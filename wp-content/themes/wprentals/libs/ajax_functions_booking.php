@@ -799,7 +799,7 @@ if( !function_exists('wpestate_create_pay_user_invoice_form') ):
                                 </div>';
                         }
                         // Giorgio
-                        $service_fee_show    =      wpestate_show_price_booking_for_invoice($booking_array ['service_fee'],$wpestate_currency,$wpestate_where_currency,0,1);
+                        // $service_fee_show = wpestate_show_price_booking_for_invoice($booking_array ['service_fee'],$wpestate_currency,$wpestate_where_currency,0,1);
                         // Giorgio
                         print ' 
                             <div class="invoice_row invoice_total total_inv_span total_invoice_for_payment">
