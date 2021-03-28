@@ -2030,7 +2030,7 @@ if( !function_exists('wpestate_create_invoice_form') ):
                             if($security_depozit!=0){
                                 print'
                                 <div class="invoice_row invoice_content">
-                                    <span class="inv_legend">   '.__('Security Deposit','wprentals').'</span>
+                                    <span class="inv_legend">   '.__('Security Deposit','wprentals').'</span>ddddddd
                                     <span id="security_depozit_row" data-val="'.esc_attr($security_depozit).'" class="inv_data">  '.$security_depozit_show.'</span>
                                     <span  class="inv_data">'.__('*refundable','wprentals').'</span>
                                 </div>';
