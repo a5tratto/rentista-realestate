@@ -2068,9 +2068,9 @@ if( !function_exists('wpestate_create_invoice_form') ):
 
                                 <div class="invoice_explantions">'.esc_html__('we deduct security deposit, city fees, cleaning fees and website service fee','wprentals').'</div>
 
-                                <span class="total_inv_span">
-                                    <span class="inv_legend invoice_legend_service_fee giorgio_servicefee">'.esc_html__( 'Service Fee','wprentals').':</span>
-                                    <span id="inv_service_fee" class="invoice_legend_service_fee_value" data-value="'.esc_attr($booking_array ['service_fee']).'"  data-value-fixed-hidden="'.  floatval ( wprentals_get_option('wp_estate_service_fee_fixed_fee','') ).'">'.$service_fee_show.'</span>
+                                <span class="total_inv_span giorgio_servicefee">
+                                    <span class="inv_legend invoice_legend_service_fee ">'.esc_html__( 'Service Fee','wprentals').':</span>
+                                    <span id="inv_service_fee" class="invoice_legend_service_fee_value" data-value="'.esc_attr($booking_array ['service_fee']).'"  data-value-fixed-hidden="'.  floatval ( wprentals_get_option('wp_estate_service_fee_fixed_fee','') ).'">'.$service_commissioni.'</span>
 
                                     <div style="width:100%"></div>
 
