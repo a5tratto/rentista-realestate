@@ -681,6 +681,8 @@ if( !function_exists('wpestate_create_pay_user_invoice_form') ):
 
         // Giorgio
         $service_commissioni = wpestate_show_price_booking_for_invoice($booking_array ['service_fee'],$wpestate_currency,$wpestate_where_currency,0,1);
+        $depozit_show = $service_commissioni;
+
         // Giorgio
 
 
@@ -1861,7 +1863,7 @@ if( !function_exists('wpestate_create_invoice_form') ):
 
 
         if(trim($deposit_show)==''){
-            $deposit_show=0;
+            $service_commissioni = $deposit_show ;
         }
 
 
