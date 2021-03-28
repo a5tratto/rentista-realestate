@@ -679,6 +679,9 @@ if( !function_exists('wpestate_create_pay_user_invoice_form') ):
         $extra_price_per_guest      =   wpestate_show_price_booking($booking_array['extra_price_per_guest'],$wpestate_currency,$wpestate_where_currency,1);
 
 
+        // Giorgio
+        $service_commissioni = wpestate_show_price_booking_for_invoice($booking_array ['service_fee'],$wpestate_currency,$wpestate_where_currency,0,1);
+        // Giorgio
 
 
         $depozit_stripe     =   $depozit;
@@ -798,15 +801,13 @@ if( !function_exists('wpestate_create_pay_user_invoice_form') ):
                                     </span>
                                 </div>';
                         }
-                        // Giorgio
-                        $service_fee_show = wpestate_show_price_booking_for_invoice($booking_array ['service_fee'],$wpestate_currency,$wpestate_where_currency,0,1);
-                        // Giorgio
+
                         print ' 
                             <div class="invoice_row invoice_total total_inv_span total_invoice_for_payment">
                                <span class="inv_legend"><strong>'.esc_html__( 'Total','wprentals').'</strong></span>
                                <span class="inv_data" id="total_amm" data-total="'.esc_attr($invoice_price).'">'.$total_price_show.'</span></br>
 
-                               <span class="inv_legend invoice_reseration_fee_req ggprimo">'.esc_html__( 'Reservation Fee Required','wprentals').':</span> <span class="inv_depozit depozit_show" data-value="'.esc_attr($depozit).'"> '.$service_fee_show.'</span></br> <!-- giorgio replace $depozit_show > $service_fee_show-->
+                               <span class="inv_legend invoice_reseration_fee_req giorgio_commissioni_fattura">'.esc_html__( 'Reservation Fee Required','wprentals').':</span> <span class="inv_depozit depozit_show" data-value="'.esc_attr($depozit).'"> '.$service_commissioni.'</span></br> <!-- giorgio replace $depozit_show > $service_commissioni-->
                                <span class="inv_legend invoice_balance_owed">'.esc_html__( 'Balance owed','wprentals').':</span> <span class="inv_depozit balance_show"  data-value="'.esc_attr($balance).'">'.$balance_show.'</span>
                            </div>
                        </div>';
@@ -1854,6 +1855,10 @@ if( !function_exists('wpestate_create_invoice_form') ):
         $extra_price_per_guest      =   wpestate_show_price_booking($booking_array['extra_price_per_guest'],$wpestate_currency,$wpestate_where_currency,1);
         $early_bird_discount_show   =   wpestate_show_price_booking_for_invoice(  $booking_array['early_bird_discount'],$wpestate_currency,$wpestate_where_currency,1,1);
 
+        // Giorgio
+        $service_commissioni = wpestate_show_price_booking_for_invoice($booking_array ['service_fee'],$wpestate_currency,$wpestate_where_currency,0,1);
+        // Giorgio
+
 
         if(trim($deposit_show)==''){
             $deposit_show=0;
@@ -2039,16 +2044,14 @@ if( !function_exists('wpestate_create_invoice_form') ):
                                 </div>';
                             }
 
-                            // Giorgio
-                            $service_fee_show = wpestate_show_price_booking_for_invoice($booking_array ['service_fee'],$wpestate_currency,$wpestate_where_currency,0,1);
-                            // Giorgio
+
                             print'
                             <div class="invoice_row invoice_total invoice_total_generate_invoice">
                                 <div style="display:none;" id="inter_price" data-value="'.esc_attr($booking_array ['inter_price']).'"></div>
                                 <span class="inv_legend"><strong>'.esc_html__( 'Guest Pays','wprentals').'</strong></span>
                                 <span class="inv_data" id="total_amm" data-total="'.esc_attr($total_price_comp).'">'.$total_price_show.'</span>
 
-                                <span class="total_inv_span"><span class="inv_legend invoice_reseration_fee_req ggsecondo">'.esc_html__( 'Reservation Fee Required','wprentals').':</span> <span id="inv_depozit" data-value="'.esc_attr($depozit).'">'.$service_fee_show.'</span><!-- giorgio replace $depozit_show > $service_fee_show-->
+                                <span class="total_inv_span"><span class="inv_legend invoice_reseration_fee_req giorgio_commissioni_ricevuta">'.esc_html__( 'Reservation Fee Required','wprentals').':</span> <span id="inv_depozit" data-value="'.esc_attr($depozit).'">'.$service_commissioni.'</span><!-- giorgio replace $depozit_show > $service_commissioni-->
                                 <div style="width:100%"></div>
                                 <span class="inv_legend invoice_balance_owed">'.esc_html__( 'Balance Owed','wprentals').':</span> <span id="inv_balance" data-val="'.esc_attr($balance).'">'.$balance_show.'</span>
                             </div>';
