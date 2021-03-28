@@ -22,6 +22,10 @@
 	width: 45%;
 }
 
+#toplevel_page_wdi_settings.current a div img { /*conflict with single item menu*/
+	opacity: 1;
+}
+
 /*tooltip css*/
 .wdi_tooltip,
 .wdi_settings_link {
@@ -1998,6 +2002,7 @@ body.instagram-feed_page_wdi_settings table:nth-of-type(1) tr:nth-of-type(4){
 	margin-bottom: 25px;
 	padding-bottom: 16px;
 	border-bottom: 1px solid rgba(229, 229, 229, 1);
+	cursor: pointer;
 }
 .wdi-advanced-options .wdi-advanced-headline .wdi-page-title {
 	float: left;
@@ -2273,5 +2278,33 @@ body.instagram-feed_page_wdi_settings table:nth-of-type(1) tr:nth-of-type(4){
 }
 .wdi_pro .wdi_account_type, .wdi_pro .wdi_info_text{
 	color: #323A45 !important;
+}
+
+#wdi_save_loading {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 999999;
+	margin: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	/* position the div in center */
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#wdi_save_loading .caching-process-message {
+	color: #fff;
+	font-size: 25px;
+	line-height: 30px;
+	text-align: center;
+}
+
+#wdi_save_loading img {
+	position: absolute;
 }
 

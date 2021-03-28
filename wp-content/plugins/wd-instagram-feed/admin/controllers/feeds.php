@@ -213,27 +213,18 @@ class Feeds_controller_wdi {
     $settings = wp_parse_args($settings, $defaults);
     $action = WDILibrary::get('add_or_edit');
     require_once (WDI_DIR."/framework/WDIInstagram.php");
-    $WDIInstagram = new WDIInstagram();
-    $WDIInstagram->wdi_preload_cache(json_decode(stripslashes($posts["feed_users"]), TRUE));
-    if ( !empty($wdi_options['wdi_authenticated_users_list']) ) {
-      $authenticated_users = json_decode($wdi_options['wdi_authenticated_users_list'], TRUE);
-      if ( !empty($authenticated_users[$posts['user_name']]) ) {
-        $user = $authenticated_users[$posts['user_name']];
-        if ( $user['type'] == 'personal' ) {
-          $settings['display_user_post_follow_number'] = 0;
-          $settings['display_user_info'] = 0;
-        }
-      }
-    }
 
     $message_id = 23;
+    $need_cache = 1;
     if ( $action == '' ) {
+	    $settings["feed_name"] = $model->get_unique_title($settings["feed_name"]);
       $wpdb->insert($wpdb->prefix . WDI_FEED_TABLE, $settings, $this->dataFormat);
       if ( $wpdb->insert_id == FALSE ) {
         $message_id = 24;
       }
     }
     else {
+      $need_cache = $model->check_need_cache( $action, $settings );
       $msg = $wpdb->update($wpdb->prefix . WDI_FEED_TABLE, $settings, array( 'id' => $action ), $this->dataFormat, array( '%d' ));
       if ( $msg == FALSE ) {
         $message_id = 24;
@@ -250,12 +241,17 @@ class Feeds_controller_wdi {
       $wdi_current_task = "display";
       $wdi_current_id = 0;
     }
-    WDILibrary::wdi_spider_redirect(add_query_arg(array(
-                                                    'page' => WDILibrary::get('page'),
-                                                    'task' => $wdi_current_task,
-                                                    'current_id' => $wdi_current_id,
-                                                    'message' => $message_id,
-                                                  ), admin_url('admin.php')));
+
+    $redirect_url['need_cache'] = $need_cache;
+    $redirect_url['feed_id'] = $wdi_current_id;
+    $redirect_url['url'] = add_query_arg(array(
+                                    'page' => WDILibrary::get('page'),
+                                    'task' => $wdi_current_task,
+                                    'current_id' => $wdi_current_id,
+                                    'message' => $message_id,
+                                  ), admin_url('admin.php'));
+    echo json_encode($redirect_url);
+    die();
   }
 
   private function reset_changes() {
@@ -328,13 +324,16 @@ class Feeds_controller_wdi {
   }
 
   private function duplicate_tabels( $feed_id ) {
+    require_once WDI_DIR . '/admin/models/feeds.php';
     global $wpdb;
+    $model = new Feeds_model_wdi();
     if ( $feed_id ) {
       $feed_row = $wpdb->get_row($wpdb->prepare('SELECT * FROM ' . $wpdb->prefix . WDI_FEED_TABLE . ' where id="%d"', $feed_id));
     }
     if ( $feed_row ) {
       $duplicate_values = WDILibrary::objectToArray($feed_row);
       unset($duplicate_values['id']);
+	 $duplicate_values["feed_name"] = $model->get_unique_title($duplicate_values["feed_name"]);
       $save = $wpdb->insert($wpdb->prefix . WDI_FEED_TABLE, $duplicate_values, $this->dataFormat);
       $new_slider_id = $wpdb->get_var('SELECT MAX(id) FROM ' . $wpdb->prefix . WDI_FEED_TABLE);
     }
@@ -474,6 +473,9 @@ class Feeds_controller_wdi {
     $sanitize_types = $model->get_sanitize_types();
     $sanitized_output = array();
     foreach ( $settings as $setting_name => $value ) {
+      if( !isset($sanitize_types[$setting_name]) ) {
+        continue;
+      }
       switch ( $sanitize_types[$setting_name] ) {
         case 'string':
         {

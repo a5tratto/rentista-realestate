@@ -708,6 +708,14 @@ function wdi_get_settings() {
       'title' => __('Uninstall', "wd-instagram-feed"),
       'default' => '',
     ),
+    'wdi_cache_request_count' => array(
+      'name' => 'wdi_cache_request_count',
+      'sanitize_type' => 'number',
+      'field_or_not' => 'field',
+      'type' => 'number',
+      'section' => 'wdi_customize_section',
+      'title' => __('Set Maximum Count of Cache Requests', "wd-instagram-feed"),
+    ),
     //'wdi_version' => array('name'=>'wdi_version','field_or_not'=>'no_field','default'=>WDI_VERSION),
     //'wdi_first_time'=>array('name'=>'wdi_first_time','field_or_not'=>'no_field','default'=>'1')
   );
@@ -725,6 +733,12 @@ function wdi_set_options_defaults() {
     $db_options[$setting['name']] = $settingDefault;
   }
   $options = wp_parse_args($options, $db_options);
+
+
+  if ( !isset($options['wdi_cache_request_count']) ) {
+    $options['wdi_cache_request_count'] = 10;
+  }
+
   if ( isset($options['wdi_plugin_uninstalled']) && $options['wdi_plugin_uninstalled'] == 'true' ) {
     $options['wdi_plugin_uninstalled'] = 'false';
   }

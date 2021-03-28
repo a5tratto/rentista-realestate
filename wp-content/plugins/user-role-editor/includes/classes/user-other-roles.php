@@ -38,7 +38,7 @@ class URE_User_Other_Roles {
             add_action( 'wpmu_activate_user', array($this, 'add_other_roles'), 10, 1 );
             add_action( 'added_existing_user', array($this, 'add_other_roles'), 10, 1);
         }
-        add_action( 'user_register', array($this, 'add_other_roles'), 10, 1 );
+        add_action( 'user_register', array($this, 'add_default_other_roles'), 10, 1 );
             
     }
     // end of set_hooks()
@@ -59,8 +59,14 @@ class URE_User_Other_Roles {
      */
     public function load_css() {
         
+        if ( defined('WP_DEBUG') && !empty( WP_DEBUG ) ) {
+            $file_name = 'multiple-select.css';
+        } else {
+            $file_name = 'multiple-select.min.css';
+        }
+        
         wp_enqueue_style('wp-jquery-ui-dialog');
-        wp_enqueue_style('ure-jquery-multiple-select', plugins_url('/css/multiple-select.css', URE_PLUGIN_FULL_PATH), array(), false, 'screen');
+        wp_enqueue_style('ure-jquery-multiple-select', plugins_url('/css/'. $file_name, URE_PLUGIN_FULL_PATH ), array(), false, 'screen');
         
     }
     // end of load_css()                
@@ -72,13 +78,18 @@ class URE_User_Other_Roles {
             return;
         }
         
+        if ( defined('WP_DEBUG') && !empty( WP_DEBUG ) ) {
+            $ms_file_name = 'multiple-select.js';
+        } else {
+            $ms_file_name = 'multiple-select.min.js';
+        }
         
         $select_primary_role = apply_filters('ure_users_select_primary_role', true);
         
         wp_enqueue_script('jquery-ui-dialog', '', array('jquery-ui-core', 'jquery-ui-button', 'jquery'));
-        wp_register_script('ure-jquery-multiple-select', plugins_url('/js/multiple-select.js', URE_PLUGIN_FULL_PATH));
+        wp_register_script('ure-jquery-multiple-select', plugins_url('/js/'. $ms_file_name, URE_PLUGIN_FULL_PATH ), array(), URE_VERSION );
         wp_enqueue_script('ure-jquery-multiple-select');
-        wp_register_script('ure-user-profile-other-roles', plugins_url('/js/user-profile-other-roles.js', URE_PLUGIN_FULL_PATH));
+        wp_register_script('ure-user-profile-other-roles', plugins_url('/js/user-profile-other-roles.js', URE_PLUGIN_FULL_PATH ), array(), URE_VERSION );
         wp_enqueue_script('ure-user-profile-other-roles');
         wp_localize_script('ure-user-profile-other-roles', 'ure_data_user_profile_other_roles', array(
             'wp_nonce' => wp_create_nonce('user-role-editor'),
@@ -330,14 +341,11 @@ class URE_User_Other_Roles {
     // end of update()
 
     
-    private function add_default_other_roles($user_id) {
-        if ( !current_user_can('edit_users') ) {
-            return false;
-        }
-        if ( !current_user_can('edit_user', $user_id) ) {
-            return false;
-        }
+    public function add_default_other_roles( $user_id ) {
         
+        if ( empty( $user_id ) ) {
+            return false;
+        }
         $user = get_user_by('id', $user_id );
         if ( empty( $user->ID ) ) {
             return true;

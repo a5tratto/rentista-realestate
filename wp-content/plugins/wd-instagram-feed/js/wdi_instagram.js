@@ -6,15 +6,11 @@
  * Author: Melik Karapetyan
  * License: GPLv2 or later
  *
- *
- *
- *
- *
  * Methods:
  *    getSelfInfo = function( args ) : Get information about the owner of the access_token.
  *    searchForUsersByName = function( username, args ) : Get a list of users matching the query.
- *      searchForTagsByName = function(tagname, args) : Search for tags by name.
- *      getTagRecentMedia = function(tagname, args) : Gets recent media based on tagname
+ *    searchForTagsByName = function(tagname, args) : Search for tags by name.
+ *    getTagRecentMedia = function(tagname, args) : Gets recent media based on tagname
  *
  */
 
@@ -107,6 +103,7 @@ function WDIInstagram(args) {
       return '';
     }
   }
+
   function getUserName() {
     if ( typeof _this.user !== 'undefined' && typeof _this.user.user_name !== 'undefined' ) {
       return _this.user.user_name
@@ -154,22 +151,16 @@ function WDIInstagram(args) {
    * non string values are not allowed
    * @param {String} token [Instagram API access token]
    */
-  this.addToken = function (token)
-  {
+  this.addToken = function (token) {
     if (typeof token == 'string') {
       _this.access_tokens.push(token);
     }
   }
 
-  this.resetTokens = function ()
-  {
+  this.resetTokens = function () {
     _this.access_tokens = [];
   }
 
-
-  /* counter for break cycle */
-  var errorItercount = 0;
-  var filterResponse = {data:new Array(), paging:{}} ;
 
   /**
    * Gets recent media based on tagname
@@ -200,114 +191,119 @@ function WDIInstagram(args) {
    *
    * @return object of founded media
    */
-  this.getTagRecentMedia = function (tagname, args, next_url, endpoint, iter = 0) {
+  this.getTagRecentMedia = function ( tagname, args, next_url, endpoint, after_cache ) {
     var instagram = this,
       noArgument = false,
       successFlag = false,
       statusCode = this.statusCode,
       errorFlag = false,
       argFlag = false,
-      filter = this.getFilter('getTagRecentMedia');
-
+      filter = this.getFilter('getTagRecentMedia'),
+      feed_id = wdi_ajax.feed_id,
+      user_name = getUserName();
     endpoint = (parseInt(endpoint) === 0) ? "top_media" : "recent_media";
-
-    if (typeof args == 'undefined' || args.length === 0) {
+    if ( typeof args == 'undefined' || args.length === 0 ) {
       noArgument = true;
     }
     else {
-
-      if ('success' in args) {
+      if ( 'success' in args ) {
         successFlag = true;
       }
-      if ('statusCode' in args) {
+      if ( 'statusCode' in args ) {
         statusCode = args['statusCode'];
       }
-      if ('error' in args) {
+      if ( 'error' in args ) {
         errorFlag = true;
       }
-
-      if ('args' in args) {
+      if ( 'args' in args ) {
         argFlag = true;
-      } else {
+      }
+      else {
         args.args = {};
       }
-
-      if ('count' in args) {
+      if ( 'count' in args ) {
         args['count'] = parseInt(args['count']);
-        if (!Number.isInteger(args['count']) || args['count'] <= 0) {
+        if ( !Number.isInteger(args['count']) || args['count'] <= 0 ) {
           args.count = 33;
         }
-      } else {
+      }
+      else {
         args.count = 33;
+      }
+      if ( 'feed_id' in args ) {
+        feed_id = args['feed_id'];
+      }
+      if ( 'user_name' in args ) {
+        user_name = args['user_name'];
       }
     }
     var wdiTagId = this.getTagId(tagname);
     jQuery.ajax({
-      type: "POST",
+      type: 'POST',
       url: wdi_ajax.ajax_url,
-      dataType:"json",
+      dataType: 'json',
       data: {
-        iter: iter,
-        tagname: tagname,
-        endpoint: endpoint,
+        action: 'wdi_getTagRecentMedia',
         wdi_nonce: wdi_ajax.wdi_nonce,
-        wdiTagId: wdiTagId,
+        user_name: user_name,
+        feed_id: feed_id,
         next_url: next_url,
-        user_name: getUserName(),
-        action: "wdi_getTagRecentMedia",
-        feed_id: wdi_ajax.feed_id,
+        tagname: tagname,
+        wdiTagId: wdiTagId,
+        endpoint: endpoint,
       },
-      success: function (response) {
-        if ( typeof response.error !== 'undefined' && errorItercount < 5 ) {
-          /* counter for break cycle */
-          errorItercount++;
-          _this.getTagRecentMedia(tagname, args, next_url, endpoint, iter)
+      success: function ( response ) {
+        var error = false;
+        var error_type = '';
+        if ( typeof response.error !== 'undefined' ) {
+          error = true;
+          error_type = response.error.type;
         }
-        else if ( typeof response.response !== 'undefined' && typeof response.response.iter !== 'undefined' && filterResponse.data.length < parseInt(wdi_ajax.number_of_photos) && iter < 10 && response.response.paging.next != '' ) {
-          next_url = response.response.paging.next;
-          filterResponse.data = filterResponse.data.concat(response.response.data);
-          filterResponse.paging = response.response.paging;
-          _this.getTagRecentMedia(tagname, args, next_url, endpoint, response.response.iter)
-        }
-        else {
-          if ( filterResponse.data.length != 0 ) {
-            response.response = filterResponse;
+
+        if( typeof response['data'] === 'undefined' || (typeof response['data'] !== 'undefined' && response['data'].length === 0 && after_cache === 0)) {
+          _this.set_cache_data('', user_name, feed_id, '', 0, 1, tagname, wdiTagId, endpoint, args);
+        } else {
+          if ( response.data.length === 0 ) {
+              response.meta = {'code': 400, 'error': error, 'error_type': error_type};
+              response.tag_id = wdiTagId;
+              success(response)
+          } else {
+              if (wdiTagId === false) {
+                wdiTagId = "";
+              }
+              if (typeof response.tag_data !== "undefined") {
+                var tag_data = response.tag_data;
+                if (typeof tag_data.tag_id !== "undefined") {
+                  wdiTagId = tag_data.tag_id;
+                }
+                var all_tags = [];
+                if (typeof window['wdi_all_tags'] !== "undefined") {
+                  all_tags = window['wdi_all_tags'];
+                }
+                all_tags[tag_data.tag_id] = tag_data;
+                window['wdi_all_tags'] = all_tags;
+              }
+              //response = response.response;
+              //response = _this.convertHashtagData(response);
+              response.meta = {'code': 200, 'error': error, 'error_type': error_type};
+              response.tag_id = wdiTagId;
+              success(response)
           }
-          if (wdiTagId === false) {
-            wdiTagId = "";
-          }
-          if ( typeof response.tag_data !== "undefined" ) {
-            var tag_data = response.tag_data;
-            if (typeof tag_data.tag_id !== "undefined") {
-              wdiTagId = tag_data.tag_id;
-            }
-            var all_tags = [];
-            if (typeof window['wdi_all_tags'] !== "undefined") {
-              all_tags = window['wdi_all_tags'];
-            }
-            all_tags[tag_data.tag_id] = tag_data;
-            window['wdi_all_tags'] = all_tags;
-          }
-          response = response.response;
-          response = _this.convertHashtagData(response);
-          response.meta = {"code": 200};
-          response.tag_id = wdiTagId;
-          success(response)
         }
       },
-      error: function (response) {
-        if (errorFlag) {
-          if (typeof args['error'] == 'object' && args['error'].length == 2) {
-            if (typeof window[args['error'][0]][args['error'][1]] == 'function') {
+      error: function ( response ) {
+        if ( errorFlag ) {
+          if ( typeof args['error'] == 'object' && args['error'].length == 2 ) {
+            if ( typeof window[args['error'][0]][args['error'][1]] == 'function' ) {
               window[args['error'][0]][args['error'][1]](response);
             }
           }
-          else if (typeof args['error'] == 'string') {
-            if (typeof window[args['error']] == 'function') {
+          else if ( typeof args['error'] == 'string' ) {
+            if ( typeof window[args['error']] == 'function' ) {
               window[args['error']](response);
             }
           }
-          else if (typeof args['error'] == 'function') {
+          else if ( typeof args['error'] == 'function' ) {
             args['error'](response);
           }
         }
@@ -315,24 +311,24 @@ function WDIInstagram(args) {
       statusCode: statusCode
     });
 
-    function success(response) {
-      if ( typeof response["data"] === 'undefined' ) response["data"] = [];
+    function success( response ) {
+      if ( typeof response["data"] === 'undefined' ) {
+        response["data"] = [];
+      }
       if ( successFlag ) {
-        if (typeof args.success == 'object' && args.success.length == 2) {
-          if (typeof window[args.success[0]] != 'undefined') {
-            if (typeof window[args.success[0]][args.success[1]] == 'function') {
-
+        if ( typeof args.success == 'object' && args.success.length == 2 ) {
+          if ( typeof window[args.success[0]] != 'undefined' ) {
+            if ( typeof window[args.success[0]][args.success[1]] == 'function' ) {
               window[args.success[0]][args.success[1]](response);
             }
           }
-        } else if ( typeof args.success == 'string' ) {
+        }
+        else if ( typeof args.success == 'string' ) {
           if ( typeof window[args.success] == 'function' ) {
-
             window[args.success](response);
           }
         }
         else if ( typeof args.success == 'function' ) {
-
           args.success(response);
         }
       }
@@ -340,10 +336,12 @@ function WDIInstagram(args) {
   }
 
   this.getTagId = function (tagname) {
-
     var feed_users = [];
     if ( typeof wdi_controller !== 'undefined' ) {
       feed_users = wdi_controller.feed_users;
+      if( typeof feed_users === 'undefined' ) {
+        return false;
+      }
       if (feed_users.length === 0) {
         var json = jQuery('#WDI_feed_users').val();
         if (typeof json !== 'undefined' && json !== '' ) {
@@ -365,183 +363,6 @@ function WDIInstagram(args) {
     }
 
     return false;
-  };
-
-  this.convertHashtagData = function ( data ) {
-    var converted_data = {
-      data: [],
-      pagination: {}
-    };
-    if ( typeof data !== 'undefined' ) {
-      if ( typeof data.paging !== "undefined" ) {
-        converted_data.pagination = {
-          cursors: { after: data.paging.cursors.after },
-          next_url: data.paging.next
-        }
-      }
-    }
-    if ( typeof data != 'undefined' && typeof data.data != 'undefined' ) {
-      for ( var i in data.data ) {
-        var media = data.data[i];
-        var media_type;
-        if ( media.media_type === "IMAGE" ) {
-          media_type = "image";
-        }
-        else if ( media.media_type === "VIDEO" ) {
-          media_type = "video";
-        }
-        else {
-          media_type = "carousel";
-        }
-        var converted = {
-          "id": media.id,
-          "user": {
-            "id": "",
-            "full_name": "",
-            "profile_picture": "",
-            "username": ""
-          },
-          "images": {
-            "thumbnail": {
-              "width": 150,
-              "height": 150,
-              "url": media.media_url
-            },
-            "low_resolution": {
-              "width": 320,
-              "height": 320,
-              "url": media.media_url
-            },
-            "standard_resolution": {
-              "width": 1080,
-              "height": 1080,
-              "url": media.media_url
-            }
-          },
-          "created_time": media.timestamp,
-          "caption": {
-            "id": "",
-            "text": media.caption,
-            "created_time": "",
-            "from": {
-              "id": "",
-              "full_name": "",
-              "profile_picture": "",
-              "username": ""
-            }
-          },
-          "user_has_liked": (media.like_count > 0),
-          "likes": {
-            "count": media.like_count
-          },
-          "tags": [],
-          "filter": "Normal",
-          "comments": {
-            "count": media.comments_count
-          },
-          "type": media_type,
-          "link": media.permalink,
-          "location": null,
-          "attribution": null,
-          "users_in_photo": []
-        };
-        if ( media.media_type === "IMAGE" || media.media_type === "CAROUSEL_ALBUM" ) {
-          converted.images = {
-            "thumbnail": {
-              "width": 150,
-              "height": 150,
-              "url": media.media_url
-            },
-            "low_resolution": {
-              "width": 320,
-              "height": 320,
-              "url": media.media_url
-            },
-            "standard_resolution": {
-              "width": 1080,
-              "height": 1080,
-              "url": media.media_url
-            }
-          };
-        }
-        else if ( media.media_type === "VIDEO" ) {
-          converted.videos = {
-            "standard_resolution": {
-              "width": 640,
-              "height": 800,
-              "url": media.thumb_url,
-            },
-            "low_bandwidth": {
-              "width": 480,
-              "height": 600,
-              "url": media.thumb_url,
-            },
-            "low_resolution": {
-              "width": 480,
-              "height": 600,
-              "url": media.thumb_url,
-            }
-          };
-        }
-        if ( media.media_type === "CAROUSEL_ALBUM" ) {
-          converted.carousel_media = [];
-          for ( var j in media.children.data ) {
-            if ( media.children.data[j].media_type === "IMAGE" ) {
-              var child = {
-                "images": {
-                  "thumbnail": {
-                    "width": 150,
-                    "height": 150,
-                    "url": media.children.data[j].media_url
-                  },
-                  "low_resolution": {
-                    "width": 320,
-                    "height": 320,
-                    "url": media.children.data[j].media_url
-                  },
-                  "standard_resolution": {
-                    "width": 640,
-                    "height": 640,
-                    "url": media.children.data[j].media_url
-                  }
-                },
-                "users_in_photo": [],
-                "type": "image"
-              };
-            }
-            else {
-              var child = {
-                "videos": {
-                  "standard_resolution": {
-                    "width": 640,
-                    "height": 800,
-                    "url": media.children.data[j].media_url,
-                    "id": media.children.data[j].id
-                  },
-                  "low_bandwidth": {
-                    "width": 480,
-                    "height": 600,
-                    "url": media.children.data[j].media_url,
-                    "id": media.children.data[j].id
-                  },
-                  "low_resolution": {
-                    "width": 480,
-                    "height": 600,
-                    "url": media.children.data[j].media_url,
-                    "id": media.children.data[j].id
-                  }
-                },
-                "users_in_photo": [],
-                "type": "video"
-              };
-            }
-            converted.carousel_media.push(child);
-          }
-        }
-        converted_data.data.push(converted);
-      }
-    }
-    return converted_data;
   };
 
   /**
@@ -674,8 +495,7 @@ function WDIInstagram(args) {
    * TOREMOVE ?
    * ***/
 
-  this.searchForUsersByName = function (username, args)
-  {
+  this.searchForUsersByName = function (username, args) {
     var instagram = this,
       noArgument = false,
       successFlag = false,
@@ -778,8 +598,7 @@ function WDIInstagram(args) {
   /**
    * ToDo check if we still use liked media , or if this is allowed. Most probably thre is no endpoint for liked media on Graph API.
    * */
-  this.getRecentLikedMedia = function (args)
-  {
+  this.getRecentLikedMedia = function (args) {
     var instagram = this,
       noArgument = false,
       successFlag = false,
@@ -914,8 +733,7 @@ function WDIInstagram(args) {
    * business - https://developers.facebook.com/docs/instagram-api/reference/user/media#get-media
    * personal - https://developers.facebook.com/docs/instagram-basic-display-api/reference/user/media#reading   - requires more permissions
    * */
-  this.getUserRecentMedia = function (user_id, args)
-  {
+  this.getUserRecentMedia = function (user_id, args) {
     var instagram = this,
       noArgument = false,
       successFlag = false,
@@ -1024,7 +842,6 @@ function WDIInstagram(args) {
     });
   }
 
-
   /**
    * Get the most recent media published by the owner of the access_token.
    *
@@ -1057,22 +874,22 @@ function WDIInstagram(args) {
    * @return object of founded media
    */
 
-  /**
-   *  ToDo, we should not use this anymore, get user_id for current user and get user_id/media with graph or basic API
-   */
-
-  this.getUserMedia = function (args, next_url = '', iter = 0) {
+  this.getUserMedia = function (args, next_url, after_cache) {
+    next_url = (next_url === undefined) ? '' : next_url;
     var instagram = this,
       noArgument = false,
       successFlag = false,
       statusCode = this.statusCode,
       errorFlag = false,
       argFlag = false,
-      filter = this.getFilter('getUserMedia');
+      filter = this.getFilter('getUserMedia'),
+      user_name = getUserName(),
+      feed_id = wdi_ajax.feed_id;
 
     if (typeof args == 'undefined' || args.length === 0) {
       noArgument = true;
-    } else {
+    }
+    else {
       if ('success' in args) {
         successFlag = true;
       }
@@ -1098,65 +915,69 @@ function WDIInstagram(args) {
       } else {
         args.count = 20;
       }
-    }
 
+      if ('feed_id' in args) {
+        feed_id = args['feed_id'];
+      }
+      if ('user_name' in args) {
+        user_name = args['user_name'];
+      }
+    }
     jQuery.ajax({
-      type: "POST",
+      type: 'POST',
       url: wdi_ajax.ajax_url,
-      dataType:"json",
+      dataType: 'json',
       data: {
         wdi_nonce:wdi_ajax.wdi_nonce,
-        action:"wdi_getUserMedia",
-        user_name:getUserName(),
-        feed_id: wdi_ajax.feed_id,
-        next_url:next_url,
-        iter:iter,
+        action: 'wdi_getUserMedia',
+        user_name: user_name,
+        feed_id: feed_id,
+        next_url: next_url,
       },
-      success: function (response)
-      {
-        if (typeof response.error !== 'undefined' && errorItercount < 5) {
-          errorItercount++;
-          _this.getUserMedia(args, next_url, response.iter)
-          return;
+      success: function (response) {
+        var error = false;
+        var error_type = '';
+        if ( typeof response.error !== 'undefined' ) {
+          error = true;
+          error_type = response.error.type;
         }
 
-        if( typeof response.iter !== 'undefined' && filterResponse.data.length < parseInt(wdi_ajax.number_of_photos) && iter < 20 && response.pagination.next_url != '') {
-          next_url = response.pagination.next_url;
-          filterResponse.data = filterResponse.data.concat(response.data);
-          filterResponse.pagination = response.pagination;
-          _this.getUserMedia( args, next_url, response.iter)
+        if( typeof response['data'] === 'undefined' || (typeof response['data'] !== 'undefined' && response['data'].length === 0 && after_cache === 0)) {
+          _this.set_cache_data('', user_name, feed_id,'', 0, 1, '', '', '', args);
         } else {
-          if(filterResponse.data.length != 0) {
-            response = filterResponse;
-          }
-          response.meta = {"code": 200};
-          if (successFlag) {
-            if (typeof args.success == 'object' && args.success.length == 2) {
-              if (typeof window[args.success[0]] != 'undefined') {
-                if (typeof window[args.success[0]][args.success[1]] == 'function') {
+          if( response['data'].length !== 0 ) {
+            response.meta = {'code': 200, 'error': error, 'error_type': error_type};
+            if (successFlag) {
+              if (typeof args.success == 'object' && args.success.length == 2) {
+                if (typeof window[args.success[0]] != 'undefined') {
+                  if (typeof window[args.success[0]][args.success[1]] == 'function') {
+                    if (filter) {
+                      response = _this.addTags(response);
+                      response = filter(response, instagram.filterArguments, args);
+                    }
+                    window[args.success[0]][args.success[1]](response);
+                  }
+                }
+              }
+              else if (typeof args.success == 'string') {
+                if (typeof window[args.success] == 'function') {
                   if (filter) {
                     response = _this.addTags(response);
                     response = filter(response, instagram.filterArguments, args);
                   }
-                  window[args.success[0]][args.success[1]](response);
+                  window[args.success](response);
                 }
               }
-            }
-            else if (typeof args.success == 'string') {
-              if (typeof window[args.success] == 'function') {
-                if (filter) {
-                  response = _this.addTags(response);
-                  response = filter(response, instagram.filterArguments, args);
-                }
-                window[args.success](response);
+              else if (typeof args.success == 'function') {
+                args.success(response);
               }
             }
-            else if (typeof args.success == 'function') {
-              args.success(response);
-            }
+          } else {
+            response.meta = {'code': 400, 'error': error, 'error_type': error_type};
+            args.success(response);
           }
-        }
 
+        }
       },
       error: function (response)
       {
@@ -1179,6 +1000,131 @@ function WDIInstagram(args) {
       statusCode: statusCode
     });
   }
+
+  /**
+   * Set the medias to cache.
+   *
+   *
+   * @param comlete_redirect_url string redirect url which called after update and cache processes finished
+   * @param user_name string instagram username for current feed
+   * @param feed_id integer
+   * @param next_url string
+   * @param iter integer
+   * @param frontend integer using to understand if the function called from backend or frontend ( 1-frontend, 0-backend)
+   * @param tagname string hashtag name
+   * @param tag_id integer id of hashtag
+   * @param endpoint string (0-is top_media, 1-is recent_media)
+   * @param args = {
+   *       success : 'success_callback',
+   *       error   : 'error_callback',
+   *       count   : 'media_count',
+   *       min_id  : 'min_id'
+   *       max_id  : 'max_id'
+   *      statusCode : statusCode
+   *
+   *  }
+   *
+   */
+  this.set_cache_data = function ( comlete_redirect_url , user_name, feed_id, next_url, iter, frontend, tagname, tag_id, endpoint, args ) {
+    /* Check if call is frontend 0-backend, 1-frontend */
+    if( frontend === 0 ) {
+        if (user_name === '') {
+          user_name = jQuery("#WDI_user_name").val();
+        }
+
+        if ( feed_id === 0 ) {
+          feed_id = jQuery("#wdi_add_or_edit").val();
+        }
+        if ( endpoint === '' && jQuery("#wdi_feed_users_ajax .wdi_user").length !== 0 ) {
+          endpoint = jQuery("#WDI_wrap_hashtag_top_recent input[name='wdi_feed_settings[hashtag_top_recent]']:checked").val();
+        }
+        if ( endpoint === '0' ) {
+          endpoint = 'top_media'
+        }
+        else {
+          endpoint = 'recent_media'
+        }
+
+        if( tag_id === '' && typeof users !== 'undefined' ) {
+          var tag_obj = JSON.parse(users);
+          tag_id = tag_obj[0]['tag_id'];
+        }
+        if( tag_id === '' ) {
+          tag_id = 'false';
+        }
+    } else {
+        tag_id = this.getTagId(tagname);
+        if (user_name === '') {
+          user_name = jQuery("#WDI_user_name").val();
+        }
+        if ( feed_id === 0 ) {
+          feed_id = wdi_ajax.feed_id;
+        }
+    }
+
+    var wdi_cache_request_count = 10;
+    if( typeof  wdi_ajax.wdi_cache_request_count != 'undefined' && wdi_ajax.wdi_cache_request_count !== "" ) {
+      wdi_cache_request_count = parseInt(wdi_ajax.wdi_cache_request_count);
+    }
+
+    jQuery.ajax({
+      type: "POST",
+      url: wdi_ajax.ajax_url,
+      dataType: 'json',
+      async : false,
+      data: {
+        action: 'wdi_set_preload_cache_data',
+        tag_id: tag_id,
+        tagname: tagname,
+        user_name : user_name,
+        feed_id : feed_id,
+        endpoint : endpoint,
+        wdi_nonce: wdi_ajax.wdi_nonce,
+        next_url : next_url,
+        iter : iter,
+      },
+      success: function ( response ) {
+        if( response['next_url'] != '' ) {
+          response['iter']++;
+
+          if( response['iter'] > wdi_cache_request_count ) {
+            if( frontend === 1 ) {
+              if( tag_id === 'false' ) {
+                _this.getTagRecentMedia( tagname, args, next_url, endpoint, 1);
+              } else {
+                _this.getUserMedia(args, response['next_url'], 1);
+              }
+            } else {
+              jQuery("#wdi_save_loading").addClass("wdi_hidden");
+              window.location = comlete_redirect_url;
+            }
+          } else {
+            /* Recall function for next iteration */
+            _this.set_cache_data(comlete_redirect_url, user_name, feed_id, response['next_url'], response['iter'], frontend, tagname, tag_id, endpoint, args);
+          }
+        } else {
+          if( frontend === 1 ) {
+            if(tag_id === 'false') {
+              _this.getTagRecentMedia( tagname, args, next_url, endpoint, 1);
+            } else {
+              _this.getUserMedia(args, response['next_url'], 1);
+            }
+          } else {
+            jQuery("#wdi_save_loading").addClass("wdi_hidden");
+            jQuery("#wdi_save_loading .caching-process-message").addClass("wdi_hidden");
+            if( comlete_redirect_url !== '' ) {
+              window.location = comlete_redirect_url;
+            }
+          }
+        }
+      },
+      error: function( xhr, status, error ) {
+        jQuery("#wdi_save_loading .caching-process-message").addClass("wdi_hidden");
+        jQuery("#wdi_save_loading").addClass("wdi_hidden");
+      }
+    });
+  }
+
 
   /* deprecated API */
   /**
@@ -1469,8 +1415,7 @@ function WDIInstagram(args) {
    * we may need it later . disabled now ?
    * may require custom permissions
    * */
-  this.getRecentMediaComments = function (media_id, args)
-  {
+  this.getRecentMediaComments = function (media_id, args, next) {
     var instagram = this,
       noArgument = false,
       successFlag = false,
@@ -1493,72 +1438,79 @@ function WDIInstagram(args) {
       }
     }
 
-    var req_url = 'https://api.instagram.com/v1/media/' + media_id + '/comments?access_token=' + getAccessToken();
-    var wdi_callback = function (cache_data) {
-      if(cache_data === false){
-        jQuery.ajax({
-          type: 'POST',
-          dataType: 'jsonp',
-          url: req_url,
-          success: function (response)
-          {
-            _this.setDataToCache(req_url,response);
-            success(response);
-          },
-          error: function (response)
-          {
-            if (errorFlag) {
-              if (typeof args['error'] == 'object' && args['error'].length == 2) {
-                if (typeof window[args['error'][0]][args['error'][1]] == 'function') {
-                  window[args['error'][0]][args['error'][1]](response);
-                }
-              } else
-              if (typeof args['error'] == 'string') {
-                if (typeof window[args['error']] == 'function') {
-                  window[args['error']](response);
-                }
-              } else
-              if (typeof args['error'] == 'function') {
-                args['error'](response);
-              }
-            }
-          },
-          statusCode: statusCode
 
-        });
-      }else{
-        success(cache_data);
-      }
-      function success(response) {
-        if (successFlag) {
-          if (typeof args.success == 'object' && args.success.length == 2) {
-            if (typeof window[args.success[0]] != 'undefined') {
-              if (typeof window[args.success[0]][args.success[1]] == 'function') {
-                if (filter) {
-                  response = filter(response, instagram.filterArguments);
-                }
-                window[args.success[0]][args.success[1]](response);
-              }
+    jQuery(".wdi_comment_container #ajax_loading #opacity_div").css("display","block");
+    jQuery(".wdi_comment_container #ajax_loading #loading_div").css("display","block");
+
+    jQuery.ajax({
+      type: 'POST',
+      url: wdi_ajax.ajax_url,
+      dataType:"json",
+      data: {
+        wdi_nonce:wdi_ajax.wdi_nonce,
+        action:"wdi_getRecentMediaComments",
+        user_name:getUserName(),
+        media_id:media_id,
+        next:next
+      },
+      success: function (response)
+      {
+        success(response);
+      },
+      complete : function() {
+        jQuery(".wdi_comment_container #ajax_loading #opacity_div").css("display","none");
+        jQuery(".wdi_comment_container #ajax_loading #loading_div").css("display","none");
+      },
+      error: function (response)
+      {
+        if (errorFlag) {
+          if (typeof args['error'] == 'object' && args['error'].length == 2) {
+            if (typeof window[args['error'][0]][args['error'][1]] == 'function') {
+              window[args['error'][0]][args['error'][1]](response);
             }
           } else
-          if (typeof args.success == 'string') {
-            if (typeof window[args.success] == 'function') {
+          if (typeof args['error'] == 'string') {
+            if (typeof window[args['error']] == 'function') {
+              window[args['error']](response);
+            }
+          } else
+          if (typeof args['error'] == 'function') {
+            args['error'](response);
+          }
+        }
+      },
+      statusCode: statusCode
+
+    });
+
+    function success(response) {
+      if (successFlag) {
+        if (typeof args.success == 'object' && args.success.length == 2) {
+          if (typeof window[args.success[0]] != 'undefined') {
+            if (typeof window[args.success[0]][args.success[1]] == 'function') {
               if (filter) {
                 response = filter(response, instagram.filterArguments);
               }
-              window[args.success](response);
+              window[args.success[0]][args.success[1]](response);
             }
-          } else
-          if (typeof args.success == 'function') {
+          }
+        } else
+        if (typeof args.success == 'string') {
+          if (typeof window[args.success] == 'function') {
             if (filter) {
               response = filter(response, instagram.filterArguments);
             }
-            args.success(response);
+            window[args.success](response);
           }
+        } else
+        if (typeof args.success == 'function') {
+          if (filter) {
+            response = filter(response, instagram.filterArguments);
+          }
+          args.success(response);
         }
       }
     }
-    _this.getDataFromCache(wdi_callback, req_url);
   }
 
 
@@ -1589,8 +1541,7 @@ function WDIInstagram(args) {
    * Probably we do not need this. We should get likes number in /media/media_id/
    *
    * */
-  this.getRecentMediaLikes = function (media_id, args)
-  {
+  this.getRecentMediaLikes = function (media_id, args) {
     var instagram = this,
       noArgument = false,
       successFlag = false,
@@ -1668,169 +1619,6 @@ function WDIInstagram(args) {
       statusCode: statusCode
 
     });
-  }
-
-
-  /**
-   * make an ajax request based on url
-   *
-   *
-   * @definition success_callback => which function to call in case of success
-   * @definition error_callback   => which function to call in case of error
-   * @definition statusCode       => StatusCode object.
-   *
-   * @param args = {
-   *       success : 'success_callback',
-   *       error   : 'error_callback',
-   *       statusCode : statusCode,
-   *       args.args : arguments to be passed to filter function
-   *  }
-   *
-   *
-   * if callback function is property of any other object just give it as array [ 'parent_object', 'callback_function']
-   * or you can pass as callback function an anonymous function
-   *
-   *
-   * @return object of founded media
-   */
-  this.requestByUrl = function (requestUrl, args)
-  {
-    var instagram = this,
-      noArgument = false,
-      successFlag = false,
-      errorFlag = false,
-      argFlag = false,
-      statusCode = this.statusCode,
-      filter = this.getFilter('requestByUrl'),
-      urlParts,
-      urlPart;
-
-    //changing access token to random one
-    urlParts = requestUrl.split('?')[1].split('&');
-    for (var i = 0; i < urlParts.length; i++) {
-      urlParts[i] = urlParts[i].split('=');
-      if (urlParts[i][0] == 'access_token') {
-        urlParts[i][1] = getAccessToken();
-      }
-      urlParts[i] = urlParts[i].join('=');
-    }
-    urlParts = urlParts.join('&');
-    requestUrl = requestUrl.split('?')[0] + '?' + urlParts;
-
-
-    if (typeof args == 'undefined' || args.length === 0) {
-      noArgument = true;
-    } else {
-      if ('success' in args) {
-        successFlag = true;
-      }
-
-      if ('args' in args) {
-        argFlag = true;
-      } else {
-        args.args = {};
-      }
-
-
-      if ('error' in args) {
-        errorFlag = true;
-      }
-
-      if ('statusCode' in args) {
-        statusCode = args['statusCode'];
-      }
-    }
-
-    var wdi_callback = function (cache_data) {
-      if(cache_data === false){
-        jQuery.ajax({
-          type: 'POST',
-          dataType: 'jsonp',
-          url: requestUrl,
-          success: function (response)
-          {
-            _this.setDataToCache(requestUrl,response);
-            if (successFlag) {
-              if (typeof args.success == 'object' && args.success.length == 2) {
-                if (typeof window[args.success[0]] != 'undefined') {
-                  if (typeof window[args.success[0]][args.success[1]] == 'function') {
-                    if (filter) {
-                      response = filter(response, instagram.filterArguments, args.args);
-                    }
-                    window[args.success[0]][args.success[1]](response);
-                  }
-                }
-              } else
-              if (typeof args.success == 'string') {
-                if (typeof window[args.success] == 'function') {
-                  if (filter) {
-                    response = filter(response, instagram.filterArguments, args.args);
-                  }
-                  window[args.success](response);
-                }
-              } else
-              if (typeof args.success == 'function') {
-                if (filter) {
-                  response = filter(response, instagram.filterArguments, args.args);
-                }
-                args.success(response);
-              }
-            }
-          },
-          error: function (response)
-          {
-            if (errorFlag) {
-              if (typeof args['error'] == 'object' && args['error'].length == 2) {
-                if (typeof window[args['error'][0]][args['error'][1]] == 'function') {
-                  window[args['error'][0]][args['error'][1]](response);
-                }
-              } else
-              if (typeof args['error'] == 'string') {
-                if (typeof window[args['error']] == 'function') {
-                  window[args['error']](response);
-                }
-              } else
-              if (typeof args['error'] == 'function') {
-                args['error'](response);
-              }
-            }
-          },
-          statusCode: statusCode
-        });
-      }
-      else{
-        success(cache_data);
-      }
-      function success(response) {
-        if (successFlag) {
-          if (typeof args.success == 'object' && args.success.length == 2) {
-            if (typeof window[args.success[0]] != 'undefined') {
-              if (typeof window[args.success[0]][args.success[1]] == 'function') {
-                if (filter) {
-                  response = filter(response, instagram.filterArguments, args.args);
-                }
-                window[args.success[0]][args.success[1]](response);
-              }
-            }
-          } else
-          if (typeof args.success == 'string') {
-            if (typeof window[args.success] == 'function') {
-              if (filter) {
-                response = filter(response, instagram.filterArguments, args.args);
-              }
-              window[args.success](response);
-            }
-          } else
-          if (typeof args.success == 'function') {
-            if (filter) {
-              response = filter(response, instagram.filterArguments, args.args);
-            }
-            args.success(response);
-          }
-        }
-      }
-    }
-    _this.getDataFromCache(wdi_callback, requestUrl);
   }
 
   this.getDataFromCache = function (callback, cache_name, async) {

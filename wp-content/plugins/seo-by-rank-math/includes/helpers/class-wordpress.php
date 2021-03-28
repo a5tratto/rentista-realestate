@@ -125,7 +125,7 @@ trait WordPress {
 
 		// Makes sure the plugin functions are defined before trying to use them.
 		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
-			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+			require_once ABSPATH . '/wp-admin/includes/plugin.php';
 		}
 
 		return is_plugin_active_for_network( plugin_basename( RANK_MATH_FILE ) ) ?
@@ -287,7 +287,7 @@ trait WordPress {
 
 		// Makes sure the plugin is defined before trying to use it.
 		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
-			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+			require_once ABSPATH . '/wp-admin/includes/plugin.php';
 		}
 
 		if ( ! is_plugin_active_for_network( plugin_basename( RANK_MATH_FILE ) ) ) {
@@ -341,6 +341,30 @@ trait WordPress {
 		}
 
 		return $robots;
+	}
+
+	/**
+	 * Get advanced robots default.
+	 *
+	 * @return array
+	 */
+	public static function get_advanced_robots_defaults() {
+		$screen          = get_current_screen();
+		$advanced_robots = Helper::get_settings( 'titles.advanced_robots_global', [] );
+
+		if ( 'post' === $screen->base && Helper::get_settings( "titles.pt_{$screen->post_type}_custom_robots" ) ) {
+			$advanced_robots = Helper::get_settings( "titles.pt_{$screen->post_type}_advanced_robots", [] );
+		}
+
+		if ( 'term' === $screen->base && Helper::get_settings( "titles.tax_{$screen->taxonomy}_custom_robots" ) ) {
+			$advanced_robots = Helper::get_settings( "titles.tax_{$screen->taxonomy}_advanced_robots", [] );
+		}
+
+		if ( in_array( $screen->base, [ 'profile', 'user-edit' ], true ) && Helper::get_settings( 'titles.author_custom_robots' ) ) {
+			$advanced_robots = Helper::get_settings( 'titles.author_advanced_robots', [] );
+		}
+
+		return $advanced_robots;
 	}
 
 	/**
@@ -441,5 +465,60 @@ trait WordPress {
 		 * @param string $post_type         The post type being checked.
 		 */
 		return apply_filters( 'use_block_editor_for_post_type', true, $post_type );
+	}
+
+	/**
+	 * Generate classes.
+	 *
+	 * @return string
+	 */
+	public static function classnames() {
+		$args = func_get_args();
+
+		$data = array_reduce(
+			$args,
+			function( $carry, $arg ) {
+				if ( is_array( $arg ) ) {
+					return array_merge( $carry, $arg );
+				}
+
+				$carry[] = $arg;
+				return $carry;
+			},
+			[]
+		);
+
+		$classes = array_map(
+			function ( $key, $value ) {
+				$condition = $value;
+				$return    = $key;
+
+				if ( is_int( $key ) ) {
+					$condition = null;
+					$return    = $value;
+				}
+
+				$is_array             = is_array( $return );
+				$is_object            = is_object( $return );
+				$is_stringable_type   = ! $is_array && ! $is_object;
+				$is_stringable_object = $is_object && method_exists( $return, '__toString' );
+
+				if ( ! $is_stringable_type && ! $is_stringable_object ) {
+					return null;
+				}
+
+				if ( is_null( $condition ) ) {
+					return $return;
+				}
+
+				return $condition ? $return : null;
+			},
+			array_keys( $data ),
+			array_values( $data )
+		);
+
+		$classes = array_filter( $classes );
+
+		return implode( ' ', $classes );
 	}
 }

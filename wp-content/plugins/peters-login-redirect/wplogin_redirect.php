@@ -4,8 +4,8 @@ Plugin Name: Peter's Login Redirect
 Plugin URI: http://www.theblog.ca/wplogin-redirect
 Description: Redirect users to different locations after logging in. Define a set of rules for specific users, user with specific roles, users with specific capabilities, and a blanket rule for all other users. This is all managed in Settings > Login/logout redirects.
 Author: Peter Keung
-Author URI: http://www.theblog.ca
-Version: 2.9.7
+Author URI: https://www.theblog.ca
+Version: 2.9.9
 Text Domain: peters-login-redirect
 Domain Path: /languages/
 */
@@ -23,7 +23,7 @@ global $rul_db_addresses;
 global $rul_version;
 // Name of the database table that will hold group information and moderator rules
 $rul_db_addresses = $wpdb->prefix . 'login_redirects';
-$rul_version      = '2.9.7';
+$rul_version      = '2.9.9';
 
 // doing this so we can pass current user logging out since it is no longer active after logout
 if ( ! function_exists('wp_logout')) :
@@ -338,6 +338,7 @@ class rulRedirectPostRegistration
         $rul_url = rulRedirectPostRegistration::get_redirect_url($requested_redirect_to);
         if ($rul_url) {
             rulRedirectFunctionCollection::rul_trigger_allowed_host($rul_url);
+
             return $rul_url;
         }
 
@@ -1311,9 +1312,77 @@ if (is_admin()) {
     add_action('admin_menu', 'rul_addoptionsmenu', 1);
 }
 
-register_activation_hook(__FILE__, 'rul_install');
-register_uninstall_hook(__FILE__, 'rul_uninstall');
 
+function rul_activate_plugin($networkwide)
+{
+    // Executes when plugin is activated
+    global $wpdb, $rul_db_addresses;
+
+    if (function_exists('is_multisite') && is_multisite() && $networkwide) {
+        $blogs = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
+        foreach ($blogs as $blog) {
+            switch_to_blog($blog);
+            $rul_db_addresses = $wpdb->prefix . 'login_redirects';
+            rul_install();
+            restore_current_blog();
+        }
+    } else {
+        rul_install();
+    }
+}
+
+function rul_uninstall_plugin()
+{
+    // Executes when plugin is deleted
+    global $wpdb, $rul_db_addresses;
+    if (function_exists('is_multisite') && is_multisite()) {
+        $blogs = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
+        foreach ($blogs as $blog) {
+            switch_to_blog($blog);
+            $rul_db_addresses = $wpdb->prefix . 'login_redirects';
+            rul_uninstall();
+            restore_current_blog();
+        }
+    } else {
+        rul_uninstall();
+    }
+}
+
+function rul_site_added($blog)
+{
+    // Executes when a site’s initialization routine should be executed.
+    global $wpdb, $rul_db_addresses;
+
+    if ( ! is_int($blog)) {
+        $blog = $blog->id;
+    }
+
+    switch_to_blog($blog);
+    $rul_db_addresses = $wpdb->prefix . 'login_redirects';
+    rul_install();
+    restore_current_blog();
+}
+
+function rul_drop_tables($tables)
+{
+    global $wpdb;
+    $tables[] = $wpdb->prefix . 'login_redirects';
+
+    return $tables;
+}
+
+register_activation_hook(__FILE__, 'rul_activate_plugin');
+register_uninstall_hook(__FILE__, 'rul_uninstall_plugin');
+add_filter('wpmu_drop_tables', 'rul_drop_tables');
+add_action('activate_blog', 'rul_site_added');
+
+// Wpmu_new_blog has been deprecated in 5.1 and replaced by wp_insert_site.
+global $wp_version;
+if (version_compare($wp_version, '5.1', '<')) {
+    add_action('wpmu_new_blog', 'rul_site_added');
+} else {
+    add_action('wp_initialize_site', 'rul_site_added', 99);
+}
 
 add_filter('login_redirect', 'peters_redirect_wrapper', 999999999, 3);
 add_filter('registration_redirect', array('rulRedirectPostRegistration', 'post_registration_wrapper'), 10, 2);

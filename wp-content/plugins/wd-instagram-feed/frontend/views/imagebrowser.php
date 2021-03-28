@@ -12,16 +12,15 @@ class WDI_ImageBrowser_view {
     global $user_feed_header_args;
     $this->pass_feed_data_to_js();
     $feed_row = $this->model->get_feed_row();
-    $wdi_feed_counter = $this->model->wdi_feed_counter;
     $this->add_theme_styles();
     $this->generate_feed_styles($feed_row);
     $style = $this->model->theme_row;
+    $wdi_feed_counter = $this->model->wdi_feed_counter;
     $container_class = 'wdi_feed_theme_' . $style['id'] . ' wdi_feed_browser_' . $style['id'];
     $wdi_data_ajax = defined('DOING_AJAX') && DOING_AJAX ? 'data-wdi_ajax=1' : '';
     ?>
-    <div id="wdi_feed_<?php echo $wdi_feed_counter ?>"
-         class="wdi_feed_main_container wdi_layout_ib <?php echo $container_class; ?>" <?php echo $wdi_data_ajax; ?> >
-      <?php // wdi_feed_frontend_messages();?>
+    <div id="wdi_feed_<?php echo $wdi_feed_counter ?>" class="wdi_feed_main_container wdi_layout_ib <?php echo $container_class; ?>" <?php echo $wdi_data_ajax; ?> >
+      <?php wdi_feed_frontend_messages();?>
       <div id="wdi_spider_popup_loading_<?php echo $wdi_feed_counter ?>" class="wdi_spider_popup_loading"></div>
       <div id="wdi_spider_popup_overlay_<?php echo $wdi_feed_counter ?>" class="wdi_spider_popup_overlay"
            onclick="wdi_spider_destroypopup(1000)"></div>
@@ -118,16 +117,15 @@ class WDI_ImageBrowser_view {
 
     if(WDILibrary::is_ajax() || WDILibrary::elementor_is_active()) {
       wdi_load_frontend_scripts_ajax();
+      echo '<style id="generate_feed_styles-inline-css">' . $this->generate_feed_styles( $feed_row, TRUE ) .'</style>';
     }
   }
 
   private function add_theme_styles(){
-
     $theme = $this->model->theme_row;
 
     require_once WDI_DIR . '/framework/WDI_generate_styles.php';
     $generator = new WDI_generate_styles($theme['id'], $theme);
-
 
     if($this->load_theme_css_file($generator) === true) {
       return;
@@ -163,8 +161,7 @@ class WDI_ImageBrowser_view {
     }
   }
 
-  public function generate_feed_styles($feed_row)
-  {
+  public function generate_feed_styles( $feed_row, $return = FALSE ) {
     $style = $this->model->theme_row;
     $colNum = (100 / $feed_row['number_of_columns']);
     $wdi_feed_counter = $this->model->wdi_feed_counter;
@@ -176,10 +173,10 @@ class WDI_ImageBrowser_view {
       }
 
       <?php
-
       if($feed_row['display_user_post_follow_number'] == '1'){
         $header_text_padding =(intval($style['user_img_width']) - intval($style['users_text_font_size']))/4;
-      }else{
+      }
+      else{
         $header_text_padding =(intval($style['user_img_width']) - intval($style['users_text_font_size']))/2;
       }
       ?>
@@ -200,8 +197,7 @@ class WDI_ImageBrowser_view {
         width: <?php echo $colNum.'%'?>; /*thumbnail_size*/
       }
 
-      <?php if($feed_row['disable_mobile_layout']=="0"){
-        ?>
+      <?php if($feed_row['disable_mobile_layout']=="0") { ?>
       @media screen and (min-width: 800px) and (max-width: 1024px) {
         #wdi_feed_<?php echo $wdi_feed_counter?> .wdi_feed_item {
           width: <?php echo ($colNum<33.33) ? '33.333333333333%' : $colNum.'%'?>; /*thumbnail_size*/
@@ -216,7 +212,6 @@ class WDI_ImageBrowser_view {
           margin: 0 auto;
           background-color: <?php echo $style['feed_container_bg_color']?>; /*feed_container_bg_color*/
         }
-
       }
 
       @media screen and (min-width: 480px) and (max-width: 800px) {
@@ -248,13 +243,12 @@ class WDI_ImageBrowser_view {
           background-color: <?php echo $style['feed_container_bg_color']?>; /*feed_container_bg_color*/
         }
       }
-
-      <?php
-        }?>
-    <?php
+    <?php }
     $css = ob_get_contents();
     ob_end_clean();
-
+    if ( $return ) {
+      return $css;
+    }
     wp_register_style( 'generate_feed_styles', false );
     wp_enqueue_style( 'generate_feed_styles' );
     wp_add_inline_style( 'generate_feed_styles', $css );

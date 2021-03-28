@@ -51,6 +51,11 @@ class Front_End_Optimization {
 		'uncode-plugins',
 		'uncode-init',
 		'lodash',
+		'wp-api-fetch',
+		'wp-i18n',
+		'wp-polyfill',
+		'wp-url',
+		'wp-hooks',
 	);
 
 	/**

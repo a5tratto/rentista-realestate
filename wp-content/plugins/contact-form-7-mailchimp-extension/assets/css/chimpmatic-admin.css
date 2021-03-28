@@ -3,7 +3,7 @@
   Plugin Name: Contact Form 7 MailChimp Extension
   Plugin URI: http://renzojohnson.com/contributions/contact-form-7-mailchimp-extension
 
-  Copyright 2013-2019 Renzo Johnson (email: renzojohnson at gmail.com)
+  Copyright 2013-2021 Renzo Johnson (email: renzojohnson at gmail.com)
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -322,9 +322,16 @@
 
 }
 
+
+.mcee-container label {
+  display: block;
+}
+
+
 .mcee-container select {
   margin-left: 0;
 }
+
 
 .mce-custom-fields {
   background-color: rgba(255,255,255,.95);
@@ -340,6 +347,7 @@
   /* display: none !important; */
 }
 
+
 .spt-hidden {
   font: 0;
   /* opacity: 0; */
@@ -350,6 +358,7 @@
   background-color: rgba(0,255,0,.05) !important;
   border: 1px dashed green !important;
 }
+
 
 .mce-type {
   color: #999 !important;
@@ -363,6 +372,7 @@ div#section-holder {
   /* background-color: rgba(0,255,0,.05); */
   padding-right: 10px;
 }
+
 
 #plugin-information .section,
 #section-holder  .section {

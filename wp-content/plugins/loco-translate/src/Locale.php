@@ -127,10 +127,10 @@ class Loco_Locale implements JsonSerializable {
             throw new Loco_error_LocaleException('Locale must have a language');
         }
         // no UN codes in Wordpress
-        if( is_numeric($tag['region']) ){
+        if( preg_match('/^\\d+$/',$tag['region']) ){
             throw new Loco_error_LocaleException('Numeric regions not supported');
         }
-        // single, scalar variant. Only using for Formal german currently.
+        // non-standard variant code. e.g. formal/informal
         if( is_array($tag['variant']) ){
             $tag['variant'] = implode('_',$tag['variant']);
         }
@@ -179,21 +179,24 @@ class Loco_Locale implements JsonSerializable {
 
 
     /**
-     * Get stored name in current display language.
-     * Note that no dynamic translation of English name is performed, but can be altered with loco_parse_locale filter
+     * @param bool whether to get name in current display language
      * @return string | null
      */    
-    public function getName(){
+    public function getName( $translate = true ){
         $name = $this->name;
-        if( is_string($name) && '' !== $name ){
-            // use canonical native name only when current language matches
-            // deliberately not matching whole tag such that fr_CA would show native name of fr_FR
-            if( $_name = $this->getNativeName() ){
-                $locale = self::parse( function_exists('get_user_locale') ? get_user_locale() : get_locale() );
-                if( $this->lang === $locale->lang ){
-                    $name = $_name;
-                }
+        // use canonical native name only when current language matches
+        // deliberately not matching whole tag such that fr_CA would show native name of fr_FR
+        if( $translate ){
+            $locale = self::parse( function_exists('get_user_locale') ? get_user_locale() : get_locale() );
+            if( $this->lang === $locale->lang && $this->_name ){
+                $name = $this->_name;
             }
+            /*/ Note that no dynamic translation of English name is performed, but can be filtered with loco_parse_locale
+            else {
+                $name = __($name,'loco-translate-languages');
+            }*/
+        }
+        if( is_string($name) && '' !== $name ){
             return $name;
         }
         return null;
@@ -282,10 +285,11 @@ class Loco_Locale implements JsonSerializable {
     public function fetchName( Loco_api_WordPressTranslations $api ){
         $tag = (string) $this;
         // pull from WordPress translations API if network allowed
-        if( $locale = $api->getLocale($tag) ){
-            $this->setName( $locale->getName(), $locale->getNativeName() );
+        $locale = $api->getLocale($tag);
+        if( $locale ){
+            $this->setName( $locale->getName(false), $locale->getNativeName() );
         }
-        return $this->getName();
+        return $this->getName(false);
     }
 
 
@@ -357,7 +361,8 @@ class Loco_Locale implements JsonSerializable {
         $a['pluraleq'] = $p[0];
         $a['plurals'] = $p[1];
         $a['nplurals'] = count($p[1]);
-        
+        // tone setting may used by some external translation providers
+        $a['tone'] = $this->getFormality();
         return $a;
     }
 
@@ -480,12 +485,42 @@ class Loco_Locale implements JsonSerializable {
         return json_encode( $this->jsonSerialize() );
     }
 
+
+    /**
+     * Get formality setting, whether implied or explicit.
+     * @return string either "", "formal" or "informal"
+     */
+    public function getFormality(){
+        $value = '';
+        $tag = $this->__toString();
+        $variant = $this->variant;
+        if( '' === $variant ){
+            // if a formal variant exists, tone may be implied informal
+            $d = Loco_data_CompiledData::get('locales');
+            if( $d->offsetExists($tag.'_formal') ){
+                if( ! $d->offsetExists($tag.'_informal') ) {
+                    $value = 'informal';
+                }
+            }
+            // if an informal variant exists, tone may be implied formal
+            else if( $d->offsetExists($tag.'_informal') ){
+                if( ! $d->offsetExists($tag.'_formal') ) {
+                    $value = 'formal';
+                }
+            }
+        }
+        else if( 'formal' === $variant || 'informal' === $variant ){
+            $value = $variant;
+        }
+        return apply_filters('loco_locale_formality',$value,$tag);
+    }
+
 }
 
 
 
 // Depends on compiled library
 if( ! function_exists('loco_parse_wp_locale') ){
-    loco_include('lib/compiled/locales.php');
+    loco_require_lib('compiled/locales.php');
 }
 

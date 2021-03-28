@@ -270,13 +270,14 @@ class WP_Optimize_Minify_Cache_Functions {
 			include_once WPO_PLUGIN_MAIN_PATH . '/minify/class-wp-optimize-minify-config.php';
 		}
 		$cache_time = wp_optimize_minify_config()->get('last-cache-update');
+		$cache_lifespan = wp_optimize_minify_config()->get('cache_lifespan');
 
 		/**
 		 * Minify cache lifespan
 		 *
 		 * @param int The minify cache expiry timestamp
 		 */
-		$expires = apply_filters('wp_optimize_minify_cache_expiry_time', time() - 86400 * 30);
+		$expires = apply_filters('wp_optimize_minify_cache_expiry_time', time() - 86400 * $cache_lifespan);
 		$log = array();
 
 		// get all directories that are a direct child of current directory
@@ -355,25 +356,10 @@ class WP_Optimize_Minify_Cache_Functions {
 				$size += $file->getSize();
 				$file_count++;
 			}
-			return self::format_filesize($size) . ' ('.$file_count.' files)';
+			return WP_Optimize()->format_size($size) . ' ('.$file_count.' files)';
 		} else {
 			return sprintf(__('Error: %s is not a directory!', 'wp-optimize'), $folder);
 		}
-	}
-
-	/**
-	 * Return size in human format
-	 *
-	 * @param integer $bytes
-	 * @param integer $decimals
-	 *
-	 * @return string
-	 */
-	public static function format_filesize($bytes, $decimals = 2) {
-		$units = array( 'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB' );
-		for ($i = 0; ($bytes / 1024) > 0.9; $i++, $bytes /= 1024) {
-		}
-		return sprintf("%1.{$decimals}f %s", round($bytes, $decimals), $units[$i]);
 	}
 
 	/**
@@ -459,7 +445,7 @@ class WP_Optimize_Minify_Cache_Functions {
 	 * @return string
 	 */
 	public static function format_date_time($timestamp) {
-		return date(get_option('date_format').' @ '.get_option('time_format'), ($timestamp + get_option('gmt_offset') * 3600));
+		return WP_Optimize()->format_date_time($timestamp);
 	}
 
 	/**

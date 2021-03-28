@@ -20,7 +20,7 @@ function iqfix_wpcf7_manage_hooks() {
 	add_filter( 'wpcf7_spam', 'iqfix_wpcf7_recaptcha_check_with_google', 9 );
 
 	// reCaptcha Enqueues
-	remove_action( 'wp_enqueue_scripts', 'wpcf7_recaptcha_enqueue_scripts', 10 );
+	remove_action( 'wp_enqueue_scripts', 'wpcf7_recaptcha_enqueue_scripts', 20 );
 	add_action( 'wp_enqueue_scripts', 'iqfix_wpcf7_recaptcha_enqueue_scripts', 9 );
 
 	// reCaptcha Footer Javascript
@@ -119,10 +119,10 @@ function iqfix_wpcf7_recaptcha_form_tag_handler( $tag ) {
 		wpcf7_form_controls_class( $tag->type, 'g-recaptcha' ) );
 	$atts['id'] = $tag->get_id_option();
 
-	$html = sprintf( '<div %1$s></div>', wpcf7_format_atts( $atts ) );
+	$html = sprintf( '<span %1$s></span>', wpcf7_format_atts( $atts ) );
 	$html .= iqfix_wpcf7_recaptcha_noscript(
 		array( 'sitekey' => $atts['data-sitekey'] ) );
-	$html = sprintf( '<div class="wpcf7-form-control-wrap">%s</div>', $html );
+	$html = sprintf( '<span class="wpcf7-form-control-wrap recaptcha">%s</span>', $html );
 
 	return $html;
 
@@ -583,3 +583,37 @@ function iqfix_recaptcha_inline_css() {
 	
 }
 add_action( 'wp_enqueue_scripts', 'iqfix_recaptcha_inline_css' );
+
+
+/**
+ * Validate empty reCaptcha
+ * 
+ * @param Object $result
+ * @param Object $tag
+ * 
+ * @return Object $result
+ */
+function iqfix_recaptcha_validation( $result, $tag ) {
+	
+	$tag->name = 'recaptcha';
+	if( ! isset( $_POST['g-recaptcha-response'] ) ) {
+		
+		$result->invalidate(
+			$tag,
+			esc_html__( 'wpcf7-recaptcha: Could not verify reCaptcha response.', 'wpcf7-recaptcha' )
+		);
+		
+	} else if( empty( $_POST['g-recaptcha-response'] ) ) {
+		
+		$result->invalidate(
+			$tag,
+			esc_html__( 'Please verify that you are not a robot.', 'wpcf7-recaptcha' )
+		);
+		
+	}
+	
+	return $result;
+	
+}
+add_filter( 'wpcf7_validate_recaptcha', 'iqfix_recaptcha_validation', 10, 2 );
+add_filter( 'wpcf7_validate_recaptcha*', 'iqfix_recaptcha_validation', 10, 2 );

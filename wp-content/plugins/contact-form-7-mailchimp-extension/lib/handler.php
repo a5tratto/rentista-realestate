@@ -1,5 +1,5 @@
 <?php
-/*  Copyright 2013-2020 Renzo Johnson (email: renzojohnson at gmail.com)
+/*  Copyright 2013-2021 Renzo Johnson (email: renzojohnson at gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -265,6 +265,32 @@ function wpcf7_mch_subscribe_remote($obj) {
 
     }
 
+
+
+		if ( isset($cf7_mch['accept']) && strlen($cf7_mch['accept']) != 0 ) {
+           $accept = cf7_mch_tag_replace( $regex, trim( $cf7_mch['accept'] ) , $submission->get_posted_data() );
+         if ( strlen( trim($accept) ) != 0   ) {
+            //$mce_csu = 'subscribed';
+         } else {
+					    $unsubscr = cf7_mch_tag_replace( $regex, trim( $cf7_mch['addunsubscr'] ) , $submission->get_posted_data() );
+					    if ( strlen( trim($unsubscr) ) != 0 ) {
+            		$mce_csu = 'unsubscribed';
+
+							}
+					    else {
+
+								return; //No hace nada
+							}
+          }
+      } //else $mce_csu = 'subscribed';
+
+
+		if ($mce_csu == '') {
+			 //$mce_csu = 'cleaned';
+			 //var_dump ( $mce_csu  ) ;
+			 return;
+		}
+
       try {
 
         $cad_mergefields = "";
@@ -285,8 +311,8 @@ function wpcf7_mch_subscribe_remote($obj) {
         $dc    = explode( "-", $api );
         $urlmcv3 = "https://anystring:$dc[0]@$dc[1].api.mailchimp.com/3.0";
         $list  = $lists;
-        $vc_date = date( 'Md.H:i' );
-        $vc_user_agent = '.' . SPARTAN_MCE_VERSION . '.' . strtolower( $vc_date );  // rj
+        $vc_date = date('d-M-Y.H:i:s');
+        $vc_user_agent = '.' . SPARTAN_MCE_VERSION . '.' . $vc_date ;  // rj
         $vc_headers = array( "Content-Type" => "application/json" ) ;
 
 
@@ -319,6 +345,7 @@ function wpcf7_mch_subscribe_remote($obj) {
 
                   $resptres = wp_remote_post( $url_edit, $opts );
 
+
               }
 
           }
@@ -329,9 +356,9 @@ function wpcf7_mch_subscribe_remote($obj) {
         $url_put   = "$urlmcv3/lists/$list";  //// $urlmcv3
         $info  = '{"members": [
 
-                    { "email_address": "'.$email.'",
-                      "status": "'.$mce_csu.'",
-                      "merge_fields":{ '.$cad_mergefields.' }
+                    { "email_address": "'. $email .'",
+                      "status": "'. $mce_csu .'",
+                      "merge_fields":{ '. $cad_mergefields .' }
                     }
 
                   ],
@@ -341,7 +368,7 @@ function wpcf7_mch_subscribe_remote($obj) {
                   'method' => 'POST',
                   'headers' => $vc_headers,
                   'body' => $info,
-                  'user-agent' => 'mce-p' . $vc_user_agent
+                  'user-agent' => 'chimpmatic-lite' . $vc_user_agent
                 );
 
         $respenvio = wp_remote_post( $url_put, $opts );
@@ -352,7 +379,17 @@ function wpcf7_mch_subscribe_remote($obj) {
 
 				$chimp_db_log = new chimp_db_log( 'mce_db_issues',  $logfileEnabled,'api',$idform );
 
-				$chimp_db_log->chimp_log_insert_db(1, 'Subscribe Response: ' , $resp  );
+
+        $resp_to_arr = json_decode( $resp );
+        $opts_to_string = json_encode( $opts );
+
+        // var_dump ( 'Hola url_put: '. $url_put ) ;
+
+
+        $chimp_db_log->chimp_log_insert_db( 1, ' ===============  POST  =============== '."\n" , $url_put );
+        $chimp_db_log->chimp_log_insert_db( 1, ' ===============  PAYLOAD  =============== '."\n" , $opts );
+        $chimp_db_log->chimp_log_insert_db( 1, ' ===============  RESPONSE  =============== '."\n" , $resp_to_arr );
+
 
       } // end try
 

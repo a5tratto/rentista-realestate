@@ -88,7 +88,12 @@ class WP_Optimizer {
 		$optimization_objects = array();
 		
 		foreach ($optimizations as $optimization) {
-			$optimization_objects[$optimization] = $this->get_optimization($optimization);
+			$optimization_object = $this->get_optimization($optimization);
+			if (is_wp_error($optimization_object)) {
+				WP_Optimize()->log('Failed to load optimization ' . $optimization . ' - ' . $optimization_object->get_error_message());
+			} else {
+				$optimization_objects[$optimization] = $optimization_object;
+			}
 		}
 	
 		return apply_filters('wp_optimize_get_optimizations', $optimization_objects);
@@ -270,6 +275,8 @@ class WP_Optimizer {
 
 		if (false === $update && null !== $tables_info) return $tables_info;
 
+		$wpo_db_info = WP_Optimize()->get_db_info();
+
 		$table_status = WP_Optimize()->get_db_info()->get_show_table_status($update);
 
 		// Filter on the site's DB prefix (was not done in releases up to 1.9.1).
@@ -286,21 +293,23 @@ class WP_Optimizer {
 				
 				$include_table = apply_filters('wp_optimize_get_tables_include_table', $include_table, $table_name, $table_prefix);
 
-				if (!$include_table) {
+				if (!$include_table && '' !== $table_prefix) {
 					unset($table_status[$index]);
 					continue;
 				}
 
-				$table_status[$index]->Engine = WP_Optimize()->get_db_info()->get_table_type($table_name);
+				$table_status[$index]->Engine = $wpo_db_info->get_table_type($table_name);
 
-				$table_status[$index]->is_optimizable = WP_Optimize()->get_db_info()->is_table_optimizable($table_name);
-				$table_status[$index]->is_type_supported = WP_Optimize()->get_db_info()->is_table_type_optimize_supported($table_name);
+				$table_status[$index]->is_optimizable = $wpo_db_info->is_table_optimizable($table_name);
+				$table_status[$index]->is_type_supported = $wpo_db_info->is_table_type_optimize_supported($table_name);
 				// add information about corrupted tables.
-				$is_needing_repair = WP_Optimize()->get_db_info()->is_table_needing_repair($table_name);
+				$is_needing_repair = $wpo_db_info->is_table_needing_repair($table_name);
 				$table_status[$index]->is_needing_repair = $is_needing_repair;
 				if ($is_needing_repair) $corrupted_tables_count++;
 
 				$table_status[$index] = $this->join_plugin_information($table_name, $table_status[$index]);
+
+				$table_status[$index]->blog_id = $wpo_db_info->get_table_blog_id($table_name);
 			}
 
 			WP_Optimize()->get_options()->update_option('corrupted-tables-count', $corrupted_tables_count);
@@ -348,6 +357,8 @@ class WP_Optimizer {
 		$can_be_removed = false;
 		// set WP core table flag.
 		$wp_core_table = false;
+		// set WP actionscheduler table flag.
+		$wp_actionscheduler_table = (false !== stripos($table_name, 'actionscheduler_'));
 		// add information about using table by any of installed plugins.
 		$table_obj->is_using = WP_Optimize()->get_db_info()->is_table_using_by_plugin($table_name);
 		// if table belongs to any plugin then add plugins status.
@@ -363,7 +374,7 @@ class WP_Optimizer {
 
 				if (__('WordPress core', 'wp-optimize') == $plugin) $wp_core_table = true;
 				// if plugin is active then we can't remove.
-				if ($wp_core_table || $status['active']) $can_be_removed = false;
+				if ($wp_core_table || $status['active'] || $wp_actionscheduler_table) $can_be_removed = false;
 
 				if ($status['installed'] || $status['active'] || !$table_obj->is_using) {
 					$plugin_status[] = array(
@@ -387,9 +398,11 @@ class WP_Optimizer {
 	 * and information regarding each table and returns
 	 * the results to optimizations-table.php and optimizationstable.php
 	 *
+	 * @param int $blog_id filter tables by prefix
+	 *
 	 * @return Array - an array of data such as table list, innodb info and data free
 	 */
-	public function get_table_information() {
+	public function get_table_information($blog_id = 0) {
 		// Get table information.
 		$tablesstatus = $this->get_tables();
 
@@ -403,6 +416,9 @@ class WP_Optimizer {
 
 		// Make a list of tables to optimize.
 		foreach ($tablesstatus as $each_table) {
+			// if $blog_id is set then filter tables
+			if ($blog_id > 0 && $blog_id != $each_table->blog_id) continue;
+
 			$table_information['table_list'] .= $each_table->Name.'|';
 
 			// check if table type supported.
@@ -423,6 +439,7 @@ class WP_Optimizer {
 				$table_information['non_inno_db_tables']++;
 			}
 		}
+
 		return $table_information;
 	}
 	
@@ -435,6 +452,7 @@ class WP_Optimizer {
 	public function enable_linkbacks($type, $enable = true) {
 	
 		$wpdb = $GLOBALS['wpdb'];
+		$wpo_options = WP_Optimize()->get_options();
 		
 		$new_status = $enable ? 'open' : 'closed';
 		
@@ -452,6 +470,7 @@ class WP_Optimizer {
 			default:
 				break;
 		}
+		$wpo_options->update_option($type.'_action', array('action' => $enable, 'timestamp' => time()));
 
 	}
 	
@@ -471,10 +490,10 @@ class WP_Optimizer {
 
 		$total_gain = 0;
 		$total_size = 0;
-		$row_usage = 0;
+		$row_usage = 0;// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- Used in the foreach below
 		$data_usage = 0;
 		$index_usage = 0;
-		$overhead_usage = 0;
+		$overhead_usage = 0; // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- Used in the foreach below
 		
 		$tablesstatus = $this->get_tables();
 
@@ -519,14 +538,17 @@ class WP_Optimizer {
 	public function trackback_comment_actions($options) {
 	
 		$output = array();
+		$messages = array();
 	
 		if (isset($options['comments'])) {
 			if (!$options['comments']) {
 				$this->enable_linkbacks('comments', false);
 				$output[] = __('Comments have now been disabled on all current and previously published posts.', 'wp-optimize');
+				$messages[] =  sprintf(__('All comments on existing posts were disabled at %s.', 'wp-optimize'), WP_Optimize()->format_date_time(time()));
 			} else {
 				$this->enable_linkbacks('comments');
 				$output[] = __('Comments have now been enabled on all current and previously published posts.', 'wp-optimize');
+				$messages[] =  sprintf(__('All comments on existing posts were enabled at %s.', 'wp-optimize'), WP_Optimize()->format_date_time(time()));
 			}
 		}
 		
@@ -534,13 +556,15 @@ class WP_Optimizer {
 			if (!$options['trackbacks']) {
 				$this->enable_linkbacks('trackbacks', false);
 				$output[] = __('Trackbacks have now been disabled on all current and previously published posts.', 'wp-optimize');
+				$messages[] =  sprintf(__('All trackbacks on existing posts were disabled at %s.', 'wp-optimize'), WP_Optimize()->format_date_time(time()));
 			} else {
 				$this->enable_linkbacks('trackbacks');
 				$output[] = __('Trackbacks have now been enabled on all current and previously published posts.', 'wp-optimize');
+				$messages[] =  sprintf(__('All trackbacks on existing posts were enabled at %s.', 'wp-optimize'), WP_Optimize()->format_date_time(time()));
 			}
 		}
 		
-		return array('output' => $output);
+		return array('output' => $output,'messages' => $messages);
 	}
 
 	/**

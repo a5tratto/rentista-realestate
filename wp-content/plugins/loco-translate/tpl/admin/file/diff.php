@@ -4,16 +4,17 @@
  */
 $this->extend('../layout');
 $dfmt = _x( 'j M @ H:i', 'revision date short format', 'default' );
+/* @var Loco_mvc_ViewParams $master */
 ?> 
 
     <div class="revisions loading" id="loco-ui">
         <form class="revisions-control-frame" action="" method="post" enctype="application/x-www-form-urlencoded">
             <div class="loco-clearfix">
                 <div class="revisions-previous jshide">
-                    <button type="button" class="button" disabled><?php echo esc_attr_x( 'Previous', 'Button label for a previous revision' ); ?></button>
+                    <button type="button" class="button" disabled><?php echo esc_attr_x('Previous','Button label for a previous revision','loco-translate'); ?></button>
                 </div>
                 <div class="revisions-next jshide">
-                    <button type="button" class="button" disabled><?php echo esc_attr_x( 'Next', 'Button label for a next revision' ); ?></button>
+                    <button type="button" class="button" disabled><?php echo esc_attr_x('Next','Button label for a next revision','loco-translate');?></button>
                 </div>
             </div>
             <div class="revisions-meta loco-clearfix">
@@ -22,7 +23,7 @@ $dfmt = _x( 'j M @ H:i', 'revision date short format', 'default' );
                     <time><?php $master->date('mtime',$dfmt)?></time><br />
                     <button type="button" class="button disabled" disabled>Restore</button>
                 </div><?php
-                /* @var $file Loco_mvc_FileParams */
+                /* @var Loco_mvc_FileParams[] $files */
                 foreach( $files as $i => $file ):?> 
                 <div class="diff-meta jshide">
                     <span><?php $file->e('name')?></span><br />
@@ -32,7 +33,7 @@ $dfmt = _x( 'j M @ H:i', 'revision date short format', 'default' );
                 </div><?php
                 endforeach?> 
             </div><?php
-            /* @var $hidden Loco_mvc_HiddenFields */
+            /* @var Loco_mvc_HiddenFields $hidden */
             $hidden->_e();?> 
         </form>
         <div class="revisions-diff-frame jsonly">

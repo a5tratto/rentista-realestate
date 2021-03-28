@@ -103,8 +103,8 @@ class Cloudflare {
 		// Default headers for non-logged-in users.
 		header_remove( 'Pragma' );
 		header_remove( 'Expires' );
-		header( 'Cache-Control: s-max-age=604800, s-maxage=604800, max-age=60' );
-		header( 'SG-Optimizer-Cache-Control: s-max-age=604800, s-maxage=604800, max-age=60' );
+		header( 'Cache-Control: s-maxage=604800, max-age=60' );
+		header( 'SG-Optimizer-Cache-Control: s-maxage=604800, max-age=60' );
 	}
 
 	/**
@@ -144,7 +144,7 @@ class Cloudflare {
 
 		// Prepare path and data.
 		$data = array(
-			'name'  => preg_replace( '(^https?://(www\.)?)', '', untrailingslashit( Helper::get_site_url() ) ),
+			'name'  => preg_replace( '(^https?://(www\.)?)', '', untrailingslashit( Helper::get_home_url() ) ),
 			'match' => 'all',
 		);
 
@@ -152,7 +152,10 @@ class Cloudflare {
 		$response = $this->request( 'zones', 'GET', $data );
 
 		// Bail if no response. Return empty will cause the api to return errors.
-		if ( empty( $response['result'][0]['id'] ) ) {
+		if (
+			is_wp_error( $response ) ||
+			empty( $response['result'][0]['id'] )
+		) {
 			return false;
 		}
 
@@ -252,7 +255,7 @@ class Cloudflare {
 			$this->get_path( 'worker' ),
 			'POST',
 			array(
-				'pattern'                 => untrailingslashit( Helper::get_site_url() ) . '/*',
+				'pattern'                 => untrailingslashit( Helper::get_home_url() ) . '/*',
 				'script'                  => $this->worker,
 				'request_limit_fail_open' => true,
 			)

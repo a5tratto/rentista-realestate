@@ -1,36 +1,12 @@
 <?php
 namespace SiteGround_Optimizer\Options;
 
-use SiteGround_Optimizer\Htaccess\Htaccess;
 use SiteGround_Optimizer\Supercacher\Supercacher;
 
 /**
  * Handle PHP compatibility checks.
  */
 class Options {
-
-	/**
-	 * The constructor.
-	 *
-	 * @since 5.0.0
-	 */
-	public function __construct() {
-		$this->htaccess_service = new Htaccess();
-
-		add_filter(
-			'pre_update_option_siteground_optimizer_enable_gzip_compression',
-			array( $this, 'toogle_gzip_comporession' ),
-			10,
-			2
-		);
-		add_filter(
-			'pre_update_option_siteground_optimizer_enable_browser_caching',
-			array( $this, 'toogle_browser_caching' ),
-			10,
-			2
-		);
-	}
-
 	/**
 	 * Check if a single boolean setting is enabled.
 	 *
@@ -188,46 +164,6 @@ class Options {
 		Supercacher::purge_cache();
 		// Return the result.
 		return $result;
-	}
-
-	/**
-	 * Handle enable/disable gzip compression.
-	 *
-	 * @since  5.0.0
-	 *
-	 * @param  mixed $value     The new value.
-	 * @param  mixed $old_value The old value.
-	 *
-	 * @return mixed            The new or old value, depending of the result.
-	 */
-	public function toogle_gzip_comporession( $value, $old_value ) {
-		if ( 1 === $value ) {
-			$result = $this->htaccess_service->enable( 'gzip' );
-		} else {
-			$result = $this->htaccess_service->disable( 'gzip' );
-		}
-
-		return true === $result ? $value : $old_value;
-	}
-
-	/**
-	 * Handle enable/disable browser caching.
-	 *
-	 * @since  5.0.0
-	 *
-	 * @param  mixed $value     The new value.
-	 * @param  mixed $old_value The old value.
-	 *
-	 * @return mixed            The new or old value, depending of the result.
-	 */
-	public function toogle_browser_caching( $value, $old_value ) {
-		if ( 1 === $value ) {
-			$result = $this->htaccess_service->enable( 'browser-caching' );
-		} else {
-			$result = $this->htaccess_service->disable( 'browser-caching' );
-		}
-
-		return true === $result ? $value : $old_value;
 	}
 
 	/**

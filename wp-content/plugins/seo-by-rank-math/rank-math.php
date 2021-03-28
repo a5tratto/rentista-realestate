@@ -3,13 +3,13 @@
  * Rank Math SEO Plugin.
  *
  * @package      RANK_MATH
- * @copyright    Copyright (C) 2019-2020, Rank Math - support@rankmath.com
+ * @copyright    Copyright (C) 2019-2021, Rank Math - support@rankmath.com
  * @link         https://rankmath.com
  * @since        0.9.0
  *
  * @wordpress-plugin
  * Plugin Name:       Rank Math SEO
- * Version:           1.0.54.1
+ * Version:           1.0.60.1
  * Plugin URI:        https://s.rankmath.com/home
  * Description:       Rank Math is a revolutionary SEO product that combines the features of many SEO tools and lets you multiply your traffic in the easiest way possible.
  * Author:            Rank Math
@@ -34,7 +34,7 @@ final class RankMath {
 	 *
 	 * @var string
 	 */
-	public $version = '1.0.54.1';
+	public $version = '1.0.60.1';
 
 	/**
 	 * Rank Math database version.
@@ -55,7 +55,7 @@ final class RankMath {
 	 *
 	 * @var string
 	 */
-	private $php_version = '5.6';
+	private $php_version = '7.2';
 
 	/**
 	 * Holds various class instances.
@@ -184,9 +184,6 @@ final class RankMath {
 		// Instantiate classes.
 		$this->instantiate();
 
-		// Initialize the action and filter hooks.
-		$this->init_actions();
-
 		// Loaded action.
 		do_action( 'rank_math/loaded' );
 	}
@@ -300,13 +297,16 @@ final class RankMath {
 		// Frontend SEO Score.
 		$this->container['frontend_seo_score'] = new \RankMath\Frontend_SEO_Score();
 		$this->load_3rd_party();
+
+		// Initialize the action and filter hooks.
+		$this->init_actions();
 	}
 
 	/**
 	 * Initialize WordPress action and filter hooks.
 	 */
 	private function init_actions() {
-		//!make sure it is loaded before setup_modules and load_modules
+		// Make sure it is loaded before setup_modules and load_modules.
 		add_action( 'plugins_loaded', [ $this, 'localization_setup' ], 9 );
 		add_action( 'init', [ $this, 'pass_admin_content' ] );
 		add_filter( 'cron_schedules', [ $this, 'cron_schedules' ] );
@@ -342,6 +342,7 @@ final class RankMath {
 		$controllers = [
 			new \RankMath\Rest\Admin(),
 			new \RankMath\Rest\Front(),
+			new \RankMath\Rest\Shared(),
 			new \RankMath\Rest\Post(),
 		];
 
@@ -376,8 +377,11 @@ final class RankMath {
 	 * Load 3rd party modules.
 	 */
 	private function load_3rd_party() {
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
 
-		if ( defined( 'ELEMENTOR_VERSION' ) ) {
+		if ( is_plugin_active( 'elementor/elementor.php' ) ) {
 			new \RankMath\Elementor\Elementor();
 		}
 	}
@@ -457,9 +461,9 @@ final class RankMath {
 	}
 
 	/**
-	 * localize admin content to JS
+	 * Localize admin content to JS
 	 */
-	public function pass_admin_content(){
+	public function pass_admin_content() {
 		if ( is_user_logged_in() && is_admin_bar_showing() ) {
 			$this->container['json']->add( 'version', $this->version, 'rankMath' );
 			$this->container['json']->add( 'ajaxurl', admin_url( 'admin-ajax.php' ), 'rankMath' );
@@ -467,6 +471,7 @@ final class RankMath {
 			$this->container['json']->add( 'endpoint', esc_url_raw( rest_url( 'rankmath/v1' ) ), 'rankMath' );
 			$this->container['json']->add( 'security', wp_create_nonce( 'rank-math-ajax-nonce' ), 'rankMath' );
 			$this->container['json']->add( 'restNonce', ( wp_installing() && ! is_multisite() ) ? '' : wp_create_nonce( 'wp_rest' ), 'rankMath' );
+			$this->container['json']->add( 'modules', \RankMath\Helper::get_active_modules(), 'rankMath' );
 		}
 	}
 

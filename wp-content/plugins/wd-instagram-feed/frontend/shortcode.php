@@ -83,7 +83,7 @@ function wdi_feed($atts, $widget_params = '') {
     return __('Cannot get other user media. API shut down by Instagram. Sorry. Display only your media.', "wd-instagram-feed");
   }
 
-  if(isset($feed_row["feed_item_onclick"]) && $feed_row["feed_item_onclick"] === "lightbox"){
+  if ( isset($feed_row["feed_item_onclick"]) && $feed_row["feed_item_onclick"] === 'lightbox' ){
     global $wdi_feed_item_onclick_type;
     $wdi_feed_item_onclick_type = true;
   }
@@ -102,7 +102,8 @@ function wdi_feed($atts, $widget_params = '') {
 
   $params = array(
     'current_feed_id' => $current_feed_id,
-    'number_of_photos' => $feed_row['number_of_photos']
+    'number_of_photos' => $feed_row['number_of_photos'],
+    'options' => $wdi_options
   );
   wdi_register_frontend_scripts( $params );
   if ( WDILibrary::is_ajax() || WDILibrary::elementor_is_active() ) {
@@ -134,7 +135,6 @@ function wdi_feed($atts, $widget_params = '') {
 
   global $user_feed_header_args;
   $user_feed_header_args = array();
-
   if ( !empty($wdi_options['wdi_authenticated_users_list']) ) {
     $authenticated_users = json_decode($wdi_options['wdi_authenticated_users_list'], true);
     if ( !empty($authenticated_users[$feed_row['username']]) ) {
@@ -199,6 +199,9 @@ function wdi_feed($atts, $widget_params = '') {
     }
 
   }
+  // @TODO. All views pass_feed_data_to_js(), add_theme_styles(), generate_feed_styles() functions can be moved here·
+  // model and $feed_row - available here
+
   if ( isset($wdi_options['wdi_custom_css']) ) {
     ?>
     <style><?php echo $wdi_options['wdi_custom_css'];?></style>
@@ -214,45 +217,25 @@ function wdi_feed($atts, $widget_params = '') {
 }
 
 function wdi_register_frontend_scripts( $params = array() ){
-
+  global $wdi_feed_item_onclick_type;
+  $min = ( WDI_MINIFY === true ) ? '.min' : '';
   wp_register_script('wdi_lazy_load', WDI_URL . '/js/jquery.lazyload.min.js', array("jquery"), wdi_get_pro_version(), true);
-  if( WDI_MINIFY === true ) {
-    wp_register_script('wdi_instagram', WDI_URL . '/js/wdi_instagram.min.js', array("jquery"), wdi_get_pro_version(), true);
-    wp_register_script('wdi_frontend', WDI_URL . '/js/wdi_frontend.min.js', array("jquery", 'wdi_instagram', 'wdi_lazy_load', 'underscore'), wdi_get_pro_version(), true);
-    wp_register_script('wdi_responsive', WDI_URL . '/js/wdi_responsive.min.js', array("jquery", "wdi_frontend"), wdi_get_pro_version(), true);
-  } else {
-    wp_register_script('wdi_instagram', WDI_URL . '/js/wdi_instagram.js', array("jquery"), wdi_get_pro_version(), true);
-    wp_register_script('wdi_frontend', WDI_URL . '/js/wdi_frontend.js', array("jquery", 'wdi_instagram', 'wdi_lazy_load', 'underscore'), wdi_get_pro_version(), true);
-    wp_register_script('wdi_responsive', WDI_URL . '/js/wdi_responsive.js', array("jquery", "wdi_frontend"), wdi_get_pro_version(), true);
-  }
+  wp_register_script('wdi_instagram', WDI_URL . '/js/wdi_instagram' . $min . '.js', array("jquery"), wdi_get_pro_version(), true);
+  wp_register_script('wdi_frontend', WDI_URL . '/js/wdi_frontend' . $min . '.js', array("jquery", 'wdi_instagram', 'wdi_lazy_load', 'underscore'), wdi_get_pro_version(), true);
+  wp_register_script('wdi_responsive', WDI_URL . '/js/wdi_responsive' . $min . '.js', array("jquery", "wdi_frontend"), wdi_get_pro_version(), true);
 
   ////////////////////////////GALLERY BOX//////////////////////////////
-  global $wdi_feed_item_onclick_type;
-  if(WDI_MINIFY === true) {
-    /* gallery fullscreeni het conflict chka ?? arje stugel ete fullscreen script ka, apa el chavelacnel */
-    wp_register_script('wdi_gallery_box', WDI_URL . '/js/gallerybox/wdi_gallery_box.min.js', array('jquery'), wdi_get_pro_version());
-    if($wdi_feed_item_onclick_type) {
-      wp_register_style('wdi_mCustomScrollbar', WDI_URL . '/css/gallerybox/jquery.mCustomScrollbar.min.css', array(), wdi_get_pro_version());
-    }
-  } else {
-    /* gallery fullscreeni het conflict chka ?? arje stugel ete fullscreen script ka, apa el chavelacnel */
-    wp_register_script('wdi_gallery_box', WDI_URL . '/js/gallerybox/wdi_gallery_box.js', array('jquery'), wdi_get_pro_version());
-    if($wdi_feed_item_onclick_type) {
-      wp_register_style('wdi_mCustomScrollbar', WDI_URL . '/css/gallerybox/jquery.mCustomScrollbar.css', array(), wdi_get_pro_version());
-    }
-  }
-
-  // Styles/Scripts for popup.
-  wp_register_script('jquery-mobile', WDI_URL . '/js/gallerybox/jquery.mobile.js', array('jquery'), wdi_get_pro_version());
-  if($wdi_feed_item_onclick_type) {
+  wp_register_script('wdi_gallery_box', WDI_URL . '/js/gallerybox/wdi_gallery_box' . $min . '.js', array('jquery'), wdi_get_pro_version());
+  // scripts for popup.
+  wp_register_script('jquery-mobile', WDI_URL . '/js/gallerybox/jquery.mobile.min.js', array('jquery'), wdi_get_pro_version());
+  if ( $wdi_feed_item_onclick_type ) {
     wp_register_script('jquery-mCustomScrollbar', WDI_URL . '/js/gallerybox/jquery.mCustomScrollbar.concat.min.js', array('jquery'), wdi_get_pro_version());
   }
-  wp_register_script('jquery-fullscreen', WDI_URL . '/js/gallerybox/jquery.fullscreen-0.4.1.js', array('jquery'), wdi_get_pro_version());
+  wp_register_script('jquery-fullscreen', WDI_URL . '/js/gallerybox/jquery.fullscreen-0.4.0' . $min . '.js', array('jquery'), wdi_get_pro_version());
 
-  //localize scrips
+  // localize scrips
   $user_is_admin = current_user_can('manage_options');
   $wdi_token_error_flag = get_option("wdi_token_error_flag");
-
 
   $current_feed_id = $params['current_feed_id'];
   $number_of_photos = $params['number_of_photos'];
@@ -262,12 +245,12 @@ function wdi_register_frontend_scripts( $params = array() ){
     'WDI_MINIFY' => (WDI_MINIFY) ? 'true' : 'false',
     'feed_id' => $current_feed_id,
     'number_of_photos' => $number_of_photos,
+    'wdi_cache_request_count' => isset($params['options']['wdi_cache_request_count']) ? $params['options']['wdi_cache_request_count'] : 10,
   ));
 
   wp_localize_script("wdi_frontend", 'wdi_url', array(
       'plugin_url' => WDI_URL . '/',
-      'ajax_url' => admin_url('admin-ajax.php'))
-  );
+      'ajax_url' => admin_url('admin-ajax.php')));
 
   wp_localize_script("wdi_frontend", 'wdi_front_messages',
     array('connection_error' => __('Connection Error, try again later :(', 'wd-instagram-feed'),
@@ -292,25 +275,19 @@ function wdi_register_frontend_scripts( $params = array() ){
   wdi_load_frontend_styles();
 }
 
-function wdi_load_frontend_styles(){
+function wdi_load_frontend_styles() {
+  global $wdi_feed_item_onclick_type;
+  $min = ( WDI_MINIFY === TRUE ) ? '.min' : '';
+  wp_register_style('wdi_font-tenweb', WDI_URL . '/css/tenweb-fonts/fonts.css', array(), wdi_get_pro_version());
+  wp_register_style('wdi_frontend', WDI_URL . '/css/wdi_frontend' . $min . '.css', array(), wdi_get_pro_version());
 
-  global $wdi_options;
-
-  if(WDI_MINIFY === true) {
-    wp_register_style('wdi_frontend_thumbnails', WDI_URL . '/css/wdi_frontend.min.css', array(), wdi_get_pro_version());
-    wp_register_style('mCustomScrollbar',  WDI_URL . '/css/gallerybox/jquery.mCustomScrollbar.min.css', array(), wdi_get_pro_version());
-  } else {
-    wp_register_style('wdi_frontend_thumbnails', WDI_URL . '/css/wdi_frontend.css', array(), wdi_get_pro_version());
-    wp_register_style('mCustomScrollbar',  WDI_URL . '/css/gallerybox/jquery.mCustomScrollbar.min.css', array(), wdi_get_pro_version());
+  wp_enqueue_style('wdi_font-tenweb');
+  wp_enqueue_style('wdi_frontend');
+  if ( $wdi_feed_item_onclick_type ) {
+    wp_register_style('wdi_mCustomScrollbar', WDI_URL . '/css/gallerybox/jquery.mCustomScrollbar' . $min . '.css', array(), wdi_get_pro_version());
+    wp_enqueue_style('wdi_mCustomScrollbar');
   }
-
-  wp_register_style('font-tenweb', WDI_URL . '/css/tenweb-fonts/fonts.css', array(), wdi_get_pro_version());
-  wp_enqueue_style('font-tenweb');
-
-  wp_enqueue_style('wdi_frontend_thumbnails');
-  wp_enqueue_style('mCustomScrollbar');
 }
-
 
 function wdi_load_frontend_scripts(){
   wp_enqueue_script('underscore');
@@ -323,10 +300,6 @@ function wdi_load_frontend_scripts(){
   wp_enqueue_script('jquery-mobile');
   wp_enqueue_script('jquery-mCustomScrollbar');
   wp_enqueue_script('jquery-fullscreen');
-
-  //styles
-  wp_enqueue_style('font-tenweb');
-  wp_enqueue_style('wdi_frontend_thumbnails');
 }
 
 /*load all scripts and styles directly without dependency on jquery*/
@@ -367,7 +340,8 @@ function wdi_load_frontend_scripts_ajax($additional_scripts = array(), $addition
   }
 
   $styles_handles = array(
-    'wdi_frontend_thumbnails',
+    'wdi_font-tenweb',
+    'wdi_frontend',
     'wdi_mCustomScrollbar',
   );
 
@@ -389,50 +363,39 @@ function wdi_load_frontend_scripts_ajax($additional_scripts = array(), $addition
       echo sprintf($style_tag, $handle, $wp_styles->registered[$handle]->src, $wp_styles->registered[$handle]->ver);
     }
   }
-
 }
-
 
 add_action('wp_ajax_wdi_token_flag', 'wdi_token_flag');
 add_action('wp_ajax_nopriv_wdi_token_flag', 'wdi_token_flag');
 function wdi_token_flag() {
-  if (check_ajax_referer('', 'wdi_token_flag_nonce', false)){
-      add_option("wdi_token_error_flag", 1);
+  $json = array( 'success' => 0 );
+  if ( check_ajax_referer('', 'wdi_token_flag_nonce', FALSE) ) {
+    $add = add_option('wdi_token_error_flag', 1);
+    $json = array( 'success' => $add );
   }
-}
-add_action('wp_ajax_wdi_delete_token_flag', 'wdi_delete_token_flag');
-add_action('wp_ajax_nopriv_wdi_delete_token_flag', 'wdi_delete_token_flag');
-function wdi_delete_token_flag() {
-  if (check_ajax_referer('', 'wdi_token_flag_nonce', false)){
-    delete_option("wdi_token_error_flag");
-  }
+  echo json_encode($json);
+  exit;
 }
 
-function wdi_feed_frontend_messages(){
+function wdi_feed_frontend_messages() {
   $manage_options_user = current_user_can('manage_options');
-  //$class = $manage_options_user ? '' : 'wdi_hidden';
-  $js_error_message = __("Something is wrong.", "wd-instagram-feed");
-
-  $token_error_message = __("Instagram token error.");
-  $error_style = "";
-  $private_feed_error_1 = "";
-  $private_feed_error_2 = "";
-  $private_feed_error_3 = "";
-  if($manage_options_user){
-    $js_error_message = __("Something is wrong. Response takes too long or there is JS error. Press Ctrl+Shift+J or Cmd+Shift+J on a Mac to see error in console or ask for <a class='wdi_error_link' href='https://wordpress.org/support/plugin/wd-instagram-feed' target='_blank'>free support</a>.", "wd-instagram-feed");
-    $token_error_message = __("Instagram token is invalid or expired. Please <a href='".site_url()."/wp-admin/admin.php?page=wdi_settings' target='_blank'>reset token</a> and sign-in again to get new one.");
+  $js_error_message = __('Something is wrong.', 'wd-instagram-feed');
+  $token_error_message = __('Instagram token error.', 'wd-instagram-feed');
+  $error_style = '';
+  $private_feed_error_1 = '';
+  $private_feed_error_2 = '';
+  $private_feed_error_3 = '';
+  if ( $manage_options_user ) {
+    $js_error_message = __("Something is wrong. Response takes too long or there is JS error. Press Ctrl+Shift+J or Cmd+Shift+J on a Mac to see error in console or ask for <a class='wdi_error_link' href='https://wordpress.org/support/plugin/wd-instagram-feed' target='_blank'>free support</a>.", 'wd-instagram-feed');
+    $token_error_message = __("Instagram token is invalid or expired. Please <a href='" . site_url() . "/wp-admin/admin.php?page=wdi_settings' target='_blank'>reset token</a> and sign-in again to get new one.");
     $error_style = 'style="color: #cc0000; text-align: center;"';
-    $private_feed_error_1 = __("Admin warning: there is one or more private user in this feed") ;
-
-    $private_feed_error_2 = __("Their media won't be displayed.") ;
-    $private_feed_error_3 = '(<span class="wdi_private_feed_names"></span>). ' ;
+    $private_feed_error_1 = __('Admin warning: there is one or more private user in this feed', 'wd-instagram-feed');
+    $private_feed_error_2 = __('Their media won\'t be displayed.', 'wd-instagram-feed');
+    $private_feed_error_3 = '(<span class="wdi_private_feed_names"></span>). ';
   }
-
   $ajax_error_message = (defined('DOING_AJAX') && DOING_AJAX) ? __("Warning: Instagram Feed is loaded using AJAX request. It might not display properly.", "wd-instagram-feed") : '';
-
-  echo '<div '.$error_style.' class="wdi_js_error">'.
-    $js_error_message ."<br/>". $ajax_error_message .'</div>';
-  echo '<div '.$error_style.' class="wdi_token_error wdi_hidden">'. $token_error_message .'</div>';
-  echo '<div '.$error_style.' class="wdi_private_feed_error wdi_hidden"><span>'. $private_feed_error_1 . $private_feed_error_3 .$private_feed_error_2.'</span></div>';
+  echo '<div ' . $error_style . ' class="wdi_js_error">' . $js_error_message . '<br/>' . $ajax_error_message . '</div>';
+  echo '<div ' . $error_style . ' class="wdi_token_error wdi_hidden">' . $token_error_message . '</div>';
+  echo '<div ' . $error_style . ' class="wdi_private_feed_error wdi_hidden"><span>' . $private_feed_error_1 . $private_feed_error_3 . $private_feed_error_2 . '</span></div>';
   echo '<div class="wdi_check_fontawesome wdi_hidden"><i class="tenweb-i tenweb-i-instagram""></i></div>';
 }

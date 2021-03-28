@@ -55,7 +55,7 @@ class Settings_view_wdi {
           <h2 class="wdi-page-title"><?php _e('Accounts', 'wd-instagram-feed'); ?></h2>
           <ul class="wdi-accounts-list">
             <?php foreach ( $authenticated_users_list as $user_name => $user ) { ?>
-              <li class="wdi-account-list-<?php echo $user_name ?>">
+              <li class="wdi-account-list-<?php echo $user['user_id'] ?>">
                 <div class="wdi-account-block">
                   <div>
                     <div class="wdi-account-user-info">
@@ -67,7 +67,7 @@ class Settings_view_wdi {
                     </div>
                   </div>
                   <div>
-                    <span class="button wdi-account-remove" onclick="wdi_account_remove('<?php echo $user_name; ?>')"><?php _e('Remove', 'wd-instagram-feed'); ?></span>
+                    <span class="button wdi-account-remove" onclick="wdi_account_remove('<?php echo $user_name; ?>','<?php echo $user['user_id']; ?>')"><?php _e('Remove', 'wd-instagram-feed'); ?></span>
                   </div>
                 </div>
                 <div class="wdi-account-accesstoken">
@@ -90,7 +90,7 @@ class Settings_view_wdi {
                     </p>
                   </div>
                   <span class="button wdi-account-remove"
-                        onclick="wdi_account_remove('<?php echo $user_name; ?>')"><?php _e('Remove', 'wd-instagram-feed'); ?></span>
+                        onclick="wdi_account_remove('<?php echo $user_name; ?>', '<?php echo $user['user_id']; ?>')"><?php _e('Remove', 'wd-instagram-feed'); ?></span>
                   <div class="wdi_clear"></div>
                 </div>
               </li>
@@ -105,6 +105,10 @@ class Settings_view_wdi {
           </div>
           <div class="wdi-advanced-body">
             <p class="wdi-input-group">
+              <label><?php _e('Set Maximum Count of Cache Requests', 'wd-instagram-feed'); ?></label>
+              <input type="number" name="<?php echo WDI_OPT . '[wdi_cache_request_count]' ?>" value="<?php echo (isset($options['wdi_cache_request_count']) && $options['wdi_cache_request_count'] !== '') ? $options['wdi_cache_request_count'] : 10; ?>">
+            </p>
+            <p class="wdi-input-group" style="display: none">
               <label><?php _e('Check for new posts every (min)', 'wd-instagram-feed'); ?></label>
               <input type="text" name="<?php echo WDI_OPT . '[wdi_transient_time]' ?>" value="<?php echo $options['wdi_transient_time']; ?>">
             </p>
@@ -149,6 +153,17 @@ class Settings_view_wdi {
         ?>
       </form>
     </div>
+    <div id="wdi_save_loading" class="wdi_hidden">
+      <img src="<?php echo WDI_URL . '/images/ajax_loader.png'; ?>" class="wdi_spider_ajax_loading" style="width:50px;">
+      <span class="caching-process-message">
+        <?php
+        _e("Please don't close this window. We are caching Instagram media.", "wdi");
+        echo "<br>";
+        _e("This may take a few minutes.", "wdi");
+        ?>
+        </span>
+    </div>
+
     <script>
       jQuery(document).ready(function () {
         jQuery('#wdi-personal-business-popup input[name="wdi-connect-type"]').on('click', function () {

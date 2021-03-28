@@ -37,22 +37,22 @@ class Product_WooCommerce {
 		$this->attributes = new WC_Attributes( $product );
 
 		if ( Helper::is_module_active( 'woocommerce' ) ) {
-			$brands = \RankMath\WooCommerce\Woocommerce::get_brands( $product->get_id() );
+			$brand = \RankMath\WooCommerce\Woocommerce::get_brands( $product->get_id() );
 
 			// Brand.
-			if ( ! empty( $brands ) ) {
-				$brands          = $brands[0]->name;
+			if ( ! empty( $brand ) ) {
 				$entity['brand'] = [
-					'@type' => 'Thing',
-					'name'  => $brands,
+					'@type' => 'Brand',
+					'name'  => $brand,
 				];
 			}
 		}
 
-		$entity['name']        = $jsonld->get_product_title( $product );
-		$entity['description'] = $jsonld->get_product_desc( $product );
-		$entity['sku']         = $product->get_sku() ? $product->get_sku() : '';
-		$entity['category']    = Product::get_category( $product->get_id(), 'product_cat' );
+		$entity['name']             = $jsonld->get_product_title( $product );
+		$entity['description']      = $jsonld->get_product_desc( $product );
+		$entity['sku']              = $product->get_sku() ? $product->get_sku() : '';
+		$entity['category']         = Product::get_category( $product->get_id(), 'product_cat' );
+		$entity['mainEntityOfPage'] = [ '@id' => $jsonld->parts['canonical'] . '#webpage' ];
 
 		$this->set_weight( $product, $entity );
 		$this->set_dimensions( $product, $entity );

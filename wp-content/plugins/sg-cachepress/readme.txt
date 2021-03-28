@@ -3,7 +3,7 @@ Contributors: Hristo Sg, siteground, sstoqnov, stoyangeorgiev
 Tags: nginx, caching, speed, memcache, memcached, performance, siteground, nginx, supercacher
 Requires at least: 4.7
 Requires PHP: 5.5
-Tested up to: 5.6.0
+Tested up to: 5.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -179,7 +179,12 @@ In version 5.0 we've added full WP-CLI support for all plugin options and functi
 * wp sg optimize dynamic-cache enable|disable - enables or disables Dynamic caching rules
 * wp sg optimize web-fonts enable|disable - enables or disables Web Fonts Optimization
 * wp sg optimize fix_insecure_content enable|disable - enables or disables Insecure Content Fix
+* wp sg optimize database-optimization enable|disable - enables or disables the DB Optimization
+* wp sg optimize dns-prefetch enable|disable add|remove|urls <value> - enables or disables the DNS Prefetching, add, remove or list urls.
+* wp sg optimize heartbeat-control enable|disable frontend|dashboard|post --frequency=<frequency> enables or disables the Heartbeat control for a specific location and sets the frequency
 * wp sg status dynamic-cache|autoflush-cache|mobile-cache|html|js|js-async|css|combine-css|querystring|emojis|images|lazyload_images|lazyload_gravatars|lazyload_thumbnails|lazyload_responsive|lazyload_textwidgets|gzip|browser-caching|memcache|ssl|ssl-fix|web-fonts|combine-js|webp - returns optimization current status (enabled|disabled)
+* wp sg settings export - exports the current plugin settings
+* wp sg settings import --hash=<string> - imports plugin settings and applies them
 
 = Requirements =
 
@@ -211,6 +216,33 @@ Our plugin uses a cookie in order to function properly. It does not store person
 1. Go to Plugins -> Installed Plugins and click the 'Activate' link under the WordPress SG Optimizer listing
 
 == Changelog ==
+
+= Version 5.7.18 =
+* Improved REST API cache invalidation
+
+= Version 5.7.17 =
+* Improved WordPress 5.7 support
+
+= Version 5.7.16 =
+* Improved Contact Form 7 support
+* Improved Amelia booking support
+* Improved support for sites with custom wp-content dir
+
+= Version 5.7.15 =
+* Improved Contact Form 7 support  
+
+= Version 5.7.14 =
+* Improved Vary:User-Agent handling
+
+= Version 5.7.13 =
+* Add settings import/export cli command
+* Exclude XML sitemaps from optimizations
+* Fix DNS Resolver fatal error for non existing hosts
+* Fix Cloudflare optimization for sites with custom wp-content dir
+* Improved Speed Test description for Webfonts optimization
+
+= Version 5.7.12 =
+* Improved Feed Cache Flush
 
 = Version 5.7.11 =
 * Improved CloudFlare Optimization

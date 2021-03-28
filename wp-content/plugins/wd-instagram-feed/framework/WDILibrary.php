@@ -1376,8 +1376,9 @@ class WDILibrary {
           $url = '';
           if($wdi_user_type === "personal"){
             $url = $instagram_app_config["basic_redirect_uri"];
-          }elseif ($wdi_user_type === "business"){
-            $wdi_user_data = wp_remote_get('https://graph.facebook.com/v3.2/' . $wdi_user_id . '?fields=id,ig_id,username,name,biography,profile_picture_url,followers_count,follows_count,media_count,website&access_token=' . $wdi_user_token);
+          }
+          elseif ($wdi_user_type === "business"){
+            $wdi_user_data = wp_remote_get('https://graph.facebook.com/v9.0/' . $wdi_user_id . '?fields=id,ig_id,username,name,biography,profile_picture_url,followers_count,follows_count,media_count,website&access_token=' . $wdi_user_token);
             if(!is_wp_error( $wdi_user_data ) && isset($wdi_user_data["body"])){
               $wdi_user_data = json_decode($wdi_user_data["body"], TRUE);
             }
@@ -1421,6 +1422,7 @@ class WDILibrary {
               $wdi_instagram_options["wdi_authenticated_users_list"] = json_encode($wdi_authenticated_users_list);
               $updated = update_option("wdi_instagram_options" , $wdi_instagram_options);
               if($updated){
+                delete_option('wdi_token_error_flag');
                 $return_data["success"] = TRUE;
                 $return_data["user"] = $user_name;
                 $return_data["token"] = $wdi_user_token;

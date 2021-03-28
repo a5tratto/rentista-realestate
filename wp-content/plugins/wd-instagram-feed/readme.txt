@@ -3,8 +3,8 @@ Contributors: webdorado,10web,progmastery
 Tags: custom instagram feed, feed, instagram, hashtag, Instagram feed, instagram gallery, instagram posts, Instagram images, Instagram photos, lightbox, photos,instagram account
 Requires at least: 3.9
 Requires PHP: 5.2
-Tested up to: 5.6
-Stable tag: 1.4.9
+Tested up to: 5.7
+Stable tag: 1.4.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -505,6 +505,34 @@ Please make sure you don't have any important information before you proceed.
 10Web Social Photo Feed for Instagram plugin uses Instagram API on website front end. You have to authorize the plugin via sign in to get data from Instagram on your behalf. The plugin does not send any user’s data to Instagram. All the data received from Instagram via API is cached in WordPress database for some short customizable period to provide front end optimization. You can delete or update cached data. Instagram saves some cookies in browsers of website visitors via API data. These cookies are mostly used for security purposes. They are regulated under terms of Instagram’s privacy policy https://instagram.com/legal/privacy. The plugin asks for your consent to collect site administrator’s email address and site URL to offer customer support, deals and discounts on premium products and more.
 
 == Changelog ==
+= 1.4.15 =
+Improved: Decreased load time on front end.
+
+== Changelog ==
+= 1.4.14 =
+Fixed: Removing feed.
+Fixed: Deactivation after uninstall.
+Fixed: Duplicated images in filmstrip.
+Fixed: Load more.
+
+= 1.4.13 =
+Fixed: Preview in Elementor.
+Fixed: Issue when "Check for new posts every" option set to 0.
+
+= 1.4.12 =
+Fixed: Ordering for hashtag.
+
+= 1.4.11 =
+Fixed: Adding the Instagram Feed to the Elementor.
+Fixed: Feed preview.
+Fixed: Comments for feed.
+
+= 1.4.10 =
+Fixed: Open settings page after activation.
+Fixed: Load more functionality.
+Fixed: Feed does not work with hashtag for some cases.
+Fixed: Error after re-connecting a Business account.
+
 = 1.4.9 =
 Fixed: Filters logic.
 Fixed: Load more functionality.
@@ -520,6 +548,7 @@ Fixed: Requests limitation in API.
 = 1.4.7 =
 Fixed: Feed images view.
 
+== Changelog ==
 = 1.4.6 =
 Improved: Separate options for personal and business accounts.
 Improved: Increased loading time of feed.

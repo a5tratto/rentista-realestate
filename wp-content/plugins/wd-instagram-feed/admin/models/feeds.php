@@ -73,7 +73,7 @@ class Feeds_model_wdi {
     $default_theme = WDILibrary::objectToArray($wpdb->get_results($query));
     $settings = array(
       'thumb_user' => '',
-      'feed_name' => 'Sample Feed',
+      'feed_name' => '',
       'feed_thumb' => '',
       'published' => '1',
       'theme_id' => $default_theme[0]['id'],
@@ -136,7 +136,7 @@ class Feeds_model_wdi {
       'mobile_breakpoint' => '640',
       'redirect_url' => '',
       'feed_resolution' => 'optimal',
-      'hashtag_top_recent' => '1',
+      'hashtag_top_recent' => '0',
     );
     if(WDI_IS_FREE){
       $settings["show_description"] = "0";
@@ -233,6 +233,22 @@ class Feeds_model_wdi {
   return $feed_row;
 }
 
+  public function get_unique_title($feed_name){
+    global $wpdb;
+    $check_feed_title = $wpdb->get_var($wpdb->prepare("SELECT id FROM ". $wpdb->prefix.WDI_FEED_TABLE. " WHERE feed_name='%s' ", $feed_name));
+    if($check_feed_title){
+	 $num = 1;
+	 do {
+	   $alt_name = $feed_name . "-$num";
+	   $num++;
+	   $slug_check = $wpdb->get_var($wpdb->prepare("SELECT id FROM ". $wpdb->prefix.WDI_FEED_TABLE. " WHERE feed_name='%s' ", $alt_name));
+	 }
+	 while ( $slug_check );
+	   $feed_name = $alt_name;
+    }
+    return $feed_name;
+  }
+
   /**
    * Create Preview Instagram post.
    *
@@ -243,7 +259,7 @@ class Feeds_model_wdi {
     $post_type = 'wdi_instagram';
     $args = array(
       'post_type' => $post_type,
-      'post_status' => 'private'
+      'post_status' => 'publish'
     );
     $row = get_posts($args);
 
@@ -253,7 +269,7 @@ class Feeds_model_wdi {
     else {
       $post_params = array(
         'post_author' => 1,
-        'post_status' => 'private',
+        'post_status' => 'publish',
         'post_content' => '[wdi_preview]',
         'post_title' => 'Preview',
         'post_type' => $post_type,
@@ -272,6 +288,33 @@ class Feeds_model_wdi {
       else {
         return "";
       }
+    }
+  }
+
+  /**
+   * Check if data in db and new data the same ( especially feed_users, conditional_filters, conditional_filter_type)
+   *
+   * int $feed_id
+   * array $data
+   *
+   * @return string $guid
+  */
+  public function check_need_cache( $feed_id, $data ) {
+    global $wpdb;
+    $users = $data['feed_users'];
+    $conditional_filters = $data['conditional_filters'];
+    $conditional_filter_type = $data['conditional_filter_type'];
+    $count = $wpdb->get_var($wpdb->prepare("SELECT COUNT(id) FROM ". $wpdb->prefix.WDI_FEED_TABLE. " WHERE id ='%d' AND feed_users='%s' AND conditional_filters='%s' AND conditional_filter_type='%s'", $feed_id, $users, $conditional_filters, $conditional_filter_type));
+    if ( $count == 0 ) {
+        return 1;
+    } else {
+        $transient_key = "wdi_cache_" . md5($feed_id);
+        $cache_data = get_transient($transient_key);
+        if ( isset($cache_data) && $cache_data != FALSE && isset($cache_data["cache_response"]) ) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
   }
 }

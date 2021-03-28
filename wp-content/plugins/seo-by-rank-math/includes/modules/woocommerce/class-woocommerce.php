@@ -111,6 +111,11 @@ class WooCommerce extends WC_Vars {
 			$slug             = array_pop( $url );
 		}
 
+		if ( 0 === strpos( $slug, 'schema-preview' ) ) {
+			$replace['schema-preview'] = '';
+			$slug                      = array_pop( $url );
+		}
+
 		$query = "SELECT COUNT(ID) as count_id FROM {$wpdb->posts} WHERE post_name = %s AND post_type = %s";
 		$num   = intval( $wpdb->get_var( $wpdb->prepare( $query, [ $slug, 'product' ] ) ) ); // phpcs:ignore
 		if ( $num > 0 ) {
@@ -245,12 +250,13 @@ class WooCommerce extends WC_Vars {
 	 * @return bool|array
 	 */
 	public static function get_brands( $product_id ) {
+		$brand    = '';
 		$taxonomy = Helper::get_settings( 'general.product_brand' );
-		if ( ! $taxonomy || ! taxonomy_exists( $taxonomy ) ) {
-			return false;
+		if ( $taxonomy && taxonomy_exists( $taxonomy ) ) {
+			$brands = get_the_terms( $product_id, $taxonomy );
+			$brand  = is_wp_error( $brands ) || empty( $brands[0] ) ? '' : $brands[0]->name;
 		}
 
-		$brands = wp_get_post_terms( $product_id, $taxonomy );
-		return empty( $brands ) || is_wp_error( $brands ) ? false : $brands;
+		return apply_filters( 'rank_math/woocommerce/product_brand', $brand );
 	}
 }

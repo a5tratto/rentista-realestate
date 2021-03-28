@@ -1,10 +1,10 @@
 === Contact Form 7 Extension For Mailchimp ===
 Contributors: rnzo, chimpmatic
 Donate link: https://bit.ly/2HdTzmO
-Tags: contact form 7, mailchimp, mailchimp tags, mailchimp audiences, newsletter, chimpmatic
+Tags: mailchimp, newsletter, email, marketing, contact form 7, chimpmatic, mailchimp tags, mailchimp audiences
 Requires at least: 4.9
-Tested up to: 5.5.9
-Stable tag: 5.3.1
+Tested up to: 5.7.9
+Stable tag: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,13 @@ MailChimp for Wordpress. Simple way to integrate MailChimp mailing lists to Cont
 
 == Description ==
 
-Wordpress Extension For Mailchimp (Chimpmatic Lite). Integrate Contact Form 7 with [Mailchimp](https://chimpmatic.com). Automatically add form submissions to predetermined lists in Mailchimp, using Mailchimp's latest API. This Extension for Mailchimp supports multiple mailing lists and API Keys.
+Wordpress Extension For Mailchimp (Chimpmatic Lite). Integrate Contact Form 7 with [Mailchimp Audiences](https://chimpmatic.com). Automatically add your Contact Form 7 submissions to predetermined lists in Mailchimp, using Mailchimp's latest API. This Contact Form 7 Extension for Mailchimp supports multiple contact forms, mailing lists and API Keys.
+
+Marketing professionals love Contact Form 7 Extension For Mailchimp for many reasons. It’s easy to set up and very flexible. If you don’t have an email marketing solution in place, this plugin is a good place to start harnessing the power of this marketing strategy and Mailchimp.
+
+The best form of engagement is direct email contact with your readers. This begins with your visitors making contact through your website contact form and this is where the Wordpress Contact Form 7 plugin will help you.
+
+Contact Form 7 & [Mailchimp Integration](https://chimpmatic.com/faqs) that gives you the flexibility to easily grow your Mailchimp audience lists via your Contact Form 7 form submitals.
 
 > <strong>Extension For Mailchimp Support</strong><br>
 > Active support is not always provided for the <a href="https://chimpmatic.com/help/contact-form-7-mailchimp-extension" rel="friend">Contact Form 7 Mailchimp Extension</a> on the WordPress.org forums. One-on-one LIVE CHAT support is available to users who visit the <a href="https://chimpmatic.com/contact" rel="friend">Mailchimp Extension developer</a>.
@@ -33,9 +39,11 @@ Wordpress Extension For Mailchimp (Chimpmatic Lite). Integrate Contact Form 7 wi
 * [Opt-in checkbox](https://renzojohnson.com/contributions/contact-form-7-mailchimp-extension/mailchimp-opt-in-checkbox) - add the chance to opt-in/opt-out
 * Latest [Mailchimp API V3](https://chimpmatic.com)
 * Constantly updated
+* [Marketing professionals requests](https://chimpmatic.com/contacts)
 
 = Premium Features =
 
+* NEW [Set GDPR for your contacts](https://chimpmatic.com/faq)
 * NEW [Tag Existing Mailchimp Subscribers](https://chimpmatic.com/pricing)
 * NEW [Group Existing Mailchimp Subscribers](https://chimpmatic.com/faq)
 * NEW [Unlimited Mailchimp Custom Fields](https://chimpmatic.com/pro)
@@ -82,21 +90,22 @@ Do you have questions or issues with Contact Form 7 Mailchimp Extension? Use the
 3. [Contact Form 7 Mailchimp](https://chimpmatic.com/help/contact-form-7-mailchimp-extension)
 4. [Mailchimp API Key](https://chimpmatic.com/how-to-find-your-mailchimp-api-key)
 4. [Mailchimp Tags or Labels](https://chimpmatic.com/how-to-find-your-mailchimp-api-key)
-5. [Mailchimp List ID](https://renzojohnson.com/contributions/contact-form-7-mailchimp-extension/mailchimp-list-id)
+5. [Mailchimp List ID](https://chimpmatic.com/help)
 6. [Mailchimp Opt-in Checkbox](https://renzojohnson.com/contributions/contact-form-7-mailchimp-extension/mailchimp-opt-in-checkbox)
 7. [Chimpmail](https://chimpmatic.com/help/contact-form-7-mailchimp-extension)
 8. [Mailchimp Form](https://chimpmatic.com/help/contact-form-7-mailchimp-extension)
 9. [Aweber vs Mailchimp](https://chimpmatic.com/help/contact-form-7-mailchimp-extension)
 10. [Mailchimp Contact Form](https://chimpmatic.com/help/contact-form-7-mailchimp-extension)
 11. [Mailchimp Custom fields](https://renzojohnson.com/contributions/contact-form-7-mailchimp-extension/mailchimp-custom-fields)
+11. [Marketing professionals requests](https://chimpmatic.com/contacts)
 
 == Changelog ==
 
-For more information, see [Releases](https://chimpmatic.com/help/contact-form-7-mailchimp-extension).
+For more information, see [Releases](https://chimpmatic.com/faqs).
 
-= 0.5.30 =
+= 0.5.36 =
 
-* Bug fixes
+* Version Bump
 
 = 0.5.16 =
 

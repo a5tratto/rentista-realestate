@@ -48,7 +48,6 @@ class Admin_Init {
 				new Option_Center(),
 				new Notices(),
 				new CMB2_Fields(),
-				new Deactivate_Survey(),
 				new Metabox\Metabox(),
 				new Import_Export(),
 				new Updates(),
@@ -80,10 +79,7 @@ class Admin_Init {
 	 * Load review tab in metabox & footer notice.
 	 */
 	private function load_review_reminders() {
-		if (
-			get_option( 'rank_math_already_reviewed' ) ||
-			get_option( 'rank_math_install_date' ) + ( 2 * WEEK_IN_SECONDS ) > current_time( 'timestamp' )
-		) {
+		if ( get_option( 'rank_math_already_reviewed' ) ) {
 			return;
 		}
 

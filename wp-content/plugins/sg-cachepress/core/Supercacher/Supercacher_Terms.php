@@ -67,6 +67,9 @@ class Supercacher_Terms extends Supercacher {
 	 * @param  int $term_id The term id.
 	 */
 	public function purge_term_and_index_cache( $term_id ) {
+		// Purge the rest api cache.
+		$this->purge_rest_cache();
+
 		// Purge the term cache.
 		$this->purge_term_cache( $term_id );
 

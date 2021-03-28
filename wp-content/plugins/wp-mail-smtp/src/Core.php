@@ -103,11 +103,6 @@ class Core {
 	 */
 	public function hooks() {
 
-		// Force from_email_force to always return true if current mailer is Gmail.
-		if ( ( new Options() )->get( 'mail', 'mailer' ) === 'gmail' ) {
-			add_filter( 'wp_mail_smtp_options_get', [ $this, 'gmail_mailer_get_from_email_force' ], 1, 3 );
-		}
-
 		// Action Scheduler requires a special early loading procedure.
 		add_action( 'plugins_loaded', [ $this, 'load_action_scheduler' ], - 10 );
 
@@ -130,6 +125,7 @@ class Core {
 		add_action( 'plugins_loaded', [ $this, 'get_usage_tracking' ] );
 		add_action( 'plugins_loaded', [ $this, 'get_admin_bar_menu' ] );
 		add_action( 'plugins_loaded', [ $this, 'get_notifications' ] );
+		add_action( 'plugins_loaded', [ $this, 'get_connect' ], 15 );
 	}
 
 	/**
@@ -403,7 +399,7 @@ class Core {
 				) .
 				'<br><br><em>' .
 				wp_kses(
-					__( '<strong>Please Note:</strong> Support for PHP 5.5 will be discontinued in 2020. After this, if no further action is taken, WP Mail SMTP functionality will be disabled.', 'wp-mail-smtp' ),
+					__( '<strong>Please Note:</strong> Support for PHP 5.5 will be discontinued in 2021. After this, if no further action is taken, WP Mail SMTP functionality will be disabled.', 'wp-mail-smtp' ),
 					array(
 						'strong' => array(),
 						'em'     => array(),
@@ -536,6 +532,24 @@ class Core {
 						esc_html_e( 'Consider running an email test after fixing it.', 'wp-mail-smtp' );
 						?>
 					</p>
+
+					<?php
+						echo wp_kses(
+							apply_filters(
+								'wp_mail_smtp_core_display_general_notices_email_delivery_error_notice_footer',
+								''
+							),
+							[
+								'p' => [],
+								'a' => [
+									'href'   => [],
+									'target' => [],
+									'class'  => [],
+									'rel'    => [],
+								],
+							]
+						);
+					?>
 				</div>
 
 				<?php
@@ -655,6 +669,9 @@ class Core {
 			$activated[ $license_type ] = time();
 			update_option( 'wp_mail_smtp_activated', $activated );
 		}
+
+		// Add transient to trigger redirect to the Setup Wizard.
+		set_transient( 'wp_mail_smtp_activation_redirect', true, 30 );
 	}
 
 	/**
@@ -865,6 +882,8 @@ class Core {
 	 *
 	 * The gmail mailer check is performed when this filter is added.
 	 *
+	 * @deprecated 2.7.0
+	 *
 	 * @since 2.2.0
 	 *
 	 * @param mixed  $value The value of the plugin option that is being retrieved via Options::get method.
@@ -874,6 +893,8 @@ class Core {
 	 * @return mixed
 	 */
 	public function gmail_mailer_get_from_email_force( $value, $group, $key ) {
+
+		_deprecated_function( __METHOD__, '2.7.0' );
 
 		if ( $group === 'mail' && $key === 'from_email_force' ) {
 			$value = true;
@@ -976,6 +997,28 @@ class Core {
 			$size = 'md';
 		}
 
-		return '<img src="' . esc_url( $this->plugin_url . '/assets/images/loaders/' . $svg_name . '.svg' ) . '" alt="' . esc_html__( 'Loading', 'wp-mail-smtp' ) . '" class="wp-mail-smtp-loading wp-mail-smtp-loading-' . $size . '">';
+		return '<img src="' . esc_url( $this->plugin_url . '/assets/images/loaders/' . $svg_name . '.svg' ) . '" alt="' . esc_attr__( 'Loading', 'wp-mail-smtp' ) . '" class="wp-mail-smtp-loading wp-mail-smtp-loading-' . $size . '">';
+	}
+
+	/**
+	 * Initialize the Connect functionality.
+	 * This has to execute after pro was loaded, since we need check for plugin license type (if pro or not).
+	 * That's why it's hooked to the same WP hook (`plugins_loaded`) as `get_pro` with lower priority.
+	 *
+	 * @since 2.6.0
+	 */
+	public function get_connect() {
+
+		static $connect;
+
+		if ( ! isset( $connect ) && ! $this->is_pro() ) {
+			$connect = apply_filters( 'wp_mail_smtp_core_get_connect', new Connect() );
+
+			if ( method_exists( $connect, 'hooks' ) ) {
+				$connect->hooks();
+			}
+		}
+
+		return $connect;
 	}
 }

@@ -31,7 +31,7 @@ class WDIInstagram {
    * @return array current feed filter data
    */
   public function get_filters( $feed_id ) {
-	return array();
+      return array();
   }
 
   /**
@@ -47,116 +47,75 @@ class WDIInstagram {
     return array();
   }
 
-  public function getUserMedia( $user_name ) {
+  /**
+   * Get user media from cache
+   *
+   * @param string $user_name connected username
+   * @param integer $fee_id
+   *
+   * @return string comments data
+   */
+  public function getUserMedia( $user_name, $feed_id ) {
     if ( isset($this->wdi_authenticated_users_list) && is_array($this->wdi_authenticated_users_list) && isset($this->wdi_authenticated_users_list[$user_name]) ) {
-
-      $next_url = WDILibrary::get('next_url', '', 'esc_url_raw', 'POST' );
-      if ( $next_url != '' ) {
-        $baseUrl = $next_url;
-      }
-      else {
-        $this->account_data = $this->wdi_authenticated_users_list[$user_name];
-        $user_id = $this->account_data["user_id"];
-        $access_token = $this->account_data["access_token"];
-        $api_url = 'https://graph.instagram.com/v1.0/';
-        $media_fields = 'id,media_type,media_url,permalink,thumbnail_url,username,caption,timestamp';
-        if ( $this->account_data["type"] === "business" ) {
-          $api_url = 'https://graph.facebook.com/v8.0/';
-          $media_fields = 'id,media_type,media_url,permalink,thumbnail_url,username,caption,timestamp,ig_id,is_comment_enabled,like_count,owner,shortcode';
-        }
-        $baseUrl = $api_url . $user_id . '/media/?fields=' . $media_fields . '&limit=100&access_token=' . $access_token;
-      }
-      $cache_data = $this->cache->get_cache_data($baseUrl);
+      $cache_data = $this->cache->get_cache_data($feed_id);
       if ( isset($cache_data) && $cache_data["success"] && isset($cache_data["cache_data"]) ) {
+
         return base64_decode($cache_data["cache_data"]);
-      }
-      $args = array();
-      $response = wp_remote_get($baseUrl, $args);
-      if ( !isset($response->errors) && is_array($response) && isset($response["body"]) ) {
-        $data = json_decode($response["body"], TRUE);
-        if ( !empty($data['data']) ) {
-          $return_data = $this->convertPersonalData($data);
-          $return_data = json_encode($return_data);
-          $this->cache->set_cache_data($baseUrl, base64_encode($return_data));
-          return $return_data;
-        }
-      }
-      $return_data = '{"error":{"message":"cURL error","type":"http_request_failed"}}';
-      return $return_data;
-    }
-  }
-
-  public function getTagRecentMedia( $tagname, $endpoint, $next_url = NULL, $wdiTagId = FALSE, $user_name = NULL ) {
-    $this->account_data = $this->wdi_authenticated_users_list[$user_name];
-    $return_data = array();
-    if ( isset($next_url) ) {
-      $baseUrl = $next_url;
-    }
-    else {
-      $baseUrl = 'https://graph.facebook.com/{tagid}/' . $endpoint . '/?fields=media_url,caption,id,media_type,comments_count,like_count,permalink,children{media_url,id,media_type,permalink}&access_token=' . $this->account_data["access_token"] . '&limit=50&user_id=' . $this->account_data["user_id"];
-      if ( $wdiTagId !== FALSE ) {
-        $baseUrl = str_replace("{tagid}", $wdiTagId, $baseUrl);
-      }
-      else {
-        $data = $this->getHastagDataUrl($tagname, $baseUrl);
-        if ( isset($data["id"]) && isset($data["url"]) ) {
-          $baseUrl = $data["url"];
-          $return_data["tag_data"] = array(
-            'id' => "#" . $tagname,
-            'username' => "#" . $tagname,
-            'tag_id' => $data["id"],
-          );
-        }
-      }
-    }
-    /***********************************************************/
-    $args = array();
-    $cache_data = $this->cache->get_cache_data($baseUrl);
-    if ( isset($cache_data) && $cache_data["success"] && isset($cache_data["cache_data"]) ) {
-      $cache_data_json = base64_decode($cache_data["cache_data"]);
-      if ( isset($cache_data_json) && $cache_data_json !== "null" ) {
-        return $cache_data_json;
-      }
-    }
-
-    $response = wp_remote_get($baseUrl, $args);
-    if ( !isset($response->errors) && is_array($response) && isset($response["body"]) ) {
-      $response_arr = json_decode( $response["body"], 1 );
-      $return_data["response"] = $response_arr;
-      if ( !empty($this->conditions) ) {
-          $this->cache->set_cache_data($baseUrl."&iter=".$this->iter, base64_encode(json_encode($return_data)));
-          $response_arr['data'] = $this->filterUserMedia( $response_arr, $this->conditions['conditional_filters'], $this->conditions['conditional_filter_type'] );
-          $response_arr['iter'] = $this->iter;
-          $return_data["response"] = $response_arr;
       } else {
-          $this->cache->set_cache_data($baseUrl, base64_encode(json_encode($return_data)));
+        return json_encode(array('data'=>''));
       }
-      return json_encode($return_data);
     }
-    $return_data = '{"error":{"message":"cURL error","type":"http_request_failed"}}';
-    return $return_data;
   }
 
-  private function getHastagDataUrl( $tagname, $baseUrl ) {
-    $url = 'https://graph.facebook.com/ig_hashtag_search/?user_id=' . $this->account_data["user_id"] . '&q=' . $tagname . '&access_token=' . $this->account_data["access_token"];
-    $return_data = array();
-    $args = array();
-    $cache_data = $this->cache->get_cache_data($url);
-    if ( isset($cache_data) && $cache_data["success"] && isset($cache_data["cache_data"]) ) {
-      return json_decode($cache_data["cache_data"], TRUE);
-    }
-    $response = wp_remote_get($url, $args);
-    if ( !isset($response->errors) && is_array($response) && isset($response["body"]) ) {
-      $response = json_decode($response["body"]);
-      if ( isset($response->data) && isset($response->data[0]) && isset($response->data[0]->id) ) {
-        $hashtag_id = $response->data[0]->id;
-        $baseUrl = str_replace("{tagid}", $hashtag_id, $baseUrl);
-        $return_data["id"] = $hashtag_id;
-        $return_data["url"] = $baseUrl;
-        $this->cache->set_cache_data($url, json_encode($return_data, TRUE));
-      }
-    }
+  /**
+   * Get comments from endpoint or from cache
+   *
+   * @param string $user_name connected username
+   * @param string $media_id media id
+   *
+   * @return string comments data
+   */
+  public function getRecentMediaComments( $user_name, $media_id ) {
+      $data['data'] = '';
+      $data['meta']['code'] = 200;
+      return json_encode($data);
+  }
 
+  /**
+   * Get medias from cache
+   *
+   * @param string $feed_id
+   *
+   * @return string
+   */
+  public function getTagRecentMedia( $feed_id ) {
+    $cache_data = $this->cache->get_cache_data($feed_id);
+    if ( isset($cache_data) && $cache_data["success"] && isset($cache_data["cache_data"]) ) {
+
+      return base64_decode($cache_data["cache_data"]);
+    } else {
+      return json_encode(array('data'=>''));
+    }
+  }
+
+  public function wdi_getHashtagId( $tagname = '', $user_name='' ) {
+    $this->account_data = $this->wdi_authenticated_users_list[$user_name];
+    $url = 'https://graph.facebook.com/v9.0/ig_hashtag_search/?user_id=' . $this->account_data["user_id"] . '&q=' . $tagname . '&access_token=' . $this->account_data["access_token"];
+    $args = array();
+    $response = wp_remote_get($url, $args);
+
+    $hashtag_id = '';
+    if ( !isset($response->errors) && is_array($response) && isset($response["body"]) ) {
+      $response = json_decode($response["body"], true);
+      if ( !empty($response['data']) && !empty($response['data'][0]) && !empty($response['data'][0]['id']) ) {
+        $hashtag_id = $response['data'][0]['id'];
+        $return_data['meta']['code'] = 200;
+      }
+    } else {
+
+    }
+    $return_data["tag_id"] = $hashtag_id;
+    //$return_data['meta']['code'] = $hashtag_id;
     return $return_data;
   }
 
@@ -231,12 +190,12 @@ class WDIInstagram {
             ),
             "user_has_liked" => ($like_count > 0),
             "likes" => array(
-              "count" => 0, // media.like_count
+              "count" => isset($media["like_count"]) ? $media["like_count"] : 0, // media.like_count
             ),
             "tags" => array(),
             "filter" => "Normal",
             "comments" => array(
-              "count" => 0, // media.comments_count
+              "count" => isset($media["comments_count"]) ? $media["comments_count"] : 0, // media.comments_count
             ),
             "media_type" => $media["media_type"],
             "type" => $media_type,
@@ -250,17 +209,17 @@ class WDIInstagram {
               "standard_resolution" => array(
                 "width" => 640,
                 "height" => 800,
-                "url" => $media["thumbnail_url"],
+                "url" => (isset($media["media_url"]) ? $media["media_url"] : ""),
               ),
               "low_bandwidth" => array(
                 "width" => 480,
                 "height" => 600,
-                "url" => $media["thumbnail_url"],
+                "url" => (isset($media["media_url"]) ? $media["media_url"] : ""),
               ),
               "low_resolution" => array(
                 "width" => 480,
                 "height" => 600,
-                "url" => $media["thumbnail_url"],
+                "url" => (isset($media["media_url"]) ? $media["media_url"] : ""),
               ),
             );
           }
@@ -282,6 +241,21 @@ class WDIInstagram {
         }
       }
     }
+    return $converted_data;
+  }
+
+  /**
+   * Convert hashtag data
+   *
+   * @param data array
+   *
+   * @return array
+  */
+  private function convertHashtagData( $data ) {
+    $converted_data = array(
+      'data' => array(),
+      'pagination' => array(),
+    );
 
     return $converted_data;
   }
@@ -291,133 +265,160 @@ class WDIInstagram {
    *
    * @param media_id =>  Media id
    *
-   * @return object of founded media only child media ids
+   * @return array of founded child media data
    */
   private function getMediaChildren( $media_id ) {
+
     $carousel_media = array();
     $api_url = 'https://graph.instagram.com/v1.0/';
     if ( $this->account_data["type"] === "business" ) {
       $api_url = 'https://graph.facebook.com/v8.0/';
     }
     $api_url .= $media_id . '/children?access_token=' . $this->account_data["access_token"];
+    $fields = 'id,media_type,media_url,permalink,thumbnail_url,username,timestamp';
+    $api_url .= '&fields='.$fields;
     $response = wp_remote_get($api_url, array());
     if ( is_array($response) && isset($response["body"]) && $this->isJson($response["body"]) ) {
-      $media_ids = json_decode($response["body"], TRUE);
-      if ( is_array($media_ids) && isset($media_ids["data"]) ) {
-        foreach ( $media_ids["data"] as $id ) {
-          if ( isset($id["id"]) ) {
-            $media = $this->getChildMediaById($id["id"]);
-            if(isset($media) && is_array($media)){
-              array_push($carousel_media, $media);
-            }
+      $medias = json_decode($response["body"], TRUE);
+      if ( is_array($medias) && isset($medias["data"]) ) {
+        foreach ( $medias["data"] as $media_data ) {
+          if ( isset($media_data["media_type"]) && $media_data["media_type"] == "IMAGE" ) {
+            $child_media = array(
+              "images" => array(
+                "thumbnail" => array(
+                  "width" => 150,
+                  "height" => 150,
+                  "url" => $media_data["media_url"],
+                ),
+                "low_resolution" => array(
+                  "width" => 320,
+                  "height" => 320,
+                  "url" => $media_data["media_url"],
+                ),
+                "standard_resolution" => array(
+                  "width" => 640,
+                  "height" => 640,
+                  "url" => $media_data["media_url"],
+                ),
+              ),
+              "users_in_photo" => array(),
+              "type" => "image",
+            );
           }
+          else {
+            $child_media = array(
+              "videos" => array(
+                "standard_resolution" => array(
+                  "width" => 640,
+                  "height" => 800,
+                  "url" => esc_url_raw($media_data["media_url"]),
+                  "id" => $media_data["id"],
+                ),
+                "low_bandwidth" => array(
+                  "width" => 480,
+                  "height" => 600,
+                  "url" => esc_url_raw($media_data["media_url"]),
+                  "id" => $media_data["id"],
+                ),
+                "low_resolution" => array(
+                  "width" => 640,
+                  "height" => 800,
+                  "url" => esc_url_raw($media_data["media_url"]),
+                  "id" => $media_data["id"],
+                ),
+              ),
+              "users_in_photo" => array(),
+              "type" => "video",
+            );
+          }
+          array_push($carousel_media, $child_media);
+
         }
       }
     }
     return $carousel_media;
   }
 
-  /**
-   * Get media info by id.
-   *
-   * @param media_id               =>  Media id
-   * @param ind                    =>  index for object
-   *
-   *
-   * @return object of founded media
-   */
-  private function getChildMediaById( $media_id ) {
-    $api_url = 'https://graph.instagram.com/v1.0/';
-    $fields = 'id,media_type,media_url,permalink,thumbnail_url,username,timestamp';
-    if ( $this->account_data["type"] === "business" ) {
-      $api_url = 'https://graph.facebook.com/v8.0/';
-      $fields = 'id,ig_id,media_type,media_url,permalink,thumbnail_url,username,timestamp,shortcode';
-    }
-    $api_url = $api_url . $media_id . '/?fields=' . $fields . '&access_token=' . $this->account_data["access_token"];
-    $response = wp_remote_get($api_url, array());
-    if ( is_array($response) && isset($response["body"]) && $this->isJson($response["body"]) ) {
-      $media_data = json_decode($response["body"], TRUE);
-      if( isset($media_data['error']) ) {
-        return FALSE;
-      }
-
-      if ( isset($media_data["media_type"]) && $media_data["media_type"] == "IMAGE" ) {
-        $return_data = array(
-          "images" => array(
-            "thumbnail" => array(
-              "width" => 150,
-              "height" => 150,
-              "url" => $media_data["media_url"],
-            ),
-            "low_resolution" => array(
-              "width" => 320,
-              "height" => 320,
-              "url" => $media_data["media_url"],
-            ),
-            "standard_resolution" => array(
-              "width" => 640,
-              "height" => 640,
-              "url" => $media_data["media_url"],
-            ),
-          ),
-          "users_in_photo" => array(),
-          "type" => "image",
-        );
+  public function wdi_set_preload_cache_data( $user_name, $feed_id, $endpoint, $tag_id, $tag_name ) {
+    if ( $tag_id === 'false' || (isset($this->wdi_authenticated_users_list) && is_array($this->wdi_authenticated_users_list) && isset($this->wdi_authenticated_users_list[$user_name])) ) {
+      $next_url = WDILibrary::get('next_url', '', 'esc_url_raw', 'POST');
+      $iter = WDILibrary::get('iter', 0, 'intval');
+      if ( $next_url != '' ) {
+        $baseUrl = $next_url;
+        $this->account_data = $this->wdi_authenticated_users_list[$user_name];
       }
       else {
-        $return_data = array(
-          "videos" => array(
-            "standard_resolution" => array(
-              "width" => 640,
-              "height" => 800,
-              "url" => esc_url_raw($media_data["media_url"]),
-              "id" => $media_data["id"],
-            ),
-            "low_bandwidth" => array(
-              "width" => 480,
-              "height" => 600,
-              "url" => esc_url_raw($media_data["media_url"]),
-              "id" => $media_data["id"],
-            ),
-            "low_resolution" => array(
-              "width" => 640,
-              "height" => 800,
-              "url" => esc_url_raw($media_data["media_url"]),
-              "id" => $media_data["id"],
-            ),
-          ),
-          "users_in_photo" => array(),
-          "type" => "video",
-        );
-      }
-      return $return_data;
-    }
-
-    return FALSE;
-  }
-
-  public function wdi_preload_cache($data=NULL) {
-    if(isset($data)){
-      $feed_list = $this->get_feed_list($data, FALSE);
-    }else{
-      $this->cache->reset_cache();
-      global $wpdb;
-      $row = $wpdb->get_results("SELECT id, feed_users ,hashtag_top_recent FROM " . $wpdb->prefix . WDI_FEED_TABLE . " WHERE published=1 ORDER BY `feed_name` ASC");
-      $feed_list = $this->get_feed_list($row, TRUE);
-    }
-    if(isset($feed_list)){
-      foreach ($feed_list as $user_feed){
-        if(isset($user_feed["feed_list"])){
-          foreach ($user_feed["feed_list"] as $data){
-            if($data["type"] === "user"){
-              $this->getUserMedia($data["tag_name"]);
-            }else{
-              $this->getTagRecentMedia($data["tag_name"], 1, NULL, FALSE, $user_feed["user_name"]);
+        $this->account_data = $this->wdi_authenticated_users_list[$user_name];
+        $user_id = $this->account_data["user_id"];
+        $access_token = $this->account_data["access_token"];
+        if( $tag_id === 'false' ) {
+            $api_url = 'https://graph.instagram.com/v1.0/';
+            $media_fields = 'id,media_type,media_url,permalink,thumbnail_url,username,caption,timestamp';
+            if ( $this->account_data["type"] === "business" ) {
+              $api_url = 'https://graph.facebook.com/v8.0/';
+              $media_fields = 'id,media_type,media_url,permalink,thumbnail_url,username,caption,timestamp,ig_id,is_comment_enabled,like_count,comments_count,owner,shortcode';
             }
+            $baseUrl = $api_url . $user_id . '/media/?fields=' . $media_fields . '&limit=100&access_token=' . $access_token;
+        } else {
+            $baseUrl = $this->wdi_getHashtagData($user_name, $endpoint, $tag_id);
+        }
+      }
+      $args = array(
+        'timeout' => 60,
+        'sslverify' => FALSE
+      );
+      $response = wp_remote_get($baseUrl, $args);
+
+      if ( !isset($response->errors) && is_array($response) && isset($response["body"]) ) {
+        $data = json_decode($response["body"], TRUE);
+        if ( !empty($data['data']) ) {
+          if ( !empty($this->conditions) ) {
+              $temp_data = $data;
+              $temp_data['data'] = $this->filterUserMedia( $data, $this->conditions['conditional_filters'], $this->conditions['conditional_filter_type'] );
+              if($tag_id !== 'false') {
+                $current_data = $this->convertHashtagData($temp_data);
+              } else {
+                $current_data = $this->convertPersonalData($temp_data);
+              }
+          } elseif( $tag_id !== 'false' ) {
+              $current_data = $this->convertHashtagData($data);
+          } else {
+              $current_data = $this->convertPersonalData($data);
           }
+          /* Remove current feed cache data */
+          if ( $iter == 0 ) {
+              $this->cache->reset_feed_cache( $feed_id );
+          } else {
+              $cache_data = $this->cache->get_cache_data($feed_id);
+              if ( isset($cache_data) && $cache_data["success"] && isset($cache_data["cache_data"]) ) {
+                $cache_data = base64_decode($cache_data["cache_data"]);
+                $cache_data = json_decode($cache_data, 1);
+                $current_data['data'] = array_merge( $cache_data['data'], $current_data['data'] );
+              }
+          }
+
+          $current_data = json_encode($current_data);
+
+          $this->cache->set_cache_data($feed_id, base64_encode($current_data));
+          $return_data['next_url'] = '';
+          if ( isset($data['paging']['next']) && $data['paging']['next'] != '' ) {
+            $return_data['next_url'] = $data['paging']['next'];
+            $return_data['iter'] = $iter;
+          }
+
+          return json_encode($return_data);
+        }
+        else {
+          $return_data['next_url'] = '';
+          $return_data['iter'] = $iter;
+          return json_encode($return_data);
         }
       }
     }
+  }
+
+  public function wdi_getHashtagData($user_name, $endpoint, $tag_id) {
+    return '';
   }
 
   private function get_feed_list($data, $cron = TRUE){

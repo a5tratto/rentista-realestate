@@ -46,19 +46,24 @@ class Htaccess {
 	 */
 	private $types = array(
 		'gzip'            => array(
-			'enabled'  => '/\#\s+GZIP enabled by SG-Optimizer/si',
-			'disabled' => '/\#\s+GZIP enabled by SG-Optimizer(.+?)\#\s+END\s+GZIP\n/ims',
+			'enabled'     => '/\#\s+GZIP enabled by SG-Optimizer/si',
+			'disabled'    => '/\#\s+GZIP enabled by SG-Optimizer(.+?)\#\s+END\s+GZIP\n/ims',
 			'disable_all' => '/\#\s+GZIP enabled by SG-Optimizer(.+?)\#\s+END\s+GZIP\n|<IfModule mod_deflate\.c>(.*?\n)<\/IfModule>|# BEGIN WP Rocket(.*)# END WP Rocket/ims',
 		),
 		'browser-caching' => array(
-			'enabled'  => '/\#\s+Leverage Browser Caching by SG-Optimizer/si',
-			'disabled' => '/\#\s+Leverage Browser Caching by SG-Optimizer(.+?)\#\s+END\s+LBC\n/ims',
+			'enabled'     => '/\#\s+Leverage Browser Caching by SG-Optimizer/si',
+			'disabled'    => '/\#\s+Leverage Browser Caching by SG-Optimizer(.+?)\#\s+END\s+LBC\n/ims',
 			'disable_all' => '/\#\s+Leverage Browser Caching by SG-Optimizer(.+?)\#\s+END\s+LBC\n|<IfModule mod_expires\.c>(.*?\n?)(<\/IfModule>\n\s)?<\/IfModule>/ims',
 		),
-		'ssl'           => array(
+		'ssl'             => array(
 			'enabled'     => '/HTTPS forced by SG-Optimizer/si',
 			'disabled'    => '/\#\s+HTTPS\s+forced\s+by\s+SG-Optimizer(.+?)\#\s+END\s+HTTPS(\n)?/ims',
 			'disable_all' => '/\#\s+HTTPS\s+forced\s+by\s+SG-Optimizer(.+?)\#\s+END\s+HTTPS(\n)?/ims',
+		),
+		'user-agent-vary' => array(
+			'enabled'     => '/\#\s+SGO Unset Vary/si',
+			'disabled'    => '/\#\s+SGO\s+Unset\s+Vary(.+?)\#\s+SGO\s+Unset\s+Vary\s+END(\n)?/ims',
+			'disable_all' => '/\#\s+SGO\s+Unset\s+Vary(.+?)\#\s+SGO\s+Unset\s+Vary\s+END(\n)?/ims',
 		),
 	);
 
@@ -186,7 +191,7 @@ class Htaccess {
 		}
 
 		// Generate the new content of htaccess.
-		$new_content = $new_rule . PHP_EOL . $content;
+		$new_content = ( 'user-agent-vary' === $type ) ? $content . PHP_EOL . $new_rule : $new_rule . PHP_EOL . $content;
 
 		// Return the result.
 		return $this->lock_and_write( $new_content );

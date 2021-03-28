@@ -893,8 +893,13 @@ class Modules {
 		// Parse the url.
 		$url_parts = parse_url( site_url( '/' ) );
 
-		// Get the A record info.
-		$dns_resolver_response = $resolver->query( $url_parts['host'], 'A' );
+		try {
+			// Get the A record info.
+			$dns_resolver_response = $resolver->query( $url_parts['host'], 'A' );
+		} catch ( \Exception $e ) {
+			return;
+		}
+
 
 		if ( empty( $dns_resolver_response->answer ) ) {
 			return;

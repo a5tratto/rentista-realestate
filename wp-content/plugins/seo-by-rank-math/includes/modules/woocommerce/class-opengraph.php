@@ -76,9 +76,9 @@ class Opengraph extends Sitemap {
 			return;
 		}
 
-		$brands = WooCommerce::get_brands( get_the_ID() );
-		if ( ! empty( $brands ) ) {
-			$opengraph->tag( 'product:brand', $brands[0]->name );
+		$brand = WooCommerce::get_brands( get_the_ID() );
+		if ( ! empty( $brand ) ) {
+			$opengraph->tag( 'product:brand', $brand );
 		}
 
 		/**
@@ -107,6 +107,15 @@ class Opengraph extends Sitemap {
 			$cat          = $wp_query->get_queried_object();
 			$thumbnail_id = get_term_meta( $cat->term_id, 'thumbnail_id', true );
 			$opengraph_image->add_image_by_id( $thumbnail_id );
+		}
+
+		/**
+		 * Passing a truthy value to the filter will effectively short-circuit the process of adding gallery images.
+		 *
+		 * @param bool $return Short-circuit return value. Either false or true.
+		 */
+		if ( ! $this->do_filter( 'woocommerce/opengraph/add_gallery_images', false ) ) {
+			return;
 		}
 
 		$product = $this->get_product();

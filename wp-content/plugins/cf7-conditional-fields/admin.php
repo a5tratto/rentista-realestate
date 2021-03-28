@@ -3,6 +3,10 @@
 add_action( 'admin_enqueue_scripts', 'wpcf7cf_admin_enqueue_scripts', 11 ); // set priority so scripts and styles get loaded later.
 
 function wpcf7cf_admin_enqueue_scripts( $hook_suffix ) {
+
+	wp_enqueue_script('cf7cf-scripts-admin-all-pages', wpcf7cf_plugin_url( 'js/scripts_admin_all_pages.js' ),array( 'jquery' ), WPCF7CF_VERSION,true);
+
+
 	if ( false === strpos( $hook_suffix, 'wpcf7' ) ) {
 		return; //don't load styles and scripts if this isn't a CF7 page.
 	}
@@ -17,7 +21,7 @@ add_filter('wpcf7_editor_panels', 'add_conditional_panel');
 function add_conditional_panel($panels) {
 	if ( current_user_can( 'wpcf7_edit_contact_form' ) ) {
 		$panels['wpcf7cf-conditional-panel'] = array(
-			'title'    => __( 'Conditional fields', 'wpcf7cf' ),
+			'title'    => __( 'Conditional fields', 'cf7-conditional-fields' ),
 			'callback' => 'wpcf7cf_editor_panel_conditional'
 		);
 	}
@@ -27,7 +31,7 @@ function add_conditional_panel($panels) {
 function wpcf7cf_all_field_options($post, $selected = '-1') {
 	$all_fields = $post->scan_form_tags();
 	?>
-	<option value="-1" <?php echo $selected == '-1'?'selected':'' ?>>-- Select field --</option>
+	<option value="-1" <?php echo $selected == '-1'?'selected':'' ?>><?php _e( '-- Select field --', 'cf7-conditional-fields' ); ?></option>
 	<?php
 	foreach ($all_fields as $tag) {
 		if ($tag['type'] == 'group' || $tag['name'] == '') continue;
@@ -41,7 +45,7 @@ function wpcf7cf_all_group_options($post, $selected = '-1') {
 	$all_groups = $post->scan_form_tags(array('type'=>'group'));
 
 	?>
-	<option value="-1" <?php echo $selected == '-1'?'selected':'' ?>>-- Select group --</option>
+	<option value="-1" <?php echo $selected == '-1'?'selected':'' ?>><?php _e( '-- Select group --', 'cf7-conditional-fields' ); ?></option>
 	<?php
 	foreach ($all_groups as $tag) {
 		?>
@@ -80,8 +84,8 @@ function wpcf7cf_editor_panel_conditional($form) {
 	if ($form_id === false) {
 		?>
 		    <div class="wpcf7cf-inner-container">
-				<h2><?php echo esc_html( __( 'Conditional fields', 'wpcf7cf' ) ); ?></h2>
-				<p>You need to save your form, before you can start adding conditions.</p>
+				<h2><?php _e( 'Conditional fields', 'cf7-conditional-fields' ); ?></h2>
+				<p><?php _e( 'You need to save your form, before you can start adding conditions.', 'cf7-conditional-fields' ); ?></p>
 			</div>
 		<?php
 		return;
@@ -97,14 +101,14 @@ function wpcf7cf_editor_panel_conditional($form) {
     <div class="wpcf7cf-inner-container">
 
 		<label class="wpcf7cf-switch" id="wpcf7cf-text-only-switch">
-			<span class="label">Text mode</span>
+			<span class="label"><?php _e( 'Text mode', 'cf7-conditional-fields' ); ?></span>
 			<span class="switch">
 				<input type="checkbox" id="wpcf7cf-text-only-checkbox" name="wpcf7cf-text-only-checkbox" value="text_only" <?php echo $is_text_only ? 'checked':''; ?>>
 				<span class="slider round"></span>
 			</span>
 		</label>
 
-		<h2><?php echo esc_html( __( 'Conditional fields', 'wpcf7cf' ) ); ?></h2>
+		<h2><?php _e( 'Conditional fields', 'cf7-conditional-fields' ); ?></h2>
 
 		<div id="wpcf7cf-entries-ui" style="display:none">
 			<?php
@@ -116,13 +120,16 @@ function wpcf7cf_editor_panel_conditional($form) {
 				?>
 			</div>
 			
-			<span id="wpcf7cf-add-button" title="add new rule">+ add new conditional rule</span>
+			<span id="wpcf7cf-add-button" title="<?php _e( 'add new rule', 'cf7-conditional-fields' ); ?>"><?php _e( '+ add new conditional rule', 'cf7-conditional-fields'); ?></span>
 
 			<div id="wpcf7cf-a-lot-of-conditions" class="wpcf7cf-notice notice-warning" style="display:none;">
 				<p>
-					<strong>Wow, That's a lot of conditions!</strong><br>
-					You can only add up to <?php echo WPCF7CF_MAX_RECOMMENDED_CONDITIONS ?> conditions using this interface.
-					Please switch to <strong>Text mode</strong> if you want to add more than <?php echo WPCF7CF_MAX_RECOMMENDED_CONDITIONS ?> conditions.
+					<strong><?php _e( 'Wow, That\'s a lot of conditions!', 'cf7-conditional-fields' ); ?></strong><br>
+					<?php 
+					// translators: 1. max recommended conditions
+					echo sprintf( __( 'You can only add up to %d conditions using this interface.', 'cf7-conditional-fields' ), WPCF7CF_MAX_RECOMMENDED_CONDITIONS ) . ' ';
+					// translators: 1,2: strong tags, 3. max recommended conditions
+					printf( __( 'Please switch to %1$sText mode%2$s if you want to add more than %3$d conditions.', 'cf7-conditional-fields' ), '<strong>', '</strong>', WPCF7CF_MAX_RECOMMENDED_CONDITIONS ); ?>
 				</p>
 			</div>
 
@@ -248,7 +255,7 @@ function print_entries_html($form, $wpcf7cf_entries = false) {
         }
 		?>
             <div class="wpcf7cf-if">
-                <span class="label">Show</span>
+                <span class="label"><?php _e( 'Show', 'cf7-conditional-fields' ); ?></span>
                 <select class="then-field-select"><?php wpcf7cf_all_group_options($form, $entry['then_field']); ?></select>
             </div>
             <div class="wpcf7cf-and-rules" data-next-index="<?php echo count($and_entries) ?>">
@@ -259,13 +266,12 @@ function print_entries_html($form, $wpcf7cf_entries = false) {
 				foreach($and_entries as $and_i => $and_entry) {
 					?>
                     <div class="wpcf7cf-and-rule">
-                        <span class="rule-part if-txt label">if</span>
+                        <span class="rule-part if-txt label"><?php _e( 'if', 'cf7-conditional-fields' ); ?></span>
                         <select class="rule-part if-field-select"><?php wpcf7cf_all_field_options( $form, $and_entry['if_field'] ); ?></select>
                         <select class="rule-part operator"><?php all_operator_options( $and_entry['operator'] ) ?></select>
-                        <input class="rule-part if-value" type="text"
-                               placeholder="value" value="<?php echo $and_entry['if_value'] ?>">
-                        <span class="and-button">And</span>
-                        <span title="delete rule" class="rule-part delete-button">remove</span>
+                        <input class="rule-part if-value" type="text" placeholder="<?php _e( 'value', 'cf7-conditional-fields' ); ?>" value="<?php echo $and_entry['if_value'] ?>">
+                        <span class="and-button"><?php _e( 'And', 'cf7-conditional-fields' ); ?></span>
+                        <span title="<?php _e( 'delete rule', 'cf7-conditional-fields' ); ?>" class="rule-part delete-button"><?php _e( 'remove', 'cf7-conditional-fields' ); ?></span>
                     </div>
 					<?php
 				}
@@ -275,3 +281,47 @@ function print_entries_html($form, $wpcf7cf_entries = false) {
 		echo '</div>';
 	}
 }
+
+add_action('admin_notices', function () {
+
+	$settings = wpcf7cf_get_settings();
+
+	$nid = 'install-cf7';
+
+	if (!defined('WPCF7_VERSION') && empty($settings['notice_dismissed_'.$nid])) {
+		?>
+			<div class="wpcf7cf-admin-notice notice notice-warning is-dismissible" data-notice-id="<?php echo $nid ?>">
+				<p>
+					<strong>Conditional Fields for Contact Form 7</strong> depends on Contact Form 7. Please install <a target="_blank" href="https://downloads.wordpress.org/plugin/contact-form-7.<?php echo WPCF7CF_CF7_MAX_VERSION ?>.zip">Contact Form 7</a>.
+				</p>
+			</div>
+		<?php
+		return;
+	}
+
+	$nid = 'rollback-cf7-'.WPCF7CF_CF7_MAX_VERSION;
+	if ( version_compare( WPCF7CF_CF7_MAX_VERSION, WPCF7_VERSION, '<' ) && empty($settings['notice_dismissed_'.$nid]) ) {
+		?>
+			<div class="wpcf7cf-admin-notice notice notice-warning is-dismissible" data-notice-id="<?php echo $nid ?>">
+				<p>
+					<strong>Conditional Fields for Contact Form 7</strong> is not yet compatible with your current version of Contact Form 7.
+					<br>If you notice any problems with your forms, please roll back to Contact Form 7 <strong>version <?php echo WPCF7CF_CF7_MAX_VERSION ?></strong>.
+					<br>For a quick and safe rollback, we recommend <a href="https://wordpress.org/plugins/wp-rollback/" target="_blank">WP Rollback</a>.
+				</p>
+			</div>
+		<?php
+	}
+
+	$nid = 'update-cf7-'.WPCF7CF_CF7_MAX_VERSION;
+	if ( version_compare( WPCF7CF_CF7_MAX_VERSION, WPCF7_VERSION, '>' ) && empty($settings['notice_dismissed_'.$nid]) ) {
+		?>
+			<div class="wpcf7cf-admin-notice notice notice-warning is-dismissible" data-notice-id="<?php echo $nid ?>">
+				<p>
+					<strong>Conditional Fields for Contact Form 7</strong> is fully compatible and tested with Contact Form 7 version <?php echo WPCF7CF_CF7_MAX_VERSION ?>.
+					<br>Compatibility with other versions of CF7 is not guaranteed, so please install <a target="_blank" href="https://downloads.wordpress.org/plugin/contact-form-7.<?php echo WPCF7CF_CF7_MAX_VERSION ?>.zip">CF7 version <?php echo WPCF7CF_CF7_MAX_VERSION ?></a>
+				</p>
+			</div>
+		<?php
+	}
+
+});

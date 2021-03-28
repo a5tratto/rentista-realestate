@@ -13,6 +13,8 @@ namespace RankMath\Analytics;
 use RankMath\Helper;
 use RankMath\Traits\Hooker;
 use RankMath\Google\Console;
+use RankMath\Google\Analytics;
+use RankMathPro\Google\Adsense;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -45,7 +47,10 @@ class Watcher {
 	 * Hooks
 	 */
 	public function hooks() {
-		if ( Console::is_console_connected() ) {
+		if ( Console::is_console_connected() ||
+			Analytics::is_analytics_connected() ||
+			\class_exists( 'RankMathPro\Google\Adsense' ) && method_exists( 'Adsense', 'is_adsense_connected' ) && Adsense::is_adsense_connected()
+		) {
 			$this->action( 'save_post', 'update_post_info', 99 );
 			$this->action( 'rank_math/schema/update', 'update_post_schema_info', 99 );
 		}
@@ -115,6 +120,7 @@ class Watcher {
 		// Update post.
 		$id = DB::update_object(
 			[
+				'object_id'      => $post_id,
 				'id'             => $id,
 				'schemas_in_use' => $schemas ? $schemas : '',
 			]

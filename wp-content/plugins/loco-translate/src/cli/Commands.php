@@ -1,6 +1,7 @@
 <?php
 /**
  * Loco Translate commands
+ * @codeCoverageIgnore
  */
 class Loco_cli_Commands {
 
@@ -22,6 +23,9 @@ class Loco_cli_Commands {
      * [--noop]
      * : Specify dry run. Makes no changes on disk.
      * 
+     * [--force]
+     * : Update even when nothing has changed. Useful for recompiling MO/JSON.
+     * 
      * ## EXAMPLES
      * 
      * wp loco sync plugins
@@ -29,7 +33,6 @@ class Loco_cli_Commands {
      * 
      * @param string[]
      * @param string[]
-     * @codeCoverageIgnore
      */
     public function sync( $args, $opts ){
         if( array_key_exists('fuzziness',$opts) ){
@@ -39,7 +42,8 @@ class Loco_cli_Commands {
             Loco_cli_SyncCommand::run (
                 Loco_cli_Utils::collectProjects( isset($args[0]) ? $args[0] : '' ),
                 Loco_cli_Utils::collectLocales( isset($opts['locale']) ? $opts['locale'] : '' ),
-                Loco_cli_Utils::bool($opts,'noop')
+                Loco_cli_Utils::bool($opts,'noop'),
+                Loco_cli_Utils::bool($opts,'force')
             );
         }
         catch( Loco_error_Exception $e ){
@@ -62,13 +66,15 @@ class Loco_cli_Commands {
      * [--noop]
      * : Specify dry run. Makes no changes on disk.
      * 
+     * [--force]
+     * : Update even when nothing has changed. Useful for updating meta properties.
+     * 
      * ## EXAMPLES
      *
      * wp loco extract core --maxsize=400K
      *
      * @param string[]
      * @param string[]
-     * @codeCoverageIgnore
      */
     public function extract( $args, $opts ){
         try {
@@ -77,14 +83,52 @@ class Loco_cli_Commands {
             }
             Loco_cli_ExtractCommand::run (
                 Loco_cli_Utils::collectProjects( isset($args[0]) ? $args[0] : '' ),
-                Loco_cli_Utils::bool($opts,'noop')
+                Loco_cli_Utils::bool($opts,'noop'),
+                Loco_cli_Utils::bool($opts,'force')
             );
         }
         catch( Loco_error_Exception $e ){
             WP_CLI::error( $e->getMessage() );
         }
     }
-    
+
+
+    /**
+     * EXPERIMENTAL. Attempts to install translation source files from an external repository.
+     * Use this to replace *installed* PO files if they are missing or have been purged of script translations.
+     *
+     * ## OPTIONS
+     *
+     * [<filter>]
+     * : Restrict to a type of bundle (plugins|themes|core) or a specific Text Domain
+     * 
+     * [--locale=<code>]
+     * : Restrict to one or more locales. Separate multiple codes with commas.
+     * 
+     * [--trunk]
+     * : Install strings for upcoming dev version as opposed to latest stable
+     *
+     * ## EXAMPLES
+     *
+     * wp loco fetch loco-translate --locale=en_GB
+     *
+     * @param string[]
+     * @param string[]
+     */
+    public function fetch( $args, $opts ){
+        try {
+            Loco_cli_FetchCommand::run (
+                Loco_cli_Utils::collectProjects( isset($args[0]) ? $args[0] : '' ),
+                Loco_cli_Utils::collectLocales( isset($opts['locale']) ? $opts['locale'] : '' ),
+                array (
+                    'trunk' => Loco_cli_Utils::bool($opts,'trunk')
+                )
+            );
+        }
+        catch( Loco_error_Exception $e ){
+            WP_CLI::error( $e->getMessage() );
+        }        
+    }
 
 }
     

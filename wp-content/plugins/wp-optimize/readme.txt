@@ -2,9 +2,10 @@
 Contributors: DavidAnderson, ruhanirabin, DNutbourne, aporter, snightingale, lumberhack
 Donate link: https://david.dw-perspective.org.uk/donate
 Tags: cache, minify, database, image optimize, performance, clean, spam, speed, caching, smush, smushing
-Requires at least: 3.9
-Tested up to: 5.5
-Stable tag: 3.1.4
+Requires PHP: 5.6
+Requires at least: 4.4
+Tested up to: 5.7
+Stable tag: 3.1.8
 License: GPLv2+
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -116,6 +117,7 @@ Our free version of WP-Optimize is great, but we also have an even more powerful
 * <strong>WP-CLI support:</strong> provides a way to manage optimizations from command-line interface if you have lots of sites
 * <strong>Lazy Loading:</strong> load only the images and part of a web-page when it is visible to the user so they can see something very quickly.
 * <strong>Optimization Preview:</strong> gives users the ability to preview, select and remove data and records available for optimization from the database.
+* <strong>Preload key requests:</strong> preload assets such as web fonts and icon fonts, as recommended by Google PageSpeed Insights.
 * <strong>Premium support</strong> - caching is one of the most complex things you can do for a website, so premium support offers you peace of mind there’s someone to talk quickly to if you need any technical answers or help configuring the optimizations of cache settings for your website.
 
 = Translations =
@@ -359,7 +361,90 @@ If none of the above works, disable processing of JavaScript files in the minify
 8. Real world tests show the cache feature alone can make your site faster than any other caching plugin
 9. Features comparison
 
+
 == Changelog ==
+
+= 3.1.8 - 12/Mar/2021 =
+
+* FIX: Cache - Warning failed to open dir
+* FIX: Premium - Unused images - Fixed issue with images including a size suffix similar to WP sizes
+* FIX: Display optimization data based on retention period
+* FIX: Scheduled cleanup settings - Invalid date selection
+* TWEAK: Premium - Separate table optimisations per sub-site
+* TWEAK: Premium - Unused images - Add compatibilty with the Envira Gallery plugin
+* TWEAK: Page caching: add support for Avada
+* TWEAK: Add visual clue when image compression was cancelled
+* TWEAK: Image compression - multi image selection using Ctrl/Shift keys
+* TWEAK: Premium - Unused images - Reset last clicked image reference when `select none` is clicked
+* TWEAK: Prevent bots from indexing plugins list json file
+* TWEAK: Minify - Added a setting to change the time stale cache should be kept
+* TWEAK: Better support for Beaver Builder
+* TWEAK: Prevent PHP warning when reading a file's size
+* TWEAK: Cache - Purge the blog page when updating a post 
+* TWEAK: Cache - Purge next and previous posts on post update
+* TWEAK: Cache - Purge sitemap files on post update
+ 
+= 3.1.7 - 12/Feb/2021 =
+
+* FEATURE: Premium - Preload key requests (Preload fonts and other assets)
+* FIX: Detecting Brotli compression issue
+* FIX: Cache - PHP Warning in URLs to exclude from caching
+* FIX: Premium - Unused images - Unused Images Tool not recognising Greek characters
+* FIX: Button for disabling Gzip doesn't showing
+* TWEAK: Database optimization - Prevent fatal error due to files missing
+* TWEAK: Skip minify when SCRIPT_DEBUG is set to true
+* TWEAK: Fixed Font-awesome settings
+* TWEAK: Add support for different spellings of "Font-awesome"
+* TWEAK: Update the feature comparison table
+* TWEAK: Added the option to not show the warning before deleting a table
+* TWEAK: Wipe all options upon plugin de-installation
+* TWEAK: Premium - Lazy-load - Lazy load support for background images
+* TWEAK: Minify - Add file size in the minify cache summary
+* TWEAK: Detect conflicting plugins for GZIP issue
+* TWEAK: Database optimization - Include all tables if database prefix is not set on WP install
+* TWEAK: Premium - Unused images - added "X of X images loaded" for unused trash images
+* TWEAK: Don't allow to remove actionscheduler_* tables
+* TWEAK: Premium - Unused images - Show a progression screen when doing any action with unused images
+* TWEAK: Cache - Enable cache for the old default permalink structure `domain.com/index.php/a-post-name` by creating a folder without the extention
+* TWEAK: Show previous action as message on Trackbacks or Comments enable or disable.
+* TWEAK: Prevent deprecation notice on PHP 8.0
+* TWEAK: Update notices
+
+= 3.1.6 - 17/Dec/2020 =
+
+* FIX: Fix wrong class name
+
+= 3.1.5 - 17/Dec/2020 =
+
+* FEATURE: Introduction of Power tweaks (premium feature)
+* FEATURE: Power tweak - replace WooCommerce "Get total spent" query by a faster one
+* FIX: CloudFlare not detected on gzip and browser caching tabs
+* FIX: Cloudflare caching issue
+* FIX: Premium - Unused images - Download CSV warning
+* FIX: PHP 8 compatibility issue WP_Optimize_Browser_Cache->prepare_interval()
+* TWEAK: Upgrade jQuery code to deal with deprecations with the latest bundled version
+* TWEAK: Fix wrong usage of wp_localize_script to prevent warnings in PHP 8
+* TWEAK: Premium - Unused images - Update the data when moving images to the trash / deleting instead of doing a hard refresh
+* TWEAK: Change how default exclusions are handled
+* TWEAK: Now that PHP 8.0 has been released, bump minimum PHP version requirement from PHP 5.4 to 5.6.
+* TWEAK: Delete WP-O's .htaccess rules at deactivation
+* TWEAK: Premium - Unused images - Separate unused images and unused image sizes processes
+* TWEAK: Update jQuery document ready style to the one not deprecated in jQuery 3.0
+* TWEAK: Minify CSS - Possibility to toggle the google fonts `display=swap` parameter from the UI.
+* TWEAK: Fix small UI issues
+* TWEAK: Clean up all cron events when deactivating the plugin
+* TWEAK: Premium - Possibility to set permissions for purging page cache and minify files.
+* TWEAK: Bypass minify when editing a post using the Brizy editor
+* TWEAK: Renamed UpdraftCentral's command classes filter
+* TWEAK: Bump WP version requirement to 4.4+, and PHP version requirement to 5.4+
+* TWEAK: Purge caches when updating a plugin / theme (also when updating using a ZIP archive)
+* TWEAK: Improve the admin bar "cache" menu
+* TWEAK: Show information about Cloudflare support
+* TWEAK: Database optimization - Resume optimizing when a timeout occurs
+* TWEAK: Remove redundant code
+* TWEAK: Cache feature - Do not cache pages with fatal errors
+* TWEAK: Cache feature - Do not cache RSS feeds
+* TWEAK: Page cacheing - Prevent adding the "comment cookie" when ordering on WooCommerce
 
 = 3.1.4 - 15/Sep/2020 =
 
@@ -367,6 +452,7 @@ If none of the above works, disable processing of JavaScript files in the minify
 
 = 3.1.3 - 15/Sep/2020 =
 
+* TWEAK: Added Oasis Workflow Pro tables to the list
 * FIX: Unused images - restore from trash UI issue
 * FIX: Premium - Unused images - Images trash works on multisite
 * TWEAK: Prevent GLOB_BRACE warning on systems not supporting it
@@ -1009,4 +1095,4 @@ If none of the above works, disable processing of JavaScript files in the minify
 * Fix Interface
 
 == Upgrade Notice ==
-* 3.1.4: Minify - Only load the required vendor classes instead of using composer's autoload in order to prevent compatibility issues. Added filters `wpo_minify_get_js` and `wpo_minify_get_css` to enable users to do extra processing before saving the code. Prevent PHP warning when no log is present and prevent error when the function gzencode doesn't exist. Various other tweaks and fixes; a recommended update for all.
+* 3.1.8: Premium - Unused images - Fixed issue with images including a size suffix similar to WP sizes.

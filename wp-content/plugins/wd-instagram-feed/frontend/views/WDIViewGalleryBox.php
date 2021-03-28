@@ -17,10 +17,12 @@ class WDIViewGalleryBox {
     $feed_id = WDILibrary::get('feed_id', 0, 'intval', 'POST');
     $current_feed = $this->model->get_feed_row_data( $feed_id );
     $is_hashtag = false;
-    if(isset($current_feed["thumb_user"]) && !empty($current_feed["thumb_user"])){
-      $first_char = mb_substr($current_feed["thumb_user"], 0, 1);
-      if($first_char === "#"){
-        $is_hashtag = true;
+    if(isset($current_feed["feed_users"]) && !empty($current_feed["feed_users"])){
+      foreach (json_decode($current_feed['feed_users']) as $user) {
+        $first_char = mb_substr($user->id, 0, 1);
+        if($first_char === "#"){
+          $is_hashtag = true;
+        }
       }
     }
     $theme_row = WDILibrary::arrayToObject($this->model->get_theme_row_data($current_feed['theme_id']));
@@ -528,7 +530,7 @@ class WDIViewGalleryBox {
                       else { ?>
                         <span class="wdi_popup_embed wdi_popup_watermark" style="display:table; table-layout:fixed;">
                         <?php
-                          $url = isset($image_row->images->standard_resolution->url) ? $image_row->images->standard_resolution->url : '';
+                        $url = isset($image_row->images->standard_resolution->url) ? $image_row->images->standard_resolution->url : $image_row->thumb_url;
                           WDILibraryEmbed::display_embed(sanitize_text_field($image_row->filetype), $image_row->filename, array('class'=>"wdi_embed_frame", 'frameborder'=>"0", 'allowfullscreen'=>"allowfullscreen", 'style'=>"width:inherit; height:inherit; vertical-align:middle; display:table-cell;"), $carousel_media, $url );
                         ?>
                       </span>
@@ -838,15 +840,19 @@ class WDIViewGalleryBox {
               jQuery('#wdi_popup_pt').attr('href',"https://pinterest.com/pin/create/button/?url="+wdi_image_url+"&media="+wdi_image_url+"media/?size=l&description="+wdi_image_description);
               /* Load comments.*/
               if (jQuery(".wdi_comment_container").hasClass("wdi_open")) {
-                if (wdi_data[key]["comment_count"] == 0) {
-                  jQuery("#wdi_added_comments").html('<p class="wdi_no_comment"><?php _e('There are no comments to show','wd-instagram-feed');?></p>');
-                }
-                else {
+                if (wdi_data[key]["comment_count"] !== 0 && typeof wdi_data[key]["comments_data"]['data'] !== 'undefined') {
                   jQuery("#wdi_added_comments").show();
                   wdi_spider_set_input_value('ajax_task', 'display');
                   wdi_spider_set_input_value('image_id', jQuery('#wdi_popup_image').attr('image_id'));
                   var cur_image_key = parseInt(jQuery("#wdi_current_image_key").val());
-                  wdi_spider_ajax_save('wdi_comment_form',cur_image_key);
+                  //wdi_spider_ajax_save('wdi_comment_form',cur_image_key);
+                  wdi_comments_manager.clear_comments();
+                  wdi_comments_manager.showComments(wdi_data[cur_image_key]['comments_data']['data'], wdi_comments_manager.load_more_count);
+                  wdi_comments_manager.createLoadMoreAndBindEvent(cur_image_key);
+                }
+                else {
+                  var cur_image_key = parseInt(jQuery("#wdi_current_image_key").val());
+                  wdi_comments_manager.init(cur_image_key);
                 }
               }
               /* Update custom scroll.*/
@@ -1154,14 +1160,16 @@ class WDIViewGalleryBox {
           /* Load comments.*/
 
           var cur_image_key = parseInt(jQuery("#wdi_current_image_key").val());
-          if (wdi_data[cur_image_key]["comment_count"] != 0) {
-            jQuery("#wdi_added_comments").show();/*deprecated*/
-            wdi_spider_set_input_value('ajax_task', 'display');/*deprecated*/
-            wdi_spider_set_input_value('image_id', jQuery('#wdi_popup_image').attr('image_id'));/*deprecated*/
-            wdi_spider_ajax_save('wdi_comment_form',cur_image_key);/*deprecated*/
-          }else{
-                jQuery("#wdi_added_comments").html('<p class="wdi_no_comment"><?php _e('There are no comments to show','wd-instagram-feed');?></p>');
-          }
+            jQuery("#wdi_added_comments").show();
+            wdi_spider_set_input_value('ajax_task', 'display');
+            wdi_spider_set_input_value('image_id', jQuery('#wdi_popup_image').attr('image_id'));
+            if(typeof wdi_data[cur_image_key]['comments_data']['data'] !== 'undefined') {
+              wdi_comments_manager.clear_comments();
+              wdi_comments_manager.showComments(wdi_data[cur_image_key]['comments_data']['data'], wdi_comments_manager.load_more_count);
+              wdi_comments_manager.createLoadMoreAndBindEvent(cur_image_key);
+            } else {
+              wdi_spider_ajax_save('wdi_comment_form', cur_image_key);
+            }
         }
       }
 
@@ -1323,7 +1331,7 @@ class WDIViewGalleryBox {
 
         jQuery(".wdi_filmstrip_left").on(wdi_click, function () {
           jQuery( ".wdi_filmstrip_thumbnails" ).stop(true, false);
-          if (jQuery(".wdi_filmstrip_thumbnails").position().<?php echo $left_or_top; ?> < 0) {
+          if ((jQuery(".wdi_filmstrip_thumbnails").position().<?php echo $left_or_top; ?>) < 0) {
             jQuery(".wdi_filmstrip_right").css({opacity: 1, filter: "Alpha(opacity=100)"});
             if (jQuery(".wdi_filmstrip_thumbnails").position().<?php echo $left_or_top; ?> > - <?php echo $filmstrip_thumb_margin_hor + $image_filmstrip_width; ?>) {
               jQuery(".wdi_filmstrip_thumbnails").animate({<?php echo $left_or_top; ?>: 0}, 500, 'linear');

@@ -575,6 +575,7 @@ div[id^="wdi_container"] p {
 }
 
 .wdi_layout_th .wdi_feed_item {
+  width: 100%;
   display: inline-block;
   vertical-align: top;
   overflow: hidden;
@@ -1369,4 +1370,13 @@ div[id^="wdi_container"] p {
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0.2);
+}
+
+#wdi_added_comments {
+  padding-top: 20px;
+}
+
+.wdi_comment_container #ajax_loading {
+  left: calc(50% - 25px);
+  top: calc(50% - 25px);
 }

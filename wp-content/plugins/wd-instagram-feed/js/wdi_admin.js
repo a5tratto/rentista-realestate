@@ -2,6 +2,7 @@ jQuery(document).ready(function() {
 	/* @ToDo It must be separate for each user */
   jQuery("#wdi_reset_cache").click(function (e) {
     jQuery(".wdi_reset_cache_success").remove();
+    jQuery("#wdi_save_loading").removeClass("wdi_hidden");
     e.preventDefault();
     jQuery.ajax({
       type: "POST",
@@ -12,42 +13,70 @@ jQuery(document).ready(function() {
         task:"reset",
         action:"wdi_cache"
       },
-      success: function(data){
-        if(data.success === false){
+      success: function(result){
+        if(result.success === false){
           jQuery("#wdi_reset_cache").after("<span class='wdi_reset_cache_success' style='color: #fc0000; margin-left: 15px; line-height: 2;'>Failed</span>");
-        }else{
-          jQuery("#wdi_reset_cache").after("<span class='wdi_reset_cache_success' style='color: #029117; margin-left: 15px; line-height: 2;'>Success</span>");
-        }
-      }
-    });
-  });
+        } else{
 
-  jQuery(".wdi_account_refresh").click(function () {
-    var __this = jQuery(this);
-    var wdi_user_name = __this.data("wdi_account");
-    jQuery.ajax({
-      type: 'POST',
-      url: wdi_ajax.ajax_url,
-      dataType: 'json',
-      data: {
-        page: 'wdi_settings',
-        action: 'wdi_account_refresh',
-        nonce: wdi_ajax.wdi_nonce,
-        user_name: wdi_user_name
-      },
-      success: function (data) {
-      	var wdi_reset_cache_success = __this.closest("div").find(".wdi_reset_cache_success");
-        wdi_reset_cache_success.remove();
-        if(data.success === true){
-          __this.after("<span class='wdi_reset_cache_success' style='color: #029117; margin-left: 15px; line-height: 2;'>Success</span>");
-        	var wdi_token_filed = __this.closest("div").find(".wdi_user_token");
-          wdi_token_filed.val(data.token);
-        }else{
-          __this.after("<span class='wdi_reset_cache_success' style='color: #fc0000; margin-left: 15px; line-height: 2;'>Failed</span>");
+					wdi_controller.instagram = new WDIInstagram();
+
+					jQuery.each( result['data'], function( key, value ) {
+
+						var users = JSON.parse(value['users']);
+						var username = '';
+						var tagname = '';
+						var tag_id = '';
+						var endpoint = value['endpoint'];
+
+						jQuery.each( users, function( key1, value1 ) {
+							/* Hashtag case */
+							if( value1['tag_id'] !== "" ) {
+									tagname = value1['username'];
+									tagname = tagname.substr(1, tagname.length);
+									tagname = tagname.replace(' ', '');
+									tag_id = value1['tag_id'];
+							} else {
+									username = wdi_controller.getUserObj(value1['username']);
+									if (username) {
+										username = username['user_name'];
+									}
+							}
+						});
+						var feed_id = value['feed_id'];
+						wdi_controller.instagram.set_cache_data( '', username, feed_id, '', 0, 0, tagname, tag_id, endpoint, '' );
+					});
+					jQuery("#wdi_reset_cache").after("<span class='wdi_reset_cache_success' style='color: #029117; margin-left: 15px; line-height: 2;'>Success</span>");
         }
       }
     });
   });
+	jQuery(".wdi_account_refresh").click(function () {
+		var __this = jQuery(this);
+		var wdi_user_name = __this.data("wdi_account");
+		jQuery.ajax({
+			type: 'POST',
+			url: wdi_ajax.ajax_url,
+			dataType: 'json',
+			data: {
+				page: 'wdi_settings',
+				action: 'wdi_account_refresh',
+				nonce: wdi_ajax.wdi_nonce,
+				user_name: wdi_user_name
+			},
+			success: function ( data ) {
+				var wdi_reset_cache_success = __this.closest("div").find(".wdi_reset_cache_success");
+				wdi_reset_cache_success.remove();
+				if ( data.success === true ) {
+					__this.after("<span class='wdi_reset_cache_success' style='color: #029117; margin-left: 15px; line-height: 2;'>Success</span>");
+					var wdi_token_filed = __this.closest("div").find(".wdi_user_token");
+					wdi_token_filed.val(data.token);
+				}
+				else {
+					__this.after("<span class='wdi_reset_cache_success' style='color: #fc0000; margin-left: 15px; line-height: 2;'>Failed</span>");
+				}
+			}
+		});
+	});
 
 	/*Feeds page*/
 	wdi_controller.bindSaveFeedEvent();
@@ -167,6 +196,10 @@ jQuery(document).ready(function() {
 		}
 		return false;
 	});
+
+	jQuery( '#WDI_feed_name' ).on( "keypress", function () {
+		jQuery( this ).removeAttr( "style" );
+	} );
 });
 
 function wdi_multiple_accounts_option_controller() {
@@ -464,10 +497,12 @@ wdi_controller.bindSaveFeedEvent = function() {
  * @param  {String} task [this is self explanatory]
  */
 wdi_controller.save_feed = function ( task ) {
+
 	var feed_users = [],
 		id,
 		type,
 		username,
+		feed_title,
 		default_user = {},
 		json_feed_users = {};
 	if ( 'cancel' == task ) {
@@ -475,7 +510,13 @@ wdi_controller.save_feed = function ( task ) {
 	}
 	type = jQuery('#WDI_user_name option:selected').data('type');
 	username = jQuery('#WDI_user_name option:selected').val();
+	feed_title = jQuery('#WDI_feed_name');
 	var userObj = wdi_controller.getUserObj(username);
+	if (feed_title.val() == "") {
+		alert(wdi_messages.feed_title_field_required);
+		feed_title.focus().attr( 'style', 'border-color: #FF0000;' );
+		return false;
+	}
 	if ( !userObj ) {
 		alert(wdi_messages.user_field_required);
 		return false;
@@ -498,9 +539,13 @@ wdi_controller.save_feed = function ( task ) {
 				feed_users.push(json_feed_users[i]);
 			}
 		}
+		feed_users.push(default_user);
 	}
-	feed_users.push(default_user);
-	jQuery('#WDI_feed_users').val(this.stringifyUserData(feed_users));
+	else {
+		feed_users.push(default_user);
+	}
+	users = this.stringifyUserData(feed_users);
+	jQuery('#WDI_feed_users').val(users);
 	jQuery('#wdi_feed_thumb').val('');
 	if ( type == 'business' ) {
 		jQuery('#wdi_feed_thumb').val(userObj.profile_picture_url);
@@ -510,8 +555,46 @@ wdi_controller.save_feed = function ( task ) {
 		jQuery('#wdi_current_id').val(id);
 	}
 	jQuery('#task').attr('value', task);
+
+
+	//set_cache_data( users );
+	submit_ajax();
+/*
 	jQuery('#wdi_save_feed').submit();
+*/
 }
+
+var comlete_redirect_url = '';
+
+function submit_ajax() {
+	var data = jQuery("#wdi_save_feed").serialize();
+	data = data + '&action=wdi_apply_changes&page=wdi_feeds';
+
+	jQuery("#wdi_save_loading").removeClass("wdi_hidden");
+	jQuery.ajax({
+		type: "POST",
+		url: wdi_ajax.ajax_url,
+		dataType: 'json',
+		data: data,
+		success: function (response) {
+			/* comlete_redirect_url url is redirect url which will be done after cash ajax complete */
+			comlete_redirect_url = response['url'];
+			var feed_id = response['feed_id'];
+			if( response['need_cache'] == 1 ) {
+				jQuery(".caching-process-message").removeClass("wdi_hidden");
+				/* TODO Timeout need as loader not appear without timeout, need to fix */
+				setTimeout(function(){ wdi_controller.instagram.set_cache_data(comlete_redirect_url, '', feed_id, '', 0, 0, '', '', '', ''); }, 1000);
+			} else {
+				jQuery("#wdi_save_loading").addClass("wdi_hidden");
+				window.location = comlete_redirect_url;
+			}
+		},
+		error: function (xhr, status, error) {
+			window.location = comlete_redirect_url;
+		}
+	});
+}
+
 
 /**
  * Takes user input as argument and makes an
@@ -554,35 +637,28 @@ wdi_controller.makeInstagramUserRequest = function ( user_input, ignoreConfirm )
 			var tagname = user_input.substr(1, user_input.length);
 			tagname = tagname.replace(' ', '');
 			var radio = jQuery("input[name='wdi_feed_settings[hashtag_top_recent]']:checked").val();
-			this.instagram.getTagRecentMedia(tagname, {
-				success: function ( response ) {
+			var data = {
+						tagname : tagname,
+						action : 'wdi_getHashtagId',
+						wdi_nonce: wdi_ajax.wdi_nonce,
+						user_name: username,
+					};
+			jQuery.ajax({
+				type: "POST",
+				url: wdi_ajax.ajax_url,
+				dataType: 'json',
+				data: data,
+				success: function (response) {
 					jQuery('#wdi_add_user_ajax').removeAttr('disabled');
-					// contain information about response such as error messages and if
-					// response is valid or not
 					var vObj = _this.isValidResponse(response);
-					if ( vObj.valid && _this.hasData(response) ) {
+					if ( vObj.valid ) {
 						_this.addHashtag(tagname, response);
 					}
-					else {
-						if ( !_this.hasData(response) && vObj.msg == 'success' ) {
-							if ( ignoreConfirm != true ) {
-								if ( confirm(wdi_messages.hashtag_no_data) ) {
-									_this.addHashtag(tagname, response);
-								}
-								else {
-									jQuery('#wdi_add_user_ajax_input').val('');
-								}
-							}
-							else {
-								_this.addHashtag(tagname, response);
-							}
-						}
-						else {
-							alert(vObj.msg);
-						}
-					}
+				},
+				error: function (xhr, status, error) {
 				}
-			}, null, radio);
+			});
+
 			break;
 		}
 	}
@@ -838,7 +914,7 @@ wdi_controller.isValidResponse = function (response) {
  * @return {Boolean}          [true or false]
  */
 wdi_controller.hasData = function(response) {
-	if (typeof response != 'undefined' && typeof response['data'] != 'undefined' && response['data'].length != 0) {
+	if (typeof response != 'undefined' && typeof response['data'] != 'undefined' && response['data'].length != 0 ) {
 		return true;
 	} else {
 		return false;
@@ -1528,7 +1604,7 @@ function wdi_spider_set_input_value(input_id, input_value) {
 }
 
 
-function wdi_account_remove(user_name) {
+function wdi_account_remove(user_name,user_id) {
 	jQuery.ajax({
 		type: 'POST',
 		url: wdi_ajax.ajax_url,
@@ -1537,11 +1613,20 @@ function wdi_account_remove(user_name) {
 			page: 'wdi_settings',
 			action: 'wdi_account_disconnect',
 			nonce: wdi_ajax.wdi_nonce,
-			user_name: user_name
+			user_name: user_name,
+			user_id: user_id,
 		},
 		success: function (response) {
 			if ( response.success ) {
-				jQuery('.wdi-account-list-' + user_name).remove();
+				if (jQuery('[class*="wdi-account-list"]').length == 1) {
+					var account = jQuery('.wdi-account-list-' + user_id).parent()
+					account.prev().remove()
+					account.remove();
+					jQuery("#toplevel_page_wdi_feeds ul").remove()
+					jQuery("#toplevel_page_wdi_feeds a").attr("href", "admin.php?page=wdi_settings")
+				} else {
+					jQuery('.wdi-account-list-' + user_id).remove();
+				}
 			}
 		}
 	});

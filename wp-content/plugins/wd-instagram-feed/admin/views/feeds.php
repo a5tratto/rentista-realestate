@@ -420,7 +420,22 @@ class Feeds_view_wdi {
                   )
                 )
               ),
-              'display_user_info' => array('name' => 'display_user_info', 'title' => __('Show User Bio and Website', 'wd-instagram-feed'), 'type' => 'checkbox', 'tooltip' => __('User bio will be displayed if feed has only one user', 'wd-instagram-feed'), 'attr' => array(array('name' => 'tab', 'value' => 'feed_settings'), array('name' => 'section', 'value' => 'thumbnails,masonry,blog_style,image_browser'))),
+              'display_user_info' => array(
+                'name' => 'display_user_info',
+                'title' => __('Show User Bio and Website', 'wd-instagram-feed'),
+                'type' => 'checkbox',
+                'tooltip' => __('User bio will be displayed if feed has only one user', 'wd-instagram-feed'),
+                'attr' => array(
+                  array(
+                    'name' => 'tab',
+                    'value' => 'feed_settings'
+                  ),
+                  array(
+                    'name' => 'section',
+                    'value' => 'thumbnails,masonry,blog_style,image_browser'
+                  )
+                )
+              ),
               'follow_on_instagram_btn' => array(
                 'name' => 'follow_on_instagram_btn',
                  'title' => __('Show "Follow On Instagram" button', 'wd-instagram-feed'),
@@ -438,7 +453,21 @@ class Feeds_view_wdi {
               ),
               'show_description' => array('name' => 'show_description', 'title' => __('Show Media Caption', 'wd-instagram-feed'), 'type' => 'checkbox', 'tooltip' => '','hide_ids'=>array('show_full_description'), 'attr' => array(array('name' => 'tab', 'value' => 'feed_settings'), array('name' => 'section', 'value' => 'thumbnails,masonry,blog_style,image_browser'))),
               'show_full_description' => array('name' => 'show_full_description', 'title' => __('Show Full Description', 'wd-instagram-feed'), 'type' => 'checkbox', 'tooltip' => __('Discription will be shown no matter how long it is', 'wd-instagram-feed'), 'attr' => array(array('name' => 'tab', 'value' => 'feed_settings'), array('name' => 'section', 'value' => 'masonry'))),
-              'show_likes' => array('name' => 'show_likes', 'title' => __('Show Number of Likes', 'wd-instagram-feed'), 'type' => 'checkbox', 'tooltip' => '', 'attr' => array(array('name' => 'tab', 'value' => 'feed_settings'), array('name' => 'section', 'value' => 'thumbnails,masonry,blog_style,image_browser'))),
+              'show_likes' => array(
+                'name' => 'show_likes',
+                'title' => __('Show Number of Likes', 'wd-instagram-feed'),
+                'type' => 'checkbox',
+                'tooltip' => '',
+                'attr' => array(
+                  array(
+                    'name' => 'tab',
+                    'value' => 'feed_settings'
+                  ),
+                  array(
+                    'name' => 'section',
+                    'value' => 'thumbnails,masonry,blog_style,image_browser')
+                  )
+                ),
               'show_comments' => array('name' => 'show_comments', 'title' => __('Show Number of Comments', 'wd-instagram-feed'), 'type' => 'checkbox', 'tooltip' => '', 'attr' => array(array('name' => 'tab', 'value' => 'feed_settings'), array('name' => 'section', 'value' => 'thumbnails,masonry,blog_style,image_browser'))),
               'show_username_on_thumb' => array('name' => 'show_username_on_thumb', 'title' => __('Show Username On Image Thumb', 'wd-instagram-feed'), 'type' => 'checkbox', 'tooltip' => '', 'attr' => array(array('name' => 'tab', 'value' => 'feed_settings'), array('name' => 'section', 'value' => 'thumbnails,masonry'))),
             ),
@@ -541,14 +570,6 @@ class Feeds_view_wdi {
         'place' => 'after',
         'class' => 'wdi_pro_only',
         'text' => __("Changing Theme is available only in premium version", "wd-instagram-feed"),
-        'br' => 'true'
-      );
-
-      $tabs["feed_settings"]["advanced"]["elements"][0]["thumb_user"]["switched"]="off";
-      $tabs["feed_settings"]["advanced"]["elements"][0]["thumb_user"]["label"] = array(
-        'place' => 'after',
-        'class' => 'wdi_pro_only',
-        'text' => __("Featured Image is available only in premium version", "wd-instagram-feed"),
         'br' => 'true'
       );
 
@@ -803,7 +824,7 @@ class Feeds_view_wdi {
       <form method="post" action="admin.php?page=wdi_feeds" id='wdi_save_feed'>
         <div class="wdi-page-header">
           <h1 class="wp-heading-inline"><?php echo __('Feed Title', 'wd-instagram-feed')?></h1>
-            <input id="WDI_feed_name" class="WDI_title_input" name="wdi_feed_settings[feed_name]"  type="text" value="<?php echo ($edit == TRUE && isset($feed_row['feed_name'])) ? $feed_row['feed_name'] : "Sample Feed";?>">
+            <input id="WDI_feed_name" class="WDI_title_input" name="wdi_feed_settings[feed_name]"  type="text" value="<?php echo ($edit == TRUE && isset($feed_row['feed_name'])) ? $feed_row['feed_name'] : "";?>">
             <div class="wdi_buttons">
               <div id="wdi_save_feed_apply" class="button button-primary"><?php echo $save_btn_name;?></div>
               <button class="button preview-button button-large"<?php if (!$wdi_preview_btn) echo ' disabled="disabled"' ?> <?php echo ($wdi_preview_btn) ? 'onclick="window.open(\''. add_query_arg( array('feed_id' => $feed_row_id), $wdi_preview_link ) .'\', \'_blank\'); return false;"' : ''; ?>><?php  echo __('Preview', 'wd-instagram-feed');?></button>
@@ -956,6 +977,16 @@ class Feeds_view_wdi {
             </div>
           </form>
       </div>
+    </div>
+    <div id="wdi_save_loading" class="wdi_hidden">
+        <img src="<?php echo WDI_URL . '/images/ajax_loader.png'; ?>" class="wdi_spider_ajax_loading" style="width:50px;">
+        <span class="caching-process-message wdi_hidden">
+        <?php
+        _e("Please don't close this window. We are caching Instagram media.", "wdi");
+        echo "<br>";
+        _e("This may take a few minutes.", "wdi");
+        ?>
+        </span>
     </div>
   <?php
 }

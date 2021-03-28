@@ -24,24 +24,28 @@ class DB {
 	/**
 	 * Get query builder object.
 	 *
+	 * @param string $table Meta table name.
+	 *
 	 * @return Query_Builder
 	 */
-	private static function table() {
-		return Database::table( 'postmeta' );
+	private static function table( $table = 'postmeta' ) {
+		return Database::table( $table );
 	}
 
 	/**
 	 * Get all schemas.
 	 *
-	 * @param int $post_id Post id.
+	 * @param int    $object_id  Object ID.
+	 * @param string $table      Meta table name.
 	 *
 	 * @return array
 	 */
-	public static function get_schemas( $post_id ) {
-		$data = self::table()
+	public static function get_schemas( $object_id, $table = 'postmeta' ) {
+		$key  = 'termmeta' === $table ? 'term_id' : 'post_id';
+		$data = self::table( $table )
 			->select( 'meta_id' )
 			->select( 'meta_value' )
-			->where( 'post_id', $post_id )
+			->where( $key, $object_id )
 			->whereLike( 'meta_key', 'rank_math_schema', '' )
 			->get();
 
@@ -129,5 +133,48 @@ class DB {
 	 */
 	public static function delete_schema_data( $post_id ) {
 		return self::table()->where( 'post_id', $post_id )->whereLike( 'meta_key', 'rank_math_schema_' )->delete();
+	}
+
+	/**
+	 * Unpublish job posting when expired.
+	 *
+	 * @param JsonLD $jsonld  JsonLD Instance.
+	 * @param array  $schemas Array of JSON-LD entity.
+	 */
+	public static function unpublish_jobposting_post( $jsonld, $schemas ) {
+		if ( ! is_singular() ) {
+			return;
+		}
+
+		$job_postings = array_map(
+			function( $schema ) {
+				return isset( $schema['@type'] ) && 'JobPosting' === $schema['@type'] ? $schema : false;
+			},
+			$schemas
+		);
+
+		if ( empty( $job_postings ) ) {
+			return;
+		}
+
+		foreach ( $job_postings as $job_posting ) {
+			if (
+				empty( $job_posting['metadata']['unpublish'] ) ||
+				'on' !== $job_posting['metadata']['unpublish'] ||
+				empty( $job_posting['validThrough'] ) ||
+				date_create( 'now' )->getTimestamp() < strtotime( $job_posting['validThrough'] )
+			) {
+				continue;
+			}
+
+			wp_update_post(
+				[
+					'ID'          => $jsonld->post_id,
+					'post_status' => 'draft',
+				]
+			);
+
+			break;
+		}
 	}
 }

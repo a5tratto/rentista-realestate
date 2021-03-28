@@ -135,18 +135,35 @@ var wdi_construct_popup = function (popup, currentFeed, image_rows, current_imag
               'height:'+image_thumb_height+'px;' +
               'margin-left:'+thumb_left+'px;' +
               'margin-top:'+thumb_top+'px;';
-            if( image_row.filetype ==  "EMBED_OEMBED_INSTAGRAM_VIDEO") {
-                var src = (typeof image_row.filename !== 'undefined') ? image_row.filename :  image_row.thumb_url;
-            } else {
-                var src = (typeof image_row.images[currentFeed.feedImageResolution] !== 'undefined' && typeof image_row.images[currentFeed.feedImageResolution]['url'] !== "undefined") ? image_row.images[currentFeed.feedImageResolution]['url'] : image_row.thumb_url;
-            }
-            if( src.indexOf('https://video.cdninstagram.com/') == 0 ) {
-                src = wdi_url.plugin_url + "images/video_missing.png";
-            }
+
             var onclick = 'wdi_change_image(parseInt(jQuery(\'#wdi_current_image_key\').val()), \'' + i + '\', wdi_data)';
             var ontouchend = 'wdi_change_image(parseInt(jQuery(\'#wdi_current_image_key\').val()), \'' + i + '\', wdi_data)';
 
-            var img_html = '<img style="' + img_style + '" class="wdi_filmstrip_thumbnail_img" src="' + src + '" onclick="' + onclick + '" ontouchend="' + ontouchend + '" image_id="' + image_row.id + '" image_key="' + i + '" alt="' + image_row.alt + '" />';
+            switch (image_row.filetype) {
+                case 'EMBED_OEMBED_INSTAGRAM_IMAGE':
+                    var src = (typeof image_row.images[currentFeed.feedImageResolution] !== 'undefined' && typeof image_row.images[currentFeed.feedImageResolution]['url'] !== "undefined") ? image_row.images[currentFeed.feedImageResolution]['url'] : image_row.thumb_url;
+                    var img_html = '<img style="' + img_style + '" class="wdi_filmstrip_thumbnail_img" src="' + src + '" onclick="' + onclick + '" ontouchend="' + ontouchend + '" image_id="' + image_row.id + '" image_key="' + i + '" alt="' + image_row.alt + '" />';
+                    break;
+                case 'EMBED_OEMBED_INSTAGRAM_VIDEO':
+                    var src = (typeof image_row.filename !== 'undefined') ? image_row.filename : image_row.thumb_url;
+                    var img_html = '<video style="' + img_style + '" class="wdi_filmstrip_thumbnail_img" src="' + src + '" onclick="' + onclick + '" ontouchend="' + ontouchend + '" image_id="' + image_row.id + '" image_key="' + i + '" alt="' + image_row.alt + '" /></video>';
+                    break;
+                case 'EMBED_OEMBED_INSTAGRAM_CAROUSEL':
+                    switch (image_row.carousel_media[0].type) {
+                        case 'image':
+                            src = image_row.carousel_media[0].images.thumbnail.url;
+                            var img_html = '<img style="' + img_style + '" class="wdi_filmstrip_thumbnail_img" src="' + src + '" onclick="' + onclick + '" ontouchend="' + ontouchend + '" image_id="' + image_row.id + '" image_key="' + i + '" alt="' + image_row.alt + '" />';
+                            break;
+                        case 'video':
+                            src = image_row.carousel_media[0].videos.low_resolution.url;
+                            var img_html = '<video style="' + img_style + '" class="wdi_filmstrip_thumbnail_img" src="' + src + '" onclick="' + onclick + '" ontouchend="' + ontouchend + '" image_id="' + image_row.id + '" image_key="' + i + '" alt="' + image_row.alt + '" /></video>';
+                            break;
+                        default:
+                            src = wdi_url.plugin_url + "images/missing.png";
+                            var img_html = '<img style="' + img_style + '" class="wdi_filmstrip_thumbnail_img" src="' + src + '" onclick="' + onclick + '" ontouchend="' + ontouchend + '" image_id="' + image_row.id + '" image_key="' + i + '" alt="' + image_row.alt + '" />';
+                            break;
+                    }
+            }
             thumbnails_html += '<div id="wdi_filmstrip_thumbnail_' + i + '" class="' + class_name + '">' + img_html + '</div>';
 
 
@@ -285,48 +302,8 @@ Object.size = function (obj)
 function wdi_spider_ajax_save(form_id, image_id)
 {
     wdi_comments_manager.init(image_id);
-    // var post_data = {};
-    // post_wdi_data["wdi_name"] = jQuery("#wdi_name").val();
-    // post_wdi_data["wdi_comment"] = jQuery("#wdi_comment").val();
-    // post_wdi_data["wdi_email"] = jQuery("#wdi_email").val();
-    // post_wdi_data["wdi_captcha_input"] = jQuery("#wdi_captcha_input").val();
-    // post_wdi_data["ajax_task"] = jQuery("#ajax_task").val();
-    // post_wdi_data["image_id"] = jQuery("#image_id").val();
-    // post_wdi_data["comment_id"] = jQuery("#comment_id").val();
-    // // Loading.
-    // jQuery("#ajax_loading").css('height', jQuery(".wdi_comments").css('height'));
-    // jQuery("#opacity_div").css('width', jQuery(".wdi_comments").css('width'));
-    // jQuery("#opacity_div").css('height', jQuery(".wdi_comments").css('height'));
-    // jQuery("#loading_div").css('width', jQuery(".wdi_comments").css('width'));
-    // jQuery("#loading_div").css('height', jQuery(".wdi_comments").css('height'));
-    // document.getElementById("opacity_div").style.display = '';
-    // document.getElementById("loading_div").style.display = 'table-cell';
-    // jQuery.post(
-    //   jQuery('#' + form_id).attr('action'),
-    //   post_data,
-
-    //   function (data) {
-    //     var str = jQuery(data).find('.wdi_comments').html();
-    //     jQuery('.wdi_comments').html(str);
-    //   }
-    // ).success(function(jqXHR, textStatus, errorThrown) {
-    //   document.getElementById("opacity_div").style.display = 'none';
-    //   document.getElementById("loading_div").style.display = 'none';
-    //   // Update scrollbar.
-    //   jQuery(".wdi_comments").mCustomScrollbar({scrollInertia: 150});
-    //   // Bind comment container close function to close button.
-    //   jQuery(".wdi_comments_close_btn").click(wdi_comment);
-    // });
-
-    // if (event.preventDefault) {
-    // event.preventDefault();
-    // }
-    // else {
-    // event.returnValue = false;
-    // }
     return false;
 }
-
 
 wdi_comments_manager = {
     media_id: '',
@@ -339,8 +316,6 @@ wdi_comments_manager = {
     /*iamge id*/
     init: function (image_id)
     {
-
-
         /*initializing instagram object which will handle all instagram api requests*/
         this.instagram = new WDIInstagram();
         this.instagram.addToken(wdi_front.access_token);
@@ -370,6 +345,13 @@ wdi_comments_manager = {
 
 
     },
+    clear_comments: function ()
+    {
+        jQuery('#wdi_load_more_comments').remove();
+        jQuery('#wdi_added_comments').html('');
+        //currentImage = wdi_data[this.currentKey];
+        this.commentCounter = 0;
+    },
     popup_destroyed: function ()
     {
         this.media_id = '';
@@ -384,7 +366,6 @@ wdi_comments_manager = {
     //function for dispaying comments
     showComments: function (comments, count)
     {
-
         if (Object.size(comments) - this.commentCounter - count < 0 || count === undefined) {
             count = Object.size(comments) - this.commentCounter;
         }
@@ -394,14 +375,16 @@ wdi_comments_manager = {
             var commentText = (comments[i]['text']);
             commentText = wdi_front.escape_tags(commentText);
             commentText = this.filterCommentText(commentText);
-            var username = (comments[i]['from']['username']);
-            var profile_picture = (comments[i]['from']['profile_picture']);
+            var username = (comments[i]['username']);
+            //var profile_picture = (comments[i]['profile_picture']);
             var singleComment = jQuery('<div class="wdi_single_comment"></div>');
-            singleComment.append(jQuery('<p class="wdi_comment_header_p"><span class="wdi_comment_header"><a target="_blank" href="//instagram.com/' + username + '">' + username + '</a></span><span class="wdi_comment_date">' + wdi_front.convertUnixDate(comments[i]['created_time']) + '</span></p>'));
+            singleComment.append(jQuery('<p class="wdi_comment_header_p"><span class="wdi_comment_header"><a target="_blank" href="//instagram.com/' + username + '">' + username + '</a></span><span class="wdi_comment_date">' + wdi_front.convertUnixDate(comments[i]['timestamp']) + '</span></p>'));
             singleComment.append(jQuery('<div class="wdi_comment_body_p"><span class="wdi_comment_body"><p>' + commentText + '</p></span></div>'));
             jQuery('#wdi_added_comments').prepend(singleComment);
         }
-
+        if (jQuery(".wdi_single_comment").length == 0){
+            jQuery("#wdi_added_comments").html('<p class="wdi_no_comment">There are no comments to show</p>');
+        }
         this.updateScrollbar();
     },
 
@@ -441,49 +424,70 @@ wdi_comments_manager = {
 
     },
     //get recent media comments
-    getAjaxComments: function ()
-    {
-
+    getAjaxComments: function () {
+        /* Next page url for comments */
+        var next = '';
+        if (typeof wdi_data[wdi_comments_manager.currentKey]['comments_data']['next'] !== 'undefined') {
+            next =wdi_data[wdi_comments_manager.currentKey]['comments_data']['next'];
+        }
         this.instagram.getRecentMediaComments(this.media_id, {
             success: function (response)
             {
-                if (response == '' || response == undefined || response == null) {
+                if (response == '' || response == undefined || response == null || typeof response['error'] !== 'undefined') {
                     errorMessage = 'Network Error, please try again later :(';
                     console.log('%c' + errorMessage, "color:#cc0000;");
+                    jQuery("#wdi_added_comments").html('<p class="wdi_no_comment">Comments are currently unavailable</p>');
+
                     return;
                 }
                 if (response['meta']['code'] != 200) {
                     errorMessage = response['meta']['error_message'];
                     console.log('%c' + errorMessage, "color:#cc0000;");
+                    jQuery("#wdi_added_comments").html('<p class="wdi_no_comment">Comments are currently unavailable</p>');
                     return;
                 }
 
-                wdi_comments_manager.mediaComments = response['data'];
+                if ( typeof wdi_data[wdi_comments_manager.currentKey]['comments_data']['data'] != 'undefined') {
+                    wdi_data[wdi_comments_manager.currentKey]['comments_data']['data'] = response['data'].concat(wdi_data[wdi_comments_manager.currentKey]['comments_data']['data']);
+                    wdi_data[wdi_comments_manager.currentKey]['comment_count'] += wdi_data[wdi_comments_manager.currentKey]['comments_data']['data'].length;
+                } else {
+                    wdi_data[wdi_comments_manager.currentKey]['comments_data'] = response;
+                    wdi_data[wdi_comments_manager.currentKey]['comment_count'] = wdi_data[wdi_comments_manager.currentKey]['comments_data']['data'].length;
+                }
+                wdi_data[wdi_comments_manager.currentKey]['comments_data']['next'] = ( typeof response['paging'] !== 'undefined') ? response['paging']['next'] : '';
 
+                //wdi_data[wdi_comments_manager.currentKey]['comments_data']['next'] = ( typeof response['paging'] !== 'undefined') ? response['paging']['next'] : '';
+                wdi_comments_manager.mediaComments = response['data'];
 
                 //ttt
                 var currentImage = wdi_data[wdi_comments_manager.currentKey];
-                currentImage['comments_data'] = response['data'];
+                //currentImage['comments_data'] = response['data'];
 
-                wdi_comments_manager.showComments(currentImage['comments_data'], wdi_comments_manager.load_more_count);
+                wdi_comments_manager.showComments(currentImage['comments_data']['data'], wdi_comments_manager.load_more_count);
                 wdi_comments_manager.ajax_comments_ready(response['data']);
             }
-        });
+        },next);
     },
     ajax_comments_ready: function (response)
     {
-
-        this.createLoadMoreAndBindEvent();
+        this.createLoadMoreAndBindEvent(wdi_comments_manager.currentKey);
     },
-    createLoadMoreAndBindEvent: function ()
+    createLoadMoreAndBindEvent: function (cur_image_key)
     {
-        jQuery('#wdi_added_comments').prepend(jQuery('<p id="wdi_load_more_comments" class="wdi_load_more_comments">load more comments</p>'));
+        if(cur_image_key == '') {
+            cur_image_key = wdi_comments_manager.currentKey;
+        }
+        if(wdi_data[cur_image_key]['comments_data']['next'] !== '' || (wdi_data[cur_image_key]['comments_data']['data'].length > wdi_comments_manager.load_more_count && jQuery(".wdi_single_comment").length < wdi_data[cur_image_key]['comments_data']['data'].length) && jQuery("#wdi_load_more_comments").length == 0) {
+            jQuery('#wdi_added_comments').prepend(jQuery('<p id="wdi_load_more_comments" class="wdi_load_more_comments">load more comments</p>'));
+        }
         jQuery('.wdi_comment_container #wdi_load_more_comments').on('click', function ()
         {
+            if( (wdi_comments_manager.commentCounter + wdi_comments_manager.load_more_count) > wdi_data[cur_image_key]['comments_data']['data'].length && wdi_data[cur_image_key]['comments_data']['next'] != '' ) {
+                wdi_comments_manager.getAjaxComments(this.currentKey);
+            }
             jQuery(this).remove();
-
-            wdi_comments_manager.showComments(wdi_comments_manager.mediaComments, wdi_comments_manager.load_more_count);
-            wdi_comments_manager.createLoadMoreAndBindEvent();
+            wdi_comments_manager.showComments(wdi_data[cur_image_key]['comments_data']['data'], wdi_comments_manager.load_more_count);
+            wdi_comments_manager.createLoadMoreAndBindEvent(wdi_comments_manager.currentKey);
         });
     },
     /*
@@ -676,36 +680,45 @@ function wdi_spider_display_embed( embed_type, embed_id, src, attrs, carousel_me
                 }
             }
             oembed_instagram_html += " >";
-            if ( carousel_media != null && carousel_media.length ) {
-                for ( var i = 0; i < carousel_media.length; i++ ) {
-                    if ( carousel_media[i]["type"] == "image" ) {
-                        oembed_instagram_html += '<img src="' + carousel_media[i]["images"]["standard_resolution"]["url"] + '"' +
-                          ' style="' +
-                          'max-width:' + '100%' + " !important" +
-                          '; max-height:' + '100%' + " !important" +
-                          '; width:' + 'auto !important' +
-                          '; height:' + 'auto !important' +
-                          ';" data-id="' + i + '" class="carousel_media ' + (i == 0 ? "active" : "") + '">';
-                    }
-                    else if ( carousel_media[i]["type"] == "video" ) {
-                        if(typeof carousel_media[i]["videos"] !== "undefined" && typeof carousel_media[i]["videos"]["standard_resolution"] !== "undefined" && typeof carousel_media[i]["videos"]["standard_resolution"]["url"] !== "undefined"){
-                          src = carousel_media[i]["videos"]["standard_resolution"]["url"];
-                        }
-                        oembed_instagram_html += '<video onclick="wdi_play_pause(jQuery(this));" style="width:auto !important; height:auto !important; max-width:100% !important; max-height:100% !important; margin:0 !important;" controls data-id="' + i + '" class="carousel_media ' + (i == 0 ? "active" : "") + '">' +
-                          '<source src="' + src +
-                          '" type="video/mp4"> Your browser does not support the video tag. </video>';
+            if ( embed_id != '' ) {
+                oembed_instagram_html += '<img src="' + src + '"' +
+                  ' style=" ' +
+                  'max-width:' + '100%' + " !important" +
+                  '; max-height:' + '100%' + " !important" +
+                  '; width:' + 'auto' +
+                  '; height:' + 'auto' +
+                  ';">';
+            }
+            oembed_instagram_html += "</div>";
+            html_to_insert += oembed_instagram_html;
+            break;
+        case 'EMBED_OEMBED_INSTAGRAM_CAROUSEL':
+            var oembed_instagram_html = '<div ';
+            for ( attr in attrs ) {
+                if ( !(/src/i).test(attr) ) {
+                    if ( attr != '' && attrs[attr] != '' ) {
+                        oembed_instagram_html += ' ' + attr + '="' + attrs[attr] + '"';
                     }
                 }
             }
-            else {
-                if ( embed_id != '' ) {
-                    oembed_instagram_html += '<img src="' + src + '"' +
-                      ' style=" ' +
+            oembed_instagram_html += " >";
+            for ( var i = 0; i < carousel_media.length; i++ ) {
+                if ( carousel_media[i]["type"] == "image" ) {
+                    oembed_instagram_html += '<img src="' + carousel_media[i]["images"]["standard_resolution"]["url"] + '"' +
+                      ' style="' +
                       'max-width:' + '100%' + " !important" +
                       '; max-height:' + '100%' + " !important" +
-                      '; width:' + 'auto' +
-                      '; height:' + 'auto' +
-                      ';">';
+                      '; width:' + 'auto !important' +
+                      '; height:' + 'auto !important' +
+                      ';" data-id="' + i + '" class="carousel_media ' + (i == 0 ? "active" : "") + '">';
+                }
+                else if ( carousel_media[i]["type"] == "video" ) {
+                    if(typeof carousel_media[i]["videos"] !== "undefined" && typeof carousel_media[i]["videos"]["standard_resolution"] !== "undefined" && typeof carousel_media[i]["videos"]["standard_resolution"]["url"] !== "undefined"){
+                        src = carousel_media[i]["videos"]["standard_resolution"]["url"];
+                    }
+                    oembed_instagram_html += '<video onclick="wdi_play_pause(jQuery(this));" style="width:auto !important; height:auto !important; max-width:100% !important; max-height:100% !important; margin:0 !important;" controls data-id="' + i + '" class="carousel_media ' + (i == 0 ? "active" : "") + '">' +
+                      '<source src="' + src +
+                      '" type="video/mp4"> Your browser does not support the video tag. </video>';
                 }
             }
             oembed_instagram_html += "</div>";

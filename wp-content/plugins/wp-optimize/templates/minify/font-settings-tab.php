@@ -29,6 +29,17 @@
 					<?php _e('Do not load Google Fonts', 'wp-optimize'); ?>
 					<span tabindex="0" data-tooltip="<?php _e('If enabled, stylesheets from Google Fonts will not be loaded on the site and system fallback fonts will be used instead.', 'wp-optimize');?>"><span class="dashicons dashicons-editor-help"></span></span>
 				</label>
+				<label for="enable_display_swap">
+					<input
+						name="enable_display_swap"
+						type="checkbox"
+						id="enable_display_swap"
+						value="1"
+						<?php echo checked($wpo_minify_options['enable_display_swap']); ?>
+					>
+					<?php _e('Add "display=swap" to Google Fonts requests', 'wp-optimize'); ?>
+					<span tabindex="0" data-tooltip="<?php esc_attr_e('This feature of Google Fonts is encouraged for better accessibility, but may result in a visible font change.', 'wp-optimize'); ?>"><span class="dashicons dashicons-editor-help"></span></span>
+				</label>
 			</fieldset>
 			<p class="wpo_min-bold-green wpo_min-rowintro">
 				<?php _e('Choose how to include fonts from Google Fonts on your pages, when available:', 'wp-optimize'); ?>
@@ -76,11 +87,19 @@
 				<label><input
 					type="radio"
 					name="fawesome_method"
-					value="inline"
-					<?php echo checked('inline' === $wpo_minify_options['fawesome_method']); ?>
+					value="inherit"
+					<?php echo checked('inherit' === $wpo_minify_options['fawesome_method']); ?>
 					>
 					<?php _e('Inherit from the CSS settings', 'wp-optimize'); ?>
 					<span tabindex="0" data-tooltip="<?php esc_attr_e('The stylesheets will be merged or inlined.', 'wp-optimize');?>"><span class="dashicons dashicons-editor-help"></span></span>
+				</label>
+				<label><input
+					type="radio"
+					name="fawesome_method"
+					value="inline"
+					<?php echo checked('inline' === $wpo_minify_options['fawesome_method']); ?>
+					>
+					<?php _e('Inline the Font Awesome CSS file', 'wp-optimize'); ?>
 				</label>
 				<label>
 					<input

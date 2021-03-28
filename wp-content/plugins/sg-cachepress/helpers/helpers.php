@@ -17,3 +17,15 @@ function sg_cachepress_purge_cache( $url = false ) {
 
 	return $siteground_optimizer_helper->supercacher->purge_cache_request( $url );
 }
+
+/**
+ * Public function to purge the entire cache.
+ *
+ * @since  5.7.14
+ */
+function sg_cachepress_purge_everything() {
+	global $siteground_optimizer_helper;
+	$siteground_optimizer_helper->supercacher->purge_cache();
+	$siteground_optimizer_helper->supercacher->flush_memcache();
+	$siteground_optimizer_helper->supercacher->delete_assets();
+}

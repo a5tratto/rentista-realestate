@@ -67,7 +67,7 @@ class Manager {
 			return;
 		}
 
-		\RankMath\Analytics\Data_Fetcher::get()->flat_posts();
+		new \RankMath\Analytics\Workflow\Objects();
 	}
 
 	/**
@@ -155,6 +155,14 @@ class Manager {
 			'settings' => Helper::get_admin_url( 'options-general' ) . '#setting-panel-images',
 		];
 
+		$modules['instant-indexing'] = [
+			'title'    => esc_html__( 'Instant Indexing', 'rank-math' ),
+			'desc'     => esc_html__( 'Directly notify search engines(Bing) when pages are added, updated or removed.', 'rank-math' ),
+			'class'    => 'RankMath\Instant_Indexing\Instant_Indexing',
+			'icon'     => 'instant-indexing',
+			'settings' => Helper::get_admin_url( 'options-instant-indexing' ),
+		];
+
 		return $modules;
 	}
 
@@ -208,7 +216,7 @@ class Manager {
 	public function setup_internals( $modules ) {
 
 		$modules['robots-txt'] = [
-			'title' => esc_html__( 'Robotx Txt', 'rank-math' ),
+			'title' => esc_html__( 'Robots Txt', 'rank-math' ),
 			'only'  => 'internal',
 			'class' => 'RankMath\Robots_Txt',
 		];

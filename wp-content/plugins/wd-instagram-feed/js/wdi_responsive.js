@@ -11,8 +11,7 @@ function wdi_responsive()
 /*
  * Calculates current column layout and gives proper column classes
  */
-wdi_responsive.columnControl = function (currentFeed, load, customWidth)
-{
+wdi_responsive.columnControl = function (currentFeed, load, customWidth) {
   currentFeed.openRows = [];
   if (load === 1) {
     var wrapper = jQuery('#wdi_feed_' + currentFeed.feed_row.wdi_feed_counter + " .wdi_feed_wrapper");
@@ -37,8 +36,6 @@ wdi_responsive.columnControl = function (currentFeed, load, customWidth)
     wrapper.removeClass(currentClass);
     wrapper.attr('wdi-res', newClass);
     wrapper.addClass(newClass);
-
-
     //////////////////////////////////////////
     if (currentClass != newClass) {
       var colNum = newClass.substr(8, newClass.length);
@@ -64,13 +61,9 @@ wdi_responsive.columnControl = function (currentFeed, load, customWidth)
 
       }
     }
-
-
-  } else {
-    jQuery(window).resize(function ()
-    {
-
-
+  }
+  else {
+    jQuery(window).resize(function () {
       var wrapper = jQuery('#wdi_feed_' + currentFeed.feed_row.wdi_feed_counter + " .wdi_feed_wrapper");
       if (wrapper.length == 0) {
         return;
@@ -85,17 +78,17 @@ wdi_responsive.columnControl = function (currentFeed, load, customWidth)
       }
 
       var currentClass = wrapper.attr('wdi-res');
-
-
       //check if layout was changed then reposition masonry
       if (currentFeed.feed_row.feed_type == 'masonry') {
         var itemWidth = jQuery('#wdi_feed_' + currentFeed.feed_row.wdi_feed_counter + " .wdi_masonry_column").first().width();
+      }
+      if( itemWidth === 0 ) {
+        itemWidth = containerWidth;
       }
       var newClass = currentClass.substr(0, 8) + Math.round(containerWidth / itemWidth);
       wrapper.removeClass(currentClass);
       wrapper.attr('wdi-res', newClass);
       wrapper.addClass(newClass);
-
 
       //Feed type based configurations
       if (currentFeed.feed_row.feed_type === 'thumbnails') {
@@ -129,8 +122,6 @@ wdi_responsive.columnControl = function (currentFeed, load, customWidth)
           wdi_front.masonryDisplayFeedItems(dataToBeDisplayed, currentFeed);
           wdi_front.applyFilters(currentFeed);
           ///wdi_front.allImagesLoaded(currentFeed);
-
-
         }
       }
       //////////////////////////////////////////
@@ -155,16 +146,10 @@ wdi_responsive.columnControl = function (currentFeed, load, customWidth)
             }
             k++;
           });
-
         }
       }
-
-
     });
-
   }
-
-
 };
 wdi_responsive.bindCaptionEvent = function (imgtitle, currentFeed)
 {
@@ -200,8 +185,6 @@ wdi_responsive.showCaption = function (caption, currentFeedCounter)
   for (var i = 0; i < colNum; i++) {
     var rowIndex = i + (imgBeforRows) * colNum;
     indexes.push(rowIndex);
-
-
   }
 
   if (imgItem.hasClass('wdi_full_caption')) {
@@ -236,8 +219,7 @@ wdi_responsive.showCaption = function (caption, currentFeedCounter)
   currentFeed.affectedRow = true;
 
 }
-wdi_responsive.fixRow = function (currentFeed)
-{
+wdi_responsive.fixRow = function (currentFeed) {
   jQuery('#wdi_feed_' + currentFeed.feed_row.wdi_feed_counter + ' .wdi_row_affected').each(function ()
   {
     jQuery(this).css('height', 'auto');
@@ -252,7 +234,8 @@ wdi_responsive.fixRow = function (currentFeed)
         jQuery(this).find('.wdi_photo_title').trigger(wdi_front.clickOrTouch);
       }
     });
-  } else {
+  }
+  else {
     jQuery('#wdi_feed_' + currentFeed.feed_row.wdi_feed_counter + ' .wdi_full_caption').each(function ()
     {
       //triggering two times one time for fixing row second for bringing back old state
@@ -260,12 +243,9 @@ wdi_responsive.fixRow = function (currentFeed)
       jQuery(this).find('.wdi_photo_title').trigger(wdi_front.clickOrTouch);
     });
   }
-
-
 }
 
-wdi_responsive.showMasonryCaption = function (caption, currentFeedCounter)
-{
+wdi_responsive.showMasonryCaption = function (caption, currentFeedCounter) {
   var currentFeed = window["wdi_feed_" + currentFeedCounter];
 
   var imgItem = caption.parent().parent();

@@ -55,10 +55,16 @@ class Uninstall_controller_wdi {
       if ( $sample_post_id !== FALSE ) {
         wp_delete_post($sample_post_id, TRUE);
       }
-      $row = get_posts(array( 'post_type' => "wdi_instagram" ));
-      if ( !empty($row[0]) ) {
-        wp_delete_post($row[0]->ID, TRUE);
+
+      $rows = get_posts(array(
+                          "post_type"   => "wdi_instagram",
+                          "numberposts" =>  -1 )
+      );
+
+      foreach ( $rows as $row ) {
+        wp_delete_post( $row->ID, true );
       }
+
       // remove all options.
       delete_option(WDI_OPT);
       delete_option('wdi_version');
@@ -70,7 +76,7 @@ class Uninstall_controller_wdi {
       delete_option('wdi_admin_notice');
       delete_option('wdi_subscribe_done');
       delete_option('wdi_redirect_to_settings');
-      delete_option('wdi_do_activation_set_up_redirect');
+      delete_option('wdi_token_error_flag');
       delete_option('widget_wdi_instagram_widget');
       $this->remove_theme_files();
 

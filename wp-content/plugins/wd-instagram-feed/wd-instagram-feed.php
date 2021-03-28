@@ -1,35 +1,29 @@
 <?php
-/*
-Plugin Name: 10Web Social Photo Feed
-Plugin URI: https://10web.io/plugins/wordpress-instagram-feed/?utm_source=instagram_feed&utm_medium=free_plugin
-Description: 10Web Social Photo Feed is a user-friendly tool for displaying user or hashtag-based feeds on your website. You can create feeds with one of the available layouts. It allows displaying image metadata, open up images in lightbox, download them and even share in social networking websites.
-Version: 1.4.9
-Author: 10Web
-Author URI: https://10Web.io/plugins/?utm_source=instagram_feed&utm_medium=free_plugin
-License: GPLv2 or later
-*/
+/**
+ * Plugin Name: 10Web Social Photo Feed
+ * Plugin URI: https://10web.io/plugins/wordpress-instagram-feed/?utm_source=instagram_feed&utm_medium=free_plugin
+ * Description: 10Web Social Photo Feed is a user-friendly tool for displaying user or hashtag-based feeds on your website. You can create feeds with one of the available layouts. It allows displaying image metadata, open up images in lightbox, download them and even share in social networking websites.
+ * Version: 1.4.15
+ * Author: 10Web
+ * Author URI: https://10Web.io/plugins/?utm_source=instagram_feed&utm_medium=free_plugin
+ * License: GPLv2 or later
+ */
 
-// define constants
-define('WDI_VERSION', '1.4.9');
-define('WDI_IS_FREE', TRUE);
-define('WDI_PREFIX', 'wdi');
-define('WDI_DIR', WP_PLUGIN_DIR . "/" . plugin_basename(dirname(__FILE__)));
-define('WDI_URL', plugins_url(plugin_basename(dirname(__FILE__))));
-define('WDI_MAIN_FILE', plugin_basename(__FILE__));
-define('WDI_META', '_wdi_instagram_meta');
-define('WDI_OPT', 'wdi_instagram_options');
-define('WDI_FSN', 'wdi_feed_settings');
-define('WDI_TSN', 'wdi_theme_settings');
-define('WDI_FEED_TABLE', 'wdi_feeds');
-define('WDI_THEME_TABLE', 'wdi_themes');
-define('WDI_MINIFY', TRUE);
-
+include_once 'config.php';
 add_action('wp_ajax_wdi_cache', 'wdi_cache');
 add_action('wp_ajax_nopriv_wdi_cache', 'wdi_cache');
 add_action('wp_ajax_wdi_getUserMedia', 'wdi_getUserMedia');
 add_action('wp_ajax_nopriv_wdi_getUserMedia', 'wdi_getUserMedia');
 add_action('wp_ajax_wdi_getTagRecentMedia', 'wdi_getTagRecentMedia');
 add_action('wp_ajax_nopriv_wdi_getTagRecentMedia', 'wdi_getTagRecentMedia');
+add_action('wp_ajax_wdi_getRecentMediaComments', 'wdi_getRecentMediaComments');
+add_action('wp_ajax_nopriv_wdi_getRecentMediaComments', 'wdi_getRecentMediaComments');
+add_action('wp_ajax_wdi_set_preload_cache_data', 'wdi_set_preload_cache_data');
+add_action('wp_ajax_nopriv_wdi_set_preload_cache_data', 'wdi_set_preload_cache_data');
+add_action('wp_ajax_wdi_getHashtagId', 'wdi_getHashtagId');
+add_action('wp_ajax_nopriv_wdi_getHashtagId', 'wdi_getHashtagId');
+add_action('wp_ajax_wdi_apply_changes', 'WDI_instagram_feeds_page');
+add_action('wp_ajax_nopriv_wdi_apply_changes', 'WDI_instagram_feeds_page');
 add_action('wp_ajax_wdi_account_disconnect', 'wdi_backend_ajax');
 add_action('wp_ajax_wdi_account_refresh', 'wdi_backend_ajax');
 
@@ -53,11 +47,13 @@ function wdi_register_plugin_block($blocks){
 }
 
 function wdi_register_block_editor_assets($assets){
-  $wd_bp_plugin_url = WDI_URL;
+  $min = ( WDI_MINIFY === true ) ? '.min' : '';
   $version = '2.0.3';
-  $js_path = $wd_bp_plugin_url . '/js/block.js';
-  $css_path = $wd_bp_plugin_url . '/css/block.css';
-  if(!isset($assets['version']) || version_compare($assets['version'], $version) === -1) {
+  $wd_bp_plugin_url = WDI_URL;
+  $js_path = $wd_bp_plugin_url . '/js/block' . $min . '.js';
+  $css_path = $wd_bp_plugin_url . '/css/block' . $min . '.css';
+
+  if ( !isset($assets['version']) || version_compare($assets['version'], $version) === -1 ) {
     $assets['version'] = $version;
     $assets['js_path'] = $js_path;
     $assets['css_path'] = $css_path;
@@ -69,10 +65,55 @@ function wdi_getUserMedia(){
   require_once(WDI_DIR . '/framework/WDILibrary.php');
   $wdi_nonce = WDILibrary::get('wdi_nonce');
   $user_name =  WDILibrary::get('user_name');
+  $feed_id =  WDILibrary::get('feed_id');
   if ( wp_verify_nonce($wdi_nonce, 'wdi_cache') && $user_name != '' ) {
     require_once ("framework/WDIInstagram.php");
     $WDIInstagram = new WDIInstagram();
-    $data = $WDIInstagram->getUserMedia($user_name);
+    $data = $WDIInstagram->getUserMedia($user_name, $feed_id);
+    echo $data; die;
+  }
+}
+
+function wdi_set_preload_cache_data() {
+  require_once(WDI_DIR . '/framework/WDILibrary.php');
+  $wdi_nonce = WDILibrary::get('wdi_nonce');
+  $user_name =  WDILibrary::get('user_name');
+  $feed_id =  WDILibrary::get('feed_id', 0);
+  $endpoint =  WDILibrary::get('endpoint');
+  $tag_id = WDILibrary::get('tag_id');
+  $tag_name = WDILibrary::get('$tag_name');
+  if ( wp_verify_nonce($wdi_nonce, 'wdi_cache') && $user_name != '' ) {
+    require_once ("framework/WDIInstagram.php");
+    $WDIInstagram = new WDIInstagram();
+    $data = $WDIInstagram->wdi_set_preload_cache_data($user_name, $feed_id, $endpoint, $tag_id, $tag_name);
+    echo $data;
+    die;
+  }
+}
+
+function wdi_getHashtagId() {
+  require_once(WDI_DIR . '/framework/WDILibrary.php');
+  $wdi_nonce = WDILibrary::get('wdi_nonce');
+  $tagname = WDILibrary::get('tagname');
+  $user_name = WDILibrary::get('user_name');
+  if ( wp_verify_nonce($wdi_nonce, 'wdi_cache') ) {
+    require_once("framework/WDIInstagram.php");
+    $WDIInstagram = new WDIInstagram();
+    $data = $WDIInstagram->wdi_getHashtagId($tagname,$user_name);
+    echo json_encode($data);
+    die;
+  }
+}
+
+function wdi_getRecentMediaComments(){
+  require_once(WDI_DIR . '/framework/WDILibrary.php');
+  $wdi_nonce = WDILibrary::get('wdi_nonce');
+  $user_name =  WDILibrary::get('user_name');
+  $media_id =  WDILibrary::get('media_id');
+  if ( wp_verify_nonce($wdi_nonce, 'wdi_cache') && $user_name != '' ) {
+    require_once ("framework/WDIInstagram.php");
+    $WDIInstagram = new WDIInstagram();
+    $data = $WDIInstagram->getRecentMediaComments($user_name,$media_id);
     echo $data; die;
   }
 }
@@ -81,30 +122,11 @@ function wdi_getTagRecentMedia(){
   require_once(WDI_DIR . '/framework/WDILibrary.php');
   $wdi_nonce = WDILibrary::get('wdi_nonce');
   if ( wp_verify_nonce($wdi_nonce, 'wdi_cache') ) {
-    if ( WDILibrary::get('tagname') != '' && WDILibrary::get('endpoint') != '' ) {
-      $tagname = WDILibrary::get('tagname');
-      $endpoint = WDILibrary::get('endpoint');
-      $wdiTagId = FALSE;
-      $next_url = NULL;
-      $user_name = NULL;
-      $wdiTagIdTemp = WDILibrary::get('wdiTagId');
-      if( $wdiTagIdTemp !== "false" && !empty($wdiTagIdTemp) ) {
-        $wdiTagId = $wdiTagIdTemp;
-      }
-      $next_urlTemp = WDILibrary::get('next_url', '', 'esc_url_raw', 'POST' );
-      if( !empty($next_urlTemp) ){
-        $next_url = $next_urlTemp;
-      }
-      $user_nameTemp = WDILibrary::get('user_name');
-      if( !empty($user_nameTemp) ) {
-        $user_name = $user_nameTemp;
-      }
-
+      $feed_id = WDILibrary::get('feed_id');
       require_once ("framework/WDIInstagram.php");
       $WDIInstagram = new WDIInstagram();
-      $data = $WDIInstagram->getTagRecentMedia($tagname, $endpoint, $next_url, $wdiTagId, $user_name);
+      $data = $WDIInstagram->getTagRecentMedia($feed_id);
       echo $data; die;
-    }
   }
 }
 
@@ -123,24 +145,42 @@ function wdi_cache(){
       } elseif ($task == "set"){
         $wdi_cache_response = WDILibrary::get('wdi_cache_response');
         if ( $wdi_cache_response != '' ) {
-          $data = $WDICache->set_cache_data($wdi_cache_name, $wdi_cache_response);
-          if ( $data === FALSE ) {
+          //$data = $WDICache->set_cache_data($wdi_cache_name, $wdi_cache_response);
+          /*if ( $data === FALSE ) {
             wdi_send_response(array( "success" => FALSE ));
           }
           else {
             wdi_send_response(array( "success" => TRUE ));
-          }
+          } */
           die;
         }
       }
     }
-    if ($task == "reset"){
-      $data = $WDICache->reset_cache();
-      if ( $data === FALSE ) {
-        wdi_send_response(array( "success" => FALSE ));
+    if ($task == "reset") {
+
+      global $wpdb;
+      $feeds = $wpdb->get_results("SELECT id,feed_users,hashtag_top_recent FROM ". $wpdb->prefix.WDI_FEED_TABLE, ARRAY_A);
+      foreach ( $feeds as $feed ) {
+
+
+
+        $data['data'][] = array(
+          'feed_id' => $feed['id'],
+          'users' => $feed['feed_users'],
+          'endpoint' => $feed['hashtag_top_recent']
+        );
+      }
+
+
+      $status = $WDICache->reset_cache();
+
+      if ( $status === FALSE ) {
+        $data['status'] = FALSE;
+        wdi_send_response($data);
       }
       else {
-        wdi_send_response(array( "success" => TRUE ));
+        $data['status'] = TRUE;
+        wdi_send_response($data);
       }
       die;
     }
@@ -200,7 +240,6 @@ function wdi_instagram_activate( $networkwide ) {
       return;
     }
   }
-  add_option('wdi_do_activation_set_up_redirect', 1);
   wdi_install();
 }
 
@@ -273,15 +312,17 @@ function wdi_privacy_policy() {
 }
 
 $wdi_options = wdi_get_options();
-wp_schedule_single_event( time() + (intval($wdi_options["wdi_transient_time"])*60), 'wdi_cache_cron' );
+if ( WDI_TRANSIENT_DEFAULT_TIME > 0 ) {
+  wp_schedule_single_event( time() + (intval(WDI_TRANSIENT_DEFAULT_TIME)*60), 'wdi_cache_cron' );
+}
 
 add_action( 'wdi_cache_cron', 'wdi_run_cache_cron' );
 function wdi_run_cache_cron() {
   require_once(WDI_DIR . '/framework/WDILibrary.php');
   WDILibrary::refresh_instagram_access_token();
-  require_once ("framework/WDIInstagram.php");
-  $WDIInstagram = new WDIInstagram();
-  $WDIInstagram->wdi_preload_cache();
+  require_once ("framework/WDICache.php");
+  $WDICache = new WDICache();
+  $WDICache->reset_cache();
 }
 
 add_filter('wdi_sanitize_options', 'wdi_create_sample_feed');
@@ -341,7 +382,7 @@ function wdi_create_sample_feed($new_options){
 
   $post_args = array(
     'post_content' => $post_content,
-    'post_status' => 'private',
+    'post_status' => 'publish',
     'post_title' => __('My Instagram Feed', 'wd-instagram-feed'),
     'post_type' => 'page',
   );
@@ -360,26 +401,34 @@ function wdi_create_sample_feed($new_options){
   return $new_options;
 }
 
-// Adding menues.
 add_action('admin_menu', 'WDI_instagram_menu', 9);
 function WDI_instagram_menu() {
   $menu_icon = WDI_URL . '/images/menu_icon.png';
-  $parent_slug = "wdi_feeds";
   $min_feeds_capability = wdi_get_create_feeds_cap();
-  add_menu_page(__('Instagram Feed', 'wd-instagram-feed'), 'Instagram Feed', $min_feeds_capability, 'wdi_feeds', 'WDI_instagram_feeds_page', $menu_icon);
-  add_submenu_page($parent_slug, __('Feeds', 'wd-instagram-feed'), __('Feeds', 'wd-instagram-feed'), $min_feeds_capability, 'wdi_feeds', 'WDI_instagram_feeds_page');
-  add_submenu_page($parent_slug, __('Themes', 'wd-instagram-feed'), __('Themes', 'wd-instagram-feed'), $min_feeds_capability, 'wdi_themes', 'WDI_instagram_themes_page');
-  add_submenu_page($parent_slug, __('Settings', 'wd-instagram-feed'), __('Settings', 'wd-instagram-feed'), 'manage_options', 'wdi_settings', 'WDI_instagram_settings_page');
-  add_submenu_page("", __('Uninstall', 'wd-instagram-feed'), __('Uninstall', 'wd-instagram-feed'), 'manage_options', 'wdi_uninstall', 'WDI_instagram_uninstall_page');
-  if ( WDI_IS_FREE ) {
-    /* Custom link to wordpress.org*/
-    global $submenu;
-    $url = 'https://wordpress.org/support/plugin/wd-instagram-feed/#new-post';
-    $submenu[$parent_slug][] = array(
-      '<div id="wdi_ask_question">' . __('Ask a question', 'wd-instagram-feed') . '</div>',
-      'manage_options',
-      $url
-    );
+  $wdi_options = get_option("wdi_instagram_options");
+  $authenticated_users_list = json_decode($wdi_options['wdi_authenticated_users_list']);
+  if ( empty($authenticated_users_list) ) {
+    $parent_slug = "wdi_settings";
+    add_menu_page(__('Instagram Settings', 'wd-instagram-feed'), 'Instagram Feed', $min_feeds_capability, $parent_slug, 'WDI_instagram_settings_page', $menu_icon);
+    add_submenu_page("", __('Uninstall', 'wd-instagram-feed'), __('Uninstall', 'wd-instagram-feed'), 'manage_options', 'wdi_uninstall', 'WDI_instagram_uninstall_page');
+  }
+  else {
+    $parent_slug = "wdi_feeds";
+    add_menu_page(__('Instagram Feed', 'wd-instagram-feed'), 'Instagram Feed', $min_feeds_capability, $parent_slug, 'WDI_instagram_feeds_page', $menu_icon);
+    add_submenu_page($parent_slug, __('Feeds', 'wd-instagram-feed'), __('Feeds', 'wd-instagram-feed'), $min_feeds_capability, 'wdi_feeds', 'WDI_instagram_feeds_page');
+    add_submenu_page($parent_slug, __('Themes', 'wd-instagram-feed'), __('Themes', 'wd-instagram-feed'), $min_feeds_capability, 'wdi_themes', 'WDI_instagram_themes_page');
+    add_submenu_page($parent_slug, __('Settings', 'wd-instagram-feed'), __('Settings', 'wd-instagram-feed'), 'manage_options', 'wdi_settings', 'WDI_instagram_settings_page');
+    add_submenu_page("", __('Uninstall', 'wd-instagram-feed'), __('Uninstall', 'wd-instagram-feed'), 'manage_options', 'wdi_uninstall', 'WDI_instagram_uninstall_page');
+    if ( WDI_IS_FREE ) {
+      /* Custom link to wordpress.org*/
+      global $submenu;
+      $url = 'https://wordpress.org/support/plugin/wd-instagram-feed/#new-post';
+      $submenu[$parent_slug][] = array(
+        '<div id="wdi_ask_question">' . __('Ask a question', 'wd-instagram-feed') . '</div>',
+        'manage_options',
+        $url
+      );
+    }
   }
 }
 
@@ -423,27 +472,23 @@ function wdi_load_scripts(){
   require_once(WDI_DIR . '/framework/WDILibrary.php');
   global $wdi_options;
   $page = WDILibrary::get('page');
-  if($page === 'wdi_themes' || $page === 'wdi_feeds' || $page === 'wdi_settings' || $page === 'wdi_uninstall') {
+  if ( $page === 'wdi_themes' || $page === 'wdi_feeds' || $page === 'wdi_settings' || $page === 'wdi_uninstall' ) {
+    $min = ( WDI_MINIFY === true ) ? '.min' : '';
     wp_register_style(WDI_PREFIX . '-roboto', 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
     wp_enqueue_script('jquery-color');
     wp_enqueue_script('wp-color-picker');
     wp_enqueue_style('wp-color-picker');
 
-    if(WDI_MINIFY === true) {
-      wp_enqueue_script('wdi_admin', plugins_url('js/wdi_admin.min.js', __FILE__), array("jquery", 'wdi_instagram'), wdi_get_pro_version());
-      wp_enqueue_script('wdi_instagram', plugins_url('js/wdi_instagram.min.js', __FILE__), array("jquery"), wdi_get_pro_version());
-    }
-    else {
-      wp_enqueue_script('wdi_admin', plugins_url('js/wdi_admin.js', __FILE__), array("jquery", 'wdi_instagram'), wdi_get_pro_version());
-      wp_enqueue_script('wdi_instagram', plugins_url('js/wdi_instagram.js', __FILE__), array("jquery"), wdi_get_pro_version());
-    }
+    wp_enqueue_script('wdi_admin', plugins_url('js/wdi_admin' . $min . '.js', __FILE__), array("jquery", 'wdi_instagram'), wdi_get_pro_version());
+    wp_enqueue_script('wdi_instagram', plugins_url('js/wdi_instagram' . $min . '.js', __FILE__), array("jquery"), wdi_get_pro_version());
 
     //localize
     $uninstall_url = wp_nonce_url(admin_url('admin-ajax.php'), 'wdiUninstallPlugin', 'uninstall_nonce');
     wp_localize_script("wdi_admin", 'wdi_ajax', array(
       'ajax_url' => admin_url('admin-ajax.php'),
       'uninstall_url' => $uninstall_url,
-      'wdi_nonce' => wp_create_nonce("wdi_cache")
+      'wdi_nonce' => wp_create_nonce("wdi_cache"),
+      'wdi_cache_request_count' => isset($wdi_options['wdi_cache_request_count']) ? $wdi_options['wdi_cache_request_count'] : 10,
     ));
 
     wp_localize_script("wdi_admin", 'wdi_messages', array(
@@ -469,6 +514,7 @@ function wdi_load_scripts(){
       'nor' => __('NOR', 'wd-instagram-feed'),
       'do_you_want_to_delete_selected_items' => __('Do you want to delete selected items?', 'wd-instagram-feed'),
       'user_field_required' => __('You have not selected a user, the user field is required.', 'wd-instagram-feed'),
+      'feed_title_field_required' => __('Title field is required.', 'wd-instagram-feed'),
       'please_write_hashtag' => __('Please write hashtag.', 'wd-instagram-feed'),
       'you_can_add_only_hashtags' => __('You can add only hashtags.', 'wd-instagram-feed')
     ));
@@ -484,16 +530,12 @@ function wdi_load_scripts(){
 //loading admin styles
 add_action('admin_enqueue_scripts', 'wdi_load_styles');
 
-function wdi_load_styles(){
-
+function wdi_load_styles() {
   require_once(WDI_DIR . '/framework/WDILibrary.php');
   $page = WDILibrary::get('page');
-  if($page === 'wdi_themes' || $page === 'wdi_feeds' || $page === 'wdi_settings' || $page === 'wdi_uninstall') {
-    if(WDI_MINIFY === true) {
-      wp_enqueue_style('wdi_backend', plugins_url('css/wdi_backend.min.css', __FILE__), array(), wdi_get_pro_version());
-    } else {
-      wp_enqueue_style('wdi_backend', plugins_url('css/wdi_backend.css', __FILE__), array(), wdi_get_pro_version());
-    }
+  if ( $page === 'wdi_themes' || $page === 'wdi_feeds' || $page === 'wdi_settings' || $page === 'wdi_uninstall' ) {
+    $min = ( WDI_MINIFY === true ) ? '.min' : '';
+    wp_enqueue_style('wdi_backend', plugins_url('css/wdi_backend' . $min . '.css', __FILE__), array(), wdi_get_pro_version());
   }
 }
 
@@ -569,7 +611,12 @@ function wdi_editor_button(){
   require_once(WDI_DIR . '/framework/WDILibrary.php');
   $page = WDILibrary::get('action');
   if($page != '' && (($page == 'WDIEditorShortcode'))) {
-    wp_register_script('wdi-shortcode', WDI_URL . '/js/shortcode.js', array('jquery'), WDI_VERSION);
+    if (WDI_MINIFY == TRUE) {
+      wp_register_script('wdi-shortcode', WDI_URL . '/js/shortcode.min.js', array('jquery'), WDI_VERSION);
+    } else {
+      wp_register_script('wdi-shortcode', WDI_URL . '/js/shortcode.js', array('jquery'), WDI_VERSION);
+    }
+
 
     require_once(WDI_DIR . '/admin/controllers/WDIControllerEditorShortcode.php');
     $controller_class = 'WDIControllerEditorShortcode';
@@ -804,9 +851,7 @@ function wdi_token_error_flag_notice(){
     if($screen_base === "instagram-feed_page_wdi_settings"){
       $link_to_reset = "reset token";
     }
-    echo "<div class='notice notice-error '>
-	    <p>Instagram token is invalid or expired. Please ".$link_to_reset." and sign-in again to get new one.</p>
-    </div>";
+    echo "<div class='notice notice-error'><p>Instagram token is invalid or expired. Please ". $link_to_reset ." and sign-in again to get new one.</p></div>";
   }
 }
 
@@ -828,7 +873,7 @@ function wdi_filter_var_notice(){
 /*ELEMENTOR*/
 add_action('plugins_loaded', 'wdi_elementor');
 function wdi_elementor(){
-  if(defined('ELEMENTOR_VERSION')) {
+  if ( defined('ELEMENTOR_VERSION') ) {
     include_once 'elementor/elementor.php';
     WDIElementor::get_instance();
   }

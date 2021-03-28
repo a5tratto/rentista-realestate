@@ -60,7 +60,8 @@ class Settings_controller_wdi {
     $wdi_options['wdi_feeds_min_capability'] = $post['wdi_feeds_min_capability'];
     $wdi_options['wdi_custom_css'] = esc_js(str_replace(array( "\n", "\r" ), "", $post['wdi_custom_css']));
     $wdi_options['wdi_custom_js'] = esc_js(str_replace(array( "\n", "\r" ), "", $post['wdi_custom_js']));
-    $update = update_option(WDI_OPT, $wdi_options);
+    $wdi_options['wdi_cache_request_count'] = intval($post['wdi_cache_request_count']);
+    update_option(WDI_OPT, $wdi_options);
     $message_id = 8;
     WDILibrary::redirect(add_query_arg(array(
                                          'page' => 'wdi_settings',
@@ -114,6 +115,7 @@ class Settings_controller_wdi {
         $wdi_options['wdi_access_token'] = $access_token;
       }
       update_option(WDI_OPT, $wdi_options);
+      delete_option('wdi_token_error_flag');
 
       WDILibrary::redirect(add_query_arg(array(
                                            'page' => 'wdi_settings',

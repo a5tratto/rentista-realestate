@@ -24,7 +24,7 @@ class Cli_Heartbeat {
 	 * ## OPTIONS
 	 *
 	 * <location>
-	 * : Settging name.
+	 * : Setting name.
 	 * ---
 	 * options:
 	 *  - frontend

@@ -205,8 +205,8 @@ abstract class WP_Optimization {
 		$this->logger = WP_Optimize()->get_logger();
 		$wpdb = $GLOBALS['wpdb'];
 		$this->wpdb = $wpdb;
-
 		$this->blogs_ids = $this->get_optimization_blogs();
+		$this->init();
 	}
 
 	/**
@@ -335,6 +335,15 @@ abstract class WP_Optimization {
 	 */
 	public function register_meta($key, $value) {
 		$this->meta[$key] = $value;
+	}
+
+	/**
+	 * Get meta-data added to the registered output.
+	 *
+	 * @return array
+	 */
+	public function get_meta() {
+		return $this->meta;
 	}
 	
 	public function init() {

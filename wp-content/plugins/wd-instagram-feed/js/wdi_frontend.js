@@ -4,21 +4,19 @@ if (typeof wdi_front == 'undefined') {
   };
 }
 
-wdi_front.detectEvent = function ()
-{
+wdi_front.detectEvent = function () {
+  var e = 'click';
   var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
-  if (isMobile) {
-    return "touchend";
-  } else {
-    return 'click';
+  if ( isMobile ) {
+    e = 'touchend';
   }
+  return e;
 }
 
 var wdi_error_show = false;
 var wdi_error_init = false;
 
-wdi_front.escape_tags = function (text)
-{
+wdi_front.escape_tags = function (text) {
   var lt = /</g,
     gt = />/g,
     ap = /'/g,
@@ -31,71 +29,47 @@ wdi_front.escape_tags = function (text)
   return text;
 }
 
-wdi_front.show_alert = function (message, response, wdi_current_feed)
-{
+wdi_front.show_alert = function ( message, response, wdi_current_feed ) {
   wdi_current_feed = jQuery('#wdi_feed_' + wdi_current_feed.feed_row.wdi_feed_counter);
-  if(response["meta"]["code"] === 400 && response["meta"]["error_type"] === "APINotAllowedError"){
-    if(typeof response.wdi_current_feed_name != "undefined"){
-      var wdi_private_user_name = response.wdi_current_feed_name;
-      var wdi_private_feed_names = wdi_current_feed.find(".wdi_private_feed_names");
-
-      if(typeof wdi_private_feed_names.attr("wdi_first_private_user") == "undefined"){
-        wdi_private_feed_names.attr("wdi_first_private_user",1);
-      }else{
-        wdi_private_user_name = ", " + wdi_private_user_name;
-      }
-
-      wdi_private_feed_names.append(wdi_private_user_name);
-      wdi_current_feed.find(".wdi_private_feed_error").removeClass("wdi_hidden");
-    }
-    wdi_current_feed.find(".wdi_spinner").remove();
-
-  }
-
-
-  if(typeof wdi_current_feed != "undefined" && response["meta"]["error_type"] != "APINotAllowedError"){
-    wdi_current_feed.find(".wdi_spinner").remove();
-    /*  if(wdi_error_show){
-        return;
-      }*/
+  if ( typeof wdi_current_feed != 'undefined' ) {
     wdi_error_show = true;
-
-    var wdi_js_error = wdi_current_feed.find(".wdi_js_error");
-    var wdi_token_error = wdi_current_feed.find(".wdi_token_error");
-
-    if(response!=false && typeof response.meta!= undefined && response.meta.error_type === "OAuthAccessTokenException"){
-      wdi_token_error.removeClass("wdi_hidden");
-      if(wdi_front_messages.wdi_token_error_flag != "1"){
+    wdi_current_feed.find('.wdi_spinner').remove();
+    var wdi_js_error = wdi_current_feed.find('.wdi_js_error');
+    var wdi_token_error = wdi_current_feed.find('.wdi_token_error');
+    if ( response != false && ( (typeof response.meta !== 'undefined' && response.meta.error == true && response.meta.error_type === 'OAuthException' ) || (typeof response.error !== 'undefined' && response.error.type === 'OAuthException') ) ) {
+      wdi_current_feed.find('.wdi_single_user').remove();
+      wdi_token_error.removeClass('wdi_hidden');
+      if ( wdi_front_messages.wdi_token_error_flag != '1' ) {
         jQuery.ajax({
           type: "POST",
           url: wdi_url.ajax_url,
           dataType: 'json',
           data: {
-            action: "wdi_token_flag",
+            action: 'wdi_token_flag',
             wdi_token_flag_nonce: wdi_front_messages.wdi_token_flag_nonce,
           },
-          success: function(data){
-
+          success: function ( data ) {
           }
         });
       }
-    }else{
-      wdi_js_error.removeClass("wdi_js_error");
-      wdi_js_error.addClass("wdi_js_error_no_animate");
+    }
+    else if ( typeof response.error !== 'undefined' && typeof response.error.message !== 'undefined') {
+      wdi_js_error.html(response.error.message);
+      wdi_current_feed.find('.wdi_single_user').remove();
+      wdi_js_error.removeClass('wdi_js_error');
+      wdi_js_error.addClass('wdi_js_error_no_animate');
       jQuery('.wdi_js_error_no_animate').show();
     }
 
-    if (wdi_front_messages.show_alerts) {
-      //alert(message);
+    if ( wdi_front_messages.show_alerts ) {
+      // alert(message);
     }
     else {
       console.log('%c' + message, "color:#cc0000;");
     }
   }
-
   wdi_error_show = true;
 }
-
 
 wdi_front.globalInit = function () {
 
@@ -105,6 +79,7 @@ wdi_front.globalInit = function () {
   if (typeof wdi_ajax.ajax_response != "undefined") {
     var init_feed_counter = wdi_feed_counter_init.wdi_feed_counter_init;
   }
+
   for (var i = init_feed_counter; i <= num; i++) {
 
     if(jQuery('#wdi_feed_' + i).length === 0) { //conflict with Yoast SEO, Page Builder by SiteOrigin
@@ -141,6 +116,7 @@ wdi_front.globalInit = function () {
     currentFeed.imageIndex = 0; //index for image indexes
     currentFeed.resIndex = 0; //responsive indexes used for pagination
     currentFeed.currentPage = 1; //pagination page number
+    currentFeed.currentPageLoadMore = 0; //pagination page number
     currentFeed.userSortFlags = []; //array for descripbing user based filter options
     currentFeed.customFilterChanged = false; //flag to notice filter change, onclick on username
 
@@ -225,29 +201,31 @@ wdi_front.init = function (currentFeed) {
     currentFeed.feed_users = ['self'];
     // do nothing,
   }
-  else
-  if (wdi_front.isJsonString(currentFeed.feed_row.feed_users)) {
-    /**
-     * Contains username and user_id of each user
-     * @type {[Array}
-     */
-    currentFeed.feed_users = JSON.parse(currentFeed.feed_row.feed_users);
+  else {
+    if (wdi_front.isJsonString(currentFeed.feed_row.feed_users)) {
+      /**
+       * Contains username and user_id of each user
+       * @type {[Array}
+       */
+      currentFeed.feed_users = JSON.parse(currentFeed.feed_row.feed_users);
 
-    /**
-     * Check if feed user has no id for some reason then update user
-     * and after updating them initialize feed
-     */
-  } else {
-    wdi_front.show_alert(wdi_front_messages.invalid_users_format, false ,currentFeed);
-    return;
+      /**
+       * Check if feed user has no id for some reason then update user
+       * and after updating them initialize feed
+       */
+    }
+    else {
+      wdi_front.show_alert(wdi_front_messages.invalid_users_format, false ,currentFeed);
+      return;
+    }
   }
-
   var all_tags = [];
   var feed_user = [];
   var feed_user_tags = [];
   if (typeof window["wdi_all_tags"] !== "undefined") {
     all_tags = window["wdi_all_tags"];
   }
+
   for (var k =0; k < currentFeed.feed_users.length; k++) {
     if (currentFeed.feed_users[k].username[0] === "#" && typeof currentFeed.feed_users[k].tag_id !== "undefined") {
       all_tags[currentFeed.feed_users[k].tag_id] = currentFeed.feed_users[k];
@@ -264,7 +242,6 @@ wdi_front.init = function (currentFeed) {
   currentFeed.feedImageResolution = feedResolution.image;
   currentFeed.feedVideoResolution = feedResolution.video;
   currentFeed.dataCount = currentFeed.feed_users.length;  // 1 in case of self feed
-
   for ( var i = 0; i < currentFeed.dataCount; i++ ) {
      wdi_front.instagramRequest(i, currentFeed);
   }
@@ -301,7 +278,6 @@ wdi_front.getFeedItemResolution = function (currentFeed) {
   var attr = container.attr('wdi-res').split('wdi_col_');
   container.find('#wdi_feed_item_example').remove();
 
-
   if(attr.length !== 2){
     return defaultResolution;
   }
@@ -312,16 +288,17 @@ wdi_front.getFeedItemResolution = function (currentFeed) {
   }
 
   var size = (container.width() / itemsCount) - 10;
-
   var resolution = defaultResolution;
 
   if(size <= 150){
     resolution.image = "thumbnail";
     resolution.video = "low_bandwidth";
-  }else if(size > 150 && size <= 320){
+  }
+  else if(size > 150 && size <= 320){
     resolution.image = "low_resolution";
     resolution.video = "low_resolution";
-  }else{
+  }
+  else{
     resolution.image = "standard_resolution";
     resolution.video = "standard_resolution";
   }
@@ -334,8 +311,7 @@ wdi_front.getFeedItemResolution = function (currentFeed) {
  * @param  {String}  str [string to check]
  * @return {Boolean}     [true or false]
  */
-wdi_front.isJsonString = function (str)
-{
+wdi_front.isJsonString = function (str) {
   try {
     JSON.parse(str);
   } catch (e) {
@@ -343,7 +319,6 @@ wdi_front.isJsonString = function (str)
   }
   return true;
 }
-
 
 /**
  * Makes an ajax request for given user from feed_users array
@@ -355,7 +330,6 @@ wdi_front.isJsonString = function (str)
 wdi_front.instagramRequest = function (id, currentFeed) {
   var _this = this,
     feed_users = currentFeed.feed_users;
-
   if (typeof feed_users[id] === 'string' && feed_users[id] === 'self') { // self liked media
     currentFeed.instagram.getRecentLikedMedia({
       success: function (response) {
@@ -372,28 +346,46 @@ wdi_front.instagramRequest = function (id, currentFeed) {
   }
   else {
       if ( this.getInputType(feed_users[id]['username']) == 'hashtag' ) {
-        currentFeed.instagram.getTagRecentMedia(this.stripHashtag(feed_users[id]['username']), {
-        success: function (response) {
-          if(typeof response.meta!= "undefined" && typeof response.meta.error_type != "undefined"){
-            wdi_front.show_alert(false, response, currentFeed);
-          }
-          currentFeed.mediaRequestsDone = true;
-
-          response = _this.checkMediaResponse(response, currentFeed);
-          if ( response != false ) {
-             _this.saveUserData(response, currentFeed.feed_users[id], currentFeed);
+        if ( this.isJsonString(currentFeed.feed_row.feed_users) ) {
+          json_feed_users = JSON.parse(currentFeed.feed_row.feed_users);
+          for ( var i in json_feed_users ) {
+            if ( json_feed_users[i].username.charAt(0) !== '#' ) {
+              user = json_feed_users[i];
+            }
           }
         }
-      }, null, currentFeed.feed_row.hashtag_top_recent);
+
+        currentFeed.instagram.getTagRecentMedia(this.stripHashtag(feed_users[id]['username']), {
+          feed_id: currentFeed.feed_row.id,
+          user_id: user.id,
+          user_name: user.username,
+          success: function (response) {
+            if ( ( typeof response.error != 'undefined' && response.error.type != 'undefined' ) || ( typeof response.meta != 'undefined' && response.meta.error == true ) ) {
+              wdi_front.show_alert(false, response, currentFeed);
+              return false;
+            }
+            currentFeed.mediaRequestsDone = true;
+            response = _this.checkMediaResponse(response, currentFeed);
+            if ( response != false ) {
+              _this.saveUserData(response, currentFeed.feed_users[id], currentFeed);
+            }
+          }
+        },
+        null,
+        currentFeed.feed_row.hashtag_top_recent,
+        0
+      );
     }
     else {
       if ( this.getInputType( feed_users[id]['username']) == 'user' ) {
         currentFeed.instagram.getUserMedia({
+          feed_id: currentFeed.feed_row.id,
           user_id: feed_users[id].id,
+          user_name: feed_users[id].username,
           success: function (response) {
-            if(typeof response.meta != "undefined" && typeof response.meta.error_type != "undefined"){
-              response.wdi_current_feed_name = feed_users[id].username;
+            if ( typeof response.meta != 'undefined' && typeof response.meta.error == true ) {
               wdi_front.show_alert(false, response, currentFeed);
+              return false;
             }
             currentFeed.mediaRequestsDone = true;
             response = _this.checkMediaResponse(response, currentFeed);
@@ -401,7 +393,7 @@ wdi_front.instagramRequest = function (id, currentFeed) {
                _this.saveUserData(response, currentFeed.feed_users[id], currentFeed);
             }
           }
-        });
+        }, '', 0);
       }
     }
   }
@@ -416,7 +408,6 @@ wdi_front.isHashtag = function (str)
 {
   return (str[0] === '#');
 }
-
 
 /*
  * Saves each user data on seperate index in currentFeed.usersData array
@@ -437,7 +428,6 @@ wdi_front.saveUserData = function (data, user, currentFeed) {
   currentFeed.currentResponseLength = wdi_front.getArrayContentLength(currentFeed.usersData, 'data');
   currentFeed.allResponseLength += currentFeed.currentResponseLength;
   if (currentFeed.dataCount == currentFeed.usersData.length) {
-
     //if getted objects is not enough then recuest new ones
     if (currentFeed.currentResponseLength < currentFeed.feed_row.number_of_photos && !wdi_front.userHasNoPhoto(currentFeed)) {
       /*here we are calling loadMore function out of recursion cycle, after this initial-keep call
@@ -451,7 +441,7 @@ wdi_front.saveUserData = function (data, user, currentFeed) {
       //when all data us properly displayed check for any active filters and then apply them
       wdi_front.applyFilters(currentFeed);
       /*removing load more button of feed has finished*/
-      if (!wdi_front.activeUsersCount(currentFeed)) {
+      if ( !wdi_front.activeUsersCount(currentFeed) ) {
         if (currentFeed.feed_row.feed_display_view == 'load_more_btn') {
           var feed_container = jQuery('#wdi_feed_' + currentFeed.feed_row.wdi_feed_counter);
           feed_container.find('.wdi_load_more').addClass('wdi_hidden');
@@ -462,13 +452,11 @@ wdi_front.saveUserData = function (data, user, currentFeed) {
   }
 }
 
-
 /*
  * Saves self user data on separate index in currentFeed.usersData array
  * And also checks if all data form all users is already avialable if yes it displays feed
  */
-wdi_front.saveSelfUserData = function (data, currentFeed)
-{
+wdi_front.saveSelfUserData = function (data, currentFeed) {
 
   //keep empty for self feed
   data['user_id'] = '';
@@ -507,8 +495,7 @@ wdi_front.saveSelfUserData = function (data, currentFeed)
 /**
  * checks weather all feed users have any photos after first time request
  */
-wdi_front.userHasNoPhoto = function (currentFeed, cstData)
-{
+wdi_front.userHasNoPhoto = function (currentFeed, cstData) {
   var counter = 0;
   var data = currentFeed.usersData;
   if (typeof cstData != 'undefined') {
@@ -541,14 +528,12 @@ wdi_front.userHasNoPhoto = function (currentFeed, cstData)
 /*
  *gives each instagram object custom hashtag parameter, which is used for searching image/video
  */
-wdi_front.appendRequestHashtag = function (data, hashtag)
-{
+wdi_front.appendRequestHashtag = function (data, hashtag) {
   for (var i = 0; i < data.length; i++) {
     data[i]['wdi_hashtag'] = hashtag;
   }
   return data;
 }
-
 
 /*
  * sorts data based on user choice and displays feed
@@ -556,17 +541,22 @@ wdi_front.appendRequestHashtag = function (data, hashtag)
  * it recursively calls wdi_front.loadMore() until the desired number of photos is reached
  */
 wdi_front.displayFeed = function (currentFeed, load_more_number) {
-
-  if (currentFeed.customFilterChanged == false) {
-    //sorting data...
-    var data = wdi_front.feedSort(currentFeed, load_more_number);
+  if(currentFeed.data.length >= currentFeed.allResponseLength) {
+    if (currentFeed.feed_row.feed_display_view == 'load_more_btn') {
+      var wdi_feed_counter = currentFeed.feed_row['wdi_feed_counter'];
+      jQuery('#wdi_feed_' + wdi_feed_counter).find('.wdi_load_more').remove();
+      jQuery('#wdi_feed_' + wdi_feed_counter).find('.wdi_spinner').remove();
+    }
+    return;
   }
-
+  if (currentFeed.customFilterChanged == false) {
+    // sorting data...
+   var data = wdi_front.feedSort(currentFeed, load_more_number);
+  }
 
   //becomes true when user clicks in frontend filter
   //if isset to true then loadmore recursion would not start
   var frontendCustomFilterClicked = currentFeed.customFilterChanged;
-
 
   // if custom filter changed then display custom data
   if (currentFeed.customFilterChanged == true) {
@@ -575,7 +565,6 @@ wdi_front.displayFeed = function (currentFeed, load_more_number) {
     //parsing data for lightbox
     currentFeed.parsedData = wdi_front.parseLighboxData(currentFeed, true);
   }
-
 
   //storing all sorted data in array for later use in user based filters
   if (currentFeed.feed_row.resort_after_load_more != '1') {
@@ -606,14 +595,15 @@ wdi_front.displayFeed = function (currentFeed, load_more_number) {
   //recursively calling load more to get photos
   var dataLength = wdi_front.getDataLength(currentFeed);
 
-
-  if (dataLength < currentFeed.photoCounter && !frontendCustomFilterClicked && currentFeed.instagramRequestCounter <= currentFeed.maxConditionalFiltersRequestCount && !wdi_front.allDataHasFinished(currentFeed)) {
+  // Counting how many images had to load during the pagination according to options
+  var mustLoadedCount = parseInt(currentFeed.feed_row.number_of_photos)+parseInt(currentFeed.feed_row.load_more_number*currentFeed.currentPageLoadMore);
+  if (dataLength < mustLoadedCount && !frontendCustomFilterClicked && currentFeed.instagramRequestCounter <= currentFeed.maxConditionalFiltersRequestCount && !wdi_front.allDataHasFinished(currentFeed)) {
     wdi_front.loadMore('', currentFeed);
-
-  } else {
+  }
+  else {
+    currentFeed.currentPageLoadMore++;
     wdi_front.allImagesLoaded(currentFeed);
   }
-
 
   /**
    * if maximum number of requests are reached then stop laoding more images and show images which are available
@@ -637,7 +627,6 @@ wdi_front.displayFeed = function (currentFeed, load_more_number) {
     jQuery('#wdi_feed_' + currentFeed.feed_row.wdi_feed_counter).find('#wdi_last_page').removeClass('wdi_disabled');
   }
 
-
   // reset instagram request counter to zero for next set of requests
   currentFeed.instagramRequestCounter = 0;
 
@@ -646,7 +635,6 @@ wdi_front.displayFeed = function (currentFeed, load_more_number) {
 
   //if there are any missing images in header then replace them with new ones if possible
   wdi_front.updateUsersImages(currentFeed);
-
 
   // /**
   //  * Enable image lazy laoding if pagination is not enabeled because pagination has option for preloading images
@@ -659,9 +647,7 @@ wdi_front.displayFeed = function (currentFeed, load_more_number) {
   // 			threshold : 400
   // 		});
   // 	});
-
   // }
-
 }
 
 /**
@@ -669,8 +655,7 @@ wdi_front.displayFeed = function (currentFeed, load_more_number) {
  * then update source
  * @param  {Object} currentFeed [description]
  */
-wdi_front.updateUsersImages = function (currentFeed)
-{
+wdi_front.updateUsersImages = function (currentFeed) {
   var elements = jQuery('#wdi_feed_' + currentFeed.feed_row.wdi_feed_counter).find('.wdi_single_user .wdi_user_img_wrap img');
   elements.each(function ()
   {
@@ -678,8 +663,6 @@ wdi_front.updateUsersImages = function (currentFeed)
       if (currentFeed.feed_row.liked_feed == 'liked') {
         return;
       }
-
-
       for (var j = 0; j < currentFeed.usersData.length; j++) {
         if (currentFeed.usersData[j]['username'] == jQuery(this).parent().parent().find('h3').text()) {
           if (currentFeed.usersData[j]['data'].length != 0) {
@@ -691,14 +674,12 @@ wdi_front.updateUsersImages = function (currentFeed)
   });
 }
 
-
 /**
  * Displays data in masonry layout
  * @param  {Object} data        data to be displayed
  * @param  {Object} currentFeed
  */
-wdi_front.masonryDisplayFeedItems = function (data, currentFeed)
-{
+wdi_front.masonryDisplayFeedItems = function (data, currentFeed) {
   var masonryColEnds = [];
   var masonryColumns = [];
   if (jQuery('#wdi_feed_' + currentFeed.feed_row.wdi_feed_counter + " .wdi_feed_wrapper").length == 0) {
@@ -736,7 +717,6 @@ wdi_front.masonryDisplayFeedItems = function (data, currentFeed)
     currentFeed.customFilterChanged = false;
   }
 
-
   //loop for displaying items
   for (var i = 0; i < data.length; i++) {
 
@@ -748,13 +728,17 @@ wdi_front.masonryDisplayFeedItems = function (data, currentFeed)
 
     currentFeed.displayedData.push(data[i]);
     /*carousel feature*/
+    var wdi_media_type = "";
+    if(typeof data[i]["wdi_hashtag"] != "undefined"){
+      wdi_media_type = data[i]["wdi_hashtag"];
+    }
     if (data[i]['type'] == 'image') {
-      var photoTemplate = wdi_front.getPhotoTemplate(currentFeed);
+      var photoTemplate = wdi_front.getPhotoTemplate(currentFeed, wdi_media_type);
     } else if(data[i].hasOwnProperty('videos') || data[i]['type'] == 'video') {
-      var photoTemplate = wdi_front.getVideoTemplate(currentFeed);
+      var photoTemplate = wdi_front.getVideoTemplate(currentFeed, wdi_media_type);
     }
     else{
-      var photoTemplate = wdi_front.getSliderTemplate(currentFeed);
+      var photoTemplate = wdi_front.getSliderTemplate(currentFeed, wdi_media_type);
     }
 
     var rawItem = data[i];
@@ -784,8 +768,7 @@ wdi_front.masonryDisplayFeedItems = function (data, currentFeed)
   var columnFlag = false;
   currentFeed.wdi_load_count = i;
   var wdi_feed_counter = currentFeed.feed_row['wdi_feed_counter'];
-  var feed_wrapper = jQuery('#wdi_feed_' + wdi_feed_counter + ' img.wdi_img').on('load', function ()
-  {
+  var feed_wrapper = jQuery('#wdi_feed_' + wdi_feed_counter + ' img.wdi_img').on('load', function () {
     currentFeed.wdi_loadedImages++;
     checkLoaded();
 
@@ -820,8 +803,7 @@ wdi_front.masonryDisplayFeedItems = function (data, currentFeed)
 
 
   //checks if all iamges have been succesfully loaded then it updates variables for next time use
-  function checkLoaded()
-  {
+  function checkLoaded() {
 
     if (currentFeed.wdi_load_count === currentFeed.wdi_loadedImages && currentFeed.wdi_loadedImages != 0) {
       currentFeed.loadedImages = 0;
@@ -838,16 +820,12 @@ wdi_front.masonryDisplayFeedItems = function (data, currentFeed)
 
   //check if load more done successfully then set infinite scroll flag to false
   currentFeed.infiniteScrollFlag = false;
-
-
 }
-
 
 /*
  * Calcuates image resolution
  */
-wdi_front.getImageResolution = function (data)
-{
+wdi_front.getImageResolution = function (data) {
 
   var originalWidth = data['images']['standard_resolution']['width'];
   var originalHeight = data['images']['standard_resolution']['height'];
@@ -859,8 +837,7 @@ wdi_front.getImageResolution = function (data)
  * Calculates data count on global Storage and if custom storage provied
  * it adds custom storage data count to golbals data count and returns length of all storages
  */
-wdi_front.getDataLength = function (currentFeed, customStorage)
-{
+wdi_front.getDataLength = function (currentFeed, customStorage) {
 
   var length = 0;
   if (typeof customStorage === 'undefined') {
@@ -876,8 +853,7 @@ wdi_front.getDataLength = function (currentFeed, customStorage)
   return length;
 }
 
-wdi_front.getArrayContentLength = function (array, data)
-{
+wdi_front.getArrayContentLength = function (array, data) {
   var sum = 0;
   for (var i = 0; i < array.length; i++) {
     if (array[i]['finished'] == 'finished' || (typeof array[i]['error'] !== 'undefined')) {
@@ -887,7 +863,6 @@ wdi_front.getArrayContentLength = function (array, data)
   }
   return sum;
 }
-
 
 /**
  * Displays data in thumbnail layout
@@ -944,19 +919,27 @@ wdi_front.displayFeedItems = function (data, currentFeed) {
         continue;
       }
     }
-
+    var wdi_media_type = "";
+    if(typeof data[i]["wdi_hashtag"] != "undefined"){
+      wdi_media_type = data[i]["wdi_hashtag"];
+    }
     if (data[i]['type'] == 'image') {
-      var photoTemplate = wdi_front.getPhotoTemplate(currentFeed);
+      var photoTemplate = wdi_front.getPhotoTemplate(currentFeed, wdi_media_type);
     } else if(data[i].hasOwnProperty('videos')) {
-      var photoTemplate = wdi_front.getVideoTemplate(currentFeed);
+      var photoTemplate = wdi_front.getVideoTemplate(currentFeed, wdi_media_type);
     }
     else{
-      var photoTemplate = wdi_front.getSliderTemplate(currentFeed);
+      var photoTemplate = wdi_front.getSliderTemplate(currentFeed, wdi_media_type);
     }
 
     var rawItem = data[i];
     var item = wdi_front.createObject(rawItem, currentFeed);
-    var html = photoTemplate(item);
+
+    var html = '';
+    /* undefined when carousel media not defined */
+    if( typeof item !== 'undefined' ) {
+      html = photoTemplate(item);
+    }
     feed_wrapper.html(feed_wrapper.html() + html);
 
     currentFeed.imageIndex++;
@@ -991,12 +974,9 @@ wdi_front.displayFeedItems = function (data, currentFeed) {
     //calls wdi_responsive.columnControl() which calculates column number on page
     //and gives feed_wrapper proper column class
     if (columnFlag === false) {
-
-
       wdi_responsive.columnControl(currentFeed, 1);
       columnFlag = true;
     }
-
 
     // //Binds caption opening and closing event to each image photo_title/mmmmmm
     // if (currentFeed.feed_row.feed_type != 'blog_style') {
@@ -1042,8 +1022,7 @@ wdi_front.displayFeedItems = function (data, currentFeed) {
 
 }
 
-wdi_front.checkFeedFinished = function (currentFeed)
-{
+wdi_front.checkFeedFinished = function (currentFeed) {
   for (var i = 0; i < currentFeed.usersData.length; i++) {
     if (typeof currentFeed.usersData[i]['finished'] == 'undefined') {
       return false;
@@ -1052,8 +1031,7 @@ wdi_front.checkFeedFinished = function (currentFeed)
   return true;
 }
 
-wdi_front.sortingOperator = function (sortImagesBy, sortOrder)
-{
+wdi_front.sortingOperator = function (sortImagesBy, sortOrder) {
   var operator;
   switch (sortImagesBy) {
     case 'date':
@@ -1138,76 +1116,60 @@ wdi_front.sortingOperator = function (sortImagesBy, sortOrder)
 /*
  * Calls smart picker method and then after receiving data it sorts data based on user choice
  */
-wdi_front.feedSort = function (currentFeed, load_more_number)
-{
-
+wdi_front.feedSort = function (currentFeed, load_more_number) {
   var sortImagesBy = currentFeed.feed_row['sort_images_by'];
   var sortOrder = currentFeed.feed_row['display_order'];
-
   if (currentFeed.feed_row['resort_after_load_more'] === '1') {
-    currentFeed['data'] = currentFeed['data'].concat(wdi_front.smartPicker(currentFeed, load_more_number));
-  } else {
-    currentFeed['data'] = wdi_front.smartPicker(currentFeed, load_more_number);
+     currentFeed['data'] = currentFeed['data'].concat(wdi_front.smartPicker(currentFeed, load_more_number));
   }
-
-
+  else {
+     currentFeed['data'] = wdi_front.smartPicker(currentFeed, load_more_number);
+  }
   var operator = wdi_front.sortingOperator(sortImagesBy, sortOrder);
   currentFeed['data'].sort(operator);
   return currentFeed['data'];
-
 }
 
 /*
  * Filters all requested data and takes some amount of data for each user
  * and stops picking when it reaches number_of_photos limit
  */
-wdi_front.smartPicker = function (currentFeed, load_more_number)
-{
-
+wdi_front.smartPicker = function (currentFeed, load_more_number) {
   var dataStorage = [];
   var dataLength = 0;
   var readyData = [];
-  var perUser = Math.ceil(currentFeed['feed_row']['number_of_photos'] / currentFeed['usersData'].length);
   var number_of_photos = parseInt(currentFeed['feed_row']['number_of_photos']);
+  var perUser = Math.ceil(number_of_photos / currentFeed['usersData'].length);
   var remainder = 0;
-
-  //check if loadmore was clicked
+  // check if loadmore was clicked
   if (load_more_number != '' && typeof load_more_number != 'undefined' && load_more_number != null) {
     number_of_photos = parseInt(load_more_number);
     perUser = Math.ceil(number_of_photos / wdi_front.activeUsersCount(currentFeed));
   }
 
-
-  var sortOperator = function (a, b)
-  {
+  var sortOperator = function (a, b){
     return (a['data'].length > b['data'].length) ? 1 : -1;
   }
 
-  var sortOperator1 = function (a, b)
-  {
+  var sortOperator1 = function (a, b) {
     return (a.length() > b.length()) ? 1 : -1;
   }
-
 
   // storing user data in global dataStoreageRaw variable
   currentFeed.storeRawData(currentFeed.usersData, 'dataStorageRaw');
 
-  //dataStorageRaw
+  // dataStorageRaw
   var dataStorageRaw = currentFeed['dataStorageRaw'].sort(sortOperator1);
 
   //sorts user data desc
   var usersData = currentFeed['usersData'].sort(sortOperator);
-
-
   //picks data from users and updates pagination in request json
+
   //for next time call
-  for (var i = 0; i < usersData.length; i++) {
-
+  for ( var i = 0; i < usersData.length; i++ ) {
     remainder += perUser;
-
     /* if data is less then amount for each user then pick all data */
     if (dataStorageRaw[i].length() <= remainder) {
-
       /* update remainder */
       remainder -= dataStorageRaw[i].length();
 
@@ -1215,101 +1177,45 @@ wdi_front.smartPicker = function (currentFeed, load_more_number)
       dataStorage.push(dataStorageRaw[i].getData(dataStorageRaw[i].length()));
       /* update data length */
       dataLength += dataStorage[dataStorage.length - 1].length;
-
-
-    } else {
+    }
+    else {
       if (dataLength + remainder > number_of_photos) {
         remainder = number_of_photos - dataLength;
       }
 
       var pickedData = [];
-
-
       if (currentFeed['auto_trigger'] === false) {
         pickedData = pickedData.concat(dataStorageRaw[i].getData(remainder));
-      } else {
+      }
+      else {
         if (pickedData.length + wdi_front.getDataLength(currentFeed) + wdi_front.getDataLength(currentFeed, dataStorage) < currentFeed['feed_row']['number_of_photos']) {
           pickedData = pickedData.concat(dataStorageRaw[i].getData(remainder));
         }
       }
 
       remainder = 0;
-
       dataLength += pickedData.length;
       dataStorage.push(pickedData);
     }
-
-
-    /*if (usersData[i]['data'].length <= remainder) {
-
-     var pagination = usersData[i]['pagination']['next_url'];
-     if (usersData[i]['finished'] === undefined) {
-     dataStorage.push(usersData[i]['data']);
-     remainder -= usersData[i]['data'].length;
-     dataLength += usersData[i]['data'].length;
-     }
-
-     if (usersData[i]['finished'] === undefined) {
-     if (pagination === undefined || pagination === '' || pagination === null) {
-     usersData[i]['finished'] = 'finished';
-     }
-     }
-     } else {
-     if ((dataLength + remainder) > number_of_photos) {
-     remainder = number_of_photos - dataLength;
-     }
-     var pickedData = [];
-     var indexPuller = 0;
-     for (var j = 0; j < remainder; j++) {
-     if (currentFeed['auto_trigger'] === false) {
-     if (usersData[i]['finished'] === undefined) {
-     pickedData.push(usersData[i]['data'][j]);
-     }
-     } else {
-     if (pickedData.length + wdi_front.getDataLength(currentFeed) + wdi_front.getDataLength(currentFeed, dataStorage) < currentFeed['feed_row']['number_of_photos']) {
-     if (usersData[i]['finished'] === undefined) {
-     pickedData.push(usersData[i]['data'][j]);
-     }
-     } else {
-     indexPuller++;
-     }
-     }
-
-     }
-     j -= indexPuller;
-
-     remainder = 0;
-
-
-
-     //updating pagination
-
-
-
-     //pushes picked data into local storage
-     dataLength += pickedData.length;
-     dataStorage.push(pickedData);
-
-     }*/
   }
   //checks if in golbal storage user already exisit then it adds new data to user old data
   //else it simple puches new user with it's data to global storage
   for (i = 0; i < dataStorage.length; i++) {
     if (typeof currentFeed.dataStorage[i] === 'undefined') {
       currentFeed.dataStorage.push(dataStorage[i]);
-    } else {
+    }
+    else {
       currentFeed.dataStorage[i] = currentFeed.dataStorage[i].concat(dataStorage[i]);
     }
   }
 
-  //parsing data for lightbox
-  currentFeed.parsedData = wdi_front.parseLighboxData(currentFeed);
+  // parsing data for lightbox
+   currentFeed.parsedData = wdi_front.parseLighboxData(currentFeed);
 
-  //combines together all avialable data in global storage and returns it
+  // combines together all avialable data in global storage and returns it
   for (i = 0; i < dataStorage.length; i++) {
     readyData = readyData.concat(dataStorage[i]);
   }
-
   return readyData;
 }
 
@@ -1318,25 +1224,45 @@ wdi_front.smartPicker = function (currentFeed, load_more_number)
  */
 wdi_front.createObject = function (obj, currentFeed) {
   var caption = (obj['caption'] != null) ? obj['caption']['text'] : '&nbsp';
-  var videoUrl = wdi_url.plugin_url + "images/video_missing.png";
-  if ( obj['type'] == 'video' && obj['videos'][currentFeed.feedVideoResolution] && obj['videos'][currentFeed.feedVideoResolution]['url'] != null ) {
-    videoUrl = obj.hasOwnProperty('videos') ? obj['videos'][currentFeed.feedVideoResolution]['url'] : '';
-  }
-  if ( typeof obj.images[currentFeed.feedImageResolution] == "undefined" ) {
-    var image_url = wdi_url.plugin_url + "images/missing.png";
-  }
-  else {
-    if ( obj.type == "carousel" && typeof obj.images[currentFeed.feedImageResolution].url === 'undefined' ) {
-      if ( typeof obj.carousel_media[0].images !== 'undefined' ) {
-        var image_url = obj.carousel_media[0].images[currentFeed.feedImageResolution].url;
-      }
-      else if ( typeof obj.carousel_media[0].videos !== 'undefined' ) {
-        var image_url = wdi_url.plugin_url + 'images/video_missing.png'; //obj.carousel_media[0].videos['standard_resolution'].url;
-      }
-    }
-    else {
+  switch (obj['type']) {
+    case 'image':
       var image_url = obj.images[currentFeed.feedImageResolution].url;
-    }
+      var videoUrl = undefined;
+      var thumbType = 'image';
+      break;
+    case 'video':
+      var image_url = undefined;
+      var videoUrl = obj.hasOwnProperty('videos') ? obj['videos'][currentFeed.feedVideoResolution]['url'] : wdi_url.plugin_url + "images/video_missing.png";
+      var thumbType = 'video';
+      break;
+    case 'carousel':
+      if( obj.carousel_media.length === 0 ){
+          var image_url = wdi_url.plugin_url + "images/missing.png";
+          var videoUrl = undefined;
+          var thumbType = 'image';
+      } else {
+          switch (obj.carousel_media[0].type) {
+            case 'image':
+              var image_url = obj.carousel_media[0].images[currentFeed.feedImageResolution].url
+              var videoUrl = undefined;
+              var thumbType = 'image';
+              break;
+            case 'video':
+              var image_url = undefined;
+              var videoUrl = obj.carousel_media[0].videos[currentFeed.feedVideoResolution].url;
+              var thumbType = 'video';
+              break;
+            default:
+              var image_url = wdi_url.plugin_url + "images/missing.png";
+              var videoUrl = wdi_url.plugin_url + "images/video_missing.png";
+              var thumbType = 'image';
+          }
+      }
+      break;
+    default:
+      var image_url = wdi_url.plugin_url + "images/missing.png";
+      var videoUrl = wdi_url.plugin_url + "images/video_missing.png";
+      var thumbType = 'image'
   }
 
   var imageIndex = currentFeed.imageIndex;
@@ -1356,6 +1282,7 @@ wdi_front.createObject = function (obj, currentFeed) {
   }
   var photoObject = {
     'id': obj['id'],
+    'thumbType': thumbType,
     'caption': wdi_front.escape_tags(caption),
     'image_url': image_url,
     'likes': obj['likes']['count'],
@@ -1374,8 +1301,7 @@ wdi_front.createObject = function (obj, currentFeed) {
 /*
  * If pagination is on sets the proper page number
  */
-wdi_front.setPage = function (currentFeed)
-{
+wdi_front.setPage = function (currentFeed) {
   var display_type = currentFeed.feed_row.feed_display_view;
   var feed_type = currentFeed.feed_row.feed_type;
   if (display_type != 'pagination') {
@@ -1397,8 +1323,7 @@ wdi_front.setPage = function (currentFeed)
 /*
  * Template for all feed items which have type=image
  */
-wdi_front.getPhotoTemplate = function (currentFeed)
-{
+wdi_front.getPhotoTemplate = function (currentFeed , type) {
   var page = wdi_front.setPage(currentFeed);
   var customClass = '';
   var pagination = '';
@@ -1486,12 +1411,13 @@ wdi_front.getPhotoTemplate = function (currentFeed)
     '</div>' +
     '</div>' +
     '</div>';
+  var imageIndex = currentFeed['imageIndex'];
   if (currentFeed['feed_row']['show_likes'] === '1' || currentFeed['feed_row']['show_comments'] === '1' || currentFeed['feed_row']['show_description'] === '1') {
     source += '<div class="wdi_photo_meta">';
-    if (currentFeed['feed_row']["thumb_user"][0] ==="#" && currentFeed['feed_row']['show_likes'] === '1') {
+    if (currentFeed['feed_row']['show_likes'] === '1' && currentFeed['dataStorageList'][imageIndex]['likes']['count'] != 0) {
       source += '<div class="wdi_thumb_likes"><i class="tenweb-i tenweb-i-heart-o">&nbsp;<%= likes%></i></div>';
     }
-    if (currentFeed['feed_row']["thumb_user"][0] ==="#" && currentFeed['feed_row']['show_comments'] === '1') {
+    if (currentFeed['feed_row']['show_comments'] === '1' && currentFeed['dataStorageList'][imageIndex]['comments']['count'] != 0) {
       source += '<div class="wdi_thumb_comments"><i class="tenweb-i tenweb-i-comment-square">&nbsp;<%= comments%></i></div>';
     }
     source += '<div class="wdi_clear"></div>';
@@ -1508,12 +1434,10 @@ wdi_front.getPhotoTemplate = function (currentFeed)
   return template;
 }
 
-
 /*
  * Template for all feed items which have type=image
  */
-wdi_front.getSliderTemplate = function (currentFeed)
-{
+wdi_front.getSliderTemplate = function (currentFeed, type) {
   var page = wdi_front.setPage(currentFeed);
   var customClass = '';
   var pagination = '';
@@ -1592,7 +1516,11 @@ wdi_front.getSliderTemplate = function (currentFeed)
     '<div class="wdi_photo_wrap">' +
     '<div class="wdi_photo_wrap_inner">' +
     '<div class="wdi_photo_img ' + wdi_shape_class + '">' +
-    '<img class="wdi_img" ' + sourceAttr + '="<%=image_url%>" alt="feed_image" onerror="wdi_front.brokenImageHandler(this);">' +
+    "<% if (thumbType === 'video') { %>"+
+        '<video class="wdi_img" ' + sourceAttr + '="<%=video_url%>" alt="feed_image" onerror="wdi_front.brokenImageHandler(this);"></video>'+
+    "<% } else {%>"+
+        '<img class="wdi_img" ' + sourceAttr + '="<%=image_url%>" alt="feed_image" onerror="wdi_front.brokenImageHandler(this);">' +
+    "<% }%>"+
     '<div class="wdi_photo_overlay ' + overlayCustomClass + '" >' + showUsernameOnThumb +
     '<div class="wdi_thumb_icon" ' + onclick + ' style="display:table;width:100%;height:100%;">' +
     '<div style="display:table-cell;vertical-align:middle;text-align:center;color:white;">' +
@@ -1603,12 +1531,13 @@ wdi_front.getSliderTemplate = function (currentFeed)
     '</div>' +
     '</div>' +
     '</div>';
+  var imageIndex = currentFeed['imageIndex'];
   if (currentFeed['feed_row']['show_likes'] === '1' || currentFeed['feed_row']['show_comments'] === '1' || currentFeed['feed_row']['show_description'] === '1') {
     source += '<div class="wdi_photo_meta">';
-    if (currentFeed['feed_row']["thumb_user"][0] ==="#" && currentFeed['feed_row']['show_likes'] === '1') {
+    if (currentFeed['feed_row']['show_likes'] === '1' && currentFeed['dataStorageList'][imageIndex]['likes']['count'] != 0) {
       source += '<div class="wdi_thumb_likes"><i class="tenweb-i tenweb-i-heart-o">&nbsp;<%= likes%></i></div>';
     }
-    if (currentFeed['feed_row']["thumb_user"][0] ==="#" && currentFeed['feed_row']['show_comments'] === '1') {
+    if (currentFeed['feed_row']['show_comments'] === '1' && currentFeed['dataStorageList'][imageIndex]['comments']['count'] != 0) {
       source += '<div class="wdi_thumb_comments"><i class="tenweb-i tenweb-i-comment-square">&nbsp;<%= comments%></i></div>';
     }
     source += '<div class="wdi_clear"></div>';
@@ -1625,8 +1554,7 @@ wdi_front.getSliderTemplate = function (currentFeed)
   return template;
 }
 
-wdi_front.replaceToVideo = function (url, index, feed_counter)
-{
+wdi_front.replaceToVideo = function (url, index, feed_counter) {
 
   overlayHtml = "<video style='width:auto !important; height:auto !important; max-width:100% !important; max-height:100% !important; margin:0 !important;' controls=''>" +
     "<source src='" + url + "' type='video/mp4'>" +
@@ -1639,8 +1567,7 @@ wdi_front.replaceToVideo = function (url, index, feed_counter)
 /*
  * Template for all feed items which have type=video
  */
-wdi_front.getVideoTemplate = function (currentFeed)
-{
+wdi_front.getVideoTemplate = function (currentFeed, type) {
   var page = wdi_front.setPage(currentFeed);
   var customClass = '';
   var pagination = '';
@@ -1719,7 +1646,7 @@ wdi_front.getVideoTemplate = function (currentFeed)
     '<div class="wdi_photo_wrap">' +
     '<div class="wdi_photo_wrap_inner">' +
     '<div class="wdi_photo_img ' +wdi_shape_class + '">' +
-    '<img class="wdi_img" ' + sourceAttr + '="<%=video_url%>" alt="feed_image" onerror="wdi_front.brokenImageHandler(this);">' +
+    '<video class="wdi_img" ' + sourceAttr + '="<%=video_url%>" alt="feed_image" onerror="wdi_front.brokenImageHandler(this);"></video>' +
     '<div class="wdi_photo_overlay ' + overlayCustomClass + '" ' + onclick + '>' + showUsernameOnThumb +
     '<div class="wdi_thumb_icon" style="display:table;width:100%;height:100%;">' +
     '<div style="display:table-cell;vertical-align:middle;text-align:center;color:white;">' +
@@ -1730,12 +1657,13 @@ wdi_front.getVideoTemplate = function (currentFeed)
     '</div>' +
     '</div>' +
     '</div>';
+  var imageIndex = currentFeed['imageIndex'];
   if (currentFeed['feed_row']['show_likes'] === '1' || currentFeed['feed_row']['show_comments'] === '1' || currentFeed['feed_row']['show_description'] === '1') {
     source += '<div class="wdi_photo_meta">';
-    if (currentFeed['feed_row']["thumb_user"][0] ==="#" && currentFeed['feed_row']['show_likes'] === '1') {
+    if (currentFeed['feed_row']['show_likes'] === '1' && currentFeed['dataStorageList'][imageIndex]['likes']['count'] != 0) {
       source += '<div class="wdi_thumb_likes"><i class="tenweb-i tenweb-i-heart-o">&nbsp;<%= likes%></i></div>';
     }
-    if (currentFeed['feed_row']["thumb_user"][0] ==="#" && currentFeed['feed_row']['show_comments'] === '1') {
+    if (currentFeed['feed_row']['show_comments'] === '1' && currentFeed['dataStorageList'][imageIndex]['comments']['count'] != 0) {
       source += '<div class="wdi_thumb_comments"><i class="tenweb-i tenweb-i-comment-square">&nbsp;<%= comments%></i></div>';
     }
     source += '<div class="wdi_clear"></div>';
@@ -1751,8 +1679,7 @@ wdi_front.getVideoTemplate = function (currentFeed)
   return template;
 }
 
-wdi_front.bindEvents = function (currentFeed)
-{
+wdi_front.bindEvents = function (currentFeed) {
 
   if (jQuery('#wdi_feed_' + currentFeed.feed_row.wdi_feed_counter + " .wdi_feed_wrapper").length == 0) {
     //no feed in DOM, ignore
@@ -1760,8 +1687,7 @@ wdi_front.bindEvents = function (currentFeed)
   }
   if (currentFeed.feed_row.feed_display_view == 'load_more_btn') {
     //binding load more event
-    jQuery('#wdi_feed_' + currentFeed.feed_row['wdi_feed_counter'] + ' .wdi_load_more_container').on(wdi_front.clickOrTouch, function ()
-    {
+    jQuery('#wdi_feed_' + currentFeed.feed_row['wdi_feed_counter'] + ' .wdi_load_more_container').on(wdi_front.clickOrTouch, function () {
       //do the actual load more operation
       wdi_front.loadMore(jQuery(this).find('.wdi_load_more_wrap'));
     });
@@ -1799,8 +1725,7 @@ wdi_front.bindEvents = function (currentFeed)
   }
 }
 
-wdi_front.infiniteScroll = function (currentFeed)
-{
+wdi_front.infiniteScroll = function (currentFeed) {
   if ((jQuery(window).scrollTop() + jQuery(window).height() - 100) >= jQuery('#wdi_feed_' + currentFeed.feed_row['wdi_feed_counter'] + ' #wdi_infinite_scroll').offset().top) {
     if (currentFeed.infiniteScrollFlag === false && currentFeed.stopInfiniteScrollFlag == false) {
       currentFeed.infiniteScrollFlag = true;
@@ -1813,8 +1738,7 @@ wdi_front.infiniteScroll = function (currentFeed)
   }
 }
 
-wdi_front.paginationFirstPage = function (btn, currentFeed)
-{
+wdi_front.paginationFirstPage = function (btn, currentFeed) {
   if (currentFeed.paginator == 1 || currentFeed.currentPage == 1) {
     btn.addClass('wdi_disabled');
     return;
@@ -1829,11 +1753,9 @@ wdi_front.paginationFirstPage = function (btn, currentFeed)
 
   //disabling first page button
   btn.addClass('wdi_disabled');
-
 }
 
-wdi_front.paginationLastPage = function (btn, currentFeed)
-{
+wdi_front.paginationLastPage = function (btn, currentFeed) {
   if (currentFeed.paginator == 1 || currentFeed.currentPage == currentFeed.paginator) {
     return;
   }
@@ -1849,8 +1771,7 @@ wdi_front.paginationLastPage = function (btn, currentFeed)
   first_page_btn.removeClass('wdi_disabled');
 }
 
-wdi_front.paginatorNext = function (btn, currentFeed)
-{
+wdi_front.paginatorNext = function (btn, currentFeed) {
   var last_page_btn = btn.parent().find('#wdi_last_page');
   var first_page_btn = btn.parent().find('#wdi_first_page');
   currentFeed.paginatorNextFlag = true;
@@ -1871,10 +1792,8 @@ wdi_front.paginatorNext = function (btn, currentFeed)
       last_page_btn.addClass('wdi_disabled');
     }
   }
-
   //enable first page button
   first_page_btn.removeClass('wdi_disabled');
-
 }
 
 wdi_front.paginatorPrev = function (btn, currentFeed)
@@ -1952,96 +1871,99 @@ wdi_front.loadMore = function (button, _currentFeed) {
   if (button != '' && typeof button != 'undefined' && button != 'initial' && button != 'initial-keep') {
     var currentFeed = window[button.parent().parent().parent().parent().attr('id')];
   }
-  if (typeof _currentFeed != 'undefined') {
+  if ( typeof _currentFeed != 'undefined' ) {
     var currentFeed = _currentFeed;
   }
-  //check if any filter is enabled and filter user images has finished
-  //then stop any load more action
-  var activeFilter = 0,
-    finishedFilter = 0;
-  for (var i = 0; i < currentFeed.userSortFlags.length; i++) {
-    if (currentFeed.userSortFlags[i].flag === true) {
-      activeFilter++;
-      for (var j = 0; j < currentFeed.usersData.length; j++) {
-        if (currentFeed.userSortFlags[i]['id'] === currentFeed.usersData[j]['user_id']) {
-          if (currentFeed.usersData[j]['finished'] === 'finished') {
-            finishedFilter++;
-          }
-        }
-      }
-    }
-  }
-  if (activeFilter === finishedFilter && activeFilter != 0) {
-    return;
-  }
-
-
-  //if button is not provided than it enables auto_tiggering and recursively loads images
-  if (button === '') {
-    currentFeed['auto_trigger'] = true;
-  } else {
-    currentFeed['auto_trigger'] = false;
-  }
-  //ading ajax loading
+  // ading ajax loading
   wdi_front.ajaxLoader(currentFeed);
-
-
-  //check if masonry view is on and and feed display type is pagination then
-  //close all captions before loading more pages for porper pagination rendering
-  if (currentFeed.feed_row.feed_type === 'masonry' && currentFeed.feed_row.feed_display_view == 'pagination') {
-    jQuery('#wdi_feed_' + wdi_front.feed_counter + ' .wdi_full_caption').each(function ()
-    {
-      jQuery(this).find('.wdi_photo_title').trigger(wdi_front.clickOrTouch);
-    });
+  if ( this.isJsonString(currentFeed.feed_row.feed_users) ) {
+   json_feed_users = JSON.parse(currentFeed.feed_row.feed_users);
+   for ( var i in json_feed_users ) {
+     iuser = json_feed_users[i];
+     if ( json_feed_users[i].username.charAt(0) !== '#' ) {
+       iuser = json_feed_users[i];
+     }
+   }
   }
+ //check if any filter is enabled and filter user images has finished
+ //then stop any load more action
+ var activeFilter = 0,
+   finishedFilter = 0;
+ for (var i = 0; i < currentFeed.userSortFlags.length; i++) {
+   if (currentFeed.userSortFlags[i].flag === true) {
+     activeFilter++;
+     for (var j = 0; j < currentFeed.usersData.length; j++) {
+       if (currentFeed.userSortFlags[i]['id'] === currentFeed.usersData[j]['user_id']) {
+         if (currentFeed.usersData[j]['finished'] === 'finished') {
+           finishedFilter++;
+         }
+       }
+     }
+   }
+ }
+ if (activeFilter === finishedFilter && activeFilter != 0) {
+   return;
+ }
+ // if button is not provided than it enables auto_tiggering and recursively loads images
+ currentFeed['auto_trigger'] = false;
+ if (button === '') {
+   currentFeed['auto_trigger'] = true;
+ }
 
 
-  //check if all data loaded then remove ajaxLoader
-  // To do Arsho
-  for (var i = 0; i < currentFeed.usersData.length; i++) {
-    if (currentFeed.usersData[i]['finished'] === 'finished') {
-      dataCounter++;
-    }
-  }
-  if (dataCounter === currentFeed.usersData.length) {
-    wdi_front.allImagesLoaded(currentFeed);
-    jQuery('#wdi_feed_' + currentFeed['feed_row']['wdi_feed_counter'] + ' .wdi_load_more').remove();
+ //check if masonry view is on and and feed display type is pagination then
+ //close all captions before loading more pages for porper pagination rendering
+ if (currentFeed.feed_row.feed_type === 'masonry' && currentFeed.feed_row.feed_display_view == 'pagination') {
+   jQuery('#wdi_feed_' + wdi_front.feed_counter + ' .wdi_full_caption').each(function () {
+     jQuery(this).find('.wdi_photo_title').trigger(wdi_front.clickOrTouch);
+   });
+ }
 
-  }
-
-  var usersData = currentFeed['usersData'];
-
+ // check if all data loaded then remove ajaxLoader
+ // To do Arsho
+ for (var i = 0; i < currentFeed.usersData.length; i++) {
+   if (currentFeed.usersData[i]['finished'] === 'finished') {
+     dataCounter++;
+   }
+ }
+ if (dataCounter === currentFeed.usersData.length) {
+   wdi_front.allImagesLoaded(currentFeed);
+   jQuery('#wdi_feed_' + currentFeed['feed_row']['wdi_feed_counter'] + ' .wdi_load_more').remove();
+ }
+ var usersData = currentFeed['usersData'];
   currentFeed.loadMoreDataCount = currentFeed.feed_users.length;
 
-  for (var i = 0; i < usersData.length; i++) {
+ for (var i = 0; i < usersData.length; i++) {
+   var pagination = usersData[i]['pagination'];
+   var hashtag_id = (typeof usersData[i]['tag_id'] !== 'undefined') ? usersData[i]['tag_id'] : '';
+   var hashtag = (typeof usersData[i]['username'] !== 'undefined' && hashtag_id) ? usersData[i]['username'] : '';
 
-    var pagination = usersData[i]['pagination'];
-    var user = {
-      user_id: usersData[i]['user_id'],
-      username: usersData[i]['username']
-    }
-    //checking if pagination url exists then load images, else skip
-    if (pagination['next_url'] != '' && pagination['next_url'] != null && typeof pagination['next_url'] != 'undefined') {
-      var next_url = pagination['next_url'];
-      wdi_front.loadMoreRequest(user, next_url, currentFeed, button);
-    } else {
+   var user = {
+     old_user_id: usersData[i]['user_id'],
+     odl_username: usersData[i]['username'],
+     user_id: iuser.id,
+     username: iuser.username,
+     hashtag: hashtag,
+     hashtag_id: hashtag_id
+   };
 
-      if (button == 'initial-keep') {
-        currentFeed.temproraryUsersData[i] = currentFeed.usersData[i];
-      }
-      currentFeed.loadMoreDataCount--;
-      wdi_front.checkForLoadMoreDone(currentFeed, button);
-      continue;
-    }
-  }
+   //checking if pagination url exists then load images, else skip
+   if (button == 'initial-keep') {
+     currentFeed.temproraryUsersData[i] = currentFeed.usersData[i];
+   }
+   if ( currentFeed.loadMoreDataCount > 0 ) {
+     currentFeed.loadMoreDataCount--
+   }
+   wdi_front.checkForLoadMoreDone(currentFeed, button);
+ }
 }
 
 /*
- * Requests images based on provided pagination url
- */
+* Requests images based on provided pagination url
+*/
 wdi_front.loadMoreRequest = function (user, next_url, currentFeed, button) {
   /*if there was no initial request, do not allow loadmore request */
-  if (!currentFeed.mediaRequestsDone) {
+  if (!currentFeed.mediaRequestsDone  || next_url == "") {
     return;
   }
   var usersData = currentFeed['usersData'];
@@ -2063,10 +1985,16 @@ wdi_front.loadMoreRequest = function (user, next_url, currentFeed, button) {
       wdi_front.show_alert(errorMessage, response, currentFeed);
       return;
     }
-    response['user_id'] = user.user_id;
-    response['username'] = user.username;
+    if (user['hashtag']) {
+      response['user_id'] = user.hashtag_id;
+      response['username'] = user.hashtag;
+    } else {
+      response['user_id'] = user.user_id;
+      response['username'] = user.username;
+    }
+
     for (var i = 0; i < currentFeed['usersData'].length; i++) {
-      if (response['user_id'] === currentFeed['usersData'][i]['user_id']) {
+      if (response['user_id'] === currentFeed['usersData'][i]['user_id'] || response['tag_id'] === currentFeed['usersData'][i]['tag_id']) {
         ///mmm!!!
         if (response['user_id'][0] === '#') {
           response['data'] = wdi_front.appendRequestHashtag(response['data'], response['user_id']);
@@ -2081,30 +2009,19 @@ wdi_front.loadMoreRequest = function (user, next_url, currentFeed, button) {
           currentFeed.temproraryUsersData[i] = currentFeed.usersData[i];
         }
         currentFeed['usersData'][i] = response;
-        currentFeed['dataStorageRaw'][i]['data'] = currentFeed['dataStorageRaw'][i]['data'].concat(response['data']);
+        if ( typeof currentFeed['dataStorageRaw'][i] === 'undefined') {
+          currentFeed['dataStorageRaw'][i] = {data:response['data']};
+        } else {
+          currentFeed['dataStorageRaw'][i]['data'] = currentFeed['dataStorageRaw'][i]['data'].concat(response['data']);
+        }
         currentFeed.loadMoreDataCount--;
       }
     }
     wdi_front.checkForLoadMoreDone(currentFeed, button);
   };
-  if (user.username[0] !== "#") {
-    currentFeed.instagram.requestByUrl(next_url, {
-      success: success_function
-    });
-  }
-  else {
-    currentFeed.instagram.getTagRecentMedia(user.username, {
-        success: success_function,
-        },
-            next_url,
-            currentFeed.feed_row.hashtag_top_recent
-      )
-  }
 }
 
-
-wdi_front.checkForLoadMoreDone = function (currentFeed, button)
-{
+wdi_front.checkForLoadMoreDone = function (currentFeed, button) {
   var load_more_number = currentFeed.feed_row['load_more_number'];
   var number_of_photos = currentFeed.feed_row['number_of_photos'];
 
@@ -2127,8 +2044,8 @@ wdi_front.checkForLoadMoreDone = function (currentFeed, button)
        displayFeed()*/
       if (gettedDataLength < number_of_photos && !wdi_front.userHasNoPhoto(currentFeed, currentFeed.temproraryUsersData) && currentFeed.instagramRequestCounter <= currentFeed.maxConditionalFiltersRequestCount) {
         wdi_front.loadMore('initial', currentFeed);
-      } else {
-
+      }
+      else {
         currentFeed.usersData = currentFeed.temproraryUsersData;
 
         wdi_front.displayFeed(currentFeed);
@@ -2137,18 +2054,16 @@ wdi_front.checkForLoadMoreDone = function (currentFeed, button)
 
         //resetting temprorary users data array for the next loadmoer call
         currentFeed.temproraryUsersData = [];
-
-
       }
-
-    } else {
+    }
+    else {
       //else load load_more_number photos
       //if existing data length is smaller then load_more_number then get more objects until desired number is reached
 
       if (gettedDataLength < load_more_number && !wdi_front.userHasNoPhoto(currentFeed, currentFeed.temproraryUsersData) && currentFeed.instagramRequestCounter <= currentFeed.maxConditionalFiltersRequestCount) {
         wdi_front.loadMore(undefined, currentFeed);
-      } else {
-
+      }
+      else {
         currentFeed.usersData = currentFeed.temproraryUsersData;
 
         if (!wdi_front.activeUsersCount(currentFeed)) {
@@ -2165,25 +2080,22 @@ wdi_front.checkForLoadMoreDone = function (currentFeed, button)
   }
 }
 
-wdi_front.allDataHasFinished = function (currentFeed)
-{
-
-
+wdi_front.allDataHasFinished = function (currentFeed) {
   var c = 0;
   for (var j = 0; j < currentFeed.dataStorageRaw.length; j++) {
-    if (currentFeed.dataStorageRaw[j].length() == 0 && currentFeed.dataStorageRaw[j].locked == true) {
+    if (currentFeed.usersData[j].pagination.next_url == '') {
       c++;
+      currentFeed.usersData[j].finished = "finished";
     }
   }
-
-  return (c == currentFeed.dataStorageRaw.length);
+  if (c == currentFeed.dataStorageRaw.length) {
+    jQuery('#wdi_feed_' + currentFeed['feed_row']['wdi_feed_counter'] + ' .wdi_load_more').remove();
+    return true;
+  }
+  return false;
 }
 
-
-wdi_front.mergeData = function (array1, array2)
-{
-
-
+wdi_front.mergeData = function (array1, array2) {
   for (var i = 0; i < array2.length; i++) {
     if (typeof array1[i] != 'undefined') {
       if (array2[i]['finished'] == 'finished') {
@@ -2209,8 +2121,7 @@ wdi_front.mergeData = function (array1, array2)
 }
 
 //broken image handling
-wdi_front.brokenImageHandler = function (source)
-{
+wdi_front.brokenImageHandler = function (source) {
 /* @ToDo. remove this function
   var url_params = source.src.split("/p/");
   if(typeof url_params[0] !== "undefined" && typeof url_params[1] !== "undefined" && url_params[0] !== "https://www.instagram.com"){
@@ -2224,8 +2135,8 @@ wdi_front.brokenImageHandler = function (source)
 */
   return true;
 }
-function wdi_baseName(str)
-{
+
+function wdi_baseName(str) {
   var base = str.substr(str.lastIndexOf('/'));
   return str.replace(base, "");
 }
@@ -2276,8 +2187,6 @@ wdi_front.allImagesLoaded = function (currentFeed) {
   if (currentFeed.feed_row.feed_display_view == 'infinite_scroll') {
     jQuery('#wdi_feed_' + currentFeed.feed_row['wdi_feed_counter'] + ' .wdi_ajax_loading').addClass('wdi_hidden');
   }
-  //custom event fired for user based custom js
-  feed_container.trigger('wdi_feed_loaded');
 }
 
 //shows different parts of the feed based user choice
@@ -2308,7 +2217,7 @@ wdi_front.show = function (name, currentFeed) {
       containerHtml = feed_container.find('.wdi_feed_header').html();
     feed_container.find('.wdi_feed_header').html(containerHtml + html);
   }
-
+  /* @ToDo This function is not used. It must be removed.
   function show_users(currentFeed) {
     feed_container.find('.wdi_feed_users').html('');
     var users = currentFeed['feed_users'];
@@ -2317,20 +2226,17 @@ wdi_front.show = function (name, currentFeed) {
     currentFeed.headerUserinfo = [];
     getThumb();
     //recursively calls itself until all user data is ready then displyes it with escapeRequest
-    function getThumb()
-    {
+    function getThumb() {
       if (currentFeed.headerUserinfo.length == users.length) {
         escapeRequest(currentFeed.headerUserinfo, currentFeed);
         return;
       }
       var _user = users[currentFeed.headerUserinfo.length];
-
       if (typeof _user === 'string' && _user === 'self') {
+        alert(2333);
         currentFeed.instagram.getSelfInfo({
-          success: function (response)
-          {
-
-            if(typeof response.meta!= "undefined" && typeof response.meta.error_type != "undefined"){
+          success: function (response) {
+            if(typeof response.meta!= 'undefined' && typeof response.meta.error_type != 'undefined'){
               wdi_front.show_alert(false, response, currentFeed);
             }
             response = _this.checkMediaResponse(response, currentFeed);
@@ -2355,13 +2261,10 @@ wdi_front.show = function (name, currentFeed) {
           }
         });
       }
-      else
-      if (false && _this.getInputType(_user.username) == 'hashtag') {
+      else if (false && _this.getInputType(_user.username) == 'hashtag') {
         currentFeed.instagram.searchForTagsByName(_this.stripHashtag(_user.username), {
-          /*currentFeed.instagram.getTagRecentMedia(_this.stripHashtag(_user.username), {*/
-          success: function (response)
-          {
-            if(typeof response.meta!= "undefined" && typeof response.meta.error_type != "undefined"){
+          success: function (response) {
+            if(typeof response.meta != "undefined" && typeof response.meta.error_type != "undefined"){
               wdi_front.show_alert(false, response, currentFeed);
             }
             response = _this.checkMediaResponse(response, currentFeed);
@@ -2390,15 +2293,12 @@ wdi_front.show = function (name, currentFeed) {
           }
         });
       }
-      else
-      if (_this.getInputType(_user.username) == 'user') {
-
+      else if (_this.getInputType(_user.username) == 'user') {
         currentFeed.instagram.getSelfInfo({
           ///deprecated API
           ///currentFeed.instagram.getUserInfo(_user.id, {
-          success: function (response)
-          {
-            if(typeof response.meta!= "undefined" && typeof response.meta.error_type != "undefined"){
+          success: function (response) {
+            if(typeof response.meta!= 'undefined' && typeof response.meta.error_type != 'undefined'){
               wdi_front.show_alert(false, response, currentFeed);
             }
             response = _this.checkMediaResponse(response, currentFeed);
@@ -2430,12 +2330,10 @@ wdi_front.show = function (name, currentFeed) {
           }
         });
       }
-
     }
 
     //when all user data is ready break recursion and create user elements
-    function escapeRequest(info, currentFeed)
-    {
+    function escapeRequest(info, currentFeed) {
       feed_container.find('.wdi_feed_users').html('');
       for (var k = 0; k < info.length; k++) {
         //setting all user filters to false
@@ -2447,7 +2345,6 @@ wdi_front.show = function (name, currentFeed) {
           'id': info[k]['id'],
           'name': info[k]['name']
         };
-
 
         //user inforamtion
         var hashtagClass = (info[k]['name'][0] == '#') ? 'wdi_header_hashtag' : '';
@@ -2463,7 +2360,6 @@ wdi_front.show = function (name, currentFeed) {
           'website_url': info[k]['website'],
           'usersCount': currentFeed.feed_row.feed_users.length,
           'hashtagClass': hashtagClass
-
         };
 
         var userTemplate = wdi_front.getUserTemplate(currentFeed, info[k]['name']),
@@ -2471,7 +2367,6 @@ wdi_front.show = function (name, currentFeed) {
           containerHtml = feed_container.find('.wdi_feed_users').html();
 
         feed_container.find('.wdi_feed_users').html(containerHtml + html);
-
 
         currentFeed.userSortFlags.push(userFilter);
 
@@ -2482,6 +2377,7 @@ wdi_front.show = function (name, currentFeed) {
       wdi_front.updateUsersImages(currentFeed);
     };
   }
+   */
 }
 
 wdi_front.getUserTemplate = function (currentFeed, username) {
@@ -2543,7 +2439,6 @@ wdi_front.getUserTemplate = function (currentFeed, username) {
     source += '<div class="wdi_website"><a target="_blank" href="<%= website_url%>" ><%= website%></a></div>';
   }
 
-
   source += '</div>' +
     '</div>';
 
@@ -2551,8 +2446,7 @@ wdi_front.getUserTemplate = function (currentFeed, username) {
   return template;
 }
 
-wdi_front.getHeaderTemplate = function ()
-{
+wdi_front.getHeaderTemplate = function () {
   var source = '<div class="wdi_header_wrapper">' +
     '<div class="wdi_header_img_wrap">' +
     '<img src="<%=feed_thumb%>">' +
@@ -2565,8 +2459,7 @@ wdi_front.getHeaderTemplate = function ()
 }
 
 //sets user filter to true and applys filter to feed
-wdi_front.addFilter = function (index, feed_counter)
-{
+wdi_front.addFilter = function (index, feed_counter) {
   var currentFeed = window['wdi_feed_' + feed_counter];
   var usersCount = currentFeed.dataCount;
   if (usersCount < 2) {
@@ -2598,7 +2491,6 @@ wdi_front.addFilter = function (index, feed_counter)
       }
     }
 
-
     if (currentFeed.feed_row.feed_display_view == 'pagination') {
       //reset responsive indexes because number of feed images may change after using filter
       currentFeed.resIndex = 0;
@@ -2612,7 +2504,6 @@ wdi_front.addFilter = function (index, feed_counter)
       currentFeed.customFilteredData = currentFeed.dataStorageList;
       wdi_front.displayFeed(currentFeed);
     }
-
 
     if (currentFeed.feed_row.feed_display_view == 'pagination') {
       //reset paginator because while filtering images become more or less so pages also become more or less
@@ -2629,9 +2520,7 @@ wdi_front.addFilter = function (index, feed_counter)
   }
 }
 
-wdi_front.filterData = function (currentFeed)
-{
-
+wdi_front.filterData = function (currentFeed) {
   var users = currentFeed.userSortFlags;
   currentFeed.customFilteredData = [];
   for (var i = 0; i < currentFeed.dataStorageList.length; i++) {
@@ -2645,8 +2534,7 @@ wdi_front.filterData = function (currentFeed)
 
 }
 
-wdi_front.applyFilters = function (currentFeed)
-{
+wdi_front.applyFilters = function (currentFeed) {
   for (var i = 0; i < currentFeed.userSortFlags.length; i++) {
     if (currentFeed.userSortFlags[i]['flag'] == true) {
       var userDiv = jQuery('#wdi_feed_' + currentFeed.feed_row.wdi_feed_counter + '[user_index="' + i + '"]');
@@ -2657,8 +2545,7 @@ wdi_front.applyFilters = function (currentFeed)
 }
 
 //gets data Count from global storage
-wdi_front.getImgCount = function (currentFeed)
-{
+wdi_front.getImgCount = function (currentFeed) {
   var dataStorage = currentFeed.dataStorage;
   var count = 0;
   for (var i = 0; i < dataStorage.length; i++) {
@@ -2724,10 +2611,10 @@ wdi_front.parseLighboxData = function (currentFeed, filterFlag) {
       'number': 0,
       'rate': '',
       'rate_count': '0',
-      'username': data[i]['user']['username'],
-      'profile_picture': data[i]['user']['profile_picture'],
+      'username': (typeof data[i]['user'] !== 'undefined') ? data[i]['user']['username'] : '',
+      'profile_picture': (typeof data[i]['user'] !== 'undefined') ? data[i]['user']['profile_picture'] : '',
       'thumb_url': thumb_url,
-      'comments_data': data[i]['comments']['data'],
+      'comments_data': (typeof data[i]['comments'] !== 'undefined') ? data[i]['comments']['data'] : '',
       'images': data[i]['images'],
       'carousel_media': (typeof data[i]['carousel_media'] !== "undefined") ? data[i]['carousel_media'] : null
     }
@@ -2736,31 +2623,26 @@ wdi_front.parseLighboxData = function (currentFeed, filterFlag) {
   return popupData;
 }
 
-wdi_front.convertUnixDate = function (date)
-{
-  var utcSeconds = parseInt(date);
+wdi_front.convertUnixDate = function (date) {
+  var utcSeconds = new Date(date).getTime() / 1000;
   var newDate = new Date(0);
   newDate.setUTCSeconds(utcSeconds);
-  var str = newDate.getFullYear() + '-' + newDate.getMonth() + '-' + newDate.getDate();
+  var str = newDate.getFullYear() + '-' + (newDate.getMonth()+1) + '-' + newDate.getDate();
   str += ' ' + newDate.getHours() + ':' + newDate.getMinutes();
   return str;
 }
 
-wdi_front.getDescription = function (desc)
-{
+wdi_front.getDescription = function (desc) {
   desc = desc.replace(/\r?\n|\r/g, ' ');
-
 
   return desc;
 }
-
 
 /**
  * use this data for lightbox
  * **/
 
-wdi_front.getFileName = function (data)
-{
+wdi_front.getFileName = function (data) {
   if( typeof data !== 'undefined' ) {
     var link = data['link'];
     var type = data['type'];
@@ -2769,8 +2651,11 @@ wdi_front.getFileName = function (data)
       return data['videos']['standard_resolution']['url'];
     }
     else {
-      var linkFragments = link.split('/');
-      return linkFragments[linkFragments.length - 2];
+      if ( typeof link !== 'undefined' ) {
+        var linkFragments = link.split('/');
+        return linkFragments[linkFragments.length - 2];
+      }
+      return '';
     }
   }
 }
@@ -2780,8 +2665,9 @@ wdi_front.getFileType = function (data) {
   //@ToDo old if (data['type'] == 'video' && data.hasOwnProperty('videos')) {
   if (data['type'] == 'video' && data.hasOwnProperty('videos')) {
     return "EMBED_OEMBED_INSTAGRAM_VIDEO";
-  }
-  else {
+  } else if(data['type'] == 'carousel' && data.hasOwnProperty('carousel_media')) {
+    return "EMBED_OEMBED_INSTAGRAM_CAROUSEL";
+  } else {
     return "EMBED_OEMBED_INSTAGRAM_IMAGE";
   }
 }
@@ -2801,8 +2687,7 @@ wdi_front.array_max = function (array) {
   };
 }
 
-wdi_front.array_min = function (array)
-{
+wdi_front.array_min = function (array) {
   var min = array[0];
   var minIndex = 0;
   for (var i = 1; i < array.length; i++) {
@@ -2820,17 +2705,16 @@ wdi_front.array_min = function (array)
 /*
  * Returns users count whose feed is not finished
  */
-wdi_front.activeUsersCount = function (currentFeed)
-{
+wdi_front.activeUsersCount = function (currentFeed) {
   var counter = 0;
   for (var i = 0; i < currentFeed.usersData.length; i++) {
     if (currentFeed.usersData[i].finished != 'finished') {
       counter++;
     }
   }
+
   return counter;
 }
-
 
 /**
  * Return response if it is valid else returns boolean false
@@ -2838,12 +2722,12 @@ wdi_front.activeUsersCount = function (currentFeed)
  * @return {Object or Boolean}          [false: if invalid response, object: if valid]
  */
 wdi_front.checkMediaResponse = function (response, currentFeed) {
-  if (response == '' || typeof response == 'undefined' || response == null) {
+  if (response == '' || typeof response == 'undefined' || response == null || typeof response.error !== 'undefined') {
     errorMessage = wdi_front_messages.connection_error;
     wdi_front.show_alert(errorMessage, response, currentFeed);
     return false;
   }
-  if ( response != '' && typeof response != 'undefined' && response != null && response['meta']['code'] != 200) {
+  if ( response != '' && typeof response != 'undefined' && response != null && typeof response['meta'] !== "undefined" && response['meta']['code'] != 200) {
     errorMessage = response['meta']['error_message'];
     wdi_front.show_alert(errorMessage, response, currentFeed);
     return false;
@@ -2852,14 +2736,12 @@ wdi_front.checkMediaResponse = function (response, currentFeed) {
   return response;
 }
 
-
 /**
  * Removes # from string if it is first char
  * @param  {String} hashtag
  * @return {String}
  */
-wdi_front.stripHashtag = function (hashtag)
-{
+wdi_front.stripHashtag = function (hashtag) {
   switch (hashtag[0]) {
     case '#':
     {
@@ -2906,8 +2788,7 @@ wdi_front.getInputType = function (input) {
  * @param  {String} searchkey   [word or phrazee to search]
  * @return {Boolean}
  */
-wdi_front.regexpTestCaption = function (captionText, searchkey)
-{
+wdi_front.regexpTestCaption = function (captionText, searchkey) {
   var flag1 = false,
     flag2 = false,
     matchIndexes = [],
@@ -2932,15 +2813,13 @@ wdi_front.regexpTestCaption = function (captionText, searchkey)
 
 }
 
-
 /**
  * replaces single new-lines with space
  * if multiple new lines are following each other then replaces all newlines with single space
  * @param  {String} string [input string]
  * @return {String}        [output string]
  */
-wdi_front.replaceNewLines = function (string)
-{
+wdi_front.replaceNewLines = function (string) {
   var delimeter = "vUkCJvN2ps3t",
     matchIndexes = [],
     regexp;
@@ -2973,7 +2852,6 @@ wdi_front.replaceNewLines = function (string)
   return string;
 }
 
-
 wdi_front.isEmptyObject = function (obj) {
   for (var prop in obj) {
     if (obj.hasOwnProperty(prop))
@@ -2986,9 +2864,7 @@ wdi_front.isEmpty = function (str) {
   return (!str || 0 === str.length);
 }
 
-
-var WDIFeed = function (obj)
-{
+var WDIFeed = function (obj) {
   this['data'] = obj['data'];
   this['dataCount'] = obj['dataCount'];
   this['feed_row'] = obj['feed_row'];
@@ -3006,9 +2882,7 @@ var WDIFeed = function (obj)
   this.set_images_loading_flag(_this);
 };
 
-
-WDIFeed.prototype.mediaExists = function (media, array)
-{
+WDIFeed.prototype.mediaExists = function (media, array) {
 
   for (var i = 0; i < array.length; i++) {
     if (media['id'] == array[i]['id']) {
@@ -3018,14 +2892,12 @@ WDIFeed.prototype.mediaExists = function (media, array)
   return false;
 }
 
-
 /**
  * gets id of media from url, this id is not the one which comes with api request
  * @param  {String} url [media url]
  * @return {String}
  */
-WDIFeed.prototype.getIdFromUrl = function (url)
-{
+WDIFeed.prototype.getIdFromUrl = function (url) {
   var url_parts = url.split('/'),
     id = false;
   for (var i = 0; i < url_parts.length; i++) {
@@ -3040,14 +2912,12 @@ WDIFeed.prototype.getIdFromUrl = function (url)
   return id;
 }
 
-
 /**
  * Iterates throught response data and remove duplicate media
  * @param  {Object} response [Instagram API request]
  * @return {Object}          [response]
  */
-WDIFeed.prototype.avoidDuplicateMedia = function (response)
-{
+WDIFeed.prototype.avoidDuplicateMedia = function (response) {
   var data = response['data'],
     uniqueData = [],
     returnObject = {};
@@ -3073,10 +2943,8 @@ WDIFeed.prototype.avoidDuplicateMedia = function (response)
 
 }
 
-
 /* stores data from objects array into global variable */
-WDIFeed.prototype.storeRawData = function (objects, variable)
-{
+WDIFeed.prototype.storeRawData = function (objects, variable) {
   var _this = this;
   if (typeof this[variable] == "object" && typeof this[variable].length == "number") {
     //checks if in golbal storage user already exisit then it adds new data to user old data
@@ -3133,7 +3001,6 @@ WDIFeed.prototype.storeRawData = function (objects, variable)
 
               for (var j = 0; j < _this.usersData.length; j++) {
                 if (_this.usersData[j]['user_id'] == this.userId) {
-                  _this.usersData[j].finished = "finished";
                   this.usersDataFinished = true;
                   break;
                 }
@@ -3160,9 +3027,7 @@ WDIFeed.prototype.storeRawData = function (objects, variable)
 
 }
 
-
-wdi_front.updateUsersIfNecessary = function (currentFeed)
-{
+wdi_front.updateUsersIfNecessary = function (currentFeed) {
   var users = currentFeed.feed_users;
   var ifUpdateNecessary = false;
 
@@ -3240,9 +3105,7 @@ if (typeof wdi_ajax.ajax_response != "undefined") {
 
 }
 else {
-  jQuery(document).ready(function ()
-  {
-
+  jQuery(document).ready(function () {
     if (wdi_front['type'] != 'not_declared') {
       wdi_front.clickOrTouch = wdi_front.detectEvent();
       //initializing all feeds in the page
@@ -3250,10 +3113,8 @@ else {
     } else {
       return;
     }
-
   });
 }
-
 
 jQuery(document).ready(function () {
   setTimeout(function(){
@@ -3268,7 +3129,6 @@ function wdi_extractHostname(url) {
     return "";
   }
   var result = url.replace(/(^\w+:|^)\/\//, '');
-
 
   return result;
 }

@@ -5,6 +5,7 @@ use SiteGround_Optimizer\Options\Options;
 use SiteGround_Optimizer\Multisite\Multisite;
 use SiteGround_Optimizer\Front_End_Optimization\Front_End_Optimization;
 use SiteGround_Optimizer\Helper\Helper;
+use SiteGround_Optimizer\Htaccess\Htaccess;
 
 /**
  * Rest Helper class that manages all of the front end optimisation.
@@ -14,8 +15,9 @@ class Rest_Helper_Options extends Rest_Helper {
 	 * The constructor.
 	 */
 	public function __construct() {
-		$this->options   = new Options();
-		$this->multisite = new Multisite();
+		$this->options          = new Options();
+		$this->multisite        = new Multisite();
+		$this->htaccess_service = new Htaccess();
 	}
 	/**
 	 * Checks if the option key exists.
@@ -29,6 +31,8 @@ class Rest_Helper_Options extends Rest_Helper {
 		$key        = $this->validate_and_get_option_value( $request, 'option_key' );
 		$is_network = $this->validate_and_get_option_value( $request, 'is_multisite', false );
 		$result     = $this->options->enable_option( $key, $is_network );
+
+		$this->maybe_change_htaccess_rules( $key, 1 );
 
 		// Enable the option.
 		wp_send_json(
@@ -55,6 +59,8 @@ class Rest_Helper_Options extends Rest_Helper {
 		$key        = $this->validate_and_get_option_value( $request, 'option_key' );
 		$is_network = $this->validate_and_get_option_value( $request, 'is_multisite', false );
 		$result     = $this->options->disable_option( $key, $is_network );
+
+		$this->maybe_change_htaccess_rules( $key, 0 );
 
 		// Disable the option.
 		return wp_send_json(
@@ -131,5 +137,45 @@ class Rest_Helper_Options extends Rest_Helper {
 
 		// Send the options to react app.
 		wp_send_json_success( $options );
+	}
+
+	/**
+	 * Check if we should add additional rules to the htaccess file.
+	 *
+	 * @since  5.7.14
+	 *
+	 * @param  string $type  The optimization type.
+	 * @param  int    $value The optimization value.
+	 */
+	public function maybe_change_htaccess_rules( $type, $value ) {
+		// Options mapping with the htaccess rules and methods.
+		$htaccess_options = array(
+			'siteground_optimizer_enable_gzip_compression' => array(
+				0 => 'disable',
+				1 => 'enable',
+				'rule' => 'gzip',
+			),
+			'siteground_optimizer_enable_browser_caching' => array(
+				0 => 'disable',
+				1 => 'enable',
+				'rule' => 'browser-caching',
+			),
+			'siteground_optimizer_user_agent_header' => array(
+				0 => 'enable',
+				1 => 'disable',
+				'rule' => 'user-agent-vary',
+			),
+		);
+
+		// Bail if the option doesn't require additional htaccess rules to be added.
+		if ( ! array_key_exists( $type, $htaccess_options ) ) {
+			return;
+		}
+
+		// Call the htaccess method to add/remove the rules.
+		call_user_func_array(
+			array( $this->htaccess_service, $htaccess_options[ $type ][ $value ] ),
+			array( $htaccess_options[ $type ]['rule'] )
+		);
 	}
 }

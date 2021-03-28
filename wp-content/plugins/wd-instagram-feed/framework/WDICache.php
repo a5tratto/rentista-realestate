@@ -6,12 +6,14 @@
 class WDICache {
 
   private $wdi_options = NULL;
+  private $feed_id = 0;
 
   /**
    * WDICache constructor.
    */
-  function __construct() {
+  function __construct( $feed_id = 0 ) {
     global $wdi_options;
+    $this->feed_id = $feed_id;
     $this->wdi_options = $wdi_options;
   }
 
@@ -26,7 +28,6 @@ class WDICache {
   public function get_cache_data( $name, $debug = FALSE ) {
     $transient_key = "wdi_cache_" . md5($name);
     $cache_data = get_transient($transient_key);
-
     if ( isset($cache_data) && $cache_data != FALSE && isset($cache_data["cache_response"]) ) {
       $wdi_debugging = FALSE;
       $wdi_debugging_data = array();
@@ -71,12 +72,7 @@ class WDICache {
    * @return array|bool
    */
   public function set_cache_data($name, $response){
-    if ( isset($this->wdi_options["wdi_transient_time"]) ) {
-      $wdi_transient_time = intval($this->wdi_options["wdi_transient_time"]);
-    }
-    else {
-      $wdi_transient_time = 60;
-    }
+    $wdi_transient_time = WDI_TRANSIENT_DEFAULT_TIME;
     $cache_date = (date('Y-m-d H:i:s'));
     $wdi_cache_response = $response;
     $transient_key = "wdi_cache_" . md5($name);
@@ -106,5 +102,19 @@ class WDICache {
     $data = $wpdb->query('DELETE FROM ' . $wpdb->prefix . 'options WHERE option_name LIKE "%wdi_cache_%"');
 
     return $data;
+  }
+
+  /**
+   * Reset cache by feed_id.
+   *
+   * @param $feed_id integer
+   *
+   * @return bool|int
+  */
+  public function reset_feed_cache( $feed_id ) {
+    global $wpdb;
+    $transient_key = "wdi_cache_" . md5($feed_id);
+    $result = $wpdb->query('DELETE FROM ' . $wpdb->prefix . 'options WHERE option_name LIKE "%'.$transient_key.'%"');
+    return $result;
   }
 }

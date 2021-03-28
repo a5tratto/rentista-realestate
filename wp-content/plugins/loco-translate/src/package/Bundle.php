@@ -79,6 +79,12 @@ abstract class Loco_package_Bundle extends ArrayObject implements JsonSerializab
      */
     abstract public function getType();
 
+    /**
+     * Get absolute URL to bundle root, with trailing slash
+     * @return string
+     */
+    abstract public function getDirectoryUrl();
+
 
     /**
      * Construct bundle from unique ID containing type and handle
@@ -715,7 +721,7 @@ abstract class Loco_package_Bundle extends ArrayObject implements JsonSerializab
         $t = Loco_data_RecentItems::get()->hasBundle( $this->getId() );
         // else have to scan targets across all projects
         if( 0 === $t ){
-            /* @var $project Loco_package_Project */
+            /* @var Loco_package_Project $project */
             foreach( $this as $project ){
                 $t = max( $t, $project->getLastUpdated() );
             }

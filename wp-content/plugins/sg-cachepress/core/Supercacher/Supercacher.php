@@ -72,7 +72,7 @@ class Supercacher {
 
 		// Delete assets (minified js and css files) every 30 days.
 		add_action( 'siteground_delete_assets', array( $this, 'delete_assets' ) );
-		add_action( 'siteground_delete_assets', array( $this, 'purge_cache' ) );
+		add_action( 'siteground_delete_assets', array( $this, 'purge_cache' ), 11 );
 		add_filter( 'cron_schedules', array( $this, 'add_siteground_cron_schedule' ) );
 
 		// Schedule a cron job that will delete all assets (minified js and css files) every 30 days.
@@ -161,7 +161,18 @@ class Supercacher {
 	 * @return bool True on success, false on failure.
 	 */
 	public function purge_index_cache() {
-		return $this->purge_cache_request( get_home_url( '/' ), false );
+		return $this->purge_cache_request( get_home_url( null, '/' ), false );
+	}
+
+	/**
+	 * Purge rest api cache.
+	 *
+	 * @since  5.7.18
+	 *
+	 * @return bool True on success, false on failure.
+	 */
+	public function purge_rest_cache() {
+		return $this->purge_cache_request( get_rest_url() );
 	}
 
 	/**

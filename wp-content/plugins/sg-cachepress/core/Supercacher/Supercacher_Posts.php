@@ -27,6 +27,9 @@ class Supercacher_Posts extends Supercacher {
 	 * @return bool True on success, false on failure.
 	 */
 	public function purge_post_cache( $post_id ) {
+		// Purge the rest api cache.
+		$this->purge_rest_cache();
+
 		// Purge the post cache.
 		return $this->purge_cache_request( get_permalink( $post_id ) );
 	}
@@ -92,6 +95,18 @@ class Supercacher_Posts extends Supercacher {
 	}
 
 	/**
+	 * Purge the feed cache.
+	 *
+	 * @since  5.7.12
+	 *
+	 * @return bool True on success, false on failure.
+	 */
+	public function purge_feed_cache() {
+		return $this->purge_cache_request( get_home_url( null, '/feed' ), true );
+
+	}
+
+	/**
 	 * Purge the cache of the post that has been changed and
 	 * it's parents, the index cache, and the post categories.
 	 *
@@ -127,6 +142,8 @@ class Supercacher_Posts extends Supercacher {
 		$this->purge_post_terms( $post_id );
 		// Purge the index cache.
 		$this->purge_index_cache();
+		// Purge the feed cache.
+		$this->purge_feed_cache();
 	}
 
 }

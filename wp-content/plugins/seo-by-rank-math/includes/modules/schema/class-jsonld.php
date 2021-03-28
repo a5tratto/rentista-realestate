@@ -86,6 +86,10 @@ class JsonLD {
 			$current_data = array_pop( $data );
 		}
 		$schema = wp_parse_args( $schema['schema'], $current_data );
+		if ( ! empty( $schema['@type'] ) && in_array( $schema['@type'], [ 'WooCommerceProduct', 'EDDProduct' ], true ) ) {
+			$schema['@type'] = 'Product';
+		}
+
 		// Merge.
 		$data = array_merge( $data, [ 'schema' => $schema ] );
 		$data = $this->validate_schema( $data );
@@ -150,7 +154,9 @@ class JsonLD {
 				'@graph'   => array_values( $data ),
 			];
 
-			echo '<script type="application/ld+json" class="rank-math-' . esc_attr( $class ) . '">' . wp_json_encode( $json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) . '</script>' . "\n";
+			$options = defined( 'RANKMATH_DEBUG' ) && RANKMATH_DEBUG ? JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES : JSON_UNESCAPED_SLASHES;
+
+			echo '<script type="application/ld+json" class="rank-math-' . esc_attr( $class ) . '">' . wp_json_encode( wp_kses_post_deep( $json ), $options ) . '</script>' . "\n";
 		}
 	}
 
@@ -217,12 +223,13 @@ class JsonLD {
 	 */
 	public function add_context_data( $data ) {
 		$is_product_page = $this->is_product_page();
+		$can_add_global  = $this->can_add_global_entities( $data );
 		$snippets        = [
-			'\\RankMath\\Schema\\Publisher'     => ! isset( $data['publisher'] ),
-			'\\RankMath\\Schema\\Website'       => true,
-			'\\RankMath\\Schema\\PrimaryImage'  => ! post_password_required() && is_singular(),
+			'\\RankMath\\Schema\\Publisher'     => ! isset( $data['publisher'] ) && $can_add_global,
+			'\\RankMath\\Schema\\Website'       => $can_add_global,
+			'\\RankMath\\Schema\\PrimaryImage'  => ! post_password_required() && $can_add_global,
 			'\\RankMath\\Schema\\Breadcrumbs'   => $this->can_add_breadcrumb(),
-			'\\RankMath\\Schema\\Webpage'       => true,
+			'\\RankMath\\Schema\\Webpage'       => $can_add_global,
 			'\\RankMath\\Schema\\Author'        => is_author(),
 			'\\RankMath\\Schema\\Products_Page' => $is_product_page,
 			'\\RankMath\\Schema\\ItemListPage'  => ! $is_product_page && ( is_category() || is_tag() || is_tax() ),
@@ -242,25 +249,32 @@ class JsonLD {
 	/**
 	 * Replace variable.
 	 *
-	 * @param  array $schemas Schema to replace.
+	 * @param array  $schemas Schema to replace.
+	 * @param object $object  Current Object.
+	 *
 	 * @return array
 	 */
-	public function replace_variables( $schemas ) {
+	public function replace_variables( $schemas, $object = [] ) {
 		$new_schemas = [];
+		$object      = empty( $object ) ? get_queried_object() : $object;
 
 		foreach ( $schemas as $key => $schema ) {
 			if ( 'metadata' === $key ) {
 				$new_schemas['isPrimary'] = ! empty( $schema['isPrimary'] );
+
+				if ( ! empty( $schema['type'] ) && 'custom' === $schema['type'] ) {
+					$new_schemas['isCustom'] = true;
+				}
+
 				continue;
 			}
 
 			if ( is_array( $schema ) ) {
-				$new_schemas[ $key ] = $this->replace_variables( $schema );
+				$new_schemas[ $key ] = $this->replace_variables( $schema, $object );
 				continue;
 			}
 
-			$new_schemas[ $key ] = Str::contains( '%', $schema ) ? Helper::replace_vars( $schema, get_queried_object() ) : $schema;
-
+			$new_schemas[ $key ] = Str::contains( '%', $schema ) ? Helper::replace_seo_fields( $schema, $object ) : $schema;
 			if ( '' === $new_schemas[ $key ] ) {
 				unset( $new_schemas[ $key ] );
 			}
@@ -302,6 +316,36 @@ class JsonLD {
 		}
 
 		return $new_schemas;
+	}
+
+	/**
+	 * Whether to add global schema entities.
+	 *
+	 * @param array $data Array of json-ld data.
+	 * @return bool
+	 */
+	public function can_add_global_entities( $data = [] ) {
+		if ( ! is_singular() || ! Helper::can_use_default_schema( $this->post_id ) || ! empty( $data ) ) {
+			return true;
+		}
+
+		$schemas = DB::get_schemas( $this->post_id );
+		if ( ! empty( $schemas ) ) {
+			return true;
+		}
+
+		$can_add = in_array( Helper::get_default_schema_type( $this->post->post_type ), [ 'BlogPosting', 'NewsArticle', 'Article', 'WooCommerceProduct', 'EDDProduct' ], true );
+		if ( metadata_exists( 'post', $this->post_id, 'rank_math_rich_snippet' ) ) {
+			$can_add = Helper::get_post_meta( 'rich_snippet', $this->post_id );
+		}
+
+		/**
+		 * Allow developer to disable global schema entities.
+		 *
+		 * @param bool   $can_add
+		 * @param JsonLD $unsigned JsonLD instance.
+		 */
+		return $this->do_filter( 'schema/add_global_entities', $can_add, $this );
 	}
 
 	/**

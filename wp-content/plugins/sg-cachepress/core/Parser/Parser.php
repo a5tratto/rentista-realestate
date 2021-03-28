@@ -39,6 +39,7 @@ class Parser {
 		// Do not run optimizations for amp.
 		if (
 			$this->is_amp_enabled( $html ) ||
+			$this->is_xml( $html ) ||
 			is_feed()
 		) {
 			return $html;
@@ -83,6 +84,24 @@ class Parser {
 		$run_amp_check = preg_match( '/<html[^>]+(amp|⚡)[^>]*>/', $is_amp );
 
 		return $run_amp_check;
+	}
+
+	/**
+	 * Check if the provided html is a xml.
+	 *
+	 * @since  5.7.13
+	 *
+	 * @param  string $html The page html.
+	 *
+	 * @return bool $run_xml_check Wheter the page xml sitemap.
+	 */
+	public function is_xml( $html ) {
+		// Get the first 200 chars of the file to make the preg_match check faster.
+		$is_xml = substr( $html, 0, 200 );
+
+		$run_xml_check = preg_match( '/<\?xml version="/', $is_xml );
+
+		return $run_xml_check;
 	}
 
 	/**

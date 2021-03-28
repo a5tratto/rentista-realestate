@@ -4,8 +4,8 @@ Donate link: https://profilepress.net/pricing
 Tags: login, logout, redirect, admin, administration, dashboard, users, authentication
 Requires at least: 4.0
 Requires PHP: 5.4
-Tested up to: 5.4
-Stable tag: 2.9.7
+Tested up to: 5.7
+Stable tag: 2.9.9
 License: GPL-2.0+
 
 Redirect users to different locations after logging in and logging out.
@@ -159,6 +159,12 @@ add_filter( 'rul_replace_variable', 'customRULVariableMonth', 10, 3 );`
 Be sure to rawurlencode the returned variable if necessary.
 
 == Changelog ==
+
+= 2.9.9 =
+* Fixed bug in multisite activation support.
+
+= 2.9.8 =
+* Added multisite support.
 
 = 2.9.7 =
 * Added option to redirect to any url specified.

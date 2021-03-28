@@ -143,7 +143,7 @@ class Admin {
 
 		$data = array(
 			'rest_base'          => untrailingslashit( get_rest_url( null, Rest::REST_NAMESPACE ) ),
-			'home_url'           => Helper::get_site_url(),
+			'home_url'           => Helper::get_home_url(),
 			'is_cron_disabled'   => Helper::is_cron_disabled(),
 			'is_avalon'          => Helper::is_avalon(),
 			'modules'            => $this->modules->get_active_modules(),

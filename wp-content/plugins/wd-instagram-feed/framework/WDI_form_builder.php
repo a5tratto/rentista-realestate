@@ -358,15 +358,13 @@ public function __construct() {
         <div class="wdwt_param" id="WDI_wrap_<?php echo $element['name'];?>">
         <div class="block">
         <div class="optioninput">
-        <?php 
-
-                if($label!='' && $label['place']=='before'){
-                  ?>
-                    <label for="<?php echo $id; ?>"><?php echo $label['text']; ?></label>
-                    <?php echo isset($label['br']) ? '<br/>' : ''?>
-                  <?php
-                }
-        
+        <?php
+          if($label!='' && $label['place']=='before'){
+            ?>
+              <label for="<?php echo $id; ?>"><?php echo $label['text']; ?></label>
+              <?php echo isset($label['br']) ? '<br/>' : ''?>
+            <?php
+          }
         foreach ( $options as $key => $option ) {
           $disable = '';
           $disable_text = '';
@@ -414,8 +412,7 @@ public function __construct() {
           for (var opt in <?php echo $id.'_hide_ids'?>){
             if(opt == selected){
               var ids = <?php echo $id.'_hide_ids'?>[opt].split(',');
-              for (var i in ids){
-                
+              for ( var i in ids ) {
                 jQuery('#WDI_wrap_'+ids[i]).parent().parent().addClass("<?php echo $id.'_hide_ids_hidden';?>");
               }
             }
@@ -505,22 +502,22 @@ public function __construct() {
         <div class="block margin">
         <div class="optioninput checkbox">
          <?php
-                if($label!='' && $label['place']=='before'){
-                  ?>
-                    <label class="<?php echo isset($label['class']) ? $label['class'] : '' ?>" for="<?php echo $id; ?>"><?php echo $label['text']; ?></label>
-                    <?php echo isset($label['br'])? '<br/>' : ''?>
-                  <?php
-                }
-      ?>
-          <input <?php echo $disable; ?> type="checkbox" class="checkbox" name="<?php echo $name; ?>" id="<?php echo $id ?>" <?php echo $attr;?> <?php checked(1,$opt_value)?>  value="1">
-          <?php
-          if($label!='' && $label['place']=='after'){
-                  ?>
-                    <?php echo isset($label['br'])? '<br/>' : ''?>
-                    <label class="<?php echo isset($label['class']) ? $label['class'] : '' ?>" for="<?php echo $id; ?>"><?php echo $label['text']; ?></label>
-                  <?php
-                }
-          ?>
+          if($label!='' && $label['place']=='before'){
+            ?>
+              <label class="<?php echo isset($label['class']) ? $label['class'] : '' ?>" for="<?php echo $id; ?>"><?php echo $label['text']; ?></label>
+              <?php echo isset($label['br'])? '<br/>' : ''?>
+            <?php
+          }
+        ?>
+        <input <?php echo $disable; ?> type="checkbox" class="checkbox" name="<?php echo $name; ?>" id="<?php echo $id ?>" <?php echo $attr;?> <?php checked(1,$opt_value)?>  value="1">
+        <?php
+        if($label!='' && $label['place']=='after'){
+                ?>
+                  <?php echo isset($label['br'])? '<br/>' : ''?>
+                  <label class="<?php echo isset($label['class']) ? $label['class'] : '' ?>" for="<?php echo $id; ?>"><?php echo $label['text']; ?></label>
+                <?php
+              }
+        ?>
         </div>
        </div>
       </div>

@@ -14,9 +14,12 @@ class WP_Optimize_Options {
 		'retention-enabled' => 'false',
 		'retention-period' => '',
 		'enable-admin-menu' => 'false',
+		'enable_cache_in_admin_bar' => true,
+		'trackbacks_action' => array(),
+		'comments_action' => array(),
 		'auto' => '',
 		'logging' => '',
-		'logging-additional' => ''
+		'logging-additional' => '',
 	);
 
 	/**
@@ -101,7 +104,7 @@ class WP_Optimize_Options {
 
 		return apply_filters(
 			'wp_optimize_option_keys',
-			array('defaults', 'weekly-schedule', 'schedule', 'retention-enabled', 'retention-period', 'last-optimized', 'enable-admin-menu', 'schedule-type', 'total-cleaned', 'current-cleaned', 'email-address', 'email', 'auto', 'settings', 'dismiss_page_notice_until', 'dismiss_dash_notice_until')
+			array('defaults', 'weekly-schedule', 'schedule', 'retention-enabled', 'retention-period', 'last-optimized', 'enable-admin-menu', 'schedule-type', 'total-cleaned', 'current-cleaned', 'email-address', 'email', 'auto', 'settings', 'dismiss_page_notice_until', 'dismiss_dash_notice_until', 'enable_cache_in_admin_bar')
 		);
 	}
 	
@@ -213,6 +216,13 @@ class WP_Optimize_Options {
 			$output['refresh'] = true;
 		}
 
+		// Save cache toolbar display setting
+		$saved_enable_cache_in_admin_bar = $this->get_option('enable_cache_in_admin_bar', true);
+		if ($saved_enable_cache_in_admin_bar != $settings['enable_cache_in_admin_bar']) {
+			$this->update_option('enable_cache_in_admin_bar', $settings['enable_cache_in_admin_bar']);
+			$output['refresh'] = true;
+		}
+
 		do_action("auto_option_settings", $settings);
 
 		/** Save multisite options */
@@ -261,6 +271,24 @@ class WP_Optimize_Options {
 	public function wipe_settings() {
 		global $wpdb;
 
+		wp_cache_flush();
+		
+		// Delete the user meta if user meta is set for ignores the table delete warning
+		$user_query = new WP_User_Query(array('meta_key' => 'wpo-ignores-table-delete-warning', 'meta_value' => '1', 'fields' => 'ID'));
+		$users = $user_query->get_results();
+		if (!empty($users)) {
+			foreach ($users as $user_id) {
+				delete_user_meta($user_id, 'wpo-ignores-table-delete-warning');
+			}
+		}
+
+		// disable cache and clean any information related to WP-Optimize Cache.
+		WPO_Page_Cache::instance()->clean_up();
+		// delete settings from .htaccess
+		WP_Optimize::get_browser_cache()->disable();
+		WP_Optimize::get_gzip_compression()->disable();
+
+		// delete settings from options table.
 		$keys = '"' . implode('", "', $this->get_additional_settings_keys()) . '"';
 
 		if (is_multisite()) {
@@ -268,14 +296,6 @@ class WP_Optimize_Options {
 		} else {
 			$result = $wpdb->query("DELETE FROM {$wpdb->options} WHERE `option_name` LIKE 'wp-optimize-%' OR `option_name` IN ({$keys})");
 		}
-
-		wp_cache_flush();
-
-		// disable cache and clean any information related to WP-Optimize Cache.
-		WPO_Page_Cache::instance()->clean_up();
-		// delete settings from .htaccess
-		WP_Optimize::get_browser_cache()->disable();
-		WP_Optimize::get_gzip_compression()->disable();
 
 		return $result;
 	}
@@ -313,7 +333,7 @@ class WP_Optimize_Options {
 			
 			$optimizations = $optimizer->get_optimizations();
 			
-			foreach ($optimizations as $optimization_id => $optimization) {
+			foreach ($optimizations as $optimization) {
 				if (empty($optimization->available_for_auto)) continue;
 				$auto_id = $optimization->get_auto_id();
 				$new_auto_options[$auto_id] = empty($options_from_user[$auto_id]) ? 'false' : 'true';

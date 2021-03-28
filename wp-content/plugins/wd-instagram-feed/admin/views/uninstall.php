@@ -27,6 +27,15 @@ class Uninstall_view_wdi {
         <li style="padding-bottom:5px;padding-left:5px;font-weight: bold;margin:0;">5) wdi_custom_css</li>
         <li style="padding-bottom:5px;padding-left:5px;font-weight: bold;margin:0;">6) wdi_instagram_options</li>
         <li style="padding-bottom:5px;padding-left:5px;font-weight: bold;margin:0;">7) wdi_feeds_min_capability</li>
+        <li style="padding-bottom:5px;padding-left:5px;font-weight: bold;margin:0;">8) wdi_sample_feed_id</li>
+        <li style="padding-bottom:5px;padding-left:5px;font-weight: bold;margin:0;">9) wdi_sample_feed_post_id</li>
+        <li style="padding-bottom:5px;padding-left:5px;font-weight: bold;margin:0;">10) wdi_sample_feed_post_url</li>
+        <li style="padding-bottom:5px;padding-left:5px;font-weight: bold;margin:0;">11) wdi_first_user_username</li>
+        <li style="padding-bottom:5px;padding-left:5px;font-weight: bold;margin:0;">12) wdi_theme_keys</li>
+        <li style="padding-bottom:5px;padding-left:5px;font-weight: bold;margin:0;">13) wdi_admin_notice</li>
+        <li style="padding-bottom:5px;padding-left:5px;font-weight: bold;margin:0;">14) wdi_subscribe_done</li>
+        <li style="padding-bottom:5px;padding-left:5px;font-weight: bold;margin:0;">15) wdi_token_error_flag</li>
+        <li style="padding-bottom:5px;padding-left:5px;font-weight: bold;margin:0;">16) widget_wdi_instagram_widget</li>
       </ul>
     </div>
     <form action="admin.php?page=wdi_uninstall" id="wdi_uninstall_form" method="post">

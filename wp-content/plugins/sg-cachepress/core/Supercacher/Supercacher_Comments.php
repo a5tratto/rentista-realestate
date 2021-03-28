@@ -35,6 +35,9 @@ class Supercacher_Comments extends Supercacher_Posts {
 
 		// Purge the post cache.
 		$this->purge_post_cache( $comment_post_id );
+
+		// Purge the rest api cache.
+		$this->purge_rest_cache();
 	}
 
 }

@@ -1,5 +1,5 @@
 <?php
-/*  Copyright 2013-2020 Renzo Johnson (email: renzojohnson at gmail.com)
+/*  Copyright 2013-2021 Renzo Johnson (email: renzojohnson at gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -49,6 +49,7 @@ function wpcf7_mch_set_autoupdate() {
 
 
 function get_log_array () {
+
     $default = array() ;
     $log = get_option ('mce_db_issues_log', $default  ) ;
 
@@ -56,11 +57,9 @@ function get_log_array () {
 
     foreach ( $log as $item ) {
 
-      $chimp_log .= "\n" . 'Date : ' . $item['datetxt'];
-      $chimp_log .= "\n" . '==== Start Log ====' . "\n";
+      $chimp_log .= "\n" . '[' . $item['datetxt'] . ' UTC]';
       $chimp_log .= $item ['content'] .  "\n";
-      $chimp_log .= print_r ( $item ['object'],true );
-      $chimp_log .= "\n" . '==== End Log ====' . "\n" ;
+      $chimp_log .= print_r ( $item ['object'],true ).  "\n\n\n\n";
 
     }
 
@@ -160,27 +159,32 @@ function mce_html_panel_listmail( $apivalid, $listdata, $cf7_mch ) {
 
 
   ?>
-    <small><input type="hidden" id="mce_txcomodin2" name="wpcf7-mailchimp[mce_txtcomodin2]" value="<?php echo( isset( $apivalid ) ) ? esc_textarea( $apivalid ) : ''; ?>" /></small>
+
+  <small><input type="hidden" id="mce_txcomodin2" name="wpcf7-mailchimp[mce_txtcomodin2]" value="<?php echo( isset( $apivalid ) ) ? esc_textarea( $apivalid ) : ''; ?>" /></small>
+
   <?php
 
-    if ( isset( $apivalid ) && '1' == $apivalid ) {
-    ?>
-      <label for="wpcf7-mailchimp-list"><?php echo esc_html( __( 'These are all your ' . $count .' mailchimp.com lists: '  , 'wpcf7' ) ); ?></label><br />
-      <select id="wpcf7-mailchimp-list" name="wpcf7-mailchimp[list]" style="width:45%;">
-      <?php
-      foreach ( $listdata['lists'] as $list ) {
-        $i = $i + 1 ;
-        ?>
-        <option value="<?php echo $list['id'] ?>"
-          <?php if ( $vlist == $list['id'] ) { echo 'selected="selected"'; } ?>>
-          <?php echo $i .' - '.  $list['name'].' - Unique id: '.$list['id'].'' ?></option>
-        <?php
-      }
+  if ( isset( $apivalid ) && '1' == $apivalid ) {
+  ?>
+    <label for="wpcf7-mailchimp-list"><?php echo esc_html( __( 'These are all your ' . $count .' mailchimp.com lists: '  , 'wpcf7' ) ); ?></label><br />
+    <select id="wpcf7-mailchimp-list" name="wpcf7-mailchimp[list]" style="width:45%;">
+    <?php
+    foreach ( $listdata['lists'] as $list ) {
+      $i = $i + 1 ;
       ?>
-      </select>
-     <?php
+      <option value="<?php echo $list['id'] ?>"
+        <?php if ( $vlist == $list['id'] ) { echo 'selected="selected"'; } ?>>
+        <?php echo $i .' - '.  $list['name'].' - Unique id: '.$list['id'].'' ?></option>
+      <?php
+    }
+    ?>
+    </select>
+   <?php
   }
+
 }
+
+
 
 function mce_html_selected_tag ($nomfield,$listatags,$cf7_mch,$filtro) {
 
@@ -266,7 +270,8 @@ function wpcf7_mce_validate_api_key( $input, $logfileEnabled, $idform = '' ) {
 
     $opts = array(
                     'headers' => $vc_headers,
-                    'user-agent' => 'mce-r' . $vc_user_agent
+                    'user-agent' => 'mce-r' . $vc_user_agent,
+                    'timeout'     => 10000
                   );
 
     $resp = wp_remote_get( $url, $opts );
@@ -276,7 +281,8 @@ function wpcf7_mce_validate_api_key( $input, $logfileEnabled, $idform = '' ) {
         $resputa = json_encode ( $resp ) ;
         $tmp = array( 'api-validation' => 0 );
 
-				$chimp_db_log->chimp_log_insert_db(4, 'API Key Response :', $resp  ) ;
+
+        $chimp_db_log->chimp_log_insert_db( 4, ' ===============  PING  =============== '."\n" , $resp );
 
         return $tmp;
     }
@@ -290,7 +296,8 @@ function wpcf7_mce_validate_api_key( $input, $logfileEnabled, $idform = '' ) {
         if ( $validate_api_key_response["status"] >=400  ) {
             $tmp = array( 'api-validation' => 0 );
 
-						$chimp_db_log->chimp_log_insert_db(4, 'API Key Response :', $resp  ) ;
+
+            $chimp_db_log->chimp_log_insert_db( 4, ' ===============  API KEY RESPONSE  =============== '."\n" , $resp );
 
             return $tmp;
         }
@@ -298,7 +305,8 @@ function wpcf7_mce_validate_api_key( $input, $logfileEnabled, $idform = '' ) {
 		$sRpta = 1;
 		$tmp = array( 'api-validation' => 1 );
 
-		$chimp_db_log->chimp_log_insert_db(1, 'API Key Response :', $resultbody  ) ;
+
+    $chimp_db_log->chimp_log_insert_db( 1, ' ===============  API KEY RESPONSE  =============== '."\n" , $resp );
 
 		return $tmp;
 
@@ -329,7 +337,7 @@ function wpcf7_mce_listasasociadas( $apikey, $logfileEnabled, $idform = '',$apiv
 
        $tmp = array( 'lisdata' => array('lists' => $list_data ));
 
-		 	 $chimp_db_log->chimp_log_insert_db(4, 'List ID - Response:'  , 'No Lists, Invalid API key: ' . $apikey  ) ;
+		 	 $chimp_db_log->chimp_log_insert_db( 4, ' ===============  List ID RESPONSE  =============== '  , 'No Lists, Invalid API key: ' . $apikey  ) ;
 
        return $tmp ;
     }
@@ -345,7 +353,8 @@ function wpcf7_mce_listasasociadas( $apikey, $logfileEnabled, $idform = '',$apiv
 
     $opts = array(
                     'headers' => $vc_headers,
-                    'user-agent' => 'mce-r' . $vc_user_agent
+                    'user-agent' => 'mce-r' . $vc_user_agent,
+                    'timeout'     => 10000
                   );
 
     $resp = wp_remote_get( $url, $opts );
@@ -360,7 +369,7 @@ function wpcf7_mce_listasasociadas( $apikey, $logfileEnabled, $idform = '',$apiv
 
         $tmp = array( 'lisdata' => array('lists' => $list_data ));
 
-				$chimp_db_log->chimp_log_insert_db(4, 'List ID - Response :' , $resp  ) ;
+				$chimp_db_log->chimp_log_insert_db( 4, ' ===============  List ID RESPONSE  ===============  ' , $resp  ) ;
 
         return $tmp;
     }
@@ -373,7 +382,7 @@ function wpcf7_mce_listasasociadas( $apikey, $logfileEnabled, $idform = '',$apiv
 
     $tmp = array( 'lisdata' => $list_datanew );
 
-	  $chimp_db_log->chimp_log_insert_db(1, 'List ID - Response:' , $resp["response"]  ) ;
+	  $chimp_db_log->chimp_log_insert_db( 1, ' ===============  List ID RESPONSE =============== ' , $resp["response"]  ) ;
 
 		return $tmp;
 
@@ -387,21 +396,27 @@ function wpcf7_mce_listasasociadas( $apikey, $logfileEnabled, $idform = '',$apiv
 
 		$chimp_db_log = new chimp_db_log( 'mce_db_issues', $logfileEnabled,'api',$idform );
 
-		$chimp_db_log->chimp_log_insert_db(1, 'List ID - Result: error Try Catch ' . $e->getMessage()  , $e  ) ;
+		$chimp_db_log->chimp_log_insert_db( 1, ' ===============  List ID - Result: error Try Catch  =============== ' . $e->getMessage()  , $e  ) ;
 		return $tmp;
 
 	}
 }
 
+
+
+
 function chmp_new_usr() {
   $new_user ='';
   $new_user .='<h2>';
-  $new_user .='<a href="https://chimpmatic.com/how-to-find-your-mailchimp-api-key'.  vc_utm(). 'NewUserMC-api" class="helping-field" target="_blank" title="get help with MailChimp API Key:"> Learn how find your Mailchimp API Key following 5 easy steps.</a>';
+  $new_user .='<a href="https://chimpmatic.com/how-to-find-your-mailchimp-api-key'.  vc_utm(). 'NewUserMC-api" class="helping-field" target="_blank" title="get help with MailChimp API Key:"> Learn how find your Mailchimp API Key Here. </a>';
   $new_user .='</h2>';
 
   echo $new_user;
 
 }
+
+
+
 
 function wpcf7_mce_form_tags() {
 	$manager = WPCF7_FormTagsManager::get_instance();

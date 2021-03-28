@@ -3,7 +3,7 @@
 Plugin Name: WP-Optimize - Clean, Compress, Cache
 Plugin URI: https://getwpo.com
 Description: WP-Optimize makes your site fast and efficient. It cleans the database, compresses images and caches pages. Fast sites attract more traffic and users.
-Version: 3.1.4
+Version: 3.1.8
 Author: David Anderson, Ruhani Rabin, Team Updraft
 Author URI: https://updraftplus.com
 Text Domain: wp-optimize
@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) die('No direct access allowed');
 
 // Check to make sure if WP_Optimize is already call and returns.
 if (!class_exists('WP_Optimize')) :
-define('WPO_VERSION', '3.1.4');
+define('WPO_VERSION', '3.1.8');
 define('WPO_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('WPO_PLUGIN_MAIN_PATH', plugin_dir_path(__FILE__));
 define('WPO_PREMIUM_NOTIFICATION', false);
@@ -61,16 +61,21 @@ class WP_Optimize {
 		
 		add_action('admin_init', array($this, 'admin_init'));
 		add_action('admin_menu', array($this, 'admin_menu'));
+		add_action('admin_bar_menu', array($this, 'cache_admin_bar'), 100, 1);
 
 		add_filter("plugin_action_links_".plugin_basename(__FILE__), array($this, 'plugin_settings_link'));
 		add_action('wpo_cron_event2', array($this, 'cron_action'));
 		add_filter('cron_schedules', array($this, 'cron_schedules'));
 
-		if (!$this->is_premium()) {
+		if (!$this->get_options()->get_option('installed-for', false)) $this->get_options()->update_option('installed-for', time());
+
+		if (!self::is_premium()) {
 			add_action('auto_option_settings', array($this->get_options(), 'auto_option_settings'));
 		}
 
 		add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
+
+		add_action('wp_enqueue_scripts', array($this, 'frontend_enqueue_scripts'));
 
 		add_action('wp_ajax_wp_optimize_ajax', array($this, 'wp_optimize_ajax_handler'));
 
@@ -85,8 +90,6 @@ class WP_Optimize {
 		 */
 		add_action('wp_optimize_admin_page_wpo_images_smush', array($this, 'admin_page_wpo_images_smush'));
 
-		include_once(WPO_PLUGIN_MAIN_PATH.'includes/helpers.php');
-
 		include_once(WPO_PLUGIN_MAIN_PATH.'includes/updraftcentral.php');
 
 		include_once(WPO_PLUGIN_MAIN_PATH.'includes/backward-compatibility-functions.php');
@@ -96,6 +99,49 @@ class WP_Optimize {
 		$this->schedule_plugin_cron_tasks();
 
 		add_action('wpo_admin_before_closing_wrap', array($this, 'load_modal_template'), 20);
+
+		add_action('upgrader_process_complete', array($this, 'detect_active_plugins_and_themes_updates'), 10, 2);
+	}
+
+	/**
+	 * Detect when an active plugin or theme is updated, and trigger an action
+	 *
+	 * @param object $upgrader_object
+	 * @param array  $options
+	 * @return void
+	 */
+	public function detect_active_plugins_and_themes_updates($upgrader_object, $options) {
+		$should_purge_cache = false;
+		$skin = $upgrader_object->skin;
+		if ('plugin' === $options['type']) {
+			// A plugin is updated using the default update system (upgrader_overwrote_package is used for the upload method)
+			if (property_exists($skin, 'plugin_active') && $skin->plugin_active) {
+				$should_purge_cache = true;
+			}
+		} elseif ('theme' === $options['type']) {
+			$active_theme = get_stylesheet();
+			$parent_theme = get_template();
+			// A theme is updated using the upload system
+			if ('install' === $options['action'] && 'update-theme' === $skin->options['overwrite']) {
+				$updated_theme = $upgrader_object->result['destination_name'];
+				// Check if the theme is in use
+				if ($active_theme == $updated_theme || $parent_theme == $updated_theme) {
+					$should_purge_cache = true;
+				}
+			// A theme is updated using the classic update system
+			} elseif ('update' === $options['action']) {
+				// Check if the theme is in use
+				if (in_array($active_theme, $options['themes']) || in_array($parent_theme, $options['themes'])) {
+					$should_purge_cache = true;
+				}
+			}
+		}
+
+		/**
+		 * Action executed when an active theme or plugin was updated
+		 */
+		if ($should_purge_cache) do_action('wpo_active_plugin_or_theme_updated');
+
 	}
 	
 	public function admin_page_wpo_images_smush() {
@@ -248,6 +294,8 @@ class WP_Optimize {
 
 		// Register or enqueue common scripts
 		wp_register_script('wp-optimize-send-command', WPO_PLUGIN_URL.'js/send-command'.$min_or_not_internal.'.js', array(), $enqueue_version);
+		wp_localize_script('wp-optimize-send-command', 'wp_optimize_send_command_data', array('nonce' => wp_create_nonce('wp-optimize-ajax-nonce')));
+		wp_enqueue_style('wp-optimize-global', WPO_PLUGIN_URL.'css/wp-optimize-global'.$min_or_not_internal.'.css', array(), $enqueue_version);
 
 		// load scripts and styles only on WP-Optimize pages.
 		if (!$this->is_wpo_page()) return;
@@ -273,6 +321,20 @@ class WP_Optimize {
 		wp_localize_script('wp-optimize-admin-js', 'wpoptimize', $js_variables);
 
 		do_action('wpo_premium_scripts_styles', $min_or_not_internal, $min_or_not, $enqueue_version);
+	}
+
+	/**
+	 * Enqueue any required front-end scripts
+	 *
+	 * @return void
+	 */
+	public function frontend_enqueue_scripts() {
+		if (!current_user_can('manage_options') || !is_admin_bar_showing()) return;
+		$enqueue_version = (defined('WP_DEBUG') && WP_DEBUG) ? WPO_VERSION.'.'.time() : WPO_VERSION;
+		$min_or_not_internal = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '-'. str_replace('.', '-', WPO_VERSION). '.min';
+
+		// Register or enqueue common scripts
+		wp_enqueue_style('wp-optimize-global', WPO_PLUGIN_URL.'css/wp-optimize-global'.$min_or_not_internal.'.css', array(), $enqueue_version);
 	}
 
 	/**
@@ -362,6 +424,8 @@ class WP_Optimize {
 		if (is_multisite()) {
 			add_action('network_admin_menu', array($this, 'admin_menu'));
 		}
+
+		add_filter('robots_txt', array($this, 'robots_txt'), 99, 1);
 
 		// Run Premium loader if it exists
 		if (file_exists(WPO_PLUGIN_MAIN_PATH.'premium.php') && !class_exists('WP_Optimize_Premium')) {
@@ -536,7 +600,7 @@ class WP_Optimize {
 	public function show_admin_notice_upgradead() {
 		$this->include_template('notices/thanks-for-using-main-dash.php');
 	}
-
+	
 	public function capability_required() {
 		return apply_filters('wp_optimize_capability_required', 'manage_options');
 	}
@@ -586,6 +650,12 @@ class WP_Optimize {
 			$options->update_option($subaction, (time() + 366 * 86400));
 		} elseif (in_array($subaction, array('dismiss_page_notice_until', 'dismiss_notice'))) {
 			$options->update_option($subaction, (time() + 84 * 86400));
+		} elseif ('dismiss_review_notice' == $subaction) {
+			if (empty($data['dismiss_forever'])) {
+				$options->update_option($subaction, time() + 84*86400);
+			} else {
+				$options->update_option($subaction, 100 * (365.25 * 86400));
+			}
 		} else {
 			// Other commands, available for any remote method.
 			if (!class_exists('WP_Optimize_Commands')) include_once(WPO_PLUGIN_MAIN_PATH . 'includes/class-commands.php');
@@ -840,7 +910,7 @@ class WP_Optimize {
 		add_action('wp_optimize_admin_page_wpo_cache_advanced', array($this, 'output_page_cache_advanced_tab'), 20);
 		add_action('wp_optimize_admin_page_wpo_cache_gzip', array($this, 'output_cache_gzip_tab'), 20);
 		add_action('wp_optimize_admin_page_wpo_cache_settings', array($this, 'output_cache_settings_tab'), 20);
-
+		add_action('wpo_page_cache_advanced_settings', array($this, 'output_cloudflare_settings'), 20);
 		/**
 		 * SUPPORT
 		 */
@@ -914,7 +984,7 @@ class WP_Optimize {
 	}
 
 	/**
-	 * Gzip tab
+	 * Cache tab
 	 */
 	public function output_page_cache_tab() {
 		$wpo_cache = $this->get_page_cache();
@@ -926,7 +996,8 @@ class WP_Optimize {
 			'active_cache_plugins' => WP_Optimize_Detect_Cache_Plugins::instance()->get_active_cache_plugins(),
 			'wpo_cache_options' => $wpo_cache_options,
 			'cache_size' => $this->get_page_cache()->get_cache_size(),
-			'display' => $display
+			'display' => $display,
+			'can_purge_the_cache' => $this->can_purge_the_cache(),
 		));
 	}
 
@@ -981,11 +1052,16 @@ class WP_Optimize {
 		$wpo_gzip_compression = $this->get_gzip_compression();
 		$wpo_gzip_compression_enabled = $wpo_gzip_compression->is_gzip_compression_enabled(true);
 		$wpo_gzip_headers_information = $wpo_gzip_compression->get_headers_information();
+		$is_cloudflare_site = $this->is_cloudflare_site();
+		$is_gzip_compression_section_exists = $wpo_gzip_compression->is_gzip_compression_section_exists();
+		$wpo_gzip_compression_enabled_by_wpo = $is_gzip_compression_section_exists && $wpo_gzip_compression_enabled && !$is_cloudflare_site && !('brotli' == $wpo_gzip_headers_information['compression']);
 
 		WP_Optimize()->include_template('cache/gzip-compression.php', false, array(
 			'wpo_gzip_headers_information' => $wpo_gzip_headers_information,
 			'wpo_gzip_compression_enabled' => $wpo_gzip_compression_enabled,
-			'wpo_gzip_compression_settings_added' => $wpo_gzip_compression->is_gzip_compression_section_exists(),
+			'is_cloudflare_site' => $is_cloudflare_site,
+			'wpo_gzip_compression_enabled_by_wpo' => $wpo_gzip_compression_enabled_by_wpo,
+			'wpo_gzip_compression_settings_added' => $is_gzip_compression_section_exists,
 			'info_link' => 'https://getwpo.com/gzip-compression-explained/',
 			'faq_link' => 'https://getwpo.com/gzip-faq-link/',
 			'class_name' => (!is_wp_error($wpo_gzip_compression_enabled) && $wpo_gzip_compression_enabled ? 'wpo-enabled' : 'wpo-disabled')
@@ -1002,6 +1078,7 @@ class WP_Optimize {
 
 		WP_Optimize()->include_template('cache/browser-cache.php', false, array(
 			'wpo_browser_cache_enabled' => $wpo_browser_cache_enabled,
+			'is_cloudflare_site' => $this->is_cloudflare_site(),
 			'wpo_browser_cache_settings_added' => $wpo_browser_cache->is_browser_cache_section_exists(),
 			'class_name' => (true === $wpo_browser_cache_enabled ? 'wpo-enabled' : 'wpo-disabled'),
 			'wpo_browser_cache_expire_days' => $this->get_options()->get_option('browser_cache_expire_days', '28'),
@@ -1009,6 +1086,24 @@ class WP_Optimize {
 			'info_link' => 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching',
 			'faq_link' => 'https://www.digitalocean.com/community/tutorials/how-to-implement-browser-caching-with-nginx-s-header-module-on-ubuntu-16-04',
 		));
+	}
+
+	/**
+	 * Check if is the current site handled with Cloudflare.
+	 *
+	 * @return bool
+	 */
+	public function is_cloudflare_site() {
+		return isset($_SERVER['HTTP_CF_RAY']);
+	}
+
+	/**
+	 * Include Cloudflare settings template.
+	 */
+	public function output_cloudflare_settings() {
+		if (self::is_premium() || !apply_filters('show_cloudflare_settings', $this->is_cloudflare_site())) return;
+
+		WP_Optimize()->include_template('cache/page-cache-cloudflare-placeholder.php');
 	}
 
 	/**
@@ -1076,8 +1171,12 @@ class WP_Optimize {
 			'automatic_backup_before_optimizations' => __('Automatic backup before optimizations', 'wp-optimize'),
 			'error_unexpected_response' => __('An unexpected response was received.', 'wp-optimize'),
 			'optimization_complete' => __('Optimization complete', 'wp-optimize'),
+			'with_warnings' => __('(with warnings - open the browser console for more details)', 'wp-optimize'),
+			'optimizing_table' => __('Optimizing table:', 'wp-optimize'),
 			'run_optimizations' => __('Run optimizations', 'wp-optimize'),
+			'table_optimization_timeout' => 120000,
 			'cancel' => __('Cancel', 'wp-optimize'),
+			'cancelling' => __('Cancelling...', 'wp-optimize'),
 			'enable' => __('Enable', 'wp-optimize'),
 			'disable' => __('Disable', 'wp-optimize'),
 			'please_select_settings_file' => __('Please, select settings file.', 'wp-optimize'),
@@ -1096,9 +1195,11 @@ class WP_Optimize {
 			'toggle_info' => __('Show information', 'wp-optimize'),
 			'page_refresh' => __('Refreshing the page to reflect changes...', 'wp-optimize'),
 			'settings_have_been_deleted_successfully' => __('WP-Optimize settings have been deleted successfully.', 'wp-optimize'),
+			'loading_data' => __('Loading data...', 'wp-optimize'),
 			'spinner_src' => esc_attr(admin_url('images/spinner-2x.gif')),
 			'settings_page_url' => admin_url('admin.php?page=wpo_settings'),
 			'sites' => $this->get_sites(),
+			'user_always_ignores_table_delete_warning' => (get_user_meta(get_current_user_id(), 'wpo-ignores-table-delete-warning', true)) ? true : false,
 		));
 	}
 
@@ -1152,6 +1253,39 @@ class WP_Optimize {
 			$wp_admin_bar->add_node($args);
 		}
 
+	}
+
+	/**
+	 * Manages the admin bar menu for caching (currently page and minify)
+	 */
+	public function cache_admin_bar($wp_admin_bar) {
+
+		$options = $this->get_options();
+		if (!$options->get_option('enable_cache_in_admin_bar', true)) return;
+
+		/**
+		 * The "purge cache" menu items
+		 *
+		 * @param array  $menu_items - The menu items, in the format required by $wp_admin_bar->add_menu()
+		 * @param object $wp_admin_bar
+		 */
+		$menu_items = apply_filters('wpo_cache_admin_bar_menu_items', array(), $wp_admin_bar);
+
+		if (empty($menu_items) || !is_array($menu_items)) return;
+
+		$wp_admin_bar->add_menu(array(
+			'id'    => 'wpo_purge_cache',
+			'title' => __('Purge cache', 'wp-optimize'),
+			'href'  => '#',
+			'meta'  => array(
+				'title' => __('Purge cache', 'wp-optimize'),
+			),
+			'parent' => false,
+		));
+
+		foreach ($menu_items as $item) {
+			$wp_admin_bar->add_menu($item);
+		}
 	}
 
 	/**
@@ -1270,7 +1404,12 @@ class WP_Optimize {
 	 * @return void
 	 */
 	public function wpo_cron_deactivate() {
-		wp_clear_scheduled_hook('wpo_cron_event2');
+		$cron_jobs = _get_cron_array();
+		foreach ($cron_jobs as $job) {
+			foreach (array_keys($job) as $hook) {
+				if (preg_match('/^wpo_/', $hook)) wp_unschedule_hook($hook);
+			}
+		}
 	}
 
 	/**
@@ -1353,7 +1492,6 @@ class WP_Optimize {
 		if ($options->get_option('enable-admin-menu', 'false') == 'true') {
 			add_action('wp_before_admin_bar_render', array($this, 'wpo_admin_bar'));
 		}
-
 	}
 
 	/**
@@ -1538,28 +1676,6 @@ class WP_Optimize {
 	}
 
 	/**
-	 * Not currently used; needs looking at.
-	 * N.B. The description does not match the actual function
-	 *
-	 * @param integer $date Date of when the optimization was executed.
-	 */
-	public function send_email($date) {
-		ob_start();
-		// This need to work on - currently not using the parameter values.
-		$my_time = current_time("timestamp", 0);
-		$my_date = gmdate(get_option('date_format') . ' ' . get_option('time_format'), $my_time);
-		$sendto = (!$options->get_option('email-address') ? get_bloginfo('admin_email') : $options->get_option('email-address'));// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable, VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable -- $sendto is unused but function Not currently used.
-		$subject = get_bloginfo('name').": ".__("Automatic Operation Completed", "wp-optimize")." ".$my_date;// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- $subject is unused but function Not currently used.
-
-		$msg  = __("Scheduled optimization was executed at", "wp-optimize")." ".$my_date."\r\n"."\r\n";
-		$msg .= __("You can safely delete this email.", "wp-optimize")."\r\n";
-		$msg .= "\r\n";
-		$msg .= __("Regards,", "wp-optimize")."\r\n";
-		$msg .= __("WP-Optimize Plugin", "wp-optimize");
-		ob_end_clean();
-	}
-
-	/**
 	 * Message to debug
 	 *
 	 * @param string $message Message to insert into the log.
@@ -1580,15 +1696,33 @@ class WP_Optimize {
 	 * @return integer        return the correct format size.
 	 */
 	public function format_size($bytes) {
-		if ($bytes > 1073741824) {
-			return number_format_i18n(($bytes / 1073741824), 2) . ' '.__('GB', 'wp-optimize');
-		} elseif ($bytes > 1048576) {
-			return number_format_i18n(($bytes / 1048576), 1) . ' '.__('MB', 'wp-optimize');
-		} elseif ($bytes > 1024) {
-			return number_format_i18n(($bytes / 1024), 1) . ' '.__('KB', 'wp-optimize');
+		if (!is_numeric($bytes)) return __('N/A', 'wp-optimize');
+
+		if (1073741824 <= $bytes) {
+			$bytes = number_format($bytes / 1073741824, 2) . ' GB';
+		} elseif (1048576 <= $bytes) {
+			$bytes = number_format($bytes / 1048576, 2) . ' MB';
+		} elseif (1024 <= $bytes) {
+			$bytes = number_format($bytes / 1024, 2) . ' KB';
+		} elseif (1 < $bytes) {
+			$bytes = $bytes . ' bytes';
+		} elseif (1 == $bytes) {
+			$bytes = $bytes . ' byte';
 		} else {
-			return number_format_i18n($bytes, 0) . ' '.__('bytes', 'wp-optimize');
+			$bytes = '0 bytes';
 		}
+
+		return $bytes;
+	}
+
+	/**
+	 * Format a timestamp into a juman readable date time
+	 *
+	 * @param int $timestamp
+	 * @return string
+	 */
+	public function format_date_time($timestamp) {
+		return date_i18n(get_option('date_format').' @ '.get_option('time_format'), ($timestamp + get_option('gmt_offset') * 3600));
 	}
 
 	/**
@@ -1865,7 +1999,7 @@ class WP_Optimize {
 	 * @return boolean
 	 */
 	public function is_multisite_mode() {
-		return (is_multisite() && WP_Optimize()->is_premium());
+		return (is_multisite() && self::is_premium());
 	}
 
 	/**
@@ -1888,6 +2022,19 @@ class WP_Optimize {
 	 */
 	public function can_manage_options() {
 		if (self::is_premium() && false == user_can(get_current_user_id(), 'wpo_manage_settings')) return false;
+		return true;
+	}
+
+	/**
+	 * CHeck if current user can purge the cache.
+	 *
+	 * @return bool
+	 */
+	public function can_purge_the_cache() {
+		if (self::is_premium()) {
+			return WP_Optimize_Premium()->can_purge_the_cache();
+		}
+
 		return true;
 	}
 
@@ -2137,6 +2284,41 @@ class WP_Optimize {
 	public function load_modal_template() {
 		$this->include_template('modal.php');
 	}
+
+	/**
+	 * Delete transients and semaphores data from options table.
+	 */
+	public function delete_transients_and_semaphores() {
+		global $wpdb;
+
+		$masks = array(
+			'updraft_locked_wpo_%',
+			'updraft_unlocked_wpo_%',
+			'updraft_last_lock_time_wpo_%',
+			'updraft_semaphore_wpo_%',
+			'wpo_locked_%',
+			'wpo_unlocked_%',
+			'wpo_last_lock_time_%',
+			'wpo_semaphore_%',
+			'_transient_timeout_wpo_%',
+			'_transient_wpo_%',
+		);
+
+		$where_parts = array();
+		foreach ($masks as $mask) {
+			$where_parts[] = "(`option_name` LIKE '{$mask}')";
+		}
+
+		$wpdb->query("DELETE FROM {$wpdb->options} WHERE " . join(' OR ', $where_parts));
+	}
+
+	/**
+	 * Prevents bots from indexing plugins list
+	 */
+	public function robots_txt($output) {
+		$output .= "Disallow: /uploads/wpo-plugins-tables-list.json";
+		return $output;
+	}
 }
 
 /**
@@ -2157,6 +2339,18 @@ function wpo_activation_actions() {
 
 	WP_Optimize()->get_options()->set_default_options();
 	WP_Optimize()->get_minify()->plugin_activate();
+
+	WP_Optimize::get_gzip_compression()->restore();
+	WP_Optimize::get_browser_cache()->restore();
+
+	// run premium activation actions.
+	if (file_exists(WPO_PLUGIN_MAIN_PATH.'premium.php')) {
+		if (!class_exists('WP_Optimize_Premium')) {
+			include_once(WPO_PLUGIN_MAIN_PATH.'premium.php');
+		}
+
+		WP_Optimize_Premium()->plugin_activation_actions();
+	}
 }
 
 /**
@@ -2166,6 +2360,8 @@ function wpo_deactivation_actions() {
 	WP_Optimize()->wpo_cron_deactivate();
 	WP_Optimize()->get_page_cache()->disable();
 	WP_Optimize()->get_minify()->plugin_deactivate();
+	WP_Optimize::get_gzip_compression()->disable();
+	WP_Optimize::get_browser_cache()->disable();
 }
 
 function wpo_cron_deactivate() {
@@ -2178,8 +2374,12 @@ function wpo_cron_deactivate() {
  * Plugin uninstall actions.
  */
 function wpo_uninstall_actions() {
+	WP_Optimize::get_gzip_compression()->disable();
+	WP_Optimize::get_browser_cache()->disable();
 	WP_Optimize()->get_options()->delete_all_options();
 	WP_Optimize()->get_minify()->plugin_uninstall();
+	WP_Optimize()->get_options()->wipe_settings();
+	WP_Optimize()->delete_transients_and_semaphores();
 }
 
 function WP_Optimize() {

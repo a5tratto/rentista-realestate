@@ -1,19 +1,19 @@
-=== Rank Math - SEO Plugin for WordPress ===
+=== Rank Math SEO - Best SEO Plugin for WordPress ===
 Contributors: rankmath
 Plugin link: https://rankmath.com/?utm_source=LP&utm_campaign=WP
-Tags: seo, sitemap, google search console, schema, redirection
-Tested up to: 5.6
-Requires at least: 5.2
-Requires PHP: 7.0
-Stable tag: 1.0.54.1
+Tags: seo, sitemap, google search console, schema, redirection, WordPress SEO
+Tested up to: 5.7
+Requires at least: 5.5
+Requires PHP: 7.2
+Stable tag: 1.0.60.1
 License: GPL-2.0+
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
 
-Rank Math is a revolutionary WordPress SEO plugin that combines the features of many SEO tools in a single package & helps you multiply your traffic.
+Rank Math SEO is a revolutionary WordPress SEO plugin that combines the features of many SEO tools in a single package & helps you multiply your traffic.
 
 == Description ==
 
-**SEO Plugin For WordPress**
+**Rank Math SEO - Best SEO Plugin for WordPress**
 ★★★★★<br>
 
 **SEO is the most consistent source of traffic for any website.** We created <a href="https://rankmath.com/wordpress/plugin/seo-suite/?utm_source=LP&utm_campaign=WP" target="_blank">**Rank Math, a WordPress SEO plugin**</a>, to help every website owner get access to the SEO tools they need to improve their SEO and attract more traffic to their website.
@@ -27,7 +27,7 @@ SEO might be the best and most **consistent source of traffic** for one's websit
 
 Its host of **intelligent features** brings top SEO capabilities in your hands that were previously out of reach. The **smart automation** features give you the **power of an entire SEO team** with just a few clicks. A **well thought out design, powerful features, and years of development** by the MyThemeShop squad make Rank Math a game-changing SEO plugin that will level the SEO playing field in your favor to help increase traffic.
 
-###  Rank Math beats the competition with hands tied behind its back. ###
+### Rank Math beats all of its competitors hands down. ###
 
 See the features which are exclusive to Rank Math SEO plugin and to understand why Rank Math is possibly the **Best SEO Plugin for WordPress**.
 
@@ -379,7 +379,7 @@ No, you won't. When you install Rank Math, it will seamlessly import your settin
 If you setup Rank Math from scratch, then your search engine rankings will depend on how you configure it. But please be advised that Google and other search engines prefer good, useful content over anything else.
 
 = What are the technical requirements for using Rank Math? =
-Rank Math requires at least PHP 5.6, cURL lib, cron jobs, to be installed and enabled on the server. Those things are mostly installed on every good hosting server. When you initiate Rank Math's setup process, Rank Math will also perform a compatibility check to confirm if your server can run Rank Math. If your server has a lower configuration of any Software, please ask your hosting to update it to the latest version.
+Rank Math requires at least PHP 7.2, cURL lib, cron jobs, to be installed and enabled on the server. Those things are mostly installed on every good hosting server. When you initiate Rank Math's setup process, Rank Math will also perform a compatibility check to confirm if your server can run Rank Math. If your server has a lower configuration of any Software, please ask your hosting to update it to the latest version.
 
 = Can I use Rank Math on a WordPress.com website? =
 Yes, as the plugin is provided through WordPress.org, it is available on WordPress.com as well. However, you might be required to opt for the Business plan of WordPress.com
@@ -475,23 +475,23 @@ Please drop us an email at support@rankmath.com and we would be more than happy 
 
 == Changelog ==
 
-= 1.0.54.1 [Dec 09, 2020] =
-* Improved: The overall data fetching process of the Analytics module from Google
-* Improved: Importing the top 1,000 keywords in the Analytics from Google
-* Fixed: The Classic Editor was not working properly on the installations where the PHP 7.2 or lower was used. Please update to at least PHP 7.4 for better security and speed
-* Fixed: Multiple reconnect notices were showing on some installations
+= 1.0.60.1 [Mar 21, 2021] =
+* Fixed: Fatal PHP Error after updating the plugin where very old PRO version is present
 
-= 1.0.54 [Dec 08, 2020] =
-* Added: Now [Analytics](https://rankmath.com/kb/analytics/) shows Keywords even with the 0 clicks, this will help to show accurate CTR and Total Keyword count
-* Added: Show reconnect notice if the Google refresh token is missing
-* Improved: 'Re-create Missing Database Tables' tool now checks all the required tables for Rank Math
-* Improved: Keep only connected Google Accounts in the database
-* Improved: Minor UI changes
-* Fixed: PHP error in the frontend if the incorrect duration was used in the Video Schema
-* Fixed: Google preview for the WooCommerce product was not showing the Schema data
-* Fixed: Enable/Disable Date Archive Option was reverted
-* Fixed: [Content Analysis](https://rankmath.com/kb/general-tab/#content-analysis) was not working in the Classic Editor's text mode
-* Fixed: Incompatibility with the WP Parsi Date plugin
-* Fixed: Wrong Total redirection count when the number was greater than 999
+= 1.0.60 [Mar 18, 2021] =
+* Updated: [Minimum required PHP](https://wordpress.org/about/requirements/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP) version is now set to 7.2. Even though the EOL is reached for PHP 7.2 as well. In a few months, we will not support any PHP version that has run out of its EOL cycle. Not only it's a security risk, but it also affects performance.
+* Improved: [Analytics module](https://rankmath.com/kb/analytics/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP) now shows the latest position for keywords and posts instead of the average position for a selected timeframe. You should see better stats overall in the plugin now
+* Improved: Calculation method for the difference of keywords and posts positions is updated to reflect more meaningful data
+* Improved: Formulas to calculate the [total number of keywords](https://rankmath.com/kb/analytics/#keyword-report-overview-numbers-pro/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP) for which a site is ranking currently
+* Improved: Smallest keyword position will now represent the post position out of all keywords for which that post is ranking
+* Improved: Keyword position's bar graph and filters related to it now show accurate keywords count
+* Improved: Removed `noindex` posts from the Analytics reporting for a better understanding of the overall SEO of a site
+* Improved: Remove all the [Schema](https://rankmath.com/blog/schema-markup/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP) entities from the post where Schema was not selected
+* Fixed: Active tab gets deselected in the Analytics pages when pagination is used
+* Fixed: Incompatibility with the Flatsome theme causing issues on some installations
+* Fixed: Every [WooCommerce](https://rankmath.com/blog/woocommerce-seo/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP) product gallery's images were adding as different `og:image` tags
+* Fixed: A fatal error in the [Sitemap](https://rankmath.com/kb/sitemaps-seo-benefits/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP) when the timezone was set to UTC-1
+* Fixed: Styling issue in the ["Mark page as" option of the admin bar](https://rankmath.com/kb/quick-actions/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP)
+* Fixed: SEO score was changing back to a lower score in the [Elementor](https://rankmath.com/blog/elementor-seo/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP) editor after reloading the page
 
-Full changelog can be found here - **[Rank Math SEO changelog](https://rankmath.com/changelog/?utm_source=LP&utm_campaign=WP)**
+Full changelog can be found here - **[Rank Math SEO changelog](https://rankmath.com/changelog/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP)**

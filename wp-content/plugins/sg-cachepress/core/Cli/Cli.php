@@ -44,8 +44,11 @@ class Cli {
 		// Heartbeat.
 		\WP_CLI::add_command( 'sg heartbeat', 'SiteGround_Optimizer\Cli\Cli_Heartbeat' );
 
-		// DNS Prefetch
+		// DNS Prefetch.
 		\WP_CLI::add_command( 'sg dns-prefetch', 'SiteGround_Optimizer\Cli\Cli_DNS_Prefetch' );
+
+		// Import/Export settings.
+		\WP_CLI::add_command( 'sg settings', 'SiteGround_Optimizer\Cli\Cli_Settings' );
 	}
 
 }

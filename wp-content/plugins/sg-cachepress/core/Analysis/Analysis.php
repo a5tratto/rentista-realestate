@@ -76,7 +76,54 @@ class Analysis {
 
 		$items['score'] = $result['lighthouseResult']['categories']['performance']['score'];
 
+		// Check if we need to add additional information to the results table.
+		if ( array_key_exists( 'data', $items['load-opportunities'] ) ) {
+			$items = $this->add_additional_info( $items );
+		}
+
 		// Return the response.
+		return $items;
+	}
+	/**
+	 * Add additional information to optimization opportunities
+	 *
+	 * @since 5.7.13
+	 *
+	 * @param array $items The array containing the results from the optimization test.
+	 *
+	 * @return array $items The items and added additional informative messages.
+	 */
+	public function add_additional_info( $items ) {
+		// Array containing the audits to which we want to add additional information.
+		$additional_optimization_info = array(
+			'uses-rel-preload',
+		);
+
+		// Array containing the messages, asset type and savigns we can achieve.
+		$additional_info_keys = array(
+			'uses-rel-preload' => array(
+				'asset'              => 'url',
+				'savings'            => 'overallSavingsMs',
+				'additional_message' => __( 'Use <strong>Fonts Preloading</strong> and add the following fonts to the preload list:', 'sg-cachepress' ),
+			),
+		);
+
+		// Loop trough the opportunities and check if we have a match with the additional info list.
+		foreach ( $items['load-opportunities']['data'] as $item => $prop ) {
+
+			if ( in_array( $prop['id'], $additional_optimization_info ) && ! empty( $prop['details']['items'] ) ) {
+
+				// Add the additional text message to the existing message notification.
+				$items['load-opportunities']['data'][ $item ]['action'] .= $additional_info_keys[ $prop['id'] ]['additional_message'];
+
+				// Loop trough all items and add them based on the additional info keys.
+				foreach ( $prop['details']['items'] as $asset ) {
+
+					$items['load-opportunities']['data'][ $item ]['action'] .= '<br/>' . $asset[ $additional_info_keys[ $prop['id'] ]['asset'] ];
+				}
+			}
+		}
+
 		return $items;
 	}
 
@@ -178,10 +225,11 @@ class Analysis {
 			'uses-rel-preload'           => array(
 				'enabled' => array(
 					'siteground_optimizer_optimize_javascript_async',
+					'siteground_optimizer_optimize_web_fonts',
 				),
 				'messages' => array(
 					'enabled' => __( 'Not all resources can be deferred, so you may continue to get this message, even after your site is well optimized.', 'sg-cachepress' ),
-					'default' => __( 'Enable the <strong>Defer Render-blocking JS</strong> option in the <a class="sg-link sg-with-color sg-typography sg-typography--break-all" href="#frontend">Frontend Optimization tab</a> and exclude critical scripts from it to pass this audit.', 'sg-cachepress' ),
+					'default' => __( 'Enable the <strong>Defer Render-blocking JS</strong> option in the <a class="sg-link sg-with-color sg-typography sg-typography--break-all" href="#frontend">Frontend Optimization tab</a> and exclude critical scripts from it to pass this audit. You could also enable the <strong>Web Fonts Optimization</strong> and preload the necessary fonts by adding them in the preload list.', 'sg-cachepress' ),
 				),
 			),
 			'efficient-animated-content' => array(
@@ -316,6 +364,16 @@ class Analysis {
 		return $response_messages;
 	}
 
+	/**
+	 * Run the speed test.
+	 *
+	 * @since  5.4.0
+	 *
+	 * @param  string $url    The url to test.
+	 * @param  string $device The device type(mobile/desktop).
+	 *
+	 * @return array          The speed test result.
+	 */
 	public function run_analysis_rest( $url, $device = 'desktop' ) {
 		$analysis = $this->run_analysis( $url, $device );
 
@@ -429,4 +487,21 @@ class Analysis {
 		// Return the analysis.
 		return $this->process_analysis( $response );
 	}
+
+	/**
+	 * Get the pre-migration speed results.
+	 *
+	 * @since  5.7.13
+	 *
+	 * @return bool/string False if the file is non existing/The array containing the speed-test results.
+	 */
+	public function get_pre_migration_test() {
+		// Bail if the file does not exist.
+		if ( ! file_exists( Helper::get_uploads_dir() . '/pagespeed_results.json' ) ) {
+			return false;
+		}
+		// Return the string containing the pre-migration speed test.
+		return json_decode( file_get_contents( Helper::get_uploads_dir() . '/pagespeed_results.json' ), true );
+	}
+
 }

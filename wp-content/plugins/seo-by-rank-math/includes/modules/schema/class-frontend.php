@@ -44,6 +44,8 @@ class Frontend {
 		$this->action( 'rank_math/json_ld', 'add_schema', 10, 2 );
 		$this->action( 'rank_math/json_ld', 'connect_schema_entities', 99, 2 );
 		$this->filter( 'rank_math/snippet/rich_snippet_event_entity', 'validate_event_schema', 11, 2 );
+
+		new Schema_OpenGraph_Tags();
 	}
 
 	/**
@@ -82,6 +84,8 @@ class Frontend {
 				return ! in_array( $schema['@type'], [ 'WooCommerceProduct', 'EDDProduct' ], true );
 			}
 		);
+		DB::unpublish_jobposting_post( $jsonld, $schemas );
+
 		$schemas = $jsonld->replace_variables( $schemas );
 		$schemas = $jsonld->filter( $schemas, $jsonld, $data );
 
@@ -100,6 +104,8 @@ class Frontend {
 		if ( empty( $schemas ) ) {
 			return $schemas;
 		}
+
+		$jsonld->parts['canonical'] = ! empty( $jsonld->parts['canonical'] ) ? $jsonld->parts['canonical'] : \RankMath\Paper\Paper::get()->get_canonical();
 
 		$schema_types = [];
 		foreach ( $schemas as $id => $schema ) {
@@ -125,42 +131,51 @@ class Frontend {
 	 * @param array  $schemas Array of json-ld data.
 	 */
 	private function connect_properties( &$schema, $id, $jsonld, $schemas ) {
+		if ( isset( $schema['isCustom'] ) ) {
+			unset( $schema['isCustom'] );
+			return;
+		}
+
 		if ( isset( $schema['image'] ) && empty( $schema['image']['url'] ) ) {
 			unset( $schema['image'] );
 		}
 
-		$schema['@id'] = $jsonld->parts['canonical'] . '#' . $id;
-		$type          = \strtolower( $schema['@type'] );
-		$is_event      = Str::contains( 'event', $type );
-		if ( $is_event ) {
-			$jsonld->add_prop( 'publisher', $schema, 'organizer', $schemas );
-		}
+		$jsonld->parts['canonical'] = ! empty( $jsonld->parts['canonical'] ) ? $jsonld->parts['canonical'] : \RankMath\Paper\Paper::get()->get_canonical();
+		$schema['@id']              = $jsonld->parts['canonical'] . '#' . $id;
 
-		$props = [
-			'is_part_of' => [
-				'key'   => 'webpage',
-				'value' => ! in_array( $type, [ 'jobposting', 'musicgroup', 'person', 'product', 'restaurant', 'service' ], true ) && ! $is_event,
-			],
-			'publisher'  => [
-				'key'   => 'publisher',
-				'value' => ! in_array( $type, [ 'jobposting', 'musicgroup', 'person', 'product', 'restaurant', 'service' ], true ) && ! $is_event,
-			],
-			'thumbnail'  => [
-				'key'   => 'image',
-				'value' => ! in_array( $type, [ 'videoobject' ], true ) || isset( $schema['image'] ),
-			],
-			'language'   => [
-				'key'   => 'inLanguage',
-				'value' => ! in_array( $type, [ 'person', 'service', 'restaurant', 'product', 'musicgroup', 'musicalbum', 'jobposting' ], true ),
-			],
-		];
-
-		foreach ( $props as $prop => $data ) {
-			if ( ! $data['value'] ) {
-				continue;
+		$types = array_map( 'strtolower', (array) $schema['@type'] );
+		foreach ( $types as $type ) {
+			$is_event = Str::contains( 'event', $type );
+			if ( $is_event ) {
+				$jsonld->add_prop( 'publisher', $schema, 'organizer', $schemas );
 			}
 
-			$jsonld->add_prop( $prop, $schema, $data['key'], $schemas );
+			$props = [
+				'is_part_of' => [
+					'key'   => 'webpage',
+					'value' => ! in_array( $type, [ 'jobposting', 'musicgroup', 'person', 'product', 'restaurant', 'service' ], true ) && ! $is_event,
+				],
+				'publisher'  => [
+					'key'   => 'publisher',
+					'value' => ! in_array( $type, [ 'jobposting', 'musicgroup', 'person', 'product', 'restaurant', 'service' ], true ) && ! $is_event,
+				],
+				'thumbnail'  => [
+					'key'   => 'image',
+					'value' => ! in_array( $type, [ 'videoobject' ], true ) || isset( $schema['image'] ),
+				],
+				'language'   => [
+					'key'   => 'inLanguage',
+					'value' => ! in_array( $type, [ 'person', 'service', 'restaurant', 'product', 'musicgroup', 'musicalbum', 'jobposting' ], true ),
+				],
+			];
+
+			foreach ( $props as $prop => $data ) {
+				if ( ! $data['value'] ) {
+					continue;
+				}
+
+				$jsonld->add_prop( $prop, $schema, $data['key'], $schemas );
+			}
 		}
 	}
 
@@ -191,13 +206,17 @@ class Frontend {
 	 * @return array
 	 */
 	private function change_webpage_entity( $schemas, $types ) {
-		if ( in_array( 'product', $types, true ) ) {
+		if ( in_array( 'Product', $types, true ) ) {
 			$schemas['WebPage']['@type'] = 'ItemPage';
+		}
+
+		if ( isset( $schemas['howto'] ) && ! empty( $schemas['WebPage'] ) ) {
+			$schemas['howto']['mainEntityOfPage'] = [ '@id' => $schemas['WebPage']['@id'] ];
 		}
 
 		$faq_data = array_map(
 			function( $schema ) {
-				return 'FAQPage' === $schema['@type'];
+				return isset( $schema['@type'] ) && 'FAQPage' === $schema['@type'];
 			},
 			$schemas
 		);

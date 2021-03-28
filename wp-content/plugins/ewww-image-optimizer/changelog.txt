@@ -1,3 +1,48 @@
+= 6.0.3 =
+* fixed: syntax error on PHP 7.2 or less
+
+= 6.0.2 =
+* security: new version of PNGOUT available on settings page (if enabled)
+* added: compatibility with Phoenix Media Rename plugin
+* changed: Easy IO supports img tags with SVG images
+* fixed: bulk optimizer gives incorrect message about not enough credits for unlimited plans
+* fixed: db install workaround for MariaDB 10.4 bug
+* fixed: errors with custom db setups when DB_* constants are not defined
+* fixed: error with JS WebP when a class attribute with no value is encountered
+
+= 6.0.1 =
+* changed: more reliable Cloudflare detection for WebP delivery methods
+* fixed: lazy load for external CSS breaking div elements in JS/JSON
+* fixed: call to undefined function from Imsanity
+* fixed: database upgrade check triggers error on MySQL 8.0.17+
+* fixed: delete originals tool is slow
+* fixed: wpdb error when attempting to run migration routine for fresh installs
+
+= 6.0.0 =
+* added: tool to delete originals from WP 5.3+ auto-scaling behavior (Tools menu)
+* added: JS WebP recognizes video elements added via JS (e.g. infinite scroll)
+* added: automatically convert GIF to PNG during new uploads, unless animated
+* added: JS WebP and picture WebP auto-detect configuration for S3 Uploads and WP Stateless
+* added: Lazy Load for external CSS and separate style blocks (div elements only for now)
+* added: Easy IO/CDN rewriting for Ultimate Member AJAX-powered activity wall
+* changed: settings UI revamped with wizard for first-time installs
+* changed: automatic PNG to JPG threshold lowered to 250kb
+* changed: extensions for WP_Image_Editor now disabled by default, use EWWW_IMAGE_OPTIMIZER_ENABLE_EDITOR constant to enable them
+* changed: JS WebP can be used with picture WebP + Lazy Load to support CSS background images
+* changed: better compatibility with Theia Smart Thumbnails
+* changed: Lazy Load auto-sizing will no longer decrease the image size, only increasing is allowed
+* changed: filter to include additional HTML element types via eio_allowed_background_image_elements filter for Lazy Load and Easy IO
+* fixed: compatibility between Easy IO and Autoptimize
+* fixed: Easy IO uses hard crop when constraining an image via a width/height found in the style attribute
+* fixed: Easy IO uses hard-coded wp-content/ and wp-includes/ paths in some cases
+* fixed: Easy IO not activating properly when plugin is activated network-wide for multi-site installs
+* fixed: database upgrade throws errors on MariaDB 10.4.x
+* fixed: WebP .htaccess error in Vary header rule
+* fixed: Easy IO doubles part of image URL when there are no thumbnails, but one is requested by a plugin or theme
+* fixed: Easy IO minifier breaks Beaver Builder
+* fixed: Lazy Load breaks Beaver Builder text editor
+* removed: JS defer with Easy IO, use SWIS Performance instead: https://ewww.io/swis/
+
 = 5.8.2 =
 * security: improper nonce verification for Nextgen bulk optimizer initialization (minor severity)
 * changed: Easy IO verification performed via API for better reliability

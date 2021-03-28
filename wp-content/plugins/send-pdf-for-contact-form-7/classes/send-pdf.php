@@ -271,7 +271,7 @@ class cf7_sendpdf {
 
         if (isset($_GET['page']) && $_GET['page'] == 'wpcf7-send-pdf') {    
             wp_enqueue_code_editor( array( 'type' => 'text/html' ) );
-            wp_enqueue_script( 'js-code-editor',  WPCF7PD_URL.'js/wpcf7pdf-code-editor.js', array( 'jquery' ), '', true );
+            wp_enqueue_script( 'js-code-editor',  WPCF7PDF_URL.'js/wpcf7pdf-code-editor.js', array( 'jquery' ), '', true );
         }
 
     }
@@ -297,11 +297,16 @@ class cf7_sendpdf {
             wp_enqueue_script('media-upload');
             wp_enqueue_script('thickbox');
             
-            wp_enqueue_script( 'script', WPCF7PD_URL.'js/wpcf7pdf-action.js', array('jquery'), '1.0', true );
-            // pass Ajax Url to script.js
-            wp_localize_script('script', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
+            wp_enqueue_script( 'script', WPCF7PDF_URL.'js/wpcf7pdf-action.js', array('jquery'), '1.0', true );
+            /*// pass Ajax Url to script.js
+            wp_localize_script('script', 'ajaxurl', admin_url( 'admin-ajax.php' ) );*/
+            wp_enqueue_script('main');
+            $localize = array(
+                'ajaxurl' => admin_url('admin-ajax.php')
+            );
+            wp_localize_script( 'main', 'ajax_params', $localize);
 
-            wp_register_script('wpcf7-my-upload', WPCF7PD_URL.'js/wpcf7pdf-script.js', array('jquery','media-upload','thickbox'));
+            wp_register_script('wpcf7-my-upload', WPCF7PDF_URL.'js/wpcf7pdf-script.js', array('jquery','media-upload','thickbox'));
             wp_enqueue_script('wpcf7-my-upload');
 
             $pcf7pdf_settings['codeEditor'] = wp_enqueue_code_editor(array('type' => 'text/html'));
@@ -341,12 +346,17 @@ class cf7_sendpdf {
 
     function wpcf7pdf_session_start() {
         
-        if( !isset($_COOKIE['pdf_uniqueid']) ) {
-            $uniqId = setcookie( 'pdf_uniqueid', uniqid(), time() + 3600, COOKIEPATH, COOKIE_DOMAIN );
-        } else {
-            $uniqId = $_COOKIE['pdf_uniqueid'];
+        if ( ! session_id() ) {
+            @session_start();
         }
-        return $uniqId;
+        // On enregistre un ID en session
+        if ( isset( $_SESSION['pdf_uniqueid'] ) ) {
+            //unset( $_SESSION['pdf_uniqueid'] );
+        } 
+        if( empty($_SESSION['pdf_uniqueid']) ) {
+        $_SESSION['pdf_uniqueid'] = uniqid();
+        }
+        session_write_close();
 
     }
 
@@ -357,7 +367,7 @@ class cf7_sendpdf {
         $data = array(
             'wpcf7pdf_id_form' => $id,
             'wpcf7pdf_data' => $data,
-            'wpcf7pdf_reference' => $_COOKIE['pdf_uniqueid'],
+            'wpcf7pdf_reference' => $_SESSION['pdf_uniqueid'],
             'wpcf7pdf_files' => $file,
             'wpcf7pdf_files2' => $file2
         );
@@ -375,7 +385,7 @@ class cf7_sendpdf {
         if( empty($id) ) { die('No ID Form'); }
         $meta_values = get_post_meta( $id, '_wp_cf7pdf', true );
 
-        //if( empty($_COOKIE['pdf_uniqueid']) ) { wp_redirect( admin_url('admin.php?page=wpcf7-send-pdf') ); exit; }
+        //if( empty($_SESSION['pdf_uniqueid']) ) { wp_redirect( admin_url('admin.php?page=wpcf7-send-pdf') ); exit; }
 
         if( isset($meta_values["pdf-name"]) && !empty($meta_values["pdf-name"]) ) {
             $namePDF = trim($meta_values["pdf-name"]);
@@ -394,7 +404,7 @@ class cf7_sendpdf {
                 $dateForName = date_i18n( 'mdY', current_time('timestamp'));
             }
             $getNamePerso = str_replace('[date]', $dateForName, $getNamePerso );
-            $getNamePerso = str_replace('[reference]', $_COOKIE['pdf_uniqueid'], $getNamePerso );
+            $getNamePerso = str_replace('[reference]', $_SESSION['pdf_uniqueid'], $getNamePerso );
             foreach ( $getNamePerso as $key => $value ) {
                 $addNewName[$key] = wpcf7_mail_replace_tags($value);
                 $addNewName[$key] = str_replace(' ', '-', $addNewName[$key]);
@@ -513,6 +523,46 @@ class cf7_sendpdf {
 
     }
 
+    function wpcf7pdf_attachments( $tag = null ) {
+        if ( ! $tag ) {
+            $tag = $this->get( 'attachments' );
+        }
+
+        $attachments = array();
+
+        if ( $submission = WPCF7_Submission::get_instance() ) {
+            $uploaded_files = $submission->uploaded_files();
+
+            foreach ( (array) $uploaded_files as $name => $paths ) {
+                if ( false !== strpos( $tag, "[${name}]" ) ) {
+                    $attachments = array_merge( $attachments, (array) $paths );
+                }
+            }
+        }
+
+        foreach ( explode( "\n", $tag ) as $line ) {
+            $line = trim( $line );
+
+            if ( '[' == substr( $line, 0, 1 ) ) {
+                continue;
+            }
+
+            $path = path_join( WP_CONTENT_DIR, $line );
+
+            if ( ! wpcf7_is_file_path_in_content_dir( $path ) ) {
+                // $path is out of WP_CONTENT_DIR
+                continue;
+            }
+
+            if ( is_readable( $path )
+            and is_file( $path ) ) {
+                $attachments[] = $path;
+            }
+        }
+
+        return $attachments[0];
+    }
+
     function wpcf7pdf_send_pdf($contact_form) {
 
         $submission = WPCF7_Submission::get_instance();
@@ -552,16 +602,15 @@ class cf7_sendpdf {
             $formatPdf = 'A4-P';
 
             // On enregistre un password en session
-            if ( isset( $_COOKIE['pdf_password'] ) ) {
-                //unset( $_COOKIE['pdf_password'] );
-                setcookie( 'pdf_password', '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN );
+            if ( isset( $_SESSION['pdf_password'] ) ) {
+                unset( $_SESSION['pdf_password'] );
             }
             $nbPassword = 12;
             if( isset($meta_values["protect_password_nb"]) && $meta_values["protect_password_nb"]!='' && is_numeric($meta_values["protect_password_nb"]) ) { 
                 $nbPassword = $meta_values["protect_password_nb"]; 
             }
-            setcookie( 'pdf_password', $this->wpcf7pdf_generateRandomPassword($nbPassword), time() + 3600, COOKIEPATH, COOKIE_DOMAIN );
-            //error_log($_COOKIE['pdf_password']);
+            $_SESSION['pdf_password'] = $this->wpcf7pdf_generateRandomPassword($nbPassword);
+
             // On va chercher les tags FILE destinés aux images
             if( isset( $meta_values['file_tags'] ) && $meta_values['file_tags']!='' ) {
                 $cf7_file_field_name = $meta_values['file_tags']; // [file uploadyourfile]
@@ -576,8 +625,8 @@ class cf7_sendpdf {
                             if( isset($image_name) && $image_name!='' && !empty($posted_data[$tags[1]]) ) {
                                 //error_log($tags[1].' --> '.$uploaded_files[$tags[1]]);
                                 if( !empty($uploaded_files[$tags[1]]) ) {
-                                    $image_location = $uploaded_files[$tags[1]];
-                                    $chemin_final[$tags[1]] = $createDirectory.'/'.$_COOKIE['pdf_uniqueid'].'-'.$image_name;
+                                    $image_location = $this->wpcf7pdf_attachments($tags[0]);
+                                    $chemin_final[$tags[1]] = $createDirectory.'/'.$_SESSION['pdf_uniqueid'].'-'.wpcf7_mail_replace_tags($tags[0]);
                                     // On copie l'image dans le dossier
                                     copy($image_location, $chemin_final[$tags[1]]);
                                 }
@@ -610,6 +659,7 @@ class cf7_sendpdf {
 
                         $tagOptions = $sh_tag["options"];
                         
+
                         if( $sh_tag["basetype"] == 'checkbox') {
                             $inputCheckbox = '';
                             $i = 1;
@@ -651,11 +701,12 @@ class cf7_sendpdf {
                             $valueTag = wpcf7_mail_replace_tags('['.$sh_tag["name"].']');                            
                             $text = str_replace('['.$sh_tag["name"].']', $valueTag, $text);                            
                         }
+
                     }
                 }
                             
-                $text = str_replace('[reference]', $_COOKIE['pdf_uniqueid'], $text);
-                $text = str_replace('[url-pdf]', str_replace($upload_dir['basedir'], $upload_dir['baseurl'], $createDirectory).'/'.$nameOfPdf.'-'.$_COOKIE['pdf_uniqueid'].'.pdf', $text);
+                $text = str_replace('[reference]', $_SESSION['pdf_uniqueid'], $text);
+                $text = str_replace('[url-pdf]', str_replace($upload_dir['basedir'], $upload_dir['baseurl'], $createDirectory).'/'.$nameOfPdf.'-'.$_SESSION['pdf_uniqueid'].'.pdf', $text);
 
                 $cf7_file_field_name = $meta_values['file_tags']; // [file uploadyourfile]
                 if( !empty($cf7_file_field_name) ) {
@@ -666,11 +717,12 @@ class cf7_sendpdf {
                         if( isset($tagsOnPdf[1]) && $tagsOnPdf[1] != '' && !empty($posted_data[$tagsOnPdf[1]]) ) {
                             $image_name2 = $posted_data[$tagsOnPdf[1]];
                             if( isset($image_name2) && $image_name2!='' ) {
-                                $chemin_final2[$tagsOnPdf[1]] = str_replace($upload_dir['basedir'], $upload_dir['baseurl'], $createDirectory).'/'.$_COOKIE['pdf_uniqueid'].'-'.$image_name2;
+
+                                $chemin_final2[$tagsOnPdf[1]] = str_replace($upload_dir['basedir'], $upload_dir['baseurl'], $createDirectory).'/'.$_SESSION['pdf_uniqueid'].'-'.wpcf7_mail_replace_tags($tagsOnPdf[0]);
                                 $text = str_replace('['.$tagsOnPdf[1].']', $image_name2, $text);
                                 $text = str_replace('[url-'.$tagsOnPdf[1].']', $chemin_final2[$tagsOnPdf[1]], $text);
                             } else {
-                                $text = str_replace('[url-'.$tagsOnPdf[1].']', WPCF7PD_URL.'images/onepixel.png', $text);
+                                $text = str_replace('[url-'.$tagsOnPdf[1].']', WPCF7PDF_URL.'images/onepixel.png', $text);
                             }
                         }
                     }
@@ -688,7 +740,7 @@ class cf7_sendpdf {
                 $text = str_replace('[date]', $dateField, $text);
                 $text = str_replace('[time]', $timeField, $text);
 
-                $csvTab = array($_COOKIE['pdf_uniqueid'], $dateField.' '.$timeField);
+                $csvTab = array($_SESSION['pdf_uniqueid'], $dateField.' '.$timeField);
                 /* Prepare les valeurs dans tableau CSV */
                 foreach($meta_tags as $ntags => $vtags) {
                     $returnValue = wpcf7_mail_replace_tags($vtags);
@@ -734,6 +786,12 @@ class cf7_sendpdf {
                     $mpdf->SetCreator(get_bloginfo('name'));
                     $mpdf->ignore_invalid_utf8 = true;
                     
+                    if( empty($meta_values["margin_auto_header"]) || ( isset($meta_values["margin_auto_header"]) && $meta_values["margin_auto_header"]=='' ) ) { $meta_values["margin_auto_header"] = 'stretch'; }
+                    if( empty($meta_values["margin_auto_header"]) || ( isset($meta_values["margin_auto_bottom"]) && $meta_values["margin_auto_bottom"]=='' ) ) { $meta_values["margin_auto_bottom"] = 'stretch'; }
+
+                    $mpdf->setAutoTopMargin = $meta_values["margin_auto_header"];
+                    $mpdf->setAutoBottomMargin = $meta_values["margin_auto_bottom"];
+
                     if( isset($meta_values['fillable_data']) && $meta_values['fillable_data']== 'true') {
                         $mpdf->useActiveForms = true;
                     }
@@ -778,8 +836,8 @@ class cf7_sendpdf {
                     
 
                     if( isset($meta_values['footer_generate_pdf']) && $meta_values['footer_generate_pdf']!='' ) {
-                        $footerText = str_replace('[reference]', $_COOKIE['pdf_uniqueid'], $meta_values['footer_generate_pdf']);
-                        $footerText = str_replace('[url-pdf]', $upload_dir['url'].'/'.$nameOfPdf.'-'.$_COOKIE['pdf_uniqueid'].'.pdf', $footerText);
+                        $footerText = str_replace('[reference]', $_SESSION['pdf_uniqueid'], $meta_values['footer_generate_pdf']);
+                        $footerText = str_replace('[url-pdf]', $upload_dir['url'].'/'.$nameOfPdf.'-'.$_SESSION['pdf_uniqueid'].'.pdf', $footerText);
                         if( isset($meta_values['date_format']) && !empty($meta_values['date_format']) ) {
                             $dateField = date_i18n($meta_values['date_format']);
                         } else {
@@ -839,27 +897,31 @@ class cf7_sendpdf {
                         if( isset($meta_values["protect_password"]) && $meta_values["protect_password"]!='' ) {
                             $pdfPassword = $meta_values["protect_password"];
                         }
-                        if( isset($meta_values["protect_uniquepassword"]) && $meta_values["protect_uniquepassword"]=='true' && (isset($_COOKIE['pdf_password']) && $_COOKIE['pdf_password']!='') ) {
-                            $pdfPassword = $_COOKIE['pdf_password'];
+                        if( isset($meta_values["protect_uniquepassword"]) && $meta_values["protect_uniquepassword"]=='true' && (isset($_SESSION['pdf_password']) && $_SESSION['pdf_password']!='') ) {
+                            $pdfPassword = $_SESSION['pdf_password'];
                         }
+                        if( isset($meta_values["protect_password_tag"]) && $meta_values["protect_password_tag"]!='' ) {
+                            $pdfPassword = wpcf7_mail_replace_tags($meta_values["protect_password_tag"]);;
+                        }
+                        //error_log('pdf:'.$pdfPassword);
                         $mpdf->SetProtection(array(), $pdfPassword, $pdfPassword, 128);                        
                     } 
                     
-                    $mpdf->Output($createDirectory.'/'.$nameOfPdf.'-'.$_COOKIE['pdf_uniqueid'].'.pdf', 'F');
+                    $mpdf->Output($createDirectory.'/'.$nameOfPdf.'-'.$_SESSION['pdf_uniqueid'].'.pdf', 'F');
 
                     // On efface l'ancien pdf renommé si il y a (on garde l'original)
                     if( file_exists($createDirectory.'/'.$nameOfPdf.'.pdf') ) {
                         unlink($createDirectory.'/'.$nameOfPdf.'.pdf');
                     }
                     // Je copy le PDF genere
-                    copy($createDirectory.'/'.$nameOfPdf.'-'.$_COOKIE['pdf_uniqueid'].'.pdf', $createDirectory.'/'.$nameOfPdf.'.pdf');
+                    copy($createDirectory.'/'.$nameOfPdf.'-'.$_SESSION['pdf_uniqueid'].'.pdf', $createDirectory.'/'.$nameOfPdf.'.pdf');
 
                 }
                 // END GENERATE PDF
 
                 // On insère dans la BDD
                 if( isset($meta_values["disable-insert"]) && $meta_values["disable-insert"] == "false" ) {
-                    $insertPost = $this->save($post['_wpcf7'], serialize($csvTab), str_replace($upload_dir['basedir'], $upload_dir['baseurl'], $createDirectory ).'/'.$nameOfPdf.'-'.$_COOKIE['pdf_uniqueid'].'.pdf');
+                    $insertPost = $this->save($post['_wpcf7'], serialize($csvTab), str_replace($upload_dir['basedir'], $upload_dir['baseurl'], $createDirectory ).'/'.$nameOfPdf.'-'.$_SESSION['pdf_uniqueid'].'.pdf');
                 }
 
                 // If CSV is enable
@@ -891,15 +953,15 @@ class cf7_sendpdf {
                        $csvTab
                     );
 
-                    $fpCsv = fopen($createDirectory.'/'.$nameOfPdf.'-'.$_COOKIE['pdf_uniqueid'].'.csv', 'w+');
-
+                    $fpCsv = fopen($createDirectory.'/'.$nameOfPdf.'-'.$_SESSION['pdf_uniqueid'].'.csv', 'w+');
+                    if( isset($meta_values["csv-separate"]) && !empty($meta_values["csv-separate"]) ) { $csvSeparate = esc_html($meta_values["csv-separate"]); } else { $csvSeparate = ','; }
                     foreach ($csvlist as $csvfields) {
-                        fputcsv($fpCsv, $csvfields);
+                        fputcsv($fpCsv, $csvfields, $csvSeparate);
                     }
                     fclose($fpCsv);
 
                     // Je copy le CSV genere
-                    copy($createDirectory.'/'.$nameOfPdf.'-'.$_COOKIE['pdf_uniqueid'].'.csv', $createDirectory.'/'.$nameOfPdf.'.csv');
+                    copy($createDirectory.'/'.$nameOfPdf.'-'.$_SESSION['pdf_uniqueid'].'.csv', $createDirectory.'/'.$nameOfPdf.'.csv');
 
 
                 }
@@ -928,11 +990,23 @@ class cf7_sendpdf {
             $meta_values = get_post_meta( $post['_wpcf7'], '_wp_cf7pdf', true );
             $nameOfPdf = $this->wpcf7pdf_name_pdf($post['_wpcf7']);
 
+            // PDF generé et envoyé
+            $disablePDF = 0;
+            /*$contact_tag = $submission->scan_form_tags();
+            foreach ( $contact_tag as $sh_tag ) {
+                
+                /* Si il existe un caase pour desactiver le PDF */
+                /*if( isset($post['disable_sendpdf'][0]) ) { 
+                    $disablePDF = 1;
+                }
+
+            }*/
+
             // Je déclare le contenu de l'email
             $messageText = $components['body'];
 
             // Si la fonction envoi mail est activée
-            if( empty($meta_values['disable-attachments']) OR (isset($meta_values['disable-attachments']) && $meta_values['disable-attachments'] == 'false') ) {
+            if( empty($meta_values['disable-attachments']) OR (isset($meta_values['disable-attachments']) && $meta_values['disable-attachments'] == 'false') && $disablePDF==0 ) {
 
                 // On envoi les mails
                 if ( 'mail' == $mail->name() ) {
@@ -944,7 +1018,7 @@ class cf7_sendpdf {
                         
                         // Création du zip
                         $zip = new ZipArchive(); 
-                        if($zip->open($createDirectory.'/'.$nameOfPdf.'-'.$_COOKIE['pdf_uniqueid'].'.zip', ZipArchive::CREATE) === true) {
+                        if($zip->open($createDirectory.'/'.$nameOfPdf.'-'.$_SESSION['pdf_uniqueid'].'.zip', ZipArchive::CREATE) === true) {
                             // Ajout des fichiers.
                             if( isset($meta_values["disable-pdf"]) && $meta_values['disable-pdf'] == 'false' ) {
                                 if( isset($meta_values["send-attachment"]) && ($meta_values["send-attachment"] == 'sender' OR $meta_values["send-attachment"] == 'both') ) {
@@ -975,8 +1049,8 @@ class cf7_sendpdf {
                             $zip->close();
                         }
                         
-                        $components['attachments'][] = $createDirectory.'/'.$nameOfPdf.'-'.$_COOKIE['pdf_uniqueid'].'.zip';
-                        //error_log('ZIP : '.$createDirectory.'/'.$nameOfPdf.'-'.$_COOKIE['pdf_uniqueid'].'.zip');
+                        $components['attachments'][] = $createDirectory.'/'.$nameOfPdf.'-'.$_SESSION['pdf_uniqueid'].'.zip';
+                        //error_log('ZIP : '.$createDirectory.'/'.$nameOfPdf.'-'.$_SESSION['pdf_uniqueid'].'.zip');
 
                     } else {
 
@@ -1022,7 +1096,7 @@ class cf7_sendpdf {
 
                         // Création du zip
                         $zip = new ZipArchive(); 
-                        if($zip->open($createDirectory.'/'.$nameOfPdf.'-2'.$_COOKIE['pdf_uniqueid'].'.zip', ZipArchive::CREATE) === true) {
+                        if($zip->open($createDirectory.'/'.$nameOfPdf.'-2'.$_SESSION['pdf_uniqueid'].'.zip', ZipArchive::CREATE) === true) {
 
                             // Ajout des fichiers.
                             if( isset($meta_values["disable-pdf"]) && $meta_values['disable-pdf'] == 'false' ) {
@@ -1054,7 +1128,7 @@ class cf7_sendpdf {
                             $zip->close();
                         }
                         
-                        $components['attachments'][] = $createDirectory.'/'.$nameOfPdf.'-'.$_COOKIE['pdf_uniqueid'].'.zip';
+                        $components['attachments'][] = $createDirectory.'/'.$nameOfPdf.'-'.$_SESSION['pdf_uniqueid'].'.zip';
 
                     } else {
 
@@ -1102,8 +1176,12 @@ class cf7_sendpdf {
                 if( isset($meta_values["protect_password"]) && $meta_values["protect_password"]!='' ) {
                     $pdfPassword = $meta_values["protect_password"];
                 }
-                if( isset($meta_values["protect_uniquepassword"]) && $meta_values["protect_uniquepassword"]=='true' && (isset($_COOKIE['pdf_password']) && $_COOKIE['pdf_password']!='') ) {
-                    $pdfPassword = $_COOKIE['pdf_password'];
+                if( isset($meta_values["protect_uniquepassword"]) && $meta_values["protect_uniquepassword"]=='true' && (isset($_SESSION['pdf_password']) && $_SESSION['pdf_password']!='') ) {
+                    $pdfPassword = $_SESSION['pdf_password'];
+                }
+                if( isset($meta_values["protect_password_tag"]) && $meta_values["protect_password_tag"]!='' ) {
+                    $pdfPassword = wpcf7_mail_replace_tags($meta_values["protect_password_tag"]);
+                    //error_log( 'mail:'. $pdfPassword );
                 }
             }
 
@@ -1137,19 +1215,19 @@ class cf7_sendpdf {
                             if( isset($tagsOnMail[1]) && $tagsOnMail[1] != '' && !empty($posted_data[$tagsOnMail[1]]) ) {
                                 $image_name_mail = $posted_data[$tagsOnMail[1]];
                                 if( isset($image_name_mail) && $image_name_mail!='' ) {
-                                    $chemin_final_mail[$tagsOnMail[1]] = str_replace($upload_dir['basedir'], $upload_dir['baseurl'], $createDirectory).'/'.$_COOKIE['pdf_uniqueid'].'-'.$image_name_mail;
+                                    $chemin_final_mail[$tagsOnMail[1]] = str_replace($upload_dir['basedir'], $upload_dir['baseurl'], $createDirectory).'/'.$_SESSION['pdf_uniqueid'].'-'.$image_name_mail;
                                     $messageText = str_replace('['.$tagsOnMail[1].']', $image_name_mail, $messageText);
                                     $messageText = str_replace('[url-'.$tagsOnMail[1].']', $chemin_final_mail[$tagsOnMail[1]], $messageText);
                                 } else {
-                                    $messageText = str_replace('[url-'.$tagsOnMail[1].']', WPCF7PD_URL.'images/onepixel.png', $messageText);
+                                    $messageText = str_replace('[url-'.$tagsOnMail[1].']', WPCF7PDF_URL.'images/onepixel.png', $messageText);
                                 }
                             }
                         }
                     }
                 }
                 
-                $messageText = str_replace('[reference]', $_COOKIE['pdf_uniqueid'], $messageText);
-                $messageText = str_replace('[url-pdf]', str_replace($upload_dir['basedir'], $upload_dir['baseurl'], $createDirectory ).'/'.$nameOfPdf.'-'.$_COOKIE['pdf_uniqueid'].'.pdf', $messageText);
+                $messageText = str_replace('[reference]', $_SESSION['pdf_uniqueid'], $messageText);
+                $messageText = str_replace('[url-pdf]', str_replace($upload_dir['basedir'], $upload_dir['baseurl'], $createDirectory ).'/'.$nameOfPdf.'-'.$_SESSION['pdf_uniqueid'].'.pdf', $messageText);
                 
                 $messageText = str_replace('[date]', $dateField, $messageText);
                 $messageText = str_replace('[time]', $timeField, $messageText);
@@ -1160,7 +1238,7 @@ class cf7_sendpdf {
             $subjectText = $components['subject'];
             if( isset($messageText) && !empty($messageText) ) {
                 
-                $subjectText = str_replace('[reference]', $_COOKIE['pdf_uniqueid'], $subjectText);
+                $subjectText = str_replace('[reference]', $_SESSION['pdf_uniqueid'], $subjectText);
                 if( isset($pdfPassword) && $pdfPassword!='' ) {
                     $subjectText = str_replace('[pdf-password]', $pdfPassword, $subjectText);
                 }
@@ -1205,11 +1283,11 @@ class cf7_sendpdf {
                 if( file_exists($createDirectory.'/'.$nameOfPdf.'.csv') ) {
                     unlink($createDirectory.'/'.$nameOfPdf.'.csv');
                 }
-                if( file_exists($createDirectory.'/'.$nameOfPdf.'-'.$_COOKIE['pdf_uniqueid'].'.pdf') ) {
-                    unlink($createDirectory.'/'.$nameOfPdf.'-'.$_COOKIE['pdf_uniqueid'].'.pdf');
+                if( file_exists($createDirectory.'/'.$nameOfPdf.'-'.$_SESSION['pdf_uniqueid'].'.pdf') ) {
+                    unlink($createDirectory.'/'.$nameOfPdf.'-'.$_SESSION['pdf_uniqueid'].'.pdf');
                 }
-                if( file_exists($createDirectory.'/'.$nameOfPdf.'-'.$_COOKIE['pdf_uniqueid'].'.zip') ) {
-                    unlink($createDirectory.'/'.$nameOfPdf.'-'.$_COOKIE['pdf_uniqueid'].'.zip');
+                if( file_exists($createDirectory.'/'.$nameOfPdf.'-'.$_SESSION['pdf_uniqueid'].'.zip') ) {
+                    unlink($createDirectory.'/'.$nameOfPdf.'-'.$_SESSION['pdf_uniqueid'].'.zip');
                 }
                 if( !empty($cf7_file_field_name) ) {
 
@@ -1218,7 +1296,7 @@ class cf7_sendpdf {
                         if( isset($tagsDelete[1]) && $tagsDelete[1] != '' ) {
                             $image_name_delete = $posted_data[$tagsDelete[1]];
                             if( isset($image_name_delete) && $image_name_delete!='' ) {
-                                $chemin_final_delete[$tagsDelete[1]] = $createDirectory.'/'.$_COOKIE['pdf_uniqueid'].'-'.$image_name_delete;
+                                $chemin_final_delete[$tagsDelete[1]] = $createDirectory.'/'.$_SESSION['pdf_uniqueid'].'-'.$image_name_delete;
                                 if( file_exists($chemin_final_delete[$tagsDelete[1]]) ) {
                                     unlink($chemin_final_delete[$tagsDelete[1]]);
                                 }
@@ -1228,13 +1306,9 @@ class cf7_sendpdf {
                 }
 
             }
-            //setcookie( 'pdf_uniqueid', '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN );
-            setcookie( 'pdf_uniqueid' );
-            unset( $_COOKIE['pdf_uniqueid'] );
-
-            setcookie( 'pdf_password' );
-            unset( $_COOKIE['pdf_password'] );
+            
        }
+       unset( $_SESSION['pdf_uniqueid'] );
 
     }
 
@@ -1282,12 +1356,21 @@ class cf7_sendpdf {
         }
     }
 
+    static function wpcf7pdf_deactivation() {
+
+        global $wpdb;
+
+        if(get_option('wpcf7pdf_version')) { delete_option('wpcf7pdf_version'); }
+        if(get_option('wpcf7pdf_path_temp')) { delete_option('wpcf7pdf_path_temp'); }
+    }
+
     static function wpcf7pdf_uninstall() {
 
         global $wpdb;
 
         if(get_option('wpcf7pdf_version')) { delete_option('wpcf7pdf_version'); }
-
+        if(get_option('wpcf7pdf_path_temp')) { delete_option('wpcf7pdf_path_temp'); }
+        
         $allposts = get_posts( 'numberposts=-1&post_type=wpcf7_contact_form&post_status=any' );
         foreach( $allposts as $postinfo ) {
             delete_post_meta( $postinfo->ID, '_wp_cf7pdf' );
@@ -1322,6 +1405,7 @@ class cf7_sendpdf {
             'DejaVuSerif' => 'dejavuserif',
             'DejaVuSerifCondensed' => 'dejavuserifcondensed',
             'DejaVuSansMono' => 'dejavusansmono',
+            'Ubuntu' => 'ubuntu',
             'FreeSans' => 'freesans',
             'FreeSerif' => 'freeserif',
             'FreeMono' => 'freemono',
@@ -1416,9 +1500,9 @@ class cf7_sendpdf {
         global $cf7msm_redirect_urls;
         $displayAddEventList = 0;
 
-        if( !isset($_COOKIE['pdf_uniqueid']) || empty($_COOKIE['pdf_uniqueid']) ) {
+        /*if( !isset($_SESSION['pdf_uniqueid']) || empty($_SESSION['pdf_uniqueid']) ) {
             setcookie( 'pdf_uniqueid', uniqid(), time() + 3600, COOKIEPATH, COOKIE_DOMAIN );
-        }
+        }*/
 
         // On recupere l'ID du Formulaire
         $wpcf7 = WPCF7_ContactForm::get_current();
@@ -1442,7 +1526,8 @@ class cf7_sendpdf {
             if( isset($meta_values['page_next']) && is_numeric($meta_values['page_next']) ) {
 
                 if( isset($meta_values['download-pdf']) && $meta_values['download-pdf']=="true" ) {
-                    $redirect = get_permalink($meta_values['page_next']).'?pdf-reference='.$_COOKIE['pdf_uniqueid'];
+                    //$redirect = get_permalink($meta_values['page_next']).'?pdf-reference='.$_SESSION['pdf_uniqueid'];
+                    $redirect = get_permalink($meta_values['page_next']);
                 } else {
                     $redirect = get_permalink($meta_values['page_next']);
                 }
@@ -1455,17 +1540,16 @@ class cf7_sendpdf {
                 if( isset($meta_values["redirect-window"]) && $meta_values["redirect-window"] == 'off' ) {
                     $targetPDF = '_tab';
                 }
-                $urlRredirectPDF = str_replace($upload_dir['basedir'], $upload_dir['baseurl'], $createDirectory).'/'.$nameOfPdf.'-'.$_COOKIE['pdf_uniqueid'].'.pdf';
-                $redirectPDF = "/* REDICTION DIRECT */
-        if ( '" . $id . "' === event.detail.contactFormId ) {";
+                $urlRredirectPDF = str_replace($upload_dir['basedir'], $upload_dir['baseurl'], $createDirectory).'/'.$nameOfPdf.'.pdf?ver='.rand();
+                $redirectPDF = "/* REDICTION DIRECT */ ";
                     if( isset($meta_values["redirect-window"]) && $meta_values["redirect-window"] == 'popup' ) {
                         $redirectPDF .= "
             window.open('".$urlRredirectPDF."','".$nameOfPdf."','menubar=no, status=no, scrollbars=yes, menubar=no, width=600, height=900');";
                      } else { 
                         $redirectPDF .= "
-            var location = '".$urlRredirectPDF."'; window.open(location, '".$targetPDF."');";
+        var location = '".$urlRredirectPDF."'; window.open(location, '".$targetPDF."');";
                     }
-                $redirectPDF .= "}
+                $redirectPDF .= "
 ";
                 $displayAddEventList = 1;
 
@@ -1475,10 +1559,9 @@ class cf7_sendpdf {
                 $displayAddEventList = 0;
             }
             
-$js .= '/* REDIRECTION  */
-        if ( "' . $id . '" === event.detail.contactFormId) { ';
+$js .= '/* REDIRECTION  */ ';
 $js .= sprintf('location.replace("%1$s");', htmlspecialchars_decode( esc_url( $redirect ) ) );
-$js .= '}
+$js .= '
 ';  
             if( $displayAddEventList == 1 ) {
                 
@@ -1491,8 +1574,20 @@ $js .= '}
 }, false );
 </script>
 <!-- END :: Send PDF for CF7 -->
-    <?php
+<?php
             }
         }
+?>
+<?php  
+    // Désactivation remplissage du formulaire
+    if( isset($meta_values["disabled-autocomplete-form"]) && $meta_values["disabled-autocomplete-form"]=="true" ) { 
+?>
+<script type='text/javascript'>
+    jQuery(document).ready(function( $ ){
+        $('form').attr('autocomplete', 'off');
+    });
+</script>
+<?php } ?>
+<?php
     }
 }

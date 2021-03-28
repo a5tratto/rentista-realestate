@@ -15,6 +15,9 @@ class Css_Combinator extends Abstract_Combinator {
 	 * @var array Array containing all styles that will be loaded.
 	 */
 	private $combined_styles_exclude_list = array(
+		'amelia-elementor-widget-font',
+		'amelia_booking_styles_vendor',
+		'amelia_booking_styles',
 		'uag-style',
 		'buy_sell_ads_pro_template_stylesheet', // Too big file.
 	);

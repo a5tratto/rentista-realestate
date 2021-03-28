@@ -10,12 +10,12 @@ class WDI_Thumbnails_view {
 
   public function display() {
     global $user_feed_header_args;
-    $this->pass_feed_data_to_js();
-    $feed_row = $this->model->get_feed_row();
-    $wdi_feed_counter = $this->model->wdi_feed_counter;
-    $this->add_theme_styles();
-    $this->generate_feed_styles($feed_row);
+    $this->pass_feed_data_to_js(); // @TODO. should be moved to shortcode.php
+    $feed_row = $this->model->get_feed_row(); // @TODO. should be moved to shortcode.php
+    $this->add_theme_styles(); // @TODO. should be moved to shortcode.php
+    $this->generate_feed_styles($feed_row); // @TODO. should be moved to shortcode.php
     $style = $this->model->theme_row;
+    $wdi_feed_counter = $this->model->wdi_feed_counter;
     $container_class = 'wdi_feed_theme_' . $style['id'] . ' wdi_feed_thumbnail_' . $style['id'];
     $wdi_data_ajax = defined('DOING_AJAX') && DOING_AJAX ? 'data-wdi_ajax=1' : '';
     ?>
@@ -49,8 +49,7 @@ class WDI_Thumbnails_view {
                  class="tenweb-i tenweb-i-step-forward wdi_pagination_ctrl wdi_disabled"></i></div></div> <?php
         }
         ?>
-        <div class="wdi_feed_wrapper <?php echo 'wdi_col_' . $feed_row['number_of_columns'] ?>"
-             wdi-res='<?php echo 'wdi_col_' . $feed_row['number_of_columns'] ?>'></div>
+        <div class="wdi_feed_wrapper <?php echo 'wdi_col_' . $feed_row['number_of_columns'] ?>" wdi-res='<?php echo 'wdi_col_' . $feed_row['number_of_columns'] ?>'></div>
         <div class="wdi_clear"></div>
 
         <?php switch ($feed_row['feed_display_view']) {
@@ -106,12 +105,9 @@ class WDI_Thumbnails_view {
       <div class="wdi_front_overlay"></div>
     </div>
     <?php
-
   }
 
-
-  public function pass_feed_data_to_js()
-  {
+  public function pass_feed_data_to_js() {
     global $wdi_options;
     $feed_row = $this->model->get_feed_row();
 
@@ -120,7 +116,6 @@ class WDI_Thumbnails_view {
       $users = array();
     }
 
-    $feed_row = $this->model->get_feed_row();
     $wdi_feed_counter = $this->model->wdi_feed_counter;
     $feed_row['access_token'] = WDILibrary::get_user_access_token($users);
     $feed_row['wdi_feed_counter'] = $wdi_feed_counter;
@@ -129,8 +124,9 @@ class WDI_Thumbnails_view {
     wp_localize_script("wdi_frontend", 'wdi_theme_' . $this->model->theme_row['id'], $this->model->theme_row);
     wp_localize_script("wdi_frontend", 'wdi_front', array('feed_counter' => $wdi_feed_counter));
 
-    if(WDILibrary::is_ajax() || WDILibrary::elementor_is_active()) {
+    if ( WDILibrary::is_ajax() || WDILibrary::elementor_is_active() ) {
       wdi_load_frontend_scripts_ajax();
+      echo '<style id="generate_feed_styles-inline-css">' . $this->generate_feed_styles( $feed_row, TRUE ) .'</style>';
     }
   }
 
@@ -173,20 +169,16 @@ class WDI_Thumbnails_view {
     }
   }
 
-  public function generate_feed_styles($feed_row)
-  {
+  public function generate_feed_styles( $feed_row, $return = FALSE ) {
     $style = $this->model->theme_row;
     $wdi_feed_counter = $this->model->wdi_feed_counter;
     $colNum = (100 / $feed_row['number_of_columns']);
-
-    ob_start()
+    ob_start();
     ?>
       #wdi_feed_<?php echo $wdi_feed_counter?> .wdi_feed_header {
         display: <?php echo ($feed_row['display_header']=='1')? 'block' : 'none'?>; /*if display-header is true display:block*/
       }
-
       <?php
-
       if($feed_row['display_user_post_follow_number'] == '1'){
         $header_text_padding =(intval($style['user_img_width']) - intval($style['users_text_font_size']))/4;
       }else{
@@ -210,8 +202,7 @@ class WDI_Thumbnails_view {
         line-height: 0;
       }
 
-      <?php  if($feed_row['disable_mobile_layout']=="0"){
-        ?>
+      <?php  if($feed_row['disable_mobile_layout']=="0") { ?>
       @media screen and (min-width: 800px) and (max-width: 1024px) {
         #wdi_feed_<?php echo $wdi_feed_counter?> .wdi_feed_item {
           width: <?php echo ($colNum<33.33) ? '33.333333333333%' : $colNum.'%'?>; /*thumbnail_size*/
@@ -260,11 +251,12 @@ class WDI_Thumbnails_view {
           background-color: <?php echo $style['feed_container_bg_color']?>; /*feed_container_bg_color*/
         }
       }
-
-      <?php } ?>
-    <?php
+    <?php }
     $css = ob_get_contents();
     ob_end_clean();
+    if ( $return ) {
+      return $css;
+    }
 
     wp_register_style( 'generate_feed_styles', false );
     wp_enqueue_style( 'generate_feed_styles' );
