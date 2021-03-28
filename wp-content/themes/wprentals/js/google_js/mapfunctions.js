@@ -25,14 +25,14 @@ var curent_gview_long = jQuery('#gmap_wrapper').attr('data-cur_long');
 
 function wpestate_show_pins_filters_from_file() {
     "use strict";
-  
+
     if(jQuery("#a_filter_action").length == 0) {
         var action      =   jQuery('#second_filter_action').attr('data-value');
         var category    =   jQuery('#second_filter_categ').attr('data-value');
         var city        =   jQuery('#second_filter_cities').attr('data-value');
-        var area        =   jQuery('#second_filter_areas').attr('data-value'); 
-        var county      =   jQuery('#second_filter_county').attr('data-value');   
-    
+        var area        =   jQuery('#second_filter_areas').attr('data-value');
+        var county      =   jQuery('#second_filter_county').attr('data-value');
+
     }else{
         var action      =   jQuery('#a_filter_action').attr('data-value');
         var category    =   jQuery('#a_filter_categ').attr('data-value');
@@ -40,31 +40,31 @@ function wpestate_show_pins_filters_from_file() {
         var area        =   jQuery('#a_filter_areas').attr('data-value');
         var county      =   jQuery('#a_filter_county').attr('data-value');
     }
-   
+
 
     if( typeof(action)!=='undefined'){
         action      = action.toLowerCase().trim().replace(" ", "-");
     }
-    
+
     if( typeof(action)!=='undefined'){
         category    = category.toLowerCase().trim().replace(" ", "-");
     }
-    
+
     if( typeof(action)!=='undefined'){
         city        = city.toLowerCase().trim().replace(" ", "-");
     }
-    
+
     if( typeof(action)!=='undefined'){
         area        = area.toLowerCase().trim().replace(" ", "-");
     }
-    
+
     if(  typeof infoBox!=='undefined' && infoBox!== null ){
-        infoBox.close(); 
+        infoBox.close();
     }
-   
- 
+
+
     var bounds = new google.maps.LatLngBounds();
-    
+
     if(!isNaN(markers_cluster) ){
         markers_cluster.setIgnoreHidden(true);
     }
@@ -72,55 +72,55 @@ function wpestate_show_pins_filters_from_file() {
     if(  typeof gmarkers!=='undefined'){
 
         for (var i=0; i<gmarkers.length; i++) {
-          
+
                 if( !wpestate_classic_form_tax_visible (gmarkers[i].action, action) && action!='all' && action!='all' && action!='all-sizes' ){
                     gmarkers[i].setVisible(false);
-                
-                }else if (!wpestate_classic_form_tax_visible (gmarkers[i].category, category) && category!='all' && category!='all-types') {   
+
+                }else if (!wpestate_classic_form_tax_visible (gmarkers[i].category, category) && category!='all' && category!='all-types') {
                     gmarkers[i].setVisible(false);
-                
+
                 }else if( !wpestate_classic_form_tax_visible (gmarkers[i].area, area) && area!='all'  && area!='all-areas'){
                     gmarkers[i].setVisible(false);
-                
+
                 }else if( !wpestate_classic_form_tax_visible (gmarkers[i].city, city)  && city!='all' && city!='all-cities' ){
                     gmarkers[i].setVisible(false);
-                
+
                 }else{
                     gmarkers[i].setVisible(true);
-                    bounds.extend( gmarkers[i].getPosition() );       
-                }                    
+                    bounds.extend( gmarkers[i].getPosition() );
+                }
         }//end for
         if(!isNaN(markers_cluster) ){
             markers_cluster.repaint();
         }
     }//end if
-       
+
         if( !bounds.isEmpty() ){
             wpestate_fit_bounds(bounds);
-        } 
-        
+        }
+
 }
 
 
 function wpestate_fit_bounds_nolsit_leaflet(){
-    map.setZoom(3);  
-    is_fit_bounds_zoom=0; 
+    map.setZoom(3);
+    is_fit_bounds_zoom=0;
 }
 
 
 
 function wpestate_fit_bounds_nolsit(){
-    map.setZoom(3);  
-    is_fit_bounds_zoom=0; 
+    map.setZoom(3);
+    is_fit_bounds_zoom=0;
 }
 
 
 function wpestate_fit_bounds(bounds){
-    
+
     is_fit_bounds_zoom=1;
 
     if(placeCircle!=''){
-        map.fitBounds(placeCircle.getBounds()); 
+        map.fitBounds(placeCircle.getBounds());
     }else{
         if(gmarkers.length===1){
             var center = gmarkers[0].getPosition();
@@ -128,65 +128,65 @@ function wpestate_fit_bounds(bounds){
             map.setZoom(10);
 
             google.maps.event.addListenerOnce(map, 'idle', function() {
-                is_fit_bounds_zoom=0;  
+                is_fit_bounds_zoom=0;
             });
         }else{
- 
+
             map.fitBounds(bounds);
             google.maps.event.addListenerOnce(map, 'idle', function() {
-                is_fit_bounds_zoom=0;  
+                is_fit_bounds_zoom=0;
             });
         }
     }
 
-    
+
 }
 
 function wpestate_fit_bounds_leaflet(bounds){
-   
-    is_fit_bounds_zoom=1;  
+
+    is_fit_bounds_zoom=1;
 
     if(placeCircle!=''){
-        map.fitBounds(placeCircle.getBounds());// placecircle is google geolocation 
+        map.fitBounds(placeCircle.getBounds());// placecircle is google geolocation
     }else{
         if(gmarkers.length===1){
             var center = gmarkers[0].getLatLng();
             map.panTo(center);
             map.setZoom(10);
-            is_fit_bounds_zoom=0;  
-   
+            is_fit_bounds_zoom=0;
+
         }else{
             map.fitBounds(bounds);
-            is_fit_bounds_zoom=0;  
+            is_fit_bounds_zoom=0;
         }
     }
 
-    
+
 }
 
  function wpestate_classic_form_tax_visible($onpin,$onreq){
     $onpin = $onpin.toLowerCase();
     $onpin = decodeURI($onpin);
     $onreq = $onreq.toLowerCase();
-    $onreq = decodeURI($onreq);            
+    $onreq = decodeURI($onreq);
     $onpin = $onpin.split(' ').join('-');
     $onreq = $onreq.split(' ').join('-');
     $onreq = $onreq.split("'").join('');
     $onpin = $onpin.latinise();
     $onreq = $onreq.latinise();
 
- 
+
     if($onpin.indexOf($onreq)> -1 ){
         return true;
     } else{
         return false;
     }
  }
- 
- 
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //  set markers... loading pins over map
-/////////////////////////////////////////////////////////////////////////////////////////////////  
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 function wprentals_google_setMarkers(map, locations) {
     "use strict";
@@ -230,7 +230,7 @@ function wprentals_google_setMarkers(map, locations) {
     infoBox = new InfoBox(myOptions);
 
     for (i = 0; i < locations.length; i++) {
- 
+
         beach                       = locations[i];
         id                          = beach[10];
         lat                         = beach[1];
@@ -254,8 +254,8 @@ function wprentals_google_setMarkers(map, locations) {
         status                      = decodeURIComponent(beach[19]);
         pin_price                   =   decodeURIComponent ( beach[20] );
         custom_info                 =   decodeURIComponent ( beach[21] );
-      
-     
+
+
         if (mapfunctions_vars.custom_search === 'yes') {
             i=1;
             slug1 = beach[19+i];
@@ -292,13 +292,13 @@ function wprentals_google_setMarkers(map, locations) {
         }
     }//end for
 
-    // pan to the latest pin for taxonmy and adv search  
+    // pan to the latest pin for taxonmy and adv search
 
     if (mapfunctions_vars.generated_pins !== '0') {
         myLatLng = new google.maps.LatLng(lat, lng);
 
         if(map_is_pan===0){
-           
+
             wpestate_pan_to_last_pin(myLatLng);
             oms = new OverlappingMarkerSpiderfier(map);
             setOms(gmarkers);
@@ -306,20 +306,20 @@ function wprentals_google_setMarkers(map, locations) {
             });
             oms.addListener('unspiderfy ', function (markers) {
             });
-        }   
+        }
         map_is_pan=0;
     }
-  
+
     if(mapfunctions_vars.is_prop_list==='1' || mapfunctions_vars.is_tax==='1' ){
         wpestate_show_pins_filters_from_file();
     }
-    
+
 }// end wprentals_google_setMarkers
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //  create marker
-/////////////////////////////////////////////////////////////////////////////////////////////////  
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
 function wpestate_createMarker(pin_price,infobox_width, size, i, id, lat, lng, pin, title, counter, image, price, single_first_type, single_first_action, link, city, area, rooms, baths, cleanprice, slug1, val1, how1, slug2, val2, how2, slug3, val3, how3, slug4, val4, how4, slug5, val5, how5, slug6, val6, how6, slug7, val7, how7, slug8, val8, how8, single_first_type_name, single_first_action_name,status,custom_info) {
     "use strict";
@@ -331,13 +331,13 @@ function wpestate_createMarker(pin_price,infobox_width, size, i, id, lat, lng, p
     if(mapfunctions_vars.useprice === 'yes'){
         infobox_class=" pin_price_info ";
         var myLatlng = new google.maps.LatLng(lat,lng);
-        marker= new WpstateMarker( 
+        marker= new WpstateMarker(
             area,
-            city,     
+            city,
             pin_price,
             poss,
-            myLatlng, 
-            map, 
+            myLatlng,
+            map,
             Titlex,
             counter,
             image,
@@ -355,9 +355,9 @@ function wpestate_createMarker(pin_price,infobox_width, size, i, id, lat, lng, p
             single_first_action_name,
             pin,
             custom_info
-        
+
         );
-          
+
     }else{
         infobox_class=" classic_info ";
         if (mapfunctions_vars.custom_search === 'yes') {
@@ -452,34 +452,34 @@ function wpestate_createMarker(pin_price,infobox_width, size, i, id, lat, lng, p
         var title, info_image, category, action, category_name, action_name, in_type, infoguest, inforooms,  vertical_off, status_html,status;
         wpestate_new_open_close_map(1);
         external_action_ondemand=1;
-     
+
         if (this.image === '') {
             info_image =  mapfunctions_vars.path + '/idxdefault.jpg';
         } else {
             info_image = this.image;
         }
-      
-        
-     
-        
+
+
+
+
         if ( typeof(this.status)!='undefined'){
             if( this.status.indexOf('%')!==-1 ){
                 status = this.status;
                 //(this.status.replace(/-/g, ' '));
             }else{
                 status = decodeURIComponent(this.status.replace(/-/g, ' '));
-            }                
+            }
         }else{
             status='';
         }
-        
-        
-       
+
+
+
         category        = decodeURIComponent(this.category.replace(/-/g, ' '));
         action          = decodeURIComponent(this.action.replace(/-/g, ' '));
         category_name   = decodeURIComponent(this.category_name.replace(/-/g, ' '));
         action_name     = decodeURIComponent(this.action_name.replace(/-/g, ' '));
-       
+
         status_html=wpestate_display_status(status);
 
 
@@ -489,7 +489,7 @@ function wpestate_createMarker(pin_price,infobox_width, size, i, id, lat, lng, p
         }
         in_type = " / ";
 
-        if (this.guest_no !== '') {
+        if (this.guest_no !== '' &&  this.guest_no !== '0' && this.guest_no !== 0  )  {
             infoguest = '<span id="infoguest">' + this.guest_no + '</span>';
         } else {
             infoguest = '';
@@ -503,14 +503,14 @@ function wpestate_createMarker(pin_price,infobox_width, size, i, id, lat, lng, p
 
         title = this.title.toString();
 
-   
-     
-        
+
+
+
         if( this.custom_info!=='undefined'){
             var custom_array=this.custom_info.split(',');
             inforooms = '<span id="inforoom" class="custom_infobox_icon"><i class="' + custom_array[0] + '"></i>' + custom_array[1] + '</span>';
             infoguest = '<span id="infoguest" class="custom_infobox_icon"><i class="' + custom_array[2] + '"></i>' + custom_array[3] + '</span>';
-            
+
         }
 
 
@@ -518,7 +518,7 @@ function wpestate_createMarker(pin_price,infobox_width, size, i, id, lat, lng, p
         infoBox.setContent('<div class="info_details '+infobox_class+' "><span id="infocloser" onClick=\'javascript:infoBox.close();\' ></span>'+status_html+'<a href="' + this.link + '"><div class="infogradient"></div><div class="infoimage" style="background-image:url(' + info_image + ')"  ></div></a><a href="' + this.link + '" id="infobox_title"> ' + title + '</a><div class="prop_detailsx">' + category_name + " " + in_type + " " + action_name + '</div><div class="infodetails">' + infoguest + inforooms + '</div><div class="prop_pricex">' + this.price + '</div></div>');
 
         infoBox.open(map, this);
-      
+
         map.setCenter(this.position);
 
         switch (infobox_width) {
@@ -526,33 +526,33 @@ function wpestate_createMarker(pin_price,infobox_width, size, i, id, lat, lng, p
                 if (!document.getElementById('google_map_on_list')) {
                     if (mapfunctions_vars.listing_map === 'top') {
                         if( document.getElementById('google_map_prop_list') ){
-                            map.panBy(0, -100);   
-                         
+                            map.panBy(0, -100);
+
                         }else{
-                            map.panBy(100, -100);   
+                            map.panBy(100, -100);
                         }
-                    } else {        
+                    } else {
                         map.panBy(10, -110);
                     }
                 } else {
-                 
+
                     map.panBy(0, -160);
                 }
                 vertical_off = 0;
                 break;
             case 500:
                 if( document.getElementById('google_map_prop_list') ){
-                    map.panBy(50, -120);   
+                    map.panBy(50, -120);
                 }else{
-                    map.panBy(50, -150);   
+                    map.panBy(50, -150);
                 }
                 break;
             case 400:
-              
+
                 if( document.getElementById('google_map_prop_list') ){
-                     map.panBy(100, -220); 
+                     map.panBy(100, -220);
                 }else{
-                    map.panBy(0, -150);   
+                    map.panBy(0, -150);
                 }
                 break;
             case 200:
@@ -590,21 +590,21 @@ function wpestate_pan_to_last_pin(myLatLng) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //  map set search
-/////////////////////////////////////////////////////////////////////////////////////////////////  
+/////////////////////////////////////////////////////////////////////////////////////////////////
 function setOms(gmarkers) {
     "use strict";
     var i;
     for (i = 0; i < gmarkers.length; i++) {
         if (typeof oms !== 'undefined') {
             oms.addMarker(gmarkers[i]);
-        } 
+        }
     }
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //  open close map
-/////////////////////////////////////////////////////////////////////////////////////////////////  
+/////////////////////////////////////////////////////////////////////////////////////////////////
 function wpestate_new_open_close_map(type) {
     "use strict";
     var current_height, closed_height, open_height, googleMap_h, gmapWrapper_h, vertical_off;
@@ -662,7 +662,7 @@ function wpestate_new_open_close_map(type) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //  build map cluter
-/////////////////////////////////////////////////////////////////////////////////////////////////   
+/////////////////////////////////////////////////////////////////////////////////////////////////
 function wprentals_google_map_cluster() {
     "use strict";
     if (mapfunctions_vars.user_cluster === 'yes') {
@@ -694,7 +694,7 @@ function wprentals_google_map_cluster() {
 
 
 if (document.getElementById('gmapzoomplus')) {
-    
+
     jQuery('#gmapzoomplus').on('click',function(){
         "use strict";
         var current = parseInt(map.getZoom(), 10);
@@ -704,7 +704,7 @@ if (document.getElementById('gmapzoomplus')) {
         }
         map.setZoom(current);
     });
-    
+
 }
 
 
@@ -718,8 +718,8 @@ if (document.getElementById('gmapzoomminus')) {
         }
         map.setZoom(current);
     });
-    
-   
+
+
 }
 
 
@@ -741,7 +741,7 @@ if (document.getElementById('geolocation-button')) {
         wprentals_myposition(map);
         wpestate_close_adv_search();
     });
-   
+
 }
 
 
@@ -761,16 +761,16 @@ jQuery('#mobile-geolocation-button,#geolocation-button').on('click',function () 
 
 
 
-function wprentals_myposition(map){    
-    
-    if(navigator.geolocation){     
+function wprentals_myposition(map){
+
+    if(navigator.geolocation){
         var latLong,protocol;
 
         protocol = "http:";
         if (location.protocol != 'http:'){
-            protocol="https:"; 
+            protocol="https:";
         }
-        
+
         if (location.protocol === 'https:') {
             navigator.geolocation.getCurrentPosition(wpestate_showMyPosition_original,errorCallback,{timeout:10000});
         }else{
@@ -779,7 +779,7 @@ function wprentals_myposition(map){
                 wprentals_showMyPosition (latLong);
             });
         }
-      
+
     }else{
         alert(mapfunctions_vars.geo_no_brow);
     }
@@ -792,10 +792,10 @@ function wpestate_showMyPosition_original(pos){
         var shape = {
            coord: [1, 1, 1, 38, 38, 59, 59 , 1],
            type: 'poly'
-        }; 
+        };
 
         var MyPoint=  new google.maps.LatLng( pos.coords.latitude, pos.coords.longitude);
-        map.setCenter(MyPoint);   
+        map.setCenter(MyPoint);
 
         var marker = new google.maps.Marker({
                  position: MyPoint,
@@ -835,14 +835,14 @@ function wpestate_showMyPosition_original(pos){
         label.bindTo('clickable', marker);
         label.bindTo('zIndex', marker);
     }else{
-       
+
         var new_pos=[pos.coords.latitude, pos.coords.longitude];
         wprentals_draw_leaflet_circle(new_pos);
     }
 
 }
-    
-    
+
+
 
 
 
@@ -866,7 +866,7 @@ function wprentals_showMyPosition(pos) {
 function wprentals_draw_leaflet_circle(pos){
 
     L.circle( [pos[0],pos[1]], parseInt(mapfunctions_vars.geolocation_radius, 10)).addTo(map);
-    
+
     var markerImage = {
             iconUrl: wprentals_custompinchild_leaflet(),
             iconSize: [44, 50],
@@ -876,25 +876,25 @@ function wprentals_draw_leaflet_circle(pos){
     var  markerOptions = {
         riseOnHover: true
     };
-    
+
     var markerCenter    =   L.latLng( pos[0], pos[1] );
     markerOptions.icon = L.icon( markerImage );
     L.marker( markerCenter, markerOptions ).addTo( map );
-    
-    
+
+
     var wprentals_leaflet_label = '<div class="wprentals_leaflet_label">';
     wprentals_leaflet_label+=parseInt(mapfunctions_vars.geolocation_radius, 10) + ' ' + mapfunctions_vars.geo_message;
     wprentals_leaflet_label += '</div>';
-    
-    var myIcon = L.divIcon({ 
+
+    var myIcon = L.divIcon({
             className:'someclass',
-            iconSize: new L.Point(0, 0), 
+            iconSize: new L.Point(0, 0),
             html: wprentals_leaflet_label
         });
-      
+
     L.marker( markerCenter, {icon: myIcon} ).addTo( map );
-        
-        
+
+
     map.panTo(markerCenter);
     map.setZoom(10);
 }
@@ -956,11 +956,11 @@ function wpestate_custompinchild() {
     var custom_img, image;
     var extension='';
     var ratio = jQuery(window).dense('devicePixelRatio');
-    
+
     if(ratio>1){
         extension='_2x';
     }
-    
+
     if (images['userpin'] === '') {
         custom_img = mapfunctions_vars.path + '/' + 'userpin' +extension+ '.png';
     } else {
@@ -976,29 +976,29 @@ function wpestate_custompinchild() {
         origin: new google.maps.Point(0, 0),
        // anchor: new google.maps.Point(16, 59)
     };
-    
-      
+
+
     if(ratio>1){
-         
+
         var   image = {
-            url: custom_img, 
+            url: custom_img,
             size :  new google.maps.Size(44, 50),
             scaledSize   :  new google.maps.Size(44, 50),
             origin: new google.maps.Point(0, 0),
             optimized:false
-  
+
         };
-     
+
     }else{
        var   image = {
-            url: custom_img, 
+            url: custom_img,
             size: new google.maps.Size(59, 59),
             origin: new google.maps.Point(0,0),
-       
+
         };
     }
-    
-    
+
+
     return image;
 }
 
@@ -1051,7 +1051,7 @@ jQuery('#google_map_on_list').on('click',function (event) {
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
-/// 
+///
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 if (document.getElementById('gmap')) {
@@ -1081,7 +1081,7 @@ if (document.getElementById('advanced_search_map_button')) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-/// navigate troguh pins 
+/// navigate troguh pins
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 jQuery('#gmap-next').on('click',function () {
@@ -1105,31 +1105,31 @@ jQuery('#gmap-next').on('click',function () {
     if(wprentals_map_type===1){
         google.maps.event.trigger(gmarkers[current_place - 1], 'click');
     }else if(wprentals_map_type===2){
-        
-        map.setView(gmarkers[current_place - 1].getLatLng());   
+
+        map.setView(gmarkers[current_place - 1].getLatLng());
         if (! gmarkers[current_place - 1]._icon) {
             gmarkers[current_place - 1].__parent.spiderfy();
         }
             lealet_map_move_on_hover=1;
-       
+
             map.setZoom(20);
-           
+
             if( (current_place - 1)==0 || (current_place - 1)==gmarkers.length ){
-                setTimeout(function(){  gmarkers[current_place - 1].fire('click');  }, 1000); 
+                setTimeout(function(){  gmarkers[current_place - 1].fire('click');  }, 1000);
             }else{
                 gmarkers[current_place - 1].fire('click');
             }
-           
+
         //lealet_map_move_on_hover=0;
          lealet_map_move_on_hover=1;
     }
-    
-    
+
+
 });
 
 
 jQuery('#gmap-prev').on('click',function () {
- 
+
     lealet_map_move_on_hover=1;
     external_action_ondemand=1;
     if (current_place < 1) {
@@ -1144,32 +1144,32 @@ jQuery('#gmap-prev').on('click',function () {
     if (map.getZoom() < 15) {
         map.setZoom(15);
     }
-    
+
     if(wprentals_map_type===1){
         google.maps.event.trigger(gmarkers[current_place - 1], 'click');
     }else if(wprentals_map_type===2){
-        map.setView(gmarkers[current_place - 1].getLatLng());   
+        map.setView(gmarkers[current_place - 1].getLatLng());
         if (! gmarkers[current_place - 1]._icon)  gmarkers[current_place - 1].__parent.spiderfy();
             lealet_map_move_on_hover=1;
-       
+
             map.setZoom(20);
-           
+
             if( (current_place - 1)==0 || (current_place )==gmarkers.length ){
-                setTimeout(function(){  gmarkers[current_place - 1].fire('click');  }, 1000); 
+                setTimeout(function(){  gmarkers[current_place - 1].fire('click');  }, 1000);
             }else{
                 gmarkers[current_place - 1].fire('click');
             }
-           
+
         lealet_map_move_on_hover=1;
-          
-    }  
-    current_place--;  
-  
+
+    }
+    current_place--;
+
 });
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// filter pins 
+/// filter pins
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 jQuery('.advanced_action_div li').on('click',function () {
@@ -1214,11 +1214,11 @@ function wpestate_visible_or_not(how, slug, value, read) {
     "use strict";
      var slider_min, slider_max, parsevalue;
     if (value !== '' && typeof (value) !== 'undefined') {
-        // value = value.replace('%',''); 
+        // value = value.replace('%','');
     }
-  
+
     //////////////////////////////////////////////
-    // in case of slider - 
+    // in case of slider -
     if (read === 'property_price' && mapfunctions_vars.slider_price === 'yes') {
         slider_min = parseInt(jQuery('#price_low').val(), 10);
         slider_max = parseInt(jQuery('#price_max').val(), 10);
@@ -1229,7 +1229,7 @@ function wpestate_visible_or_not(how, slug, value, read) {
         }
     }
     //////////////////////////////////////////////
-    // END in case of slider - 
+    // END in case of slider -
 
     if (read === 'none') {
         return true;
@@ -1354,7 +1354,7 @@ function wprentals_show_pins() {
                 wpestate_fit_bounds(bounds);
             }
             jQuery("#results, #showinpage,#showinpage_mobile").show();
-    
+
             jQuery("#results_no").show().empty().append(results_no);
         }
     } else {
@@ -1374,7 +1374,7 @@ function wpestate_convertToSlug(Text) {
 
 function custompin(image) {
     "use strict";
- 
+
     if( !mapfunctions_vars.hidden_map ){
         image ={
             path: google.maps.SymbolPath.CIRCLE,
@@ -1385,13 +1385,13 @@ function custompin(image) {
         }
         return image;
     }
-    
-    
+
+
     var custom_img;
-    
+
     var extension='';
     var ratio = jQuery(window).dense('devicePixelRatio');
-  
+
     if(ratio>1){
         extension='_2x';
     }
@@ -1418,31 +1418,31 @@ function custompin(image) {
         if(ratio>1){
             custom_img= wpestate_get_custom_retina_pin(  images['single_pin'] );
         }else{
-            custom_img= images['single_pin']; 
+            custom_img= images['single_pin'];
         }
     }
 
     if(ratio>1){
-   
+
         image = {
-            url: custom_img, 
+            url: custom_img,
             size :  new google.maps.Size(44, 50),
             scaledSize   :  new google.maps.Size(44, 50),
             origin: new google.maps.Point(0, 0),
             optimized:false
         };
-     
+
     }else{
             image = {
             url: custom_img,
             size: new google.maps.Size(44, 50),
             origin: new google.maps.Point(0, 0),
-          
+
         };
     }
-    
-   
-            
+
+
+
     return image;
 }
 
@@ -1450,19 +1450,19 @@ function custompin(image) {
 function wprentals_custompinhover() {
     "use strict";
     var custom_img, image;
-    
+
     var extension='';
     var ratio = jQuery(window).dense('devicePixelRatio');
-    
+
     if(ratio>1){
         extension='_2x';
     }
-    
+
     custom_img = mapfunctions_vars.path + '/hover'+extension+'.png';
 
 
     if(wprentals_map_type===2){
-      
+
         var markerImage    = L.icon({
             iconUrl: custom_img,
             iconSize: [44, 50],
@@ -1470,7 +1470,7 @@ function wprentals_custompinhover() {
             popupAnchor: [1, -50]
         });
         return markerImage;
-       
+
     }
 
 
@@ -1480,18 +1480,18 @@ function wprentals_custompinhover() {
         origin: new google.maps.Point(0, 0),
        // anchor: new google.maps.Point(26, 25)
     };
-    
+
     if(ratio>1){
-  
+
         image = {
-            url: custom_img, 
+            url: custom_img,
             size :  new google.maps.Size(44, 50),
             scaledSize   :  new google.maps.Size(44, 50),
             origin: new google.maps.Point(0, 0),
             optimized:false
-            
+
           };
-    
+
     }else{
         image = {
             url: custom_img,
@@ -1499,7 +1499,7 @@ function wprentals_custompinhover() {
             origin: new google.maps.Point(0, 0),
         };
     }
-   
+
     return image;
 }
 
@@ -1509,13 +1509,13 @@ function wpestate_get_custom_retina_pin(custom_img){
     "use strict";
     var custom_img_retina;
     custom_img_retina=custom_img.replace(".png","_2x.png");
-            
+
     jQuery.get(custom_img_retina)
-        .done(function() { 
+        .done(function() {
             custom_img = custom_img_retina;
-        }).fail(function() { 
+        }).fail(function() {
         });
-    return custom_img;              
+    return custom_img;
 }
 
 
@@ -1643,17 +1643,18 @@ function wpestate_set_filter_pins(map, new_markers) {
 
 
         if( typeof (markers_cluster)!=='undefined'){
-            markers_cluster.clearMarkers();  
+            markers_cluster.clearMarkers();
         }
 
-        if (new_markers.length > 0) {  
+        if (new_markers.length > 0) {
             bounds_list = new google.maps.LatLngBounds();
             wprentals_map_general_set_markers(map, new_markers);
             wprentals_google_map_cluster();
+              wprentals_google_fit_to_bounds();
         }
-        
+
     } else if(wprentals_map_type===2){
-       
+
         if (mapfunctions_vars.user_cluster === 'yes') {
             map.removeLayer(markers_cluster);
         }else{
@@ -1662,15 +1663,15 @@ function wpestate_set_filter_pins(map, new_markers) {
             }
         }
 
-        gmarkers = [];        
+        gmarkers = [];
         markers_cluster=L.markerClusterGroup({
             showCoverageOnHover: false,
             iconCreateFunction: function(cluster) {
                     return L.divIcon({ html: '<div class="leaflet_cluster" style="background-image: url('+images['cloud_pin']+')">' + cluster.getChildCount() + '</div>' });
-            },       
+            },
         });
-          
-        if (new_markers.length > 0) {  
+
+        if (new_markers.length > 0) {
 
             bounds_list =undefined;
             wprentals_map_general_set_markers(map, new_markers);
@@ -1680,25 +1681,25 @@ function wpestate_set_filter_pins(map, new_markers) {
             wprentals_map_general_fit_to_bounds();
         }
         wprentals_map_general_cluster();
-   
+
     }
- 
+
 }
 
 
 function wpestate_set_filter_pins_ondemand(map, new_markers) {
     "use strict";
     if(wprentals_map_type===1){
-        
+
         for (var i = 0; i < gmarkers.length; i++) {
             gmarkers[i].setVisible(false);
             gmarkers[i].setMap(null);
         }
         gmarkers = [];
 
-        if (new_markers.length > 0) {  
+        if (new_markers.length > 0) {
             if( typeof (markers_cluster)!=='undefined'){
-               markers_cluster.clearMarkers();  
+               markers_cluster.clearMarkers();
             }
             wprentals_google_setMarkers(map, new_markers);
             wprentals_google_map_cluster();
@@ -1711,8 +1712,8 @@ function wpestate_set_filter_pins_ondemand(map, new_markers) {
         });
         oms.addListener('unspiderfy ', function (markers) {
         });
-    
-    
+
+
     } else if(wprentals_map_type===2){
 
         if (mapfunctions_vars.user_cluster === 'yes') {
@@ -1722,25 +1723,25 @@ function wpestate_set_filter_pins_ondemand(map, new_markers) {
                 map.removeLayer(gmarkers[i]);
             }
         }
-    
-        gmarkers = [];   
+
+        gmarkers = [];
         markers_cluster=L.markerClusterGroup({
             showCoverageOnHover: false,
             iconCreateFunction: function(cluster) {
                     return L.divIcon({ html: '<div class="leaflet_cluster" style="background-image: url('+images['cloud_pin']+')">' + cluster.getChildCount() + '</div>' });
-            },       
+            },
         });
-          
-        if (new_markers.length > 0) {  
+
+        if (new_markers.length > 0) {
             bounds_list = map.getBounds();
             wprentals_map_general_set_markers(map, new_markers);
         }
         wprentals_map_general_cluster();
-      
-        
-        
+
+
+
     }
-    
+
 }
 
 
@@ -1754,30 +1755,30 @@ function wpestate_hover_action_pin(listing_id) {
     "use strict";
 
     for (var i = 0; i < gmarkers.length; i++) {
-     
+
         if (parseInt(gmarkers[i].idul, 10) === parseInt(listing_id, 10)) {
-        
+
             if(wprentals_map_type===1){
                 google.maps.event.trigger(gmarkers[i], 'click');
-                
+
                 if(mapfunctions_vars.useprice !== 'yes'){
                     gmarkers[i].setIcon( wprentals_custompinhover() );
                 }
-                
+
                 marker_zindex=gmarkers[i].getZIndex();
                 gmarkers[i].setZIndex(9999999);
             }else if(wprentals_map_type===2){
-          
+
                 lealet_map_move_on_hover=1;
                 if (! gmarkers[i]._icon)  gmarkers[i].__parent.spiderfy();
                 map.panTo(  gmarkers[i].getLatLng());
                 gmarkers[i].togglePopup();
-                
+
                 if(mapfunctions_vars.useprice !== 'yes'){
                     gmarkers[i].setIcon(wprentals_custompinhover());
                 }
-                
-               
+
+
             }
         }
     }
@@ -1791,7 +1792,7 @@ function wpestate_return_hover_action_pin(listing_id) {
     "use strict";
     for (var i = 0; i < gmarkers.length; i++) {
         if (parseInt(gmarkers[i].idul, 10) === parseInt(listing_id, 10)) {
-            
+
             if(wprentals_map_type===1){
                 if (parseInt(gmarkers[i].idul, 10) === parseInt(listing_id, 10)) {
                     infoBox.close();
@@ -1801,8 +1802,8 @@ function wpestate_return_hover_action_pin(listing_id) {
                     gmarkers[i].setZIndex(marker_zindex);
                 }
             }  else if(wprentals_map_type===2){
-               
-                gmarkers[i].togglePopup(); 
+
+                gmarkers[i].togglePopup();
                 lealet_map_move_on_hover=0;
                 if(mapfunctions_vars.useprice !== 'yes'){
                  var   markerImage      = L.icon({
@@ -1814,10 +1815,10 @@ function wpestate_return_hover_action_pin(listing_id) {
                     gmarkers[i].setIcon(markerImage);
                 }
             }
-        
-        
+
+
         }
-        
+
     }
 
 }
@@ -1833,11 +1834,11 @@ String.prototype.capitalize = function () {
 ///////////////////////////////////////////////////////////////
 
 var wpestate_initialize_poi = function ( map_for_poi,what){
- 
+
     if( parseInt(mapbase_vars.wprentals_map_type)!==1){
         return;
     }
-    
+
     var poi_service         =   new google.maps.places.PlacesService( map_for_poi );
     var already_serviced    =   '';
     var show_poi            =   '';
@@ -1847,7 +1848,7 @@ var wpestate_initialize_poi = function ( map_for_poi,what){
         selector = '.google_poish';
     }
 
-    
+
 
     jQuery(selector).on('click',function(event){
         event.stopPropagation();
@@ -1859,13 +1860,13 @@ var wpestate_initialize_poi = function ( map_for_poi,what){
         if( jQuery(this).hasClass('poi_active')){
             wpestate_show_hide_poi(poi_type,'hide');
         }else{
-    
+
             already_serviced = wpestate_show_hide_poi(poi_type,'show');
-            if(already_serviced===1){ 
-               
+            if(already_serviced===1){
+
                 var request = {
                     location:   position,
-                    types:      show_poi,        
+                    types:      show_poi,
                     bounds:     map_bounds,
                     radius:     2500,
                 };
@@ -1876,11 +1877,11 @@ var wpestate_initialize_poi = function ( map_for_poi,what){
         }
         jQuery(this).toggleClass('poi_active');
     });
- 
-    
-   
-    
-    
+
+
+
+
+
     // return google poi types for selected poi
     var wpestate_return_poi_values = function (poi_type){
         var  show_poi;
@@ -1907,7 +1908,7 @@ var wpestate_initialize_poi = function ( map_for_poi,what){
         return show_poi;
     };
 
-    
+
     // add poi markers on the map
     var wpestate_googlemap_display_poi = function (results, status,map_for_poi) {
         var place, poi_marker;
@@ -1950,14 +1951,14 @@ var wpestate_initialize_poi = function ( map_for_poi,what){
 
         google.maps.event.addListener(marker, 'mouseout', function(event) {
             if( infobox_poi!== null){
-                infobox_poi.close(); 
+                infobox_poi.close();
             }
         });
         return marker;
     };
 
 
-    
+
     // hide-show poi
     var wpestate_show_hide_poi = function (poi_type,showhide){
         var is_hiding=1;

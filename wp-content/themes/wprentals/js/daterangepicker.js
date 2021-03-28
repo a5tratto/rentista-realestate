@@ -841,7 +841,8 @@
 
                   
                    // wpestate added
-                    if(this.element[0].id==='start_date'){
+                   //|| this.element[0].id==='end_date'
+                    if(this.element[0].id==='start_date' ){
                             // if is block by mandatory start/end date
                             
                             if(wpestate_booking_invalid_Date_new(infome_unix)==='is_block_check_in_check_out'){
@@ -866,8 +867,12 @@
                                 }
                             }
 
-                            // minimum days
+
+                        
+                            
+                            // minimum days for mega details
                             if( typeof(mega_details)==='object'){
+                              
                                 var minday_unix= moment(this.startDate).utc().add(moment(this.startDate).utcOffset(),'minutes').valueOf();
                                 var minday_unix=minday_unix/1000;
 
@@ -883,11 +888,21 @@
                                     this.minDateSpan = minLimit;
                                 }
 
+                               
+                                
                                 if(this.minDateSpan && this.startDate && calendar[row][col].isBefore(this.minDateSpan, 'day')  && calendar[row][col].isAfter(this.startDate, 'day')){
+                                
                                     classes.push('wpestate_min_days_required', 'disabled');
                                     classes.push('off', 'disabled');
                                 }
 
+                            }else{
+                           
+                                if(this.minDateSpan && this.startDate && calendar[row][col].isBefore(this.minDateSpan, 'day')  && calendar[row][col].isAfter(this.startDate, 'day')){
+                                  
+                                    classes.push('wpestate_min_days_required', 'disabled');
+                                    classes.push('off', 'disabled');
+                                }
                             }
                     }
 
@@ -924,7 +939,8 @@
                     }
                     if (!disabled)
                         cname += 'available'; 
-                        if (typeof wpestate_show_price_Daterangepicker === "function" &&  this.element[0].id==='start_date') { 
+                    //|| this.element[0].id==='end_date') 
+                        if (typeof wpestate_show_price_Daterangepicker === "function" && this.element[0].id==='start_date'  ){ 
                             html += '<td class="infome_unix wpestate_booking_class ' + cname.replace(/^\s+|\s+$/g, '') + '" data-custom="'+infome2+'" data-title="' + 'r' + row + 'c' + col + '">' + calendar[row][col].date() + '<div class="wpestate_show_price_calendar">'+wpestate_show_price_Daterangepicker(infome_unix)+'</div></td>';
                         }else{
                             html += '<td class="' + cname.replace(/^\s+|\s+$/g, '') + '" data-custom="'+infome+'" data-title="' + 'r' + row + 'c' + col + '">' + calendar[row][col].date() + '</td>';
@@ -1386,7 +1402,7 @@
             // * if single date picker mode, and time picker isn't enabled, apply the selection immediately
             // * if one of the inputs above the calendars was focused, cancel that manual input
             //
-
+        
             if (this.endDate || date.isBefore(this.startDate, 'day')) { //picking start
                 if (this.timePicker) {
                     var hour = parseInt(this.container.find('.left .hourselect').val(), 10);
@@ -1409,6 +1425,7 @@
                 
                 //wpestate SeT is start_Date_picked flag
                 who_is=0;
+             
                 var input_val = $(e.target).attr("data-custom");
                 this.element.val(input_val);
                 this.start_date_picked=1;

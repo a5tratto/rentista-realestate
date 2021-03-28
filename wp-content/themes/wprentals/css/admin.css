@@ -2,20 +2,13 @@ body.login div#login h1 a {
     background-position: center center;
 }
 
-.rcapi_payment_management_info{
-    width: 100%;
-    display: inline-block;
-}
+
 
 .order-number,
 .order-date{
     padding: 10px!important;
 }
 
-.redux-container .form-table>tbody>tr.rcapi_payment_management_info>th{
-width: 100%;
-    display: inline-block;
-}
 
 
 .sms_wrapper_redux{
@@ -40,11 +33,11 @@ width: 100%;
 .redux-container .redux-main{
     background: #fff!important;
     border-left: 1px solid #ffffff;
-}   
+}
 
 .redux-sidebar .redux-group-menu li a {
     color: #e7e8eb;
-}  
+}
 
 .redux-sidebar .redux-group-menu {
     margin-top: 0 !important;
@@ -71,7 +64,7 @@ width: 100%;
     box-shadow: none;
      color: #e7e8eb;
 }
-  
+
 .wprentals_pin_fields td .redux-container-media .upload_button_div {
     margin-top: 7px;
     margin-bottom: 0px;
@@ -100,17 +93,17 @@ width: 100%;
 
 
 
-.admin-color-fresh .redux-sidebar .redux-group-menu li.activeChild.hasSubSections ul.subsection li a, 
+.admin-color-fresh .redux-sidebar .redux-group-menu li.activeChild.hasSubSections ul.subsection li a,
 .wp-customizer .redux-sidebar .redux-group-menu li.activeChild.hasSubSections ul.subsection li a {
     background: #292e39;
 }
-.admin-color-fresh .redux-sidebar .redux-group-menu li.activeChild.hasSubSections ul.subsection li.active a, 
+.admin-color-fresh .redux-sidebar .redux-group-menu li.activeChild.hasSubSections ul.subsection li.active a,
 .wp-customizer .redux-sidebar .redux-group-menu li.activeChild.hasSubSections ul.subsection li.active a {
     background: #7482a8;
     text-shadow: none;
 }
 
-.admin-color-fresh .redux-sidebar .redux-group-menu li.activeChild.hasSubSections a, 
+.admin-color-fresh .redux-sidebar .redux-group-menu li.activeChild.hasSubSections a,
 .wp-customizer .redux-sidebar .redux-group-menu li.activeChild.hasSubSections a {
     background: #a0a5aa;
     text-shadow: none;
@@ -153,8 +146,8 @@ width: 100%;
     margin-left: 5px!important;
 
 }
-.admin-color-fresh .redux-container-switch .cb-enable.selected, 
-.admin-color-fresh .redux-field-container .ui-buttonset .ui-state-active, 
+.admin-color-fresh .redux-container-switch .cb-enable.selected,
+.admin-color-fresh .redux-field-container .ui-buttonset .ui-state-active,
 .wp-customizer .redux-container-switch .cb-enable.selected,
 .wp-customizer .redux-field-container .ui-buttonset .ui-state-active{
     background-color: #292e39 !important;
@@ -163,9 +156,9 @@ width: 100%;
     box-shadow: none!important;
 }
 
-#redux-import-code-button, 
-#redux-import-link-button, 
-#redux-export-code-copy, 
+#redux-import-code-button,
+#redux-import-link-button,
+#redux-export-code-copy,
 #redux-export-link {
     color: #fff;
     background-color: #292e39 !important;
@@ -195,19 +188,19 @@ width: 100%;
     height: 350px;
 }
 
-.admin-color-fresh .select2-drop-active, 
-.admin-color-fresh .select2-container-multi.select2-container-active .select2-choices, 
-.admin-color-fresh .select2-drop.select2-drop-above.select2-drop-active, 
-.admin-color-fresh .select2-container-active .select2-choice, 
-.admin-color-fresh .select2-container-active .select2-choices, 
-.admin-color-fresh .select2-dropdown-open.select2-drop-above .select2-choice, 
-.admin-color-fresh .select2-dropdown-open.select2-drop-above .select2-choices, 
-.wp-customizer .select2-drop-active, 
-.wp-customizer .select2-container-multi.select2-container-active .select2-choices, 
-.wp-customizer .select2-drop.select2-drop-above.select2-drop-active, 
-.wp-customizer .select2-container-active .select2-choice, 
-.wp-customizer .select2-container-active .select2-choices, 
-.wp-customizer .select2-dropdown-open.select2-drop-above .select2-choice, 
+.admin-color-fresh .select2-drop-active,
+.admin-color-fresh .select2-container-multi.select2-container-active .select2-choices,
+.admin-color-fresh .select2-drop.select2-drop-above.select2-drop-active,
+.admin-color-fresh .select2-container-active .select2-choice,
+.admin-color-fresh .select2-container-active .select2-choices,
+.admin-color-fresh .select2-dropdown-open.select2-drop-above .select2-choice,
+.admin-color-fresh .select2-dropdown-open.select2-drop-above .select2-choices,
+.wp-customizer .select2-drop-active,
+.wp-customizer .select2-container-multi.select2-container-active .select2-choices,
+.wp-customizer .select2-drop.select2-drop-above.select2-drop-active,
+.wp-customizer .select2-container-active .select2-choice,
+.wp-customizer .select2-container-active .select2-choices,
+.wp-customizer .select2-dropdown-open.select2-drop-above .select2-choice,
 .wp-customizer .select2-dropdown-open.select2-drop-above .select2-choices {
     border-color: #ddd;
 }
@@ -234,7 +227,7 @@ width: 100%;
 }
 
 #clear-gallery,
-.redux-main .button.remove-image, 
+.redux-main .button.remove-image,
 .redux-main .removeCSS {
     margin-left: 10px;
     color: #ef521d;
@@ -291,9 +284,9 @@ width: 100%;
     height: 500px!important;
 }
 
-.redux-container .redux-group-tab { 
+.redux-container .redux-group-tab {
     padding: 10px 30px;
-} 
+}
 .redux-container .redux_field_th {
     padding: 20px 30px 20px 0px;
 }
@@ -302,23 +295,23 @@ width: 100%;
     line-height: 1.6em;
 }
 
-.toplevel_page_WpRentals  input[type=text], 
-.toplevel_page_WpRentals input[type=search], 
-.toplevel_page_WpRentals input[type=radio], 
-.toplevel_page_WpRentals input[type=tel], 
-.toplevel_page_WpRentals input[type=time], 
-.toplevel_page_WpRentals input[type=url], 
-.toplevel_page_WpRentals input[type=week], 
-.toplevel_page_WpRentals input[type=password], 
-.toplevel_page_WpRentals input[type=checkbox], 
-.toplevel_page_WpRentals input[type=color], 
-.toplevel_page_WpRentals input[type=date], 
-.toplevel_page_WpRentals input[type=datetime], 
-.toplevel_page_WpRentals input[type=datetime-local], 
-.toplevel_page_WpRentals input[type=email], 
-.toplevel_page_WpRentals input[type=month], 
+.toplevel_page_WpRentals  input[type=text],
+.toplevel_page_WpRentals input[type=search],
+.toplevel_page_WpRentals input[type=radio],
+.toplevel_page_WpRentals input[type=tel],
+.toplevel_page_WpRentals input[type=time],
+.toplevel_page_WpRentals input[type=url],
+.toplevel_page_WpRentals input[type=week],
+.toplevel_page_WpRentals input[type=password],
+.toplevel_page_WpRentals input[type=checkbox],
+.toplevel_page_WpRentals input[type=color],
+.toplevel_page_WpRentals input[type=date],
+.toplevel_page_WpRentals input[type=datetime],
+.toplevel_page_WpRentals input[type=datetime-local],
+.toplevel_page_WpRentals input[type=email],
+.toplevel_page_WpRentals input[type=month],
 .toplevel_page_WpRentals input[type=number],
-.toplevel_page_WpRentals select, 
+.toplevel_page_WpRentals select,
 .toplevel_page_WpRentals textarea {
     border: 1px solid red;
     box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
@@ -423,8 +416,8 @@ textarea#wp_estate_copyright_message-textarea,
     display: none !important;
 }
 
-.select2-container, 
-.select2-drop, 
+.select2-container,
+.select2-drop,
 .select2-search {
     max-width: 300px;
 }
@@ -447,10 +440,10 @@ textarea#wp_estate_copyright_message-textarea,
     color: #fff!important;
     border-color: #4ecb8f!important;
 }
- 
-#redux-defaults-section-sticky, 
-#redux-defaults-sticky, 
-#redux-defaults-section, 
+
+#redux-defaults-section-sticky,
+#redux-defaults-sticky,
+#redux-defaults-section,
 #redux-defaults {
     height: 36px;
     text-shadow: none;
@@ -464,17 +457,15 @@ textarea#wp_estate_copyright_message-textarea,
 }
 
 input[type=checkbox]:checked:before {
-   
+
     color: #1e8cbe;
-    
+
 }
 .toplevel_page_WpRentalsChildtheme input[type=checkbox]:checked:before,
 .toplevel_page_WpRentals input[type=checkbox]:checked:before {
-    content: "\f147";
     margin: 0px 0px 0px 0px;
     color: #1e8cbe;
     font-size: 24px;
-    width: auto;
 }
 /*=Theme Options */
 .ocdi__gl.js-ocdi-gl{
@@ -509,7 +500,7 @@ input[type=checkbox]:checked:before {
     width:140px!important;
     min-width:140px!important;
 }
- 
+
 .modal_notice{
     position: absolute;
     width: 400px;
@@ -635,7 +626,7 @@ input[type=checkbox]:checked:before {
     background: #ececec;
     border: 1px solid #ccc;
     padding: 10px;
-    
+
 }
 
 
@@ -688,13 +679,13 @@ input[type=checkbox]:checked:before {
 
 .wpestate-tab-item{
     width:100%;
-    padding: 0px; 
+    padding: 0px;
     float:left;
     font-size: 14px;
     font-family: 'Arial';
     font-style: normal;
     box-sizing: border-box;
-    -moz-box-sizing: border-box;    
+    -moz-box-sizing: border-box;
     z-index: 100;
     position: relative;
     border-bottom: 1px solid #ddd;
@@ -717,7 +708,7 @@ input[type=checkbox]:checked:before {
     padding: 13px 0px 5px 15px;
     width: 185px;
     float: left;
-    min-height: 30px;    
+    min-height: 30px;
 }
 
 
@@ -746,7 +737,7 @@ input[type=checkbox]:checked:before {
 .wpestate-tabh1{
     color: #1a171b;
     font-size: 25px;
-    font-weight: normal;    
+    font-weight: normal;
     margin: 37px 20px 20px 20px!important;
 }
 
@@ -769,7 +760,7 @@ input[type=checkbox]:checked:before {
 
 .metacustom {
     float: left;
-    width: 50%;
+    width: 33.3%;
     margin-bottom: 10px;
 }
 
@@ -932,7 +923,7 @@ input[type=checkbox]:checked:before {
 }
 
 #sample_member_row{
-   display:none; 
+   display:none;
 }
 
 .memebership_alert{
@@ -995,12 +986,12 @@ input[type=checkbox]:checked:before {
 .colorpicker {
     width: 356px;
     height: 176px;
-    overflow: hidden; 
+    overflow: hidden;
     position: absolute;
     background: url(css-images/colorpicker_background.png);
     font-family: Arial, Helvetica, sans-serif;
     display: none;
-    
+
 }
 
 .colorpicker_color {
@@ -1480,10 +1471,10 @@ input[type=checkbox]:checked:before {
 /*=======================================================================
 
     Tabs
-    
+
  ========================================================================*/
 
-.tabs { 
+.tabs {
     display: block;
     width:700px;
     margin-top:30px;
@@ -1539,14 +1530,14 @@ input[type=checkbox]:checked:before {
 
 #googleMap > div{
     display: block;
-} 
+}
 
 #googleMap > div div{
     display: block;
-} 
+}
 /*  */
 
-#tabsys input[type="text"],#tabpat input[type="text"]{	
+#tabsys input[type="text"],#tabpat input[type="text"]{
     float: left;
     display: inline;
 }
@@ -1562,12 +1553,12 @@ input[type=checkbox]:checked:before {
     padding:0px;
 }
 
-/* 
+/*
 .tabs tabadmin {
                display: none;
 padding: 20px 10px;
        }
-*/	
+*/
 
 .tabs div.active {
     display: block;
@@ -1622,7 +1613,7 @@ padding: 20px 10px;
 
 .pretty.tabs ul li.active:first-child a {
 
-    margin-left: 0; 
+    margin-left: 0;
 }
 
 .pretty.tabs ul li.active:last-child a {
@@ -1752,7 +1743,7 @@ textarea, input, select {
     margin: 0px 5px;
 }
 
-.admin-color-fresh #redux-header, 
+.admin-color-fresh #redux-header,
 .wp-customizer #redux-header {
     border-color: #23282d;
 }
@@ -1836,7 +1827,7 @@ textarea, input, select {
 }
 
 .pblankh{
-  padding-left: 0px;  
+  padding-left: 0px;
 }
 
 
@@ -1847,11 +1838,11 @@ textarea, input, select {
     background-image: url(css-images/vclogo.png);
     width: 32px;
     height: 32px;
-    background-size: contain; 
+    background-size: contain;
 }
 .wpb-content-layouts .wpb-layout-element-button .vc-element-icon.wpestate_vc_logo {
     width: 32px;
-    height: 32px; 
+    height: 32px;
 }
 
 .vc_license-activation-notice{
@@ -1861,7 +1852,7 @@ textarea, input, select {
 
 .floor_p{
     width:33%;
-    float:left;   
+    float:left;
     height: 50px;
 }
 
@@ -1899,7 +1890,7 @@ textarea, input, select {
 #add_new_plan {
     margin: 10px 0px 30px 0px;
     cursor:pointer;
-   
+
     background-color: #4ecb8f;
     color: #fff;
     padding: 5px;
@@ -1907,11 +1898,11 @@ textarea, input, select {
 
 
 
-.create_invoice_form input[type=text], 
-.create_invoice_form input[type=password], 
-.create_invoice_form input[type=email], 
-.create_invoice_form input[type=url], 
-.create_invoice_form input[type=number], 
+.create_invoice_form input[type=text],
+.create_invoice_form input[type=password],
+.create_invoice_form input[type=email],
+.create_invoice_form input[type=url],
+.create_invoice_form input[type=number],
 .create_invoice_form textarea {
     width: 70%;
     margin-bottom: 11px;
@@ -1945,7 +1936,7 @@ textarea, input, select {
     float:left;
     width:100%;
     border:1px solid #45b37e;
-    margin-bottom: 13px;
+    margin:15px 0px;
 }
 
 .invoice_row{
@@ -2060,13 +2051,13 @@ textarea, input, select {
 }
 
 .estate_option_row_no_border{
-    padding: 20px 20px 20px 230px; 
+    padding: 20px 20px 20px 230px;
 }
 
 #splash_slider_images{
     display: inline-block;
     padding-left: 30px;
-    
+
 }
 
 .splash_image_info,
@@ -2162,12 +2153,12 @@ textarea, input, select {
     vertical-align: middle;
     height: 40px;
     padding: 7px 9px;
-    min-width: 300px;    
+    min-width: 300px;
     -webkit-appearance: none;
 }
 
 
-#free_mem_list_unl{    
+#free_mem_list_unl{
     width: 18px;
     height: 18px!important;
     min-width: 18px!important;
@@ -2187,7 +2178,7 @@ textarea, input, select {
     background-clip: padding-box;
     -moz-background-clip: padding;
     -webkit-background-clip: padding-box;
-    
+
 }
 #wpestate_wrapper_admin_menu #custom_fields_wrapper .field_row textarea {
     border-radius: 0px;
@@ -2345,7 +2336,7 @@ textarea, input, select {
 }
 
 .activate_wrapper{
-    
+
 }
 
 .activate_template{
@@ -2378,7 +2369,7 @@ textarea, input, select {
     border-radius: 0px;
     margin-right: 10px;
     margin-top: 2px;
-} 
+}
 
 .template-item{
     float: left;
@@ -2414,17 +2405,17 @@ textarea, input, select {
 
 }
 
-.col-md-1, 
-.col-md-2, 
-.col-md-3, 
-.col-md-4, 
-.col-md-5, 
-.col-md-6, 
-.col-md-7, 
-.col-md-8, 
-.col-md-9, 
-.col-md-10, 
-.col-md-11, 
+.col-md-1,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-md-10,
+.col-md-11,
 .col-md-12 {
     float: left;
     position: relative;
@@ -2474,23 +2465,23 @@ textarea, input, select {
     font-weight: bold;
 }
 
-.payments_management_wrapper .col-md-1, 
-.payments_management_wrapper .col-md-2, 
-.payments_management_wrapper .col-md-3, 
-.payments_management_wrapper .col-md-4, 
-.payments_management_wrapper .col-md-5, 
-.payments_management_wrapper .col-md-6, 
-.payments_management_wrapper .col-md-7, 
-.payments_management_wrapper .col-md-8, 
-.payments_management_wrapper .col-md-9, 
-.payments_management_wrapper .col-md-10, 
-.payments_management_wrapper .col-md-11, 
+.payments_management_wrapper .col-md-1,
+.payments_management_wrapper .col-md-2,
+.payments_management_wrapper .col-md-3,
+.payments_management_wrapper .col-md-4,
+.payments_management_wrapper .col-md-5,
+.payments_management_wrapper .col-md-6,
+.payments_management_wrapper .col-md-7,
+.payments_management_wrapper .col-md-8,
+.payments_management_wrapper .col-md-9,
+.payments_management_wrapper .col-md-10,
+.payments_management_wrapper .col-md-11,
 .payments_management_wrapper .col-md-12{
     border: 1px solid #eee;
     padding: 5px;
     box-sizing: border-box;
     min-height: 60px;
-    
+
 }
 
 .actions_row{
@@ -2548,13 +2539,13 @@ textarea, input, select {
     margin-bottom: 10px;
 }
 
-.woocommerce table.shop_table, 
+.woocommerce table.shop_table,
 .woocommerce-page table.shop_table {
     border: 1px solid #dce0e0!important;
     background-color: #fff;
 }
 
-.woocommerce table.my_account_orders, 
+.woocommerce table.my_account_orders,
 .woocommerce-page table.my_account_orders{
     padding:0px;
 }
@@ -2624,7 +2615,7 @@ textarea, input, select {
 }
 
 .invoice_paid{
-    width:100%; 
+    width:100%;
     font-weight: bold;
     float:left;
 }
@@ -2674,7 +2665,7 @@ textarea, input, select {
 
 .payment_management_rentals_wrapper{
     margin-left: 220px;
-    
+
 }
 
 #estate_invoice-sectionid #print_invoice{
@@ -2852,7 +2843,7 @@ textarea, input, select {
 }
 
 .wpestate_theme_opt{
-    float: left; 
+    float: left;
     color: #fff;
     -webkit-transition: all .3s ease;
     -moz-transition: all .3s ease;
@@ -2879,7 +2870,7 @@ textarea, input, select {
 
 .reverse_but{
     background-color: #4d5567;
-  
+
     font-weight: 600;
     color: #fff;
 }
@@ -2970,7 +2961,7 @@ textarea, input, select {
 .wpestate_admin_menu ul li ul {
     visibility: hidden;
     opacity: 0;
-    width: 0px;    
+    width: 0px;
 }
 
 .wpestate_admin_menu ul li:hover>ul {
@@ -3023,8 +3014,8 @@ textarea, input, select {
 
 @media only screen and (max-width: 1800px) and (min-width: 1500px){
 #wpbody-content #dashboard-widgets #postbox-container-2, #wpbody-content #dashboard-widgets #postbox-container-3, #wpbody-content #dashboard-widgets #postbox-container-4 {
-        float: left; 
-    
+        float: left;
+
     }
 }
 
@@ -3114,7 +3105,7 @@ textarea, input, select {
 }
 
 .wpestate_admin_start_notice_wpapper .wpestate_admin_button a{
-     color: #444; 
+     color: #444;
 }
 
 .wpestate_admin_start_notice_wpapper .wpestate_admin_button:hover {
@@ -3496,7 +3487,7 @@ textarea, input, select {
     margin-bottom: 20px;
     padding: 8px;
     margin-left: 10px;
-    
+
 }
 
 .iconpicker-items_wrapper_close{
@@ -3535,7 +3526,7 @@ textarea, input, select {
 }
 
 .input-group-addon.searchf {
-    top: 1px;    
+    top: 1px;
     right: -26px;
 }
 
@@ -3552,20 +3543,20 @@ textarea, input, select {
         width: 50%;
         float: left;
     }
-    #estate_property-googlemap input[type=text], 
-    #estate_property-custom input[type=text], 
-    #estate_property-propdetails input[type=text], 
-    #estate_property-sectionid input[type=text], 
-    #estate_property-sectionid select, 
-    #estate_property-custom select, 
-    .post-type-estate_property select#embed_video_type, 
-    .post-type-estate_property select#property_agent, 
-    .post-type-estate_property select#sidebar_option, 
-    .post-type-estate_property select#sidebar_select, 
-    .post-type-estate_property select#checkin_change_over, 
-    .post-type-estate_property select#checkin_checkout_change_over, 
-    .post-type-estate_property select#city_fee_per_day, 
-    .post-type-estate_property select#cleaning_fee_per_day, 
+    #estate_property-googlemap input[type=text],
+    #estate_property-custom input[type=text],
+    #estate_property-propdetails input[type=text],
+    #estate_property-sectionid input[type=text],
+    #estate_property-sectionid select,
+    #estate_property-custom select,
+    .post-type-estate_property select#embed_video_type,
+    .post-type-estate_property select#property_agent,
+    .post-type-estate_property select#sidebar_option,
+    .post-type-estate_property select#sidebar_select,
+    .post-type-estate_property select#checkin_change_over,
+    .post-type-estate_property select#checkin_checkout_change_over,
+    .post-type-estate_property select#city_fee_per_day,
+    .post-type-estate_property select#cleaning_fee_per_day,
     .post-type-estate_property select#page_custom_zoom {
         width: calc(100% - 10px);
         height: 36px;
@@ -3578,9 +3569,9 @@ textarea, input, select {
         float: left;
         width: 50%;
     }
-    #estate_property-googlemap textarea, 
-    #estate_property-custom textarea, 
-    #estate_property-propdetails textarea, 
+    #estate_property-googlemap textarea,
+    #estate_property-custom textarea,
+    #estate_property-propdetails textarea,
     #estate_property-sectionid textarea {
         width: calc(100% - 10px);
     }
@@ -3596,20 +3587,20 @@ textarea, input, select {
         width: 100%;
         float: left;
     }
-    #estate_property-googlemap input[type=text], 
-    #estate_property-custom input[type=text], 
-    #estate_property-propdetails input[type=text], 
-    #estate_property-sectionid input[type=text], 
-    #estate_property-sectionid select, 
-    #estate_property-custom select, 
-    .post-type-estate_property select#embed_video_type, 
-    .post-type-estate_property select#property_agent, 
-    .post-type-estate_property select#sidebar_option, 
-    .post-type-estate_property select#sidebar_select, 
-    .post-type-estate_property select#checkin_change_over, 
-    .post-type-estate_property select#checkin_checkout_change_over, 
-    .post-type-estate_property select#city_fee_per_day, 
-    .post-type-estate_property select#cleaning_fee_per_day, 
+    #estate_property-googlemap input[type=text],
+    #estate_property-custom input[type=text],
+    #estate_property-propdetails input[type=text],
+    #estate_property-sectionid input[type=text],
+    #estate_property-sectionid select,
+    #estate_property-custom select,
+    .post-type-estate_property select#embed_video_type,
+    .post-type-estate_property select#property_agent,
+    .post-type-estate_property select#sidebar_option,
+    .post-type-estate_property select#sidebar_select,
+    .post-type-estate_property select#checkin_change_over,
+    .post-type-estate_property select#checkin_checkout_change_over,
+    .post-type-estate_property select#city_fee_per_day,
+    .post-type-estate_property select#cleaning_fee_per_day,
     .post-type-estate_property select#page_custom_zoom {
         width: 100%;
         height: 36px;
@@ -3622,9 +3613,9 @@ textarea, input, select {
         float: left;
         width: 100%;
     }
-    #estate_property-googlemap textarea, 
-    #estate_property-custom textarea, 
-    #estate_property-propdetails textarea, 
+    #estate_property-googlemap textarea,
+    #estate_property-custom textarea,
+    #estate_property-propdetails textarea,
     #estate_property-sectionid textarea {
         width: 100%;
     }
@@ -3699,7 +3690,7 @@ textarea, input, select {
 
 .property_prop_full input[type=text],
 .property_prop_full textarea{
-    width:95%;
+    width:500px;
 }
 
 #property_custom_video_button, #button_new_image {
@@ -3730,4 +3721,20 @@ textarea, input, select {
     font-size: 20px;
     padding: 5px;
     cursor: pointer;
+}
+
+
+#wprentals_admin-wp_estate_url_rewrites .label_option_row {
+    margin: 15px 0px;
+    line-height: 30px;
+}
+
+#wprentals_admin-wp_estate_url_rewrites input {
+    line-height: 30px;
+    height: 30px;
+    vertical-align: baseline;
+}
+
+.ui-checkboxradio-icon.ui-corner-all.ui-icon.ui-icon-background.ui-icon-blank{
+  display: none;
 }

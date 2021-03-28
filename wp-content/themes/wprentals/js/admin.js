@@ -148,7 +148,8 @@ jQuery(document).ready(function ($) {
                 curent  =   curent+','+remove; 
 
             });
-            var nonce = jQuery('#wpestate_attach_delete').val();
+            
+            var nonce = jQuery('#wpestate_image_upload').val();
             jQuery('#image_to_attach').val(curent); 
             jQuery.ajax({
                 type: 'POST',
@@ -367,7 +368,7 @@ jQuery(document).ready(function ($) {
 
             },
             success: function (data) {     
-                console.log(data);
+            
                 if(data==='ok'){
                     $('.license_check_wrapper').empty().text('Your copy of the theme is activated. Refresh the page to see Theme Options panel.');
                 }else{

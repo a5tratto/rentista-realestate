@@ -8,9 +8,9 @@ function wpestate_start_filtering_ajax_map(newpage,pan_ne_lat, pan_ne_long, pan_
     "use strict";
     is_fit_bounds_zoom=1;
     map_geo_first_load=1;
-    
+
     var ajaxurl,all_fields,all_checkers,city,area,country,property_admin_area,stype,search_location_filter_autointernal,all_checkers,postid,keyword_search;
-  
+
     all_fields=new Array();
     ajaxcalls_vars.adv_search_what_half.forEach( function(element) {
         if(element==='property_price'){
@@ -20,49 +20,72 @@ function wpestate_start_filtering_ajax_map(newpage,pan_ne_lat, pan_ne_long, pan_
             all_fields.push({element:element.toLowerCase(),value:jQuery('#'+element.toLowerCase()).val() });
         }
     });
-    
-    
+
+
     if(ajaxcalls_vars.adv_search_type==='type4'){
         all_fields.push({element:'property_category',value:jQuery('#property_category').val() });
         all_fields.push({element:'property_action_category',value:jQuery('#property_action_category').val() });
-        
+
 
 
     }
-     
-    if(jQuery('#search_location_city').length >0){ 
+
+    if(jQuery('#search_location_city').length >0){
         city                    =   jQuery('#search_location_city').val();
     }
-    if(jQuery('#advanced_city').length >0){ 
+    if(jQuery('#advanced_city').length >0){
         city                    =   jQuery('#advanced_city').val();
     }
-    
-    
-    if(jQuery('#search_location_area').length>0){ 
+
+    if(jQuery('#advanced_cityhalf').length >0){
+        city                    =   jQuery('#advanced_cityhalf').val();
+    }
+
+
+    if(jQuery('#search_location_area').length>0){
         area                    =   jQuery('#search_location_area').val();
     }
-    if(jQuery('#advanced_area').length>0){ 
+    if(jQuery('#advanced_area').length>0){
         area                    =   jQuery('#advanced_area').val();
     }
-    
-    if(jQuery('#search_location_country').length>0){ 
+    if(jQuery('#advanced_areahalf').length>0){
+        area                    =   jQuery('#advanced_areahalf').val();
+    }
+
+
+
+
+    if(jQuery('#search_location_country').length>0){
         country                    =   jQuery('#search_location_country').val();
     }
-    
-    if(jQuery('#advanced_area').length>0){ 
+
+    if(jQuery('#advanced_country').length>0){
         country                    =   jQuery('#advanced_country').val();
     }
-    
-    
+    if(jQuery('#advanced_countryhalf').length>0){
+        country                    =   jQuery('#advanced_countryhalf').val();
+    }
+
+
+
+
     property_admin_area     =   jQuery('#property_admin_area').val();
+    if(jQuery('#property_admin_areahalf').length>0){
+        property_admin_area                    =   jQuery('#property_admin_areahalf').val();
+    }
+
     stype                   =   jQuery('#stype').val();
     search_location_filter_autointernal =   jQuery('#search_location_autointernal').val();
-    
-    
+    if(jQuery('#search_locationhalf_autointernal').length>0){
+        search_location_filter_autointernal                    =   jQuery('#search_locationhalf_autointernal').val();
+    }
+
+
+
     all_checkers = '';
-    jQuery('#extended_search_check_filter input[type="checkbox"]').each(function () {
+    jQuery('.extended_search_check_wrapper input[type="checkbox"]').each(function () {
         if (jQuery(this).is(":checked")) {
-            all_checkers = all_checkers + "," + jQuery(this).attr("id");
+            all_checkers = all_checkers + "," + jQuery(this).attr("data-label-search");
         }
     });
 
@@ -78,12 +101,12 @@ function wpestate_start_filtering_ajax_map(newpage,pan_ne_lat, pan_ne_long, pan_
     if( jQuery('#keyword_search').length > 0 ){
         keyword_search          = jQuery('#keyword_search').val();
     }
-    
-    
+
+
     var geo_lat     =   '';
     var geo_long    =   '';
     var geo_rad     =   '';
-    if( jQuery("#geolocation_search").length > 0){    
+    if( jQuery("#geolocation_search").length > 0){
         geo_lat     =   jQuery('#geolocation_lat').val();
         geo_long    =   jQuery('#geolocation_long').val();
         geo_rad     =   jQuery('#geolocation_radius').val();
@@ -92,9 +115,9 @@ function wpestate_start_filtering_ajax_map(newpage,pan_ne_lat, pan_ne_long, pan_
 
 
     ajaxurl     =   ajaxcalls_vars.admin_url + 'admin-ajax.php';
-    jQuery('#listing_ajax_container').empty();
-    jQuery('#listing_loader').show();
-    
+    jQuery('#google_map_prop_list_sidebar #listing_ajax_container').empty();
+    jQuery('#google_map_prop_list_sidebar #listing_loader').show();
+
     var nonce = jQuery('#wprentals_ajax_filtering').val();
 
     jQuery.ajax({
@@ -117,54 +140,54 @@ function wpestate_start_filtering_ajax_map(newpage,pan_ne_lat, pan_ne_long, pan_
             'geo_lat'               :   geo_lat,
             'geo_long'              :   geo_long,
             'geo_rad'               :   geo_rad,
-            'pan_ne_lat'            :   pan_ne_lat, 
-            'pan_ne_long'           :   pan_ne_long, 
+            'pan_ne_lat'            :   pan_ne_lat,
+            'pan_ne_long'           :   pan_ne_long,
             'pan_sw_lat'            :   pan_sw_lat,
             'pan_sv_long'           :   pan_sv_long,
             'move_map'              :   move_map,
             'security'              :   nonce,
-        
+
         },
         success: function (data) {
-        
-      
+
+
             jQuery('#advanced_search_map_list').removeClass('movetofixed');
             jQuery('#listing_loader').hide();
             jQuery('.listing_loader_title').show();
-            jQuery('#listing_ajax_container').empty().append(data.response);
+            jQuery('#google_map_prop_list_sidebar #listing_ajax_container').empty().append(data.response);
             jQuery('.pagination_nojax').remove();
-           
+
             wpestate_restart_js_after_ajax();
             wpestate_lazy_load_carousel_property_unit();
             var  new_markers = jQuery.parseJSON(data.markers);
             if (infoBox !== null) {
                 infoBox.close();
             }
-      
-            
+
+
             if(typeof(move_map)!=='undefined'){
                 wpestate_set_filter_pins_ondemand(map, new_markers);
             }else{
                wpestate_set_filter_pins(map, new_markers);
             }
-            
-            is_fit_bounds_zoom=0;  
-            
+
+            is_fit_bounds_zoom=0;
+
             if( jQuery("#geolocation_search").length > 0 && initial_geolocation_circle_flag === 0){
                 var place_lat = jQuery('#geolocation_lat').val();
                 var place_lng = jQuery('#geolocation_long').val();
 
-            
+
                 if(place_lat!=='' && place_lng!=''){
                     initial_geolocation_circle_flag=1;
                     wpestate_geolocation_marker(place_lat,place_lng);
                 }
         }
-    
-    
+
+
         },
         error: function (errorThrown) {}
-    });//end ajax     
+    });//end ajax
 }
 
 
@@ -176,13 +199,13 @@ function wpestate_start_filtering_ajax_map(newpage,pan_ne_lat, pan_ne_long, pan_
 
 function wpestate_geolocation_marker (place_lat, place_lng){
     var place_radius;
-    
+
     if(control_vars.geo_radius_measure==='miles'){
-        place_radius =parseInt( jQuery('#geolocation_radius').val(),10)*1609.34 ; 
+        place_radius =parseInt( jQuery('#geolocation_radius').val(),10)*1609.34 ;
     }else{
-        place_radius =parseInt( jQuery('#geolocation_radius').val(),10)*1000 ;    
+        place_radius =parseInt( jQuery('#geolocation_radius').val(),10)*1000 ;
     }
-        
+
     if(wprentals_map_type===1){
         var place_position=new google.maps.LatLng(place_lat, place_lng);
         map.setCenter(place_position);
@@ -198,7 +221,7 @@ function wpestate_geolocation_marker (place_lat, place_lng){
             icon: mapfunctions_vars.path+'/poi/location.png'
         });
 
-       
+
         var populationOptions = {
             strokeColor: '#67cfd8',
             strokeOpacity: 0.6,
@@ -211,16 +234,16 @@ function wpestate_geolocation_marker (place_lat, place_lng){
         };
         placeCircle = new google.maps.Circle(populationOptions);
         map.fitBounds(placeCircle.getBounds());
-        
-        
+
+
     }else if(wprentals_map_type===2){
         var markerCenter    =   L.latLng(place_lat, place_lng );
-        map.panTo(markerCenter);      
+        map.panTo(markerCenter);
         if(map.hasLayer(circleLayer)){
             map.removeLayer(circleLayer);
         }
-        
-        
+
+
         var markerImage = {
                 iconUrl:  mapfunctions_vars.path+'/poi/location.png',
                 iconSize: [28, 38],
@@ -237,9 +260,9 @@ function wpestate_geolocation_marker (place_lat, place_lng){
         markerOptions.icon = L.icon( markerImage );
         L.marker( markerCenter, markerOptions ).addTo( map );
         placeCircle= L.circle( markerCenter, parseInt(place_radius,10) ).addTo(circleLayer);
-        
-        
-        map.addLayer(circleLayer);    
+
+
+        map.addLayer(circleLayer);
         map.fitBounds(placeCircle.getBounds());
     }
 }
@@ -259,30 +282,30 @@ function wpestate_get_custom_value(slug){
     /*ok*/
     var value;
     var is_drop=0;
-    if(slug === 'adv_categ' || slug === 'adv_actions' ||  slug === 'advanced_city' ||  slug === 'advanced_area'  ||  slug === 'county-state'){     
+    if(slug === 'adv_categ' || slug === 'adv_actions' ||  slug === 'advanced_city' ||  slug === 'advanced_area'  ||  slug === 'county-state'){
         value = jQuery('#'+slug).attr('data-value');
     } else if(slug === 'property_price' && mapfunctions_vars.slider_price==='yes'){
         value = jQuery('#price_low').val();
     }else if(slug === 'property-country'){
         value = jQuery('#advanced_country').attr('data-value');
     }else{
-      
-        if( jQuery('#'+slug).hasClass('filter_menu_trigger') ){ 
+
+        if( jQuery('#'+slug).hasClass('filter_menu_trigger') ){
             value = jQuery('#'+slug).attr('data-value');
             is_drop=1;
         }else{
             value = jQuery('#half-'+slug).val() ;
-            
+
         }
     }
-    
-  
+
+
     if (typeof(value)!=='undefined'&& is_drop===0){
       //  value=  value .replace(" ","-");
     }
-    
+
     return value;
- 
+
 }
 
 
@@ -306,12 +329,12 @@ function wpestate_start_filtering_ajax(newpage) {
     min_price   =   parseInt(jQuery('#price_low').val(), 10);
     price_max   =   parseInt(jQuery('#price_max').val(), 10);
     postid      =   parseInt(jQuery('#adv-search-1').attr('data-postid'), 10);
-   
+
 
     check_in    =   jQuery('#check_in').val();
     check_out   =   jQuery('#check_out').val();
     guest_no    =   jQuery('#guest_no_main').val();
-    
+
     ajaxurl     =   ajaxcalls_vars.admin_url + 'admin-ajax.php';
     jQuery('#listing_ajax_container').empty();
     jQuery('.listing_loader_title').show();
@@ -339,16 +362,16 @@ function wpestate_start_filtering_ajax(newpage) {
             'security'          :   nonce,
         },
         success: function (data) {
-            
+
             jQuery('#internal-loader,#listing_loader').hide();
             jQuery('#listing_ajax_container').addClass('load_from_ajax').empty().append(data);
             wpestate_restart_js_after_ajax();
-          
+
         },
         error: function (errorThrown) {
-     
+
         }
-    });//end ajax     
+    });//end ajax
 }
 
 
@@ -360,38 +383,28 @@ function wpestate_start_filtering_ajax(newpage) {
 function wpestate_restart_js_after_ajax() {
     "use strict";
     var newpage, post_id, post_image, to_add, icon, already_in, i, bLazy;
-    
+
     //bLazy = new Blazy();
     //bLazy.revalidate();
-  
-    
-    jQuery('.property_listing').on('click',function (event) {
-        var link, classevent;
-        classevent=jQuery(event.target);
-        
-        if(classevent.hasClass('carousel-control')  || classevent.hasClass('icon-left-open-big') || classevent.hasClass('icon-right-open-big') ){
-            return;
-        }
-        
-        link = jQuery(this).attr('data-link');
-        window.open(link, '_self');
-    });
-      
-    jQuery('#google_map_prop_list_sidebar .listing_wrapper').unbind('hover');
-      
 
-    
-     jQuery("#google_map_prop_list_sidebar .listing_wrapper").on("hover", function(e) {
 
-        if (e.type === "mouseenter") { 
-            var listing_id = jQuery(this).attr('data-listid');
-            wpestate_hover_action_pin(listing_id);
-         } else if (e.type === "mouseleave") { 
-            var listing_id = jQuery(this).attr('data-listid');
-            wpestate_return_hover_action_pin(listing_id);
-        }
+    wpestate_open_property_card_setup();
 
-    });
+
+    jQuery('#google_map_prop_list_sidebar .listing_wrapper').unbind('mouseenter');
+    jQuery('#google_map_prop_list_sidebar .listing_wrapper').unbind('mouseleave');
+
+    jQuery("#google_map_prop_list_sidebar .listing_wrapper").on("mouseenter", function(event) {
+      var listing_id = jQuery(this).attr('data-listid');
+      wpestate_hover_action_pin(listing_id);
+    })
+
+    jQuery("#google_map_prop_list_sidebar .listing_wrapper").on("mouseleave", function(event) {
+      var listing_id = jQuery(this).attr('data-listid');
+      wpestate_return_hover_action_pin(listing_id);
+    })
+
+
 
 
     jQuery('.prop-compare:first-of-type').remove();
@@ -412,12 +425,12 @@ function wpestate_restart_js_after_ajax() {
 
 
     jQuery('.pagination_ajax_search_home a').on('click',function (event) {
-       
+
         event.preventDefault();
         newpage = parseInt(jQuery(this).attr('data-future'), 10);
         document.getElementById('scrollhere').scrollIntoView();
-       
-      
+
+
         if (googlecode_regular_vars.on_demand_pins==='yes' && map_is_moved===1){
             wpestate_reload_pins_onmap(newpage);
         }else{
@@ -461,24 +474,24 @@ function wpestate_restart_js_after_ajax() {
         wpestate_add_remove_favorite(icon);
     });
 
-   
-    jQuery(".share_list, .icon-fav, .compare-action").on("hover", function(e) {
 
-        if (e.type === "mouseenter") { 
-            jQuery(this).tooltip('show');
-         } else if (e.type === "mouseleave") { 
-            jQuery(this).tooltip('hide');
-        }
 
+
+    jQuery(".share_list, .icon-fav, .compare-action").on("mouseenter", function(event) {
+        jQuery(this).tooltip('show');
     });
+    jQuery(".share_list, .icon-fav, .compare-action").on("mouseleave", function(event) {
+        jQuery(this).tooltip('hide');
+    });
+
 
     jQuery('.share_list').on('click',function () {
         var sharediv = jQuery(this).parent().find('.share_unit');
         sharediv.toggle();
         jQuery(this).toggleClass('share_on');
     });
-    
-         wpestate_lazy_load_carousel_property_unit();
+
+     wpestate_lazy_load_carousel_property_unit();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -511,8 +524,13 @@ function wpestate_add_remove_favorite(icon) {
                     icon.removeClass('icon-fav-off').addClass('icon-fav-on');
                     icon.attr('data-original-title',ajaxcalls_vars.remove_favorite);
                 } else {
+
                     icon.removeClass('icon-fav-on').addClass('icon-fav-off');
-                     icon.attr('data-original-title',ajaxcalls_vars.add_favorite_unit);
+                    icon.attr('data-original-title',ajaxcalls_vars.add_favorite_unit);
+                    if(jQuery('.favorite_dashboard_property_list').length>0){
+                      icon.parents('.dasboard-prop-listing').remove();
+                    }
+
                 }
             },
             error: function (errorThrown) {
@@ -554,7 +572,7 @@ function wpestate_resend_for_approval(prop_id, selected_div) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 /// make property featured-jslint checked
-//////////////////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////////////////////
 function wpestate_make_prop_featured(prop_id, selectedspan) {
     "use strict";
     var ajaxurl      =   ajaxcalls_vars.admin_url + 'admin-ajax.php';
@@ -585,7 +603,7 @@ function wpestate_make_prop_featured(prop_id, selectedspan) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 /// pay package via paypal recuring-jslint checked
-////////////////////////////////////////////////////////////////////////////////////////////   
+////////////////////////////////////////////////////////////////////////////////////////////
 function wpestate_recuring_pay_pack_via_paypal() {
     "use strict";
     var ajaxurl, packName, packId;
@@ -605,17 +623,17 @@ function wpestate_recuring_pay_pack_via_paypal() {
             'security'      :   nonce,
         },
         success: function (data) {
-     
-            window.location.href = data; 
+
+            window.location.href = data;
         },
         error: function (errorThrown) {
         }
-    });//end ajax    
+    });//end ajax
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 /// pay package via paypal-jslint checked
-////////////////////////////////////////////////////////////////////////////////////////////   
+////////////////////////////////////////////////////////////////////////////////////////////
 function wpestate_pay_pack_via_paypal() {
     "use strict";
     var  ajaxurl, packName, packId;
@@ -633,7 +651,7 @@ function wpestate_pay_pack_via_paypal() {
             'security'      :   nonce
         },
         success: function (data) {
-        
+
             window.location.href = data;
         },
         error: function (errorThrown) {
@@ -671,7 +689,7 @@ function wpestate_listing_pay(prop_id, selected_div, is_featured, is_upgrade) {
 ////////////////////////////////////////////////////////////////////////////////////////////
 function wpestate_start_filtering(newpage) {
     "use strict";
-  
+
     jQuery('#grid_view').addClass('icon_selected');
     jQuery('#list_view').removeClass('icon_selected');
     var action, category, city, area, order, ajaxurl, page_id;
@@ -736,18 +754,18 @@ function wpestate_show_login_form(type, ispop, propid) {
      }
 
     //ispop=9 modal is open from booking - hide socila login
-   
+
     if(parseInt(ispop,10)===9){
         jQuery('#loginmodal .login-links').hide();
     }
-    
+
     jQuery('#loginmodal').modal();
     wpestate_enable_actions_modal();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 /// change pass on profile-jslint checked
-////////////////////////////////////////////////////////////////////////////////////////////   
+////////////////////////////////////////////////////////////////////////////////////////////
 function wpestate_change_pass_profile() {
     "use strict";
     var oldpass, newpass, renewpass, securitypass, ajaxurl;
@@ -788,21 +806,21 @@ function wpestate_register_wd() {
     nonce               =  jQuery('#wpestate_ajax_log_reg').val();
     user_pass           =   jQuery('#user_password_wd').val();
     user_pass_retype    =   jQuery('#user_password_retype_wd').val();
-    
+
     ajaxurl             =  ajaxcalls_vars.admin_url + 'admin-ajax.php';
     user_type           =   jQuery("input[name=acc_type]:checked").val();
     if (!jQuery('#user_terms_register_wd').is(":checked")) {
         jQuery('#register_message_area_wd').empty().append('<div class="login-alert alert_err">' + control_vars.terms_cond + '</div>');
         return;
     }
-    
+
     capthca='';
     if(control_vars.usecaptcha==='yes'){
             capthca= grecaptcha.getResponse(
                 widgetId3
             );
     }
-    
+
     jQuery.ajax({
         type: 'POST',
         url: ajaxurl,
@@ -821,9 +839,9 @@ function wpestate_register_wd() {
 
         success: function (data) {
             if (data.register === true) {
-                jQuery('#register_message_area_wd').empty().append('<div class="login-alert">' + data.message + '</div>'); 
+                jQuery('#register_message_area_wd').empty().append('<div class="login-alert">' + data.message + '</div>');
             }else{
-                jQuery('#register_message_area_wd').empty().append('<div class="alert_err login-alert">' + data.message + '</div>'); 
+                jQuery('#register_message_area_wd').empty().append('<div class="alert_err login-alert">' + data.message + '</div>');
             }
             jQuery('#user_login_register_wd').val('');
             jQuery('#user_email_register_wd').val('');
@@ -849,7 +867,7 @@ function wpestate_register_wd_mobile() {
     user_type           =   jQuery("input[name=acc_type]:checked").val();
     user_pass           =  jQuery('#user_password_wd_mobile').val();
     user_pass_retype    =  jQuery('#user_password_retype_wd_mobile').val();
-    
+
     if (!jQuery('#user_terms_register_wd_mobile').is(":checked")) {
         jQuery('#register_message_area_wd_mobile').empty().append('<div class="login-alert alert_err">' + control_vars.terms_cond + '</div>');
         return;
@@ -881,9 +899,9 @@ function wpestate_register_wd_mobile() {
 
         success: function (data) {
             if (data.register === true) {
-                jQuery('#register_message_area_wd_mobile').empty().append('<div class="login-alert">' + data.message + '</div>'); 
+                jQuery('#register_message_area_wd_mobile').empty().append('<div class="login-alert">' + data.message + '</div>');
             }else{
-                jQuery('#register_message_area_wd_mobile').empty().append('<div class="alert_err login-alert">' + data.message + '</div>'); 
+                jQuery('#register_message_area_wd_mobile').empty().append('<div class="alert_err login-alert">' + data.message + '</div>');
             }
             jQuery('#user_login_register_wd_mobile').val('');
             jQuery('#user_email_register_wd_mobile').val('');
@@ -921,6 +939,8 @@ function wpestate_forgot(type) {
         securityforgot        =  jQuery('#security-login-forgot_wd_mobile').val();
     }
    var nonce               =  jQuery('#wpestate_ajax_log_reg').val();
+
+   jQuery('#forgot_pass_area').empty();
     jQuery.ajax({
         type: 'POST',
         url: ajaxurl,
@@ -959,7 +979,7 @@ function wpestate_forgot(type) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 /// on ready-jslint checked
-////////////////////////////////////////////////////////////////////////////////////////////   
+////////////////////////////////////////////////////////////////////////////////////////////
 function wpestate_login_wd() {
     "use strict";
     var login_user, login_pwd, ispop, ajaxurl, security;
@@ -1013,7 +1033,7 @@ function wpestate_login_wd() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 /// on ready-jslint checked
-////////////////////////////////////////////////////////////////////////////////////////////   
+////////////////////////////////////////////////////////////////////////////////////////////
 function wpestate_login_wd_mobile() {
     "use strict";
     var login_user, login_pwd, ispop, ajaxurl, security;
@@ -1041,18 +1061,18 @@ function wpestate_login_wd_mobile() {
         },
 
         success: function (data) {
-            
-         
-          
-          
+
+
+
+
             if (data.loggedin === true) {
-                
-                
+
+
                 if (parseInt(data.ispop, 10) === 1) {
-                
+
                     ajaxcalls_vars.userid = data.newuser;
                     jQuery('#loginmodal').modal('hide');
-                   
+
                     if(jQuery('body').hasClass('single-estate_property') ){
                         location.reload();
                     }else{
@@ -1066,7 +1086,7 @@ function wpestate_login_wd_mobile() {
                             }
                         }
                     }
-                
+
                 } else {
                     if(data.newlink!==''){
                         if(jQuery('body').hasClass('page-template-user_dashboard_add_step1') ){
@@ -1083,10 +1103,10 @@ function wpestate_login_wd_mobile() {
                                     document.location.href =ajaxcalls_vars.redirect_custom_link;
                                 }
                             }
-                           
+
                         }
                     }else{
-                         
+
                         if(jQuery('body').hasClass('single-estate_property') ){
                             location.reload();
                         }else{
@@ -1101,13 +1121,13 @@ function wpestate_login_wd_mobile() {
                             }
                         }
                     }
-                   
+
                 }
                 jQuery('#user_not_logged_in').hide();
                 jQuery('#user_logged_in').show();
-                
-          
-                
+
+
+
             } else {
                 jQuery('#login_message_area_wd_mobile').empty().append('<div class="login-alert alert_err">' + data.message + '<div>');
                 jQuery('#login_user').val('');
@@ -1115,13 +1135,13 @@ function wpestate_login_wd_mobile() {
             }
         },
         error: function (errorThrown) {
-        
+
         }
     });
 }
 ////////////////////////////////////////////////////////////////////////////////////////////
 /// on ready-jslint checked
-////////////////////////////////////////////////////////////////////////////////////////////   
+////////////////////////////////////////////////////////////////////////////////////////////
 function wpestate_login_topbar() {
     "use strict";
     var login_user, login_pwd, ispop, ajaxurl, security;
@@ -1169,7 +1189,7 @@ function wpestate_login_topbar() {
 function wpestate_enable_actions_modal() {
     "use strict";
 
-    
+
     jQuery('#loginmodal').on('hidden.bs.modal', function (e) {
         if( jQuery('body').hasClass('page-template-user_dashboard_add_step1')  ){
             window.location.href = ajaxcalls_vars.home;
@@ -1196,7 +1216,7 @@ function wpestate_enable_actions_modal() {
             jQuery('#ajax_login_div').fadeIn();
         });
     });
-    
+
     jQuery('#forgot_password_mod').on('click',function (event) {
         event.preventDefault();
         jQuery("#ajax_login_div").removeClass('show').hide();
@@ -1228,13 +1248,13 @@ function wpestate_register() {
     user_type           =   jQuery("input[name=acc_type]:checked").val();
     user_pass           =   jQuery('#user_password').val();
     user_pass_retype    =   jQuery('#user_password_retype').val();
-            
-            
+
+
     if ( !jQuery('#user_terms_register_sh').is(":checked") ) {
         jQuery('#register_message_area').empty().append('<div class="alert_err login-alert">' + control_vars.terms_cond + '</div>');
         return;
-    } 
-    
+    }
+
     capthca='';
     if(control_vars.usecaptcha==='yes'){
        capthca= grecaptcha.getResponse(
@@ -1242,9 +1262,9 @@ function wpestate_register() {
        );
    }
 
-  
+
     var nonce               =  jQuery('#wpestate_ajax_log_reg').val();
-    
+
     jQuery.ajax({
         type: 'POST',
         url: ajaxurl,
@@ -1262,19 +1282,19 @@ function wpestate_register() {
             'security'                  :   nonce,
         },
         success: function (data) {
-         
+
             // This outputs the result of the ajax request
             if (data.register === true) {
-                jQuery('#register_message_area').empty().append('<div class="login-alert">' + data.message + '</div>'); 
+                jQuery('#register_message_area').empty().append('<div class="login-alert">' + data.message + '</div>');
                 setTimeout(function(){ jQuery('#reveal_login').trigger('click') }, 1500);
             }else{
-                jQuery('#register_message_area').empty().append('<div class="alert_err login-alert">' + data.message + '</div>'); 
+                jQuery('#register_message_area').empty().append('<div class="alert_err login-alert">' + data.message + '</div>');
             }
             jQuery('#user_login_register').val('');
             jQuery('#user_email_register').val('');
         },
         error: function (errorThrown) {
-        
+
         }
     });
 }
@@ -1287,18 +1307,18 @@ function wpestate_register_sh() {
     var capthca,user_pass,user_pass_retype,user_login_register, user_email_register, nonce, ajaxurl,propid, user_type;
     user_login_register =   jQuery('#user_login_register_sh').val();
     user_email_register =   jQuery('#user_email_register_sh').val();
-   
+
     ajaxurl             =   ajaxcalls_vars.admin_url + 'admin-ajax.php';
     propid              =   jQuery('#wp-login-but').attr('data-mixval');
     user_type           =   jQuery("input[name=acc_type_sh]:checked").val();
     user_pass           =   jQuery('#user_password_sh').val();
     user_pass_retype    =   jQuery('#user_password_retype_sh').val();
-            
+
     if ( !jQuery('#user_terms_register_sh_sh').is(":checked") ) {
         jQuery('#register_message_area_sh').empty().append('<div class="alert_err login-alert">' + control_vars.terms_cond + '</div>');
         return;
-    } 
-        
+    }
+
 
     capthca='';
     if(control_vars.usecaptcha==='yes'){
@@ -1326,15 +1346,15 @@ function wpestate_register_sh() {
         success: function (data) {
             // This outputs the result of the ajax request
             if (data.register === true) {
-                jQuery('#register_message_area_sh').empty().append('<div class="login-alert">' + data.message + '</div>'); 
+                jQuery('#register_message_area_sh').empty().append('<div class="login-alert">' + data.message + '</div>');
             }else{
-                jQuery('#register_message_area_sh').empty().append('<div class="alert_err login-alert">' + data.message + '</div>'); 
+                jQuery('#register_message_area_sh').empty().append('<div class="alert_err login-alert">' + data.message + '</div>');
             }
             jQuery('#user_login_register_sh').val('');
             jQuery('#user_email_register_sh').val('');
         },
         error: function (errorThrown) {
-      
+
         }
     });
 }
@@ -1368,20 +1388,20 @@ function wpestate_login() {
             'security'          :   nonce,
         },
         success: function (data) {
-        
-           
-          
+
+
+
             if (data.loggedin === true) {
                 jQuery('#login_message_area').empty().append('<div class="login-alert">' + data.message + '<div>');
-                
-                
-               
-                
+
+
+
+
                 if (parseInt(data.ispop, 10) === 1) {
-                
+
                     ajaxcalls_vars.userid = data.newuser;
                     jQuery('#loginmodal').modal('hide');
-                   
+
                     if(jQuery('body').hasClass('single-estate_property') ){
                         location.reload();
                     }else{
@@ -1395,7 +1415,7 @@ function wpestate_login() {
                             }
                         }
                     }
-                
+
                 } else {
                     if(data.newlink!==''){
                         if(jQuery('body').hasClass('page-template-user_dashboard_add_step1') ){
@@ -1412,10 +1432,10 @@ function wpestate_login() {
                                     document.location.href =ajaxcalls_vars.redirect_custom_link;
                                 }
                             }
-                           
+
                         }
                     }else{
-                         
+
                         if(jQuery('body').hasClass('single-estate_property') ){
                             location.reload();
                         }else{
@@ -1430,13 +1450,13 @@ function wpestate_login() {
                             }
                         }
                     }
-                   
+
                 }
                 jQuery('#user_not_logged_in').hide();
                 jQuery('#user_logged_in').show();
-                
-                
-                
+
+
+
             } else {
                 jQuery('#login_message_area').empty().addClass('alert_err').append('<div class="login-alert">' + data.message + '<div>');
                 jQuery('#login_user').val('');
@@ -1444,7 +1464,7 @@ function wpestate_login() {
             }
         },
         error: function (errorThrown) {
-     
+
         }
     });
 }
@@ -1473,16 +1493,16 @@ function wpestate_login_sh() {
             'security'          :   nonce
         },
         success: function (data) {
-        
-       
-          
+
+
+
             if (data.loggedin === true) {
                 jQuery('#login_message_area_sh').empty().append('<div class="login-alert">' + data.message + '<div>');
                 if (parseInt(data.ispop, 10) === 1) {
                     ajaxcalls_vars.userid = data.newuser;
                     jQuery('#loginmodal').modal('hide');
                    // wprentals_update_menu_bar(data.newuser);
-                    
+
                     if(jQuery('body').hasClass('single-estate_property') ){
                         location.reload();
                     }else{
@@ -1490,13 +1510,13 @@ function wpestate_login_sh() {
                     }
                 } else {
                     if(data.newlink!==''){
-                       
+
                         if(jQuery('body').hasClass('single-estate_property') ){
                             location.reload();
                         }else{
                             document.location.href = data.newlink;
                         }
-                        
+
                     }else{
                         if(jQuery('body').hasClass('single-estate_property') ){
                            location.reload();
@@ -1504,7 +1524,7 @@ function wpestate_login_sh() {
                             document.location.href = ajaxcalls_vars.login_redirect;
                         }
                     }
-                   
+
                 }
                 jQuery('#user_not_logged_in').hide();
                 jQuery('#user_logged_in').show();
@@ -1515,7 +1535,7 @@ function wpestate_login_sh() {
             }
         },
         error: function (errorThrown) {
-     
+
         }
     });
 }
@@ -1539,7 +1559,7 @@ function wprentals_update_menu_bar(newuser) {
             'action'            :   "wpestate_update_menu_bar",
             'newuser'           :    newuser
         },
-        success: function (data) {     
+        success: function (data) {
             jQuery('#user_menu_u').addClass('user_loged');
             jQuery('#user_menu_u').empty().append(data.premenu);
             jQuery('#user_menu_u').after(data.menu);
@@ -1554,10 +1574,10 @@ function wprentals_update_menu_bar(newuser) {
 ////////////////////////////////////////////////////////////////////////////////////////////
 jQuery(document).ready(function ($) {
     "use strict";
-    
+
     $('.wpestate_social_login').on('click',function(){
        var ajaxurl         =   ajaxcalls_vars.admin_url + 'admin-ajax.php';
-       var social_type     = $(this).attr('data-social'); 
+       var social_type     = $(this).attr('data-social');
        var nonce           = $(this).parent().find('.wpestate_social_login_nonce').val();
         $.ajax({
             type: 'POST',
@@ -1565,8 +1585,8 @@ jQuery(document).ready(function ($) {
             data: {
                 'action'       :   'wpestate_social_login_generate_link',
                 'social_type'  :    social_type,
-                'nonce'        :    nonce 
-               
+                'nonce'        :    nonce
+
             },
             success: function (data) {
                window.location.href = data;
@@ -1574,17 +1594,17 @@ jQuery(document).ready(function ($) {
             error: function (errorThrown) {
             }
         });
-        
+
     });
-    
-    
-    
- 
+
+
+
+
     $('.disable_listing').on('click',function () {
         var prop_id = $(this).attr('data-postid');
         var ajaxurl         =   ajaxcalls_vars.admin_url + 'admin-ajax.php';
         var nonce = jQuery('#wprentals_property_actions').val();
-        
+
         $.ajax({
             type: 'POST',
             url: ajaxurl,
@@ -1592,7 +1612,7 @@ jQuery(document).ready(function ($) {
                 'action'       :   'wpestate_disable_listing',
                 'prop_id'      :   prop_id,
                 'security'     :    nonce
-               
+
             },
             success: function (data) {
                 location.reload();
@@ -1601,8 +1621,8 @@ jQuery(document).ready(function ($) {
             }
         });
     });
-    
-    
+
+
     ///////////////////////////////////////////////////////////////////////////////////////////
     //// stripe cancel
     ///////////////////////////////////////////////////////////////////////////////////////////
@@ -1611,9 +1631,9 @@ jQuery(document).ready(function ($) {
         stripe_user_id    =   $(this).attr('data-stripeid');
         ajaxurl         =   ajaxcalls_vars.admin_url + 'admin-ajax.php';
         $('#stripe_cancel').text(ajaxcalls_vars.saving);
-        
+
          var nonce = jQuery('#wprentals_stripe_cancel').val();
-         
+
         $.ajax({
             type: 'POST',
             url: ajaxurl,
@@ -1621,7 +1641,7 @@ jQuery(document).ready(function ($) {
                 'action'                  :   'wpestate_cancel_stripe',
                 'stripe_customer_id'      :   stripe_user_id,
                 'security'                :   nonce
-               
+
             },
             success: function (data) {
                 $('#stripe_cancel').text(ajaxcalls_vars.stripecancel);
@@ -1632,16 +1652,16 @@ jQuery(document).ready(function ($) {
     });
 
     ////////////////////////////////////////////////////////////////////////////////////////////
-    /// resend for approval  
+    /// resend for approval
     ///////////////////////////////////////////////////////////////////////////////////////////
     $('.resend_pending').on('click',function () {
         var prop_id = $(this).attr('data-listingid');
         wpestate_resend_for_approval(prop_id, $(this));
     });
 
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+    ///////////////////////////////////////////////////////////////////////////////////////////
     ////////  set featured inside membership
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+    ///////////////////////////////////////////////////////////////////////////////////////////
     $('.make_featured').on('click',function () {
         var prop_id = $(this).attr('data-postid');
         wpestate_make_prop_featured(prop_id, $(this));
@@ -1650,18 +1670,18 @@ jQuery(document).ready(function ($) {
 
 
     jQuery('#wpestate_stripe_booking_recurring').on('click',function(){
-        
+
         var modalid=jQuery(this).attr('data-modalid');
         jQuery('#'+modalid).show();
         jQuery('#'+modalid+' .wpestate_stripe_form_1').show();
-        
+
         wpestate_start_stripe(1,modalid);
     });
-    
-    
-    ///////////////////////////////////////////////////////////////////////////////////////////  
-    ////////  pack upgrade via paypal    
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    ////////  pack upgrade via paypal
+    ///////////////////////////////////////////////////////////////////////////////////////////
     $('#pick_pack').on('click',function () {
          $(this).text(ajaxcalls_vars.processing);
         if ($('#pack_recuring').is(':checked')) {
@@ -1671,9 +1691,9 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+    ///////////////////////////////////////////////////////////////////////////////////////////
     //////// listing pay via paypal
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+    ///////////////////////////////////////////////////////////////////////////////////////////
     $('.listing_submit_normal').on('click',function () {
         var prop_id, featured_checker, is_featured, is_upgrade;
         prop_id = $(this).attr('data-listingid');
@@ -1698,8 +1718,8 @@ jQuery(document).ready(function ($) {
         is_featured =   jQuery(this).attr('data-is_featured');
         is_upgrade  =   0;
         is_submit   =   1;
-        
-       
+
+
         ajaxurl     =   ajaxcalls_vars.admin_url + 'admin-ajax.php';
         jQuery.ajax({
                 type: 'POST',
@@ -1719,11 +1739,11 @@ jQuery(document).ready(function ($) {
                     }
                 },
                 error: function (errorThrown) {}
-        });//end ajax  
+        });//end ajax
     });
-    
-    
-    
+
+
+
 
     $('.listing_upgrade').on('click',function () {
         var is_upgrade, is_featured, prop_id;
@@ -1744,20 +1764,20 @@ jQuery(document).ready(function ($) {
         contact_email   =   $('#contact_email').val();
         contact_website =   $('#contact_website').val();
         contact_coment  =   $('#agent_comment').val();
-    
-    
+
+
         nonce           =   $('#agent_property_ajax_nonce').val();
         ajaxurl         =   ajaxcalls_vars.admin_url + 'admin-ajax.php';
-        
+
         $('#alert-agent-contact').empty().removeClass('alert_err').append(ajaxcalls_vars.sending);
-        
+
         if(ajaxcalls_vars.use_gdpr==='yes'){
             if ( !$('#wpestate_agree_gdpr').is(':checked') ){
                 $("#alert-agent-contact").empty().append(ajaxcalls_vars.gdpr_terms);
                 return;
             }
         }
-            
+
         $.ajax({
             type: 'POST',
             dataType: 'json',
@@ -1768,7 +1788,7 @@ jQuery(document).ready(function ($) {
                 'email'     :   contact_email,
                 'website'   :   contact_website,
                 'comment'   :   contact_coment,
-            
+
                 'nonce'     :   nonce
             },
             success: function (data) {
@@ -1782,7 +1802,7 @@ jQuery(document).ready(function ($) {
                 }else{
                     $('#alert-agent-contact').empty().addClass('alert_err').append(data.response);
                 }
-               
+
             },
             error: function (errorThrown) {
             }
@@ -1790,9 +1810,9 @@ jQuery(document).ready(function ($) {
     });
 
 
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+    ///////////////////////////////////////////////////////////////////////////////////////////
     ////////  property listing listing
-    ////////////////////////////////////////////////////////////////////////////////////////////       
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
     $('.listing_filters_head li').on('click',function () {
         var pick, value, parent;
@@ -1803,9 +1823,9 @@ jQuery(document).ready(function ($) {
         wpestate_start_filtering(1);
     });
 
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+    ///////////////////////////////////////////////////////////////////////////////////////////
     ////////  property listing listing
-    ////////////////////////////////////////////////////////////////////////////////////////////       
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
     $('.booking_form_request li').on('click',function () {
         var pick, value, parent;
@@ -1813,13 +1833,13 @@ jQuery(document).ready(function ($) {
         value = $(this).attr('data-value');
         parent = $(this).parent().parent();
         parent.find('.filter_menu_trigger').text(pick).append('<span class="caret caret_filter"></span>').attr('data-value', value);
-       
+
     });
-    
-    
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
     ////////  Ajax add to favorites on listing
-    ////////////////////////////////////////////////////////////////////////////////////////////        
+    ////////////////////////////////////////////////////////////////////////////////////////////
     $('.icon-fav').on('click',function (event) {
         event.stopPropagation();
         var icon = $(this);
@@ -1828,15 +1848,18 @@ jQuery(document).ready(function ($) {
 
     // remove from fav listing on user profile
     $('.icon-fav-on-remove').on('click',function () {
+      if(jQuery('.favorite_dashboard_property_list').length===0 ){
         $(this).parent().parent().parent().parent().remove();
-        
+      }
+
     });
 
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+    ///////////////////////////////////////////////////////////////////////////////////////////
     ////////  Ajax add to favorites on propr
-    ////////////////////////////////////////////////////////////////////////////////////////////        
+    ////////////////////////////////////////////////////////////////////////////////////////////
     $('#add_favorites').on('click',function () {
         var post_id, securitypass, ajaxurl;
+
         post_id         =  $('#add_favorites').attr('data-postid');
         securitypass    =  $('#security-pass').val();
         ajaxurl         =  ajaxcalls_vars.admin_url + 'admin-ajax.php';
@@ -1902,14 +1925,14 @@ jQuery(document).ready(function ($) {
 
 
 
-  ///////////////////////////////////////////////////////////////////////////////////////////  
+  ///////////////////////////////////////////////////////////////////////////////////////////
     ////////  WIDGET Register mobile
     ////////////////////////////////////////////////////////////////////////////////////////////
     $('#wp-submit-register_wd_mobile').on('click',function () {
         wpestate_register_wd_mobile();
     });
 
-  
+
 
     $('#user_email_register_wd_mobile, #user_login_register_wd_mobile').keydown(function (e) {
         if (e.keyCode === 13) {
@@ -1917,15 +1940,15 @@ jQuery(document).ready(function ($) {
             wpestate_register_wd_mobile();
         }
     });
-    
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
     ////////  WIDGET Register ajax
     ////////////////////////////////////////////////////////////////////////////////////////////
     $('#wp-submit-register_wd').on('click',function () {
         wpestate_register_wd();
     });
 
-  
+
 
     $('#user_email_register_wd, #user_login_register_wd').keydown(function (e) {
         if (e.keyCode === 13) {
@@ -1933,10 +1956,10 @@ jQuery(document).ready(function ($) {
             wpestate_register_wd();
         }
     });
-  
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
     ////////  login/forgot password  actions
-    ////////////////////////////////////////////////////////////////////////////////////////////  
+    ////////////////////////////////////////////////////////////////////////////////////////////
     $('#forgot_pass').on('click',function (event) {
         event.preventDefault();
         $("#login-div").hide();
@@ -1949,17 +1972,17 @@ jQuery(document).ready(function ($) {
         $("#login-div").show();
     });
 
-  
 
 
-    ///////////////////////////////////////////////////////////////////////////////////////////  
-    ////////  forgot pass  
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    ////////  forgot pass
     ////////////////////////////////////////////////////////////////////////////////////////////
     $('#wp-forgot-but_mod').on('click',function () {
         wpestate_forgot(2);
     });
-    
-    
+
+
     $('#wp-forgot-but').on('click',function () {
         wpestate_forgot(3);
     });
@@ -1972,9 +1995,9 @@ jQuery(document).ready(function ($) {
     });
 
 
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+    ///////////////////////////////////////////////////////////////////////////////////////////
     //////// TOPBAR  login/forgot password  actions
-    ////////////////////////////////////////////////////////////////////////////////////////////     
+    ////////////////////////////////////////////////////////////////////////////////////////////
     $('#widget_register_topbar').on('click',function (event) {
         event.preventDefault();
         $('#login-div_topbar').hide();
@@ -1990,11 +2013,11 @@ jQuery(document).ready(function ($) {
         $('#login-div-title-topbar').show();
         $('#register-div-title-topbar').hide();
     });
-    
-    
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
     //////// WIDGET  login/forgot password  actions
-    ////////////////////////////////////////////////////////////////////////////////////////////     
+    ////////////////////////////////////////////////////////////////////////////////////////////
     $('#widget_register_sw').on('click',function (event) {
         event.preventDefault();
         $('.loginwd_sidebar #login-div').hide();
@@ -2010,7 +2033,7 @@ jQuery(document).ready(function ($) {
         $('.loginwd_sidebar #register-div-title').hide();
         $('.loginwd_sidebar #login-div-title').show();
     });
-    
+
     $('#widget_register_mobile').on('click',function (event) {
         event.preventDefault();
         $('.login_sidebar_mobile #login-div-mobile').hide();
@@ -2018,8 +2041,8 @@ jQuery(document).ready(function ($) {
         $('.login_sidebar_mobile #login-div-title-mobile').hide();
         $('.login_sidebar_mobile #register-div-title-mobile').show();
     });
-    
-    
+
+
     $('#widget_login_sw_mobile').on('click',function (event) {
         event.preventDefault();
         $('.login_sidebar_mobile #register-div-mobile').hide();
@@ -2027,9 +2050,9 @@ jQuery(document).ready(function ($) {
         $('.login_sidebar_mobile #register-div-title-mobile').hide();
         $('.login_sidebar_mobile #login-div-title-mobile').show();
     });
-    
 
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
     ////////  login  ajax
     ////////////////////////////////////////////////////////////////////////////////////////////
     $('#wp-login-but').on('click',function () {
@@ -2042,9 +2065,9 @@ jQuery(document).ready(function ($) {
             wpestate_login();
         }
     });
-    
-    
-     ///////////////////////////////////////////////////////////////////////////////////////////  
+
+
+     ///////////////////////////////////////////////////////////////////////////////////////////
     ////////  login  shortcode
     ////////////////////////////////////////////////////////////////////////////////////////////
     $('#wp-login-but_sh').on('click',function () {
@@ -2057,10 +2080,10 @@ jQuery(document).ready(function ($) {
             wpestate_login_sh();
         }
     });
-    
-    
 
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
     ////////  Mobile login  ajax
     ////////////////////////////////////////////////////////////////////////////////////////////
     $('#wp-login-but-wd-mobile').on('click',function () {
@@ -2086,14 +2109,14 @@ jQuery(document).ready(function ($) {
         $('#login-div-title-mobile,#login-div-mobile').show();
          $('#mobile_forgot_wrapper').hide();
     });
-    
+
     $('#wp-forgot-but_mobile').on('click',function(e){
         e.preventDefault();
          wpestate_forgot(4);
     });
 
 
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+    ///////////////////////////////////////////////////////////////////////////////////////////
     ////////  WIDGET login  ajax
     ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -2120,13 +2143,13 @@ jQuery(document).ready(function ($) {
         $('#login-div-title,#login-div').show();
         $('#forgot-div-title_shortcode,#forgot-pass-div_shortcode').hide();
     });
-    
+
     $('#wp-forgot-but_shortcode').on('click',function(e){
         e.preventDefault();
          wpestate_forgot(3);
     });
-    
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
     ////////  TOPBAR  login  ajax
     ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -2142,9 +2165,9 @@ jQuery(document).ready(function ($) {
     });
 
 
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+    ///////////////////////////////////////////////////////////////////////////////////////////
     ////////  Ajax update password
-    //////////////////////////////////////////////////////////////////////////////////////////// 
+    ////////////////////////////////////////////////////////////////////////////////////////////
     $('#oldpass, #newpass, #renewpass').keydown(function (e) {
         if (e.keyCode === 13) {
             e.preventDefault();
@@ -2155,18 +2178,18 @@ jQuery(document).ready(function ($) {
     $('#change_pass').on('click',function () {
         wpestate_change_pass_profile();
     });
-  
-  
-  
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
     ////////  Sms validation
-    ////////////////////////////////////////////////////////////////////////////////////////////   
-  
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
     $('#send_sms_pin').on('click',function(){
         var ajaxurl;
         ajaxurl         =  ajaxcalls_vars.admin_url + 'admin-ajax.php';
         var nonce = jQuery('#wprentals_send_sms_nonce').val();
-      
+
         $.ajax({
             type: 'POST',
             url: ajaxurl,
@@ -2175,16 +2198,16 @@ jQuery(document).ready(function ($) {
                 'security'          :   nonce,
                 },
             success: function (data) {
-                
+
                 $('#sms_profile_message').empty().append('<div class="login-alert">' + data + '<div>');
             },
             error: function (errorThrown) {
-             
+
             }
         });
     });
-    
-    
+
+
     $('#validate_phone').on('click',function(){
         var ajaxurl,validate_phoneno;
         ajaxurl             =  ajaxcalls_vars.admin_url + 'admin-ajax.php';
@@ -2204,12 +2227,12 @@ jQuery(document).ready(function ($) {
             error: function (errorThrown) {
             }
         });
-        
+
     });
 
-    ///////////////////////////////////////////////////////////////////////////////////////////  
+    ///////////////////////////////////////////////////////////////////////////////////////////
     ////////  update profile
-    ////////////////////////////////////////////////////////////////////////////////////////////   
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
     $('#update_profile').on('click',function () {
         var userwebsite,youtube,instagram,useridimageid,useridurl,payment_info,paypal_payments_to,live_in,i_speak, usermobile, userpinterest, userlinkedin, usertwitter, userfacebook, profile_image_url, profile_image_url_small, firstname, secondname, useremail, userphone, userskype, usertitle, description, ajaxurl, securityprofile, upload_picture, useridurl, useridimageid;
@@ -2220,19 +2243,19 @@ jQuery(document).ready(function ($) {
         usermobile      =  $('#usermobile').val();
         userskype       =  $('#userskype').val();
         userwebsite     =  $('#userwebsite').val();
-       
+
         description     =  $('#about_me').val();
         userfacebook    =  $('#userfacebook').val();
         usertwitter     =  $('#usertwitter').val();
         userlinkedin    =  $('#userlinkedin').val();
         userpinterest   =  $('#userpinterest').val();
-        
+
         instagram       =  $('#userinstagram').val();
         youtube         =  $('#useryoutube').val();
-             
+
         live_in         =  $('#live_in').val();
         i_speak         =  $('#i_speak').val();
-        
+
         paypal_payments_to  =  $('#paypal_payments_to').val();
         payment_info        =  $('#payment_info').val();
         ajaxurl         =  ajaxcalls_vars.admin_url + 'admin-ajax.php';
@@ -2240,10 +2263,10 @@ jQuery(document).ready(function ($) {
         upload_picture  =  $('#upload_picture').val();
         profile_image_url  = $('#profile-image').attr('data-profileurl');
         profile_image_url_small  = $('#profile-image').attr('data-smallprofileurl');
-        
+
         useridurl          = $('#user-id-image').attr('data-useridurl');
         useridimageid      = $('#user-id-image').attr('data-useridimageid');
-        
+
         $('#profile_message').empty().append('<div class="login-alert">' + ajaxcalls_vars.saving + '<div>');
         var nonce = jQuery('#wprentals_update_profile_nonce').val();
 
@@ -2278,7 +2301,7 @@ jQuery(document).ready(function ($) {
                 'instagram'         :   instagram,
                 'youtube'           :   youtube,
                 'userwebsite'       :   userwebsite,
-                
+
             },
             success: function (data) {
 
@@ -2315,9 +2338,9 @@ jQuery(document).ready(function ($) {
             });
         }
     });
-    
-//end delete profile 
 
-   
+//end delete profile
+
+
 }); // end ready jquery
 //End ready ********************************************************************

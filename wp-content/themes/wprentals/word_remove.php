@@ -476,7 +476,7 @@ function wpestate_admin_login_logo() {
             background-size: contain;
         }
         body.login {
-            background-image: url(<?php print get_template_directory_uri() . '/img/admin_background.png'?>);
+           background: linear-gradient(43deg, rgba(20,28,21,1) 0%, rgba(184, 129 ,253,1) 100%);
         }
         
         #login {

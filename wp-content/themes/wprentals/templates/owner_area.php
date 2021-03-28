@@ -107,8 +107,9 @@ if($listing_page_type==2 || $listing_page_type==3 || $listing_page_type==4){
         } 
     ?>
         
-        
-    <div  id="contact_me_long" class=" owner_read_more " data-postid="<?php esc_attr(the_ID());?>" ><?php esc_html_e('Contact Owner','wprentals');?></div>
+    <?php if( wprentals_get_option('wp_estate_replace_booking_form','') == 'no'){ ?>    
+        <div  id="contact_me_long" class=" owner_read_more " data-postid="<?php esc_attr(the_ID());?>" ><?php esc_html_e('Contact Owner','wprentals');?></div>
+    <?php } ?>
 </div>
 
 <?php }else{ ?>
@@ -130,6 +131,10 @@ if($listing_page_type==2 || $listing_page_type==3 || $listing_page_type==4){
                 print '<div class="owner_area_description owner_area_1">'.trim($content).'</div>';     
             }
         ?>
-        <div  id="contact_me_long" class="  " data-postid="<?php esc_attr(the_ID());?>" ><?php esc_html_e('Contact Owner','wprentals');?></div>
+        
+        <?php if( wprentals_get_option('wp_estate_replace_booking_form','') == 'no'){ ?>    
+            <div  id="contact_me_long" class="  " data-postid="<?php esc_attr(the_ID());?>" ><?php esc_html_e('Contact Owner','wprentals');?></div>
+        <?php } ?>
+        
     </div>
 <?php } ?>

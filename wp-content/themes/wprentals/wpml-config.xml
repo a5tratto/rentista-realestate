@@ -12,6 +12,7 @@
     <taxonomy translate="1">property_area</taxonomy>
   </taxonomies>
   <custom-fields>
+    <custom-field action="copy">prop_featured</custom-field>
     <custom-field action="copy">agent_email</custom-field>
     <custom-field action="copy">agent_facebook</custom-field>
     <custom-field action="copy">agent_linkedin</custom-field>
@@ -73,7 +74,7 @@
     <key name="wpestate_custom_fields_list">
       <key name="add_field_label"/>
     </key>
-    
+
     <key name="wp_estate_property_features_text"/>
     <key name="wp_estate_date_lang"/>
     <key name="wprentals_admin">
@@ -95,4 +96,3 @@
     </key>
   </admin-texts>
 </wpml-config>
-

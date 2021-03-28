@@ -21,7 +21,7 @@ include(locate_template('templates/listingslider.php') );
 include(locate_template('templates/property_header2.php') );
 ?>
 
-<div  class="row content-fixed-listing">
+<div  class="row content-fixed-listing listing_type_2">
     <div class=" <?php 
     if ( $wpestate_options['content_class']=='col-md-12' || $wpestate_options['content_class']=='none'){
         print 'col-md-8';
@@ -79,17 +79,23 @@ include(locate_template('templates/property_header2.php') );
         <?php echo wpestate_property_yelp_wrapper($post->ID);?>
         <?php wpestate_show_virtual_tour($post->ID);?>
             
-            
-            
-        <?php
-        include(locate_template ('/templates/show_avalability.php') );
-        wp_reset_query();
-        ?>  
+         
+        <div class="property_page_container boxed_calendar">
+            <?php
+            include(locate_template ('/templates/show_avalability.php') );
+            wp_reset_query();
+            ?>  
+        </div> 
          
         <?php
         endwhile; // end of the loop
         $show_compare=1;
         ?>
+               
+
+        <?php     include(locate_template ('/templates/listing_reviews.php')); ?>
+        
+        
         </div><!-- end single content -->
     </div><!-- end 8col container-->
     
@@ -110,7 +116,7 @@ include(locate_template('templates/property_header2.php') );
 </div>   
 
 <div class="full_width_row">    
-    <?php include(locate_template ('/templates/listing_reviews.php') ); ?>
+    <?php //include(locate_template ('/templates/listing_reviews.php') ); ?>
     <div class="owner-page-wrapper">
         <div class="owner-wrapper  content-fixed-listing row" id="listing_owner">
             <?php include(locate_template ('/templates/owner_area.php' ) ); ?>

@@ -56,16 +56,16 @@ $rental_type         =      wprentals_get_option('wp_estate_item_rental_type');
 
 if ( isset($_REQUEST['check_in']) && isset($_REQUEST['check_out']) ){
     $check_out  =   sanitize_text_field ( $_REQUEST['check_out'] );
-    $check_in   =   sanitize_text_field ( $_REQUEST['check_in'] ); 
+    $check_in   =   sanitize_text_field ( $_REQUEST['check_in'] );
     if($wprentals_is_per_hour==2){
         $check_in=$check_in.' '.get_post_meta($post->ID, 'booking_start_hour', true);
         $check_out=$check_out.' '.get_post_meta($post->ID, 'booking_end_hour', true);
     }
-    
+
     $link       =   add_query_arg( 'check_in_prop', (trim($check_in)), $link);
     $link       =   add_query_arg( 'check_out_prop',(trim($check_out)), $link);
-    
-   
+
+
     if(isset($_REQUEST['guest_no'])){
         $wpestate_guest_no   =   intval($_REQUEST['guest_no']);
         $link                =   add_query_arg( 'guest_no_prop', $wpestate_guest_no, $link);
@@ -78,14 +78,14 @@ if ( isset($_REQUEST['check_in']) && isset($_REQUEST['check_out']) ){
             $wpestate_book_from=$wpestate_book_from.' '.get_post_meta($post->ID, 'booking_start_hour', true);
             $wpestate_book_to=$wpestate_book_to.' '.get_post_meta($post->ID, 'booking_end_hour', true);
         }
-    
+
         $link       =   add_query_arg( 'check_in_prop', trim($wpestate_book_from), $link);
         $link       =   add_query_arg( 'check_out_prop', trim($wpestate_book_to), $link);
-    
+
         if($wpestate_guest_no!=''){
             $link   =   add_query_arg( 'guest_no_prop', intval($wpestate_guest_no), $link);
         }
-        
+
     }
 }
 
@@ -95,9 +95,9 @@ $favorite_class =   'icon-fav-off';
 $fav_mes        =   esc_html__( 'add to favorites','wprentals');
 if($wpestate_curent_fav){
     if ( in_array ($post->ID,$wpestate_curent_fav) ){
-    $favorite_class =   'icon-fav-on';   
+    $favorite_class =   'icon-fav-on';
     $fav_mes        =   esc_html__( 'remove from favorites','wprentals');
-    } 
+    }
 }
 
 $listing_type_class='property_unit_v3';
@@ -110,115 +110,115 @@ if( $schema_flag==1) {
 }else{
     $schema_data=' itemscope itemtype="http://schema.org/Product" ';
 }
-?>  
+?>
 
-<div <?php print trim($schema_data);?> class="listing_wrapper <?php print esc_attr($col_class.' '.$listing_type_class); ?>  property_flex " data-org="<?php print esc_attr($col_org);?>" data-listid="<?php print esc_attr($post->ID);?>" > 
+<div <?php print trim($schema_data);?> class="listing_wrapper <?php print esc_attr($col_class.' '.$listing_type_class); ?>  property_flex " data-org="<?php print esc_attr($col_org);?>" data-listid="<?php print esc_attr($post->ID);?>" >
     <?php if( $schema_flag==1) {?>
         <meta itemprop="position" content="<?php print esc_html($prop_selection->current_post);?>" />
     <?php } ?>
- 
+
     <div class="property_listing" data-link="<?php print esc_url($link);?>">
         <?php
-  
-          
+
+
             $featured           =   intval  ( get_post_meta($post->ID, 'prop_featured', true) );
             $agent_id           =   wpsestate_get_author($post->ID);
             $agent_id           =   get_user_meta($agent_id, 'user_agent_id', true);
             $thumb_id_agent     =   get_post_thumbnail_id($agent_id);
             $preview_agent      =   wp_get_attachment_image_src($thumb_id_agent, 'wpestate_user_thumb');
             $preview_agent_img  =   $preview_agent[0];
-            
+
             if($preview_agent_img   ==  ''){
                 $preview_agent_img    =   get_stylesheet_directory_uri().'/img/default_user_small.png';
             }
-            
+
             $agent_link         =   esc_url(get_permalink($agent_id));
-           
+
             $price              =   intval( get_post_meta($post->ID, 'property_price', true) );
             $property_city      =   get_the_term_list($post->ID, 'property_city', '', ', ', '') ;
             $property_area      =   get_the_term_list($post->ID, 'property_area', '', ', ', '');
-            $property_action    =   get_the_term_list($post->ID, 'property_action_category', '', ', ', '');   
-            $property_categ     =   get_the_term_list($post->ID, 'property_category', '', ', ', '');   
+            $property_action    =   get_the_term_list($post->ID, 'property_action_category', '', ', ', '');
+            $property_categ     =   get_the_term_list($post->ID, 'property_category', '', ', ', '');
             ?>
-        
-          
+
+
             <?php wpestate_print_property_unit_slider($post->ID,$wpestate_property_unit_slider,$wpestate_listing_type,$wpestate_currency,$wpestate_where_currency,$link,''); ?>
-            
+
             <div class="property_unit_action">
                 <span class="icon-fav <?php print esc_attr($favorite_class); ?>" data-original-title="<?php print esc_attr($fav_mes); ?>" data-postid="<?php print intval($post->ID); ?>"><i class="fas fa-heart"></i></span>
             </div>
-     
-        
-        
-            <?php        
+
+
+
+            <?php
             if($featured==1){
                 print '<div class="featured_div">'.esc_html__( 'featured','wprentals').'</div>';
             }
-            
+
             echo wpestate_return_property_status($post->ID);
             ?>
-          
+
             <div class="title-container">
-               
-                <?php 
+
+                <?php
                 if(wpestate_has_some_review($post->ID)!==0){
-                    print wpestate_display_property_rating( $post->ID ); 
+                    print wpestate_display_property_rating( $post->ID );
                 }else{
                     print '<div class=rating_placeholder></div>';
                 }
                 ?>
-                
+
                 <div class="category_name">
                     <a itemprop="url" href="<?php print esc_url($link);?>" class="listing_title_unit">
                         <span itemprop="name">
-                        <?php 
-                           
+                        <?php
+
                             $title_str = html_entity_decode($title);
                             $size_str = 60;
 
                             $title_cropped = mb_substr($title_str, 0, 60, "utf-8") ;
-                                             
+
                             if(strlen($title_cropped)==$size_str){
                                 echo mb_substr($title_str, 0, mb_strrpos( $title_cropped ,' ', 'utf-8'), 'utf-8');
                                 echo '...';
                             }else{
                               print esc_html($title_cropped);
                             }
-                            
+
                         ?>
-                        </span>    
+                        </span>
                     </a>
-                    
-                    
+
+
                     <div class="category_tagline actions_icon">
                         <?php print trim($property_categ.' / '.$property_action);?>
                     </div>
-                    
+
                     <div class="category_tagline">
-                       <?php   
+                       <?php
                         $options_array=array(
                             0   =>  esc_html__('Single Fee','wprentals'),
                             1   =>  wpestate_show_labels('per_night',$rental_type,$booking_type),
                             2   =>  esc_html__('Per Guest','wprentals'),
                             3   =>  wpestate_show_labels('per_night_per_guest',$rental_type,$booking_type)
                         );
-             
-                        
-                       $custom_listing_fields = wprentals_get_option( 'wp_estate_custom_listing_fields');    
-                                
+
+
+                       $custom_listing_fields = wprentals_get_option( 'wp_estate_custom_listing_fields');
+
                        foreach ($custom_listing_fields as $field){
                             if($field[2]!='none'){
-                         
+
                                 if( $field[2]=='property_category' || $field[2]=='property_action_category' ||  $field[2]=='property_city' ||  $field[2]=='property_area' ){
-                                    $value=   get_the_term_list($post->ID, $field[2], '', ', ', '');   
+                                    $value=   get_the_term_list($post->ID, $field[2], '', ', ', '');
                                 }else{
-                                    
+
                                     $slug       =   wpestate_limit45(sanitize_title( $field[2] ));
                                     $slug       =   sanitize_key($slug);
                                     $value      =   esc_html(get_post_meta($post->ID, $slug, true));
 
                                 }
-                     
+
                                 if($value!=''){
                                     print '<div class="custom_listing_data">';
                                     if($field[0]!=''){
@@ -228,10 +228,10 @@ if( $schema_flag==1) {
                                             print '<i class="'.esc_attr($field[1]).'"></i>';
                                         }
                                     }
-                                    
-                                    
+
+
                                     $price_items =array('property_price','city_fee','cleaning_fee','price_per_weekeend','property_price_per_week','property_price_per_month','extra_price_per_guest','security_deposit');
-                                    
+
                                     if( $value!=0 && in_array($field[2], $price_items) ){
                                         if( $field[2]=='property_price'){
                                             print get_post_meta($post->ID, 'property_price_before_label', true).' ';
@@ -241,17 +241,17 @@ if( $schema_flag==1) {
                                             $cleaning_fee_per_day           =   floatval  ( get_post_meta($post->ID,  'cleaning_fee_per_day', true) );
                                             print ' '. trim($options_array[ intval($cleaning_fee_per_day) ]);
                                         }
-                                        
+
                                         if(   $field[2]=='city_fee' ){
                                             $city_fee_per_day      =   floatval  ( get_post_meta($post->ID,  'city_fee_per_day', true) );
                                             print ' '.trim($options_array[ intval($city_fee_per_day) ]);
                                         }
-         
+
                                         if( $field[2]=='property_price'){
                                             print ' '.get_post_meta($post->ID, 'property_price_after_label', true);
                                         }
                                     }else if( $field[2]=='property_size'){
-                                    
+
                                         $measure_sys    =   esc_html (wprentals_get_option('wp_estate_measure_sys',''));
                                         if(is_numeric($value)){
                                             print number_format(floatval($value)) . ' '.esc_html($measure_sys).'<sup>2</sup>';
@@ -263,20 +263,20 @@ if( $schema_flag==1) {
                                     }
 
                                     print '</div>';
-                                }                                                            
-                            }      
+                                }
+                            }
                        }
 
                     ?>
                     </div>
                 </div>
-                
-            
+
+
             </div>
-        <?php 
+        <?php
         if ( isset($show_remove_fav) && $show_remove_fav==1 ) {
             print '<span class="icon-fav icon-fav-on-remove" data-postid="'.intval($post->ID).'"> '.esc_html($fav_mes).'</span>';
         }
         ?>
-    </div>          
+    </div>
 </div>

@@ -99,14 +99,20 @@ $guest_list= wpestate_get_guest_dropdown('noany');
             ?>         
         </div> 
        
+          
+        <?php
+        if(trim($property_area)!=''){
+            $property_area=', '.$property_area;
+        }
+        ?>
         
         <div class="listing_main_image_location" itemprop="location" itemscope itemtype="http://schema.org/Place">
-            <?php print  wp_kses_post($property_city.', '.$property_area); ?>     
+            <?php print  wp_kses_post($property_city.$property_area); ?>     
             <div  class="schema_div_noshow" itemprop="name"><?php echo strip_tags (  $property_city.', '.$property_area); ?></div>
         </div>   
 
         <div class="panel-wrapper imagebody_wrapper">
-            <div class="panel-body imagebody imagebody_new">
+            <div class="panel-body imagebody imagebody_new property_pictures_wrapper">
                 <?php  
                 include(locate_template('templates/property_pictures3.php'));
                 ?>
@@ -129,31 +135,29 @@ $guest_list= wpestate_get_guest_dropdown('noany');
             <a href="#listing_calendar" class="check_avalability"><?php esc_html_e('Check Availability','wprentals');?></a>
         </div>
       
-        <div id="listing_description">
-        <?php
-            $content = get_the_content();
-            $content = apply_filters('the_content', $content);
-            $content = str_replace(']]>', ']]&gt;', $content);
-            if($content!=''){   
-                   
-                $wpestate_property_description_text =  wprentals_get_option('wp_estate_property_description_text');
-                if (function_exists('icl_translate') ){
-                    $wpestate_property_description_text     =   icl_translate('wprentals','wp_estate_property_description_text', esc_html( wprentals_get_option('wp_estate_property_description_text') ) );
-                }
-                print '<h4 class="panel-title-description">'.esc_html($wpestate_property_description_text).'</h4>';
-                print '<div class="panel-body" id="listing_description_content"  itemprop="description">'.$content;
-                
-                   get_template_part ('/templates/download_pdf');
-                print '</div>'; //escpaed above      
+       <div class="listing_description_wrapper panel-wrapper ">
+            <div id="listing_description">
+                <?php
+                    $content = get_the_content();
+                    $content = apply_filters('the_content', $content);
+                    $content = str_replace(']]>', ']]&gt;', $content);
+                    if($content!=''){   
+
+                        $wpestate_property_description_text =  wprentals_get_option('wp_estate_property_description_text');
+                        if (function_exists('icl_translate') ){
+                            $wpestate_property_description_text     =   icl_translate('wprentals','wp_estate_property_description_text', esc_html( wprentals_get_option('wp_estate_property_description_text') ) );
+                        }
+                        print '<h4 class="panel-title-description">'.esc_html($wpestate_property_description_text).'</h4>';
+                        print '<div class="panel-body" id="listing_description_content"  itemprop="description">'.$content;
+
+                        get_template_part ('/templates/download_pdf');
+                        print '</div>'; //escpaed above      
+                    }
+                ?>
+            </div>
             
-                
-            }
-        ?>
-             
+           <div id="view_more_desc"><?php esc_html_e('View more','wprentals');?></div>
         </div>
-        <div id="view_more_desc"><?php esc_html_e('View more','wprentals');?></div>
-     
-  
        
         <?php echo wpestate_property_price($post->ID,$wpestate_property_price_text);?> 
         <?php echo wpestate_sleeping_situation_wrapper($post->ID,$wp_estate_sleeping_text); ?>

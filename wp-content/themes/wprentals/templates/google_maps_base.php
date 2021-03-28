@@ -1,6 +1,8 @@
 <!-- Google Map -->
 <?php
 global $post;
+$gmap_class="";
+
 if( isset($post->ID) ){
     $wpestate_gmap_lat  =   floatval( get_post_meta($post->ID, 'property_latitude', true));
     $wpestate_gmap_long =   floatval( get_post_meta($post->ID, 'property_longitude', true));
@@ -18,9 +20,28 @@ if( isset($post->ID) ){
     $open_close_status  =   esc_html( wprentals_get_option('wp_estate_keep_min','' ) ); 
 }
 
+
+
+
+$display_contact=0;
+if(isset($map_height) && intval($map_height)!==0 ){
+    $closed_height=$map_height;
+    $gmap_class.=' wpestate_full_map_shortcode ';
+    $display_map_controls=1;
+}
+
+if(is_page_template('contact_page.php') || 
+        ( isset($map_shortcode_for) && $map_shortcode_for=='contact' && $map_shorcode_show_contact_form=='yes') ){
+    $display_contact=1;
+    $gmap_class.=" contact_map ";
+    
+}
+
+
+
 ?>
 
-<div id="gmap_wrapper"  <?php print trim($property_add_on); ?> style="height:<?php print intval($closed_height);?>px"  >
+<div id="gmap_wrapper"  class="<?php print esc_attr($gmap_class);?>"   <?php print trim($property_add_on); ?> style="height:<?php print intval($closed_height);?>px"  >
     <span id="isgooglemap" data-isgooglemap="1"></span>       
    
     <div id="gmap-controls-wrapper">

@@ -111,7 +111,8 @@ function wpestate_search_type_inject($categ_select_list,$action_select_list,$whe
     if($where=="half"){
         $col_class='col-md-3';
     }
-  
+    
+    ob_start();
     print'<div class="col-md-6">
                 <i class="custom_icon_class_icon fas fa-keyboard"></i>
 
@@ -177,6 +178,10 @@ function wpestate_search_type_inject($categ_select_list,$action_select_list,$whe
                         </ul>        
                     </div>
                 </div>';
+                        
+        $retur= ob_get_contents();
+        ob_end_clean();
+        return $retur;
      
 }
 

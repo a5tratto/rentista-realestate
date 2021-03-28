@@ -1,11 +1,12 @@
 <?php
 global $wpestate_global_header_type;
 global $wpestate_header_type;
-$adv_submit                 =   wpestate_get_template_link('advanced_search_results.php');
+global $search_object;
+
 $args                       =   wpestate_get_select_arguments();
 $action_select_list         =   wpestate_get_action_select_list($args);
 $categ_select_list          =   wpestate_get_category_select_list($args);
-$select_city_list           =   wpestate_get_city_select_list($args); 
+$select_city_list           =   wpestate_get_city_select_list($args);
 $select_area_list           =   wpestate_get_area_select_list($args);
 $adv_search_type            =   wprentals_get_option('wp_estate_adv_search_type','');
 $show_adv_search_visible    =   wprentals_get_option('wp_estate_show_adv_search_visible','');
@@ -15,7 +16,7 @@ $use_float_search_form      =   wprentals_get_option('wp_estate_use_float_search
 $wp_estate_float_form_top   =   wprentals_get_option('wp_estate_float_form_top','');
 
 if( is_tax() ){
-  $wp_estate_float_form_top             =    esc_html( wprentals_get_option('wp_estate_float_form_top_tax')  );      
+  $wp_estate_float_form_top             =    esc_html( wprentals_get_option('wp_estate_float_form_top_tax')  );
 }
 
 if(isset($_GET['guest_no'])){
@@ -42,10 +43,10 @@ if( $wpestate_header_type==0 ){ // global
      case 4:
         $search_position="advpos_map";
         break;
-    }   
-    
+    }
+
 }else{
-    
+
     switch ($wpestate_header_type) {
     case 1:
         $search_position="advpos_none";
@@ -65,14 +66,14 @@ if( $wpestate_header_type==0 ){ // global
     case 6:
         $search_position="advpos_image";
         break;
-    }   
-    
-   
+    }
+
+
 }
 
 
 if( is_tax() ){
-  $wp_estate_float_form_top             =    esc_html( wprentals_get_option('wp_estate_float_form_top_tax')  );      
+  $wp_estate_float_form_top             =    esc_html( wprentals_get_option('wp_estate_float_form_top_tax')  );
 }
 
     if(isset( $post->ID)){
@@ -102,81 +103,34 @@ if( is_tax() ){
             $close_class_wr .="  float_search_closed ";
         }
     }
-    
-    
-    
+
+
+
 $search_type    =   wprentals_get_option('wp_estate_adv_search_type','');
- 
-if($search_type == 'oldtype'){ ?>
-    <div class="search_wrapper <?php print esc_attr($search_position); ?> search_wr_<?php print esc_attr($adv_search_type.' '.$close_class_wr.' '.$search_start_class); ?>" id="search_wrapper" data-postid="<?php echo intval($post_id); ?>">
-        <?php
-        if ( isset($post->ID) && is_page($post->ID) &&  basename( get_page_template() ) == 'contact_page.php' ) {
-            //
-        }else {
-            include(get_theme_file_path('templates/advanced_search_type1.php'));
-        }               
-        ?>
-    </div>
-<?php
- }else if($search_type=='newtype') {
- ?>
-    <div class="search_wrapper type2 <?php print esc_attr($search_position); ?> search_wr_<?php print esc_attr($adv_search_type.' '.$close_class_wr.' '.$search_start_class);?>" id="search_wrapper" data-postid="<?php echo intval($post_id); ?>">
-        <?php
-        if ( isset($post->ID) && is_page($post->ID) &&  basename( get_page_template() ) == 'contact_page.php' ) {
-            //
-        }else {
-            include(get_theme_file_path('templates/advanced_search_type2.php'));
-        }               
-        ?>
-    </div>
 
-   
-<?php
-}else if ($search_type=='type3'){
+$wpestate_extra_classes=array(
+    'newtype'   => 'type2',
+    'oldtype'   => '',
+    'type3'     =>  'type3',
+    'type4'     =>  'type4',
+    'type5'     =>  'type5',
+
+);
+
 ?>
-    <div class="search_wrapper type3 search_wr_<?php print esc_attr($adv_search_type.' '.$close_class_wr.' '.$search_start_class);?>" id="search_wrapper" data-postid="<?php echo intval($post_id); ?>">
+
+
+
+
+<div class="search_wrapper <?php print esc_attr( $wpestate_extra_classes[$search_type].' '.$search_position.' search_wr_'.$adv_search_type.' '.$close_class_wr.' '.$search_start_class); ?>"
+     id="search_wrapper" data-postid="<?php echo intval($post_id); ?>">
         <?php
-        print '  <div id="search_wrapper_color"></div>';
         if ( isset($post->ID) && is_page($post->ID) &&  basename( get_page_template() ) == 'contact_page.php' ) {
             //
         }else {
-            include(get_theme_file_path('templates/advanced_search_type3.php'));
-        }               
+
+            print trim($search_object->wpstate_display_search_form('mainform'));
+            include(locate_template('libs/internal_autocomplete_wpestate.php'));
+        }
         ?>
     </div>
-
-   
-
-<?php
-}else if ($search_type=='type4'){
-?>
-    <div class="search_wrapper type4 search_wr_<?php print esc_attr($adv_search_type.' '.$close_class_wr.' '.$search_start_class); ?>" id="search_wrapper" data-postid="<?php echo intval($post_id); ?>">
-        <?php 
-        print '  <div id="search_wrapper_color"></div>';
-        if ( isset($post->ID) && is_page($post->ID) &&  basename( get_page_template() ) == 'contact_page.php' ) {
-            //
-        }else {
-            include(get_theme_file_path('templates/advanced_search_type4.php'));
-        }               
-        ?>
-    </div>
-
-
-<?php
-}else if ($search_type=='type5'){
-?>
-    <div class="search_wrapper type5 search_wr_<?php print esc_attr($adv_search_type.' '.$close_class_wr.' '.$search_start_class);?>" id="search_wrapper" data-postid="<?php echo intval($post_id); ?>">
-        <?php
-      //  print '  <div id="search_wrapper_color"></div>';
-        if ( isset($post->ID) && is_page($post->ID) &&  basename( get_page_template() ) == 'contact_page.php' ) {
-            //
-        }else {
-            include(get_theme_file_path('templates/advanced_search_type5.php'));
-        }               
-        ?>
-    </div>
-
-   
-
-<?php
-}

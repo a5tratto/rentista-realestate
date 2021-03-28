@@ -2,7 +2,7 @@
 require_once get_theme_file_path('/libs/plugins/class-tgm-plugin-activation.php');
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-/////// Required Plugins 
+/////// Required Plugins
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -10,105 +10,115 @@ require_once get_theme_file_path('/libs/plugins/class-tgm-plugin-activation.php'
 
 if( !function_exists('wpestate_required_plugins') ):
 function wpestate_required_plugins() {
-        
+
 	$plugins = array(
                 array(
-                    'name'     			=> 'WpRentals Core functionality', 
-                    'slug'     			=> 'wprentals-core', 
+                    'name'     			=> 'WpRentals Core functionality',
+                    'slug'     			=> 'wprentals-core',
                     'source'   			=> get_template_directory_uri()  . '/libs/plugins/wprentals-core.zip',
                     'required' 			=> true,
-                    'version' 			=> '2.8.5',
-                    'force_activation' 		=> false, 
-                    'force_deactivation' 	=> false,
-                    'external_url' 		=> '', 
-		),
-                array(
-                    'name'     			=> 'WpRentals Elementor Widgets', 
-                    'slug'     			=> 'wprentals-elementor', 
-                    'source'   			=> get_template_directory_uri()  . '/libs/plugins/wprentals-elementor.zip',
-                    'required' 			=> true,
-                    'version' 			=> '1.02',
-                    'force_activation' 		=> false, 
+                    'version' 			=> '3.2.2',
+                    'force_activation' 		=> false,
                     'force_deactivation' 	=> false,
                     'external_url' 		=> '',
 		),
                 array(
-                    'name'     			=> 'WpRentals Gutenberg Blocks', 
-                    'slug'     			=> 'rentals-gutenberg', 
+                    'name'     			=> 'WpRentals Elementor Widgets',
+                    'slug'     			=> 'wprentals-elementor',
+                    'source'   			=> get_template_directory_uri()  . '/libs/plugins/wprentals-elementor.zip',
+                    'required' 			=> true,
+                    'version' 			=> '3.1',
+                    'force_activation' 		=> false,
+                    'force_deactivation' 	=> false,
+                    'external_url' 		=> '',
+		),
+                array(
+                    'name'     			=> 'WpRentals Gutenberg Blocks',
+                    'slug'     			=> 'rentals-gutenberg',
                     'source'   			=> get_template_directory_uri()  . '/libs/plugins/rentals-gutenberg.zip',
                     'required' 			=> true,
                     'version' 			=> '2.3',
-                    'force_activation' 		=> false, 
+                    'force_activation' 		=> false,
                     'force_deactivation' 	=> false,
                     'external_url' 		=> '',
 		),
 		array(
-                    'name'     			=> 'Revolution Slider', 
-                    'slug'     			=> 'revslider', 
+                    'name'     			=> 'Revolution Slider',
+                    'slug'     			=> 'revslider',
                     'source'   			=> get_template_directory_uri()  . '/libs/plugins/revslider.zip',
                     'required' 			=> false,
-                    'version' 			=> '6.2.2',
-                    'force_activation' 		=> false, 
+                    'version' 			=> '6.3.9',
+                    'force_activation' 		=> false,
                     'force_deactivation' 	=> false,
                     'external_url' 		=> '',
 		),
                 array(
-                    'name'     			=> 'WPBakery Visual Composer', 
-                    'slug'     			=> 'js_composer', 
+                    'name'     			=> 'WPBakery Visual Composer',
+                    'slug'     			=> 'js_composer',
                     'source'   			=> get_template_directory_uri()  . '/libs/plugins/js_composer.zip',
                     'required' 			=> true,
-                    'version' 			=> '6.1',
-                    'force_activation' 		=> false, 
+                    'version' 			=> '6.5.0',
+                    'force_activation' 		=> false,
                     'force_deactivation' 	=> false,
                     'external_url' 		=> '',
 		),
                 array(
-                    'name'     			=> 'Ultimate Addons for Visual Composer', 
-                    'slug'     			=> 'Ultimate_VC_Addons', 
+                    'name'     			=> 'Ultimate Addons for Visual Composer',
+                    'slug'     			=> 'Ultimate_VC_Addons',
                     'source'   			=> get_template_directory_uri()  . '/libs/plugins/Ultimate_VC_Addons.zip',
                     'required' 			=> false,
-                    'version' 			=> '3.19.4',
-                    'force_activation' 		=> false, 
+                    'version' 			=> '3.19.8',
+                    'force_activation' 		=> false,
                     'force_deactivation' 	=> false,
                     'external_url' 		=> '',
 		)
                 ,array(
-                    'name'     			=> 'One Click Demo Import', 
-                    'slug'     			=> 'one-click-demo-import', 
+                    'name'     			=> 'One Click Demo Import',
+                    'slug'     			=> 'one-click-demo-import',
                     'source'   			=> get_template_directory_uri()  . '/libs/plugins/one-click-demo-import.zip',
                     'required' 			=> false,
-                    'version' 			=> '2.5.1',
-                    'force_activation' 		=> false, 
+                    'version' 			=> '2.6.1',
+                    'force_activation' 		=> false,
                     'force_deactivation' 	=> false,
                     'external_url' 		=> '',
 		),
                 array(
-                    'name'     			=> 'Envato Market', 
-                    'slug'     			=> 'envato-market', 
+                    'name'     			=> 'Envato Market',
+                    'slug'     			=> 'envato-market',
                     'source'   			=> 'https://goo.gl/pkJS33',
                     'required' 			=> false,
                     'version' 			=> '2.0.1',
-                    'force_activation' 		=> false, 
+                    'force_activation' 		=> false,
                     'force_deactivation' 	=> false,
                     'external_url' 		=> '',
-		)
+		),
+                array(
+                    'name'     			=> 'Elementor',
+                    'slug'     			=> 'elementor',
+                    'source'   			=> 'https://downloads.wordpress.org/plugin/elementor.3.0.16.zip',
+                    'required' 			=> false,
+                    'version' 			=> '3.0.16',
+                    'force_activation' 		=> false,
+                    'force_deactivation' 	=> false,
+                    'external_url' 		=> '',
+		),
 	);
 
-	
-	
+
+
 		$config = array(
-		'domain'       		=> 'wprentals',         	
-		'default_path' 		=> '',                         	
-		'parent_slug'           => 'themes.php', 				
-						
-		'menu'         		=> 'install-required-plugins', 	
-		'has_notices'      	=> true,                       
-		'is_automatic'    	=> false,					   
-		'message' 			=> '',							
+		'domain'       		=> 'wprentals',
+		'default_path' 		=> '',
+		'parent_slug'           => 'themes.php',
+
+		'menu'         		=> 'install-required-plugins',
+		'has_notices'      	=> true,
+		'is_automatic'    	=> false,
+		'message' 			=> '',
 		'strings'      		=> array(
 			'page_title'                       			=> esc_html__(  'Install Required Plugins', 'wprentals' ),
 			'menu_title'                       			=> esc_html__(  'Install Plugins', 'wprentals' ),
-			'installing'                       			=> esc_html__(  'Installing Plugin: %s', 'wprentals' ), 
+			'installing'                       			=> esc_html__(  'Installing Plugin: %s', 'wprentals' ),
 			'oops'                             			=> esc_html__(  'Something went wrong with the plugin API.', 'wprentals' ),
 			'notice_can_install_required'     			=> _n_noop( 'This theme requires the following plugin: %1$s.', 'This theme requires the following plugins: %1$s.' ,'wprentals'), // %1$s = plugin name(s)
 			'notice_can_install_recommended'			=> _n_noop( 'This theme recommends the following plugin: %1$s.', 'This theme recommends the following plugins: %1$s.' ,'wprentals'), // %1$s = plugin name(s)
@@ -122,11 +132,11 @@ function wpestate_required_plugins() {
 			'activate_link' 				  	=> _n_noop( 'Activate installed plugin', 'Activate installed plugins','wprentals' ),
 			'return'                           			=> esc_html__(  'Return to Required Plugins Installer', 'wprentals' ),
 			'plugin_activated'                 			=> esc_html__(  'Plugin activated successfully.', 'wprentals' ),
-			'complete' 						=> esc_html__(  'All plugins installed and activated successfully. %s', 'wprentals' ), 
+			'complete' 						=> esc_html__(  'All plugins installed and activated successfully. %s', 'wprentals' ),
 			'nag_type'						=> 'updated'
 		)
 	);
 tgmpa($plugins, $config);
 }
-endif; // end   wpestate_required_plugins  
+endif; // end   wpestate_required_plugins
 ?>

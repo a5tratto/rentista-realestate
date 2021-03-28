@@ -1,16 +1,16 @@
 
-@media only screen and (min-width: 2050px){  
-    
+@media only screen and (min-width: 2050px){
+
     .label_adjust{
         margin-bottom: 0px;
     }
 }
 
-@media only screen and (max-width: 1600px){  
+@media only screen and (max-width: 1600px){
     #google_map_prop_list_wrapper{
         width: 48%;
     }
-    
+
     .half_map_on_right #advanced_search_map_list_hidden,
     #google_map_prop_list_sidebar {
         width: 52%;
@@ -19,29 +19,29 @@
         height: 550px;
         margin-top: -250px;
     }
-    
+
     #book_per_hour_calendar {
         height: 475px;
     }
 }
 
-@media only screen and (max-width: 1450px){  
+@media only screen and (max-width: 1450px){
     #google_map_prop_list_wrapper{
         width: 45%;
     }
-    
+
     .half_map_on_right #advanced_search_map_list_hidden,
     #google_map_prop_list_sidebar {
         width: 55%;
     }
-    
+
     .social_share_wrapper{
         top:110px;
     }
     .admin-bar  .social_share_wrapper{
         top:150px;
     }
-    
+
     .wide .carousel_type2_control_wrapper {
         top: 52%;
     }
@@ -53,6 +53,8 @@
 
 
 @media only screen and (max-width:1366px){
+
+
     .listing_type_3    .booking_form_request {
         width:100%;
         max-width: 100%;
@@ -61,15 +63,15 @@
         margin-bottom: 15px;
     }
     .listing_type_3 .listingsidebar {
-        margin-top: 0px!important; 
+        margin-top: 0px!important;
     }
 
-    
+
 }
 
 
 
-@media only screen and (max-width: 1350px){  
+@media only screen and (max-width: 1350px){
     #gmap-controls-wrapper {
         width: 100%;
         position: absolute;
@@ -85,7 +87,7 @@
     #google_map_prop_list_sidebar {
         width: 60%;
     }
-    
+
     .social_share_wrapper{
         top:90px;
     }
@@ -94,7 +96,7 @@
     }
 }
 
-@media only screen and (max-width: 1280px){ 
+@media only screen and (max-width: 1280px){
     .is_dashboard_page #user_menu_u,
     .is_dashboard_page  #submit_action{
         display:none!important;
@@ -105,20 +107,20 @@
         margin-left: -500px;
         left: 50%;
     }
-    
+
 }
 
-@media only screen and (max-width: 1240px){ 
+@media only screen and (max-width: 1240px){
 
-    
+
     .wpestate_header_video_overlay {
         pointer-events: none;
     }
-    
+
     .listing_content{
         padding: 5px 0px 15px 0px;
     }
-    
+
     .social_share_wrapper{
         top:90px;
     }
@@ -129,32 +131,32 @@
     .content-fixed-listing {
         width: 100%;
     }
-    
+
     .content_wrapper{
         width:100%;
          padding-left: 25px;
         padding-right: 25px;
         float:left;
     }
-    
-    
-    
+
+
+
     .invoice_actions {
       float: left;
       width: 100%;
       margin-top: 25px;
     }
-    
+
     .col-md-8 .listing_filters_head .listing_filter_select{
     }
-    
+
     .sub_footer_content {
         width:100%;
         padding: 0px 20px;
         max-width: 100%;
     }
-    
-    
+
+
 }
 
 @media only screen and (max-width: 1330px) and (min-width: 1280px){
@@ -163,27 +165,21 @@
     }
 }
 
-@media only screen and (max-width: 1330px) and (min-width: 1178px){   
+@media only screen and (max-width: 1330px) and (min-width: 1178px){
     .property_tab_list_header,
     .property_tab_header{
         width:130px;
     }
-    
+
     .calendar_pad_title, .calendar_pad {
         width: 23px;
     }
 }
 
 @media only screen and (max-width: 1178px){
-    .listing_type_1 .property_ratings {
-        float: left;
-        margin-top: 0px;
-    }
-    
     .calendar_pad_title, .calendar_pad {
         width: 17px;
     }
-    
     #estate-carousel_slick .slider-content-wrapper {
         width: 100%;
         margin:0px;
@@ -195,25 +191,25 @@
     }
 }
 
-@media only screen and (max-width: 1240px) and (min-width: 991px){    
+@media only screen and (max-width: 1240px) and (min-width: 991px){
     .booking-calendar-set .booking-calendar-wrapper-in {
-        width: 685px;
-        max-width: 685px;
+        width: 660px;
+        max-width: 660px;
     }
     .booking-calendar-set {
-        width: 685px;
+        width: 660px;
     }
     .booking-calendar-set table.booking-calendar {
         width: 670px;
     }
-   
+
     .custom_day_from_to{
         width:80px;
     }
-    
+
     .custom_day_header .custom_day_from_to,
-    .custom_day.custom_day_header .custom_price_per_day, 
-    .custom_day.custom_day_header .custom_day_min_days, 
+    .custom_day.custom_day_header .custom_price_per_day,
+    .custom_day.custom_day_header .custom_day_min_days,
     .custom_day.custom_day_header .custom_day_name_price_per_guest,
     .custom_day.custom_day_header .custom_day_name_price_per_weekedn,
     .custom_day.custom_day_header .custom_day_name_change_over,
@@ -225,14 +221,14 @@
     .custom_day_name_change_over,
     .custom_day_name_price_per_weekedn,
     .custom_day_name_price_per_guest,
-    .custom_price_per_day, 
+    .custom_price_per_day,
     .custom_day_min_days,
     .custom_day_from_to{
       height:135px;
     }
-    
-    
-    
+
+
+
     .carouselvertical .carousel-inner {
         max-width: 627px;
         max-height: 338px;
@@ -242,16 +238,16 @@
     .carouselvertical{
         height:auto!important;
     }
-    
-   
-    
+
+
+
 }
 
-@media only screen and (max-width: 1220px){ 
+@media only screen and (max-width: 1220px){
     #colophon .listing-unit-img-wrapper .carousel-inner {
         height: auto;
     }
-    
+
     #colophon .property_unit_v3 .price_unit_wrapper{
         position: absolute;
         left: 15px;
@@ -265,91 +261,91 @@
         margin-left: 0px;
         width: auto;
     }
-    
+
     .listing_reviews_container{
         width:100%;
         padding-left: 30px;
     }
-    
+
     .listingsidebar {
         margin-top: 0px;
     }
-    
+
     .property_categs{
         width:100%;
     }
-    
+
     .property_header{
         padding: 0px 15px 0px 25px;
     }
-    
+
     .property_header_wrapper{
         padding-left: 0px;
         padding-right: 15px;
         margin-right: 17px;
     }
-    
+
     .booking_form_request {
         position: relative;
         top: auto;
         right: auto;
         width: 31.5%;
-        max-width: none;        
+        max-width: none;
         position: absolute;
         top: 0px;
         right: 0px;
         width: 31.5%;
         max-width: none;
     }
-    
-  
+
+
     .header_masonry {
         margin-bottom: 15px;
     }
-    
+
     .col-md-pull-8.booking_form_request{
         left: auto;
         right: 69.26666667%;
         position: relative;
         float: left;
     }
-    
+
     .property_page_container.for_reviews {
         padding-left: 0px;
         padding-right: 0px;
         margin-bottom: 0px;
     }
-    
+
     .listing_type_1 .property_page_container.for_reviews{
         padding-left: 30px;
         padding-right: 30px;
         margin-bottom: 30px;
     }
-    
+
     .listing-content{
         padding: 0px 10px;
     }
-    
+
     .owner-page-wrapper-inside {
         width: 100%;
         padding-left: 10px;
         padding-right: 10px;
     }
-    
+
     .owner-page-wrapper-reviews .owner-page-wrapper-inside {
         padding: 0px 10px 60px 10px;
     }
-    
+
 
     .owner-page-wrapper .verified_userid {
-        margin: 10px 0px 0px 10px; 
+        margin: 10px 0px 0px 10px;
     }
-    
+
     .single-estate_property .owner-page-wrapper .verified_userid{
         margin-top: 130px;
         margin-left: -5px;
     }
-    
+
     .image_gallery{
         width:33.3%!important;
         border-right: 6px solid #f1f3f7!important;
@@ -359,106 +355,106 @@
         border-bottom: 1px solid #f1f3f7;
         border-right: 1px solid #f1f3f7!important;
         float: left;
-    }    
+    }
 
     .header_wrapper_inside{
         width: 100%;
     }
-    
+
     #colophon {
         width: 100%;
         float:left;
     }
-    
+
     #footer-widget-area {
         padding: 0px 7px 25px 7px;
     }
-    
+
     #colophon .price_unit_wrapper{
         left: 0px;
     }
-    
+
     #primary .listing-unit-img-wrapper,
     #colophon .listing-unit-img-wrapper{
-        max-width: 100%;    
+        max-width: 100%;
         height: auto;
         margin-bottom: 10px;
     }
-    
-    #primary .category_name, 
+
+    #primary .category_name,
     #colophon .category_name {
         padding: 0px 0px 10px 0px;
     }
-    
+
     #colophon .featured_property .category_name {
        padding: 8px 10px;
     }
-    
+
     .entry-prop,
     .listing_main_image_location,
     .listing_main_image_price{
         width: 100%;
         margin-left: 0px;
         left: 0px;
-        padding: 0px 20px;  
+        padding: 0px 20px;
     }
 
     .listing_type_1 .entry-prop{
         padding: 0px;
     }
-    
+
     .listing-type_1 .listing_main_image_location{
         padding: 0px!important;
     }
-    
+
     .gmap-controls, #gmap-controls-wrapper {
         width: 100%;
         margin-left: 0px;
         left: 0px;
         padding: 0px 45px;
-    } 
-    
+    }
+
     #search_wrapper{
         width: 100%;
         left: 0px;
         margin: 0px;
         float: left;
     }
-    
+
     #search_wrapper.type2 {
         width: 1000px;
         margin-left: -500px;
         left: 50%;
     }
-    
+
     .adv-search-1{
         width: 100%;
         padding: 20px 20px;
         left: 0px;
         margin-left: 0px;
     }
-    
-    #search_wrapper.with_search_form_float.sticky_adv .adv-search-1, 
+
+    #search_wrapper.with_search_form_float.sticky_adv .adv-search-1,
     #search_wrapper.with_search_on_end .adv-search-1, #search_wrapper.with_search_on_start .adv-search-1 {
         max-width: 100%;
         padding: 20px 20px;
     }
-    
-    #search_wrapper.search_wr_type3.with_search_on_end, 
+
+    #search_wrapper.search_wr_type3.with_search_on_end,
     #search_wrapper.search_wr_type3.with_search_on_start {
         padding: 0px 20px;
     }
 
-    
-    
+
+
     .theme_slider_wrapper .carousel-indicators {
         display:none;
     }
-    
+
     .dashboard-margin-nolog{
         width:100%;
-    } 
-    
+    }
+
     .no_log_submit .user_dashboard_panel {
         margin: 0px 0px;
         padding: 0px 25px;
@@ -475,72 +471,72 @@
     .top_bar{
         width:100%;
     }
-    
+
     .similar_listings_wrapper{
         padding: 60px 15px 30px 15px;
     }
-    
+
     .similar_listings{
         width:100%;
     }
-    
-   
+
+
 }
 
 
 /*top menu break and transform*/
 @media only screen and (max-width:1180px){
-    
-    .admin-bar.top_bar_on #google_map_prop_list_sidebar.half_header_type2, 
+
+    .admin-bar.top_bar_on #google_map_prop_list_sidebar.half_header_type2,
     .admin-bar.top_bar_on #google_map_prop_list_wrapper.half_header_type2,
-    .admin-bar #google_map_prop_list_sidebar.half_header_type2, 
+    .admin-bar #google_map_prop_list_sidebar.half_header_type2,
     .admin-bar #google_map_prop_list_wrapper.half_header_type2 {
         margin-top: 0px;
     }
 
-    .top_bar_on #google_map_prop_list_sidebar.half_header_type2, 
+    .top_bar_on #google_map_prop_list_sidebar.half_header_type2,
     .top_bar_on #google_map_prop_list_wrapper.half_header_type2 {
         margin-top: 110px;
     }
 
-    #google_map_prop_list_sidebar.half_header_type2, 
+    #google_map_prop_list_sidebar.half_header_type2,
     #google_map_prop_list_wrapper.half_header_type2 {
         margin-top: 70px;
     }
-    
+
     .top_bar_on #google_map_prop_list_sidebar.half_header_type2,
-    .top_bar_on #google_map_prop_list_wrapper.half_header_type2, 
-    #google_map_prop_list_sidebar.half_header_type2, 
+    .top_bar_on #google_map_prop_list_wrapper.half_header_type2,
+    #google_map_prop_list_sidebar.half_header_type2,
     #google_map_prop_list_wrapper.half_header_type2{
         margin-top:0px;
     }
-    .top_bar_on #google_map_prop_list_sidebar.half_header_type2, 
+    .top_bar_on #google_map_prop_list_sidebar.half_header_type2,
     .top_bar_on #google_map_prop_list_wrapper.half_header_type2 {
         top: 111px;
     }
-    
+
     .listing_type_1 .listingsidebar2 {
         margin-top: 70px;
     }
-    
+
     .booking_list .dasboard-prop-listing{
         border:none;
         border-bottom: 1px solid #e8ebf0;
     }
-    
+
     .booking_list .prop-info{
-        width:100%;   
+        width:100%;
         margin-left: -20px;
         margin-bottom: 0px;
     }
-    
+
     .info-container_booking {
         float: left;
         position: relative;
         bottom: 0px;
         left: 0px;
     }
-        
+
     .user_dashboard_panel .row {
         min-width: auto;
     }
@@ -548,66 +544,55 @@
         width:100%;
         text-align: center;
     }
-    
+
     .user_dashboard_panel_guide a {
         padding: 17px 12px;
     }
-    
+
     .dashboard-header{
-        padding-left: 0px;   
+        padding-left: 0px;
     }
-    .user_dashboard_panel .col-md-12,
-    .user_dashboard_panel .col-md-8,
-    .user_dashboard_panel .col-md-6,
-    .user_dashboard_panel .col-md-2,
-    .user_dashboard_panel .col-md-3,
-    .user_dashboard_panel .col-md-4{
-        padding: 0px 0px;
-        float: left;
-    }
-    .dashboard-margin>.row{
-       /* float:none;*/
-    }
+
     .user_dashboard_panel_title{
         padding: 0px 0px 0px 0px;
         white-space: initial;
     }
-   
+
     .mdfillin{
         display:none;
     }
-    
+
     .is_half_map {
 /*        display:table-row-group;*/
         overflow-x: initial;
     }
-    
+
     .moved_mobile_user #google_map_prop_list_sidebar,
     .moved_mobile #google_map_prop_list_sidebar{
         overflow: initial;
     }
-    
-    .website-wrapper.is_half_map.topbar_show_mobile_no #google_map_prop_list_wrapper, 
-    .website-wrapper.is_half_map.topbar_show_mobile_no #google_map_prop_list_sidebar, 
-    #google_map_prop_list_sidebar, 
+
+    .website-wrapper.is_half_map.topbar_show_mobile_no #google_map_prop_list_wrapper,
+    .website-wrapper.is_half_map.topbar_show_mobile_no #google_map_prop_list_sidebar,
+    #google_map_prop_list_sidebar,
     #google_map_prop_list_wrapper {
         top: 70px;
     }
-    
-    
+
+
     .admin-bar .top_bar_on #google_map_prop_list_wrapper,
     .admin-bar  .top_bar_on #google_map_prop_list_sidebar{
         top: 142px!important;
     }
-    
+
     .admin-bar #google_map_prop_list_sidebar,
     .admin-bar  #google_map_prop_list_wrapper {
         top: 102px!important;
     }
-    
+
     #advanced_submit_2_mobile, #advanced_submit_2 {
     }
-    
+
     #google_map_prop_list_wrapper.halfmapfull.halfmapfullx{
         top:0px!important;
     }
@@ -615,28 +600,28 @@
         float: left;
         width: 100%;
     }
-    
+
     #search_wrapper.sticky_adv {
         display: none;
     }
-    
-    #search_wrapper.search_wr_type4.with_search_on_end .adv-search-4, 
+
+    #search_wrapper.search_wr_type4.with_search_on_end .adv-search-4,
     #search_wrapper.search_wr_type4.with_search_on_start .adv-search-4 {
         max-width: 100%;
         padding: 30px 17px;
     }
-    
+
     .mobile_header{
         display: block;
         float: left;
         width: 100%;
         position: Relative;
     }
-    
+
     .property_menu_wrapper_hidden{
         display:none!important;
     }
-    
+
     .header_media{
        float:left;
     }
@@ -645,65 +630,63 @@
         float:left;
         padding: 0px 30px;
     }
-    
-   
+
+
     .top_bar_wrapper.topbar_show_mobile_no,
     .header_wrapper,
     #access{
         display: none!important;
     }
-    
+
     .gmap-controls, #gmap-controls-wrapper {
         padding: 0px 20px;
     }
-    
+
     .wide .top_bar, .page-template-property_list_half .top_bar {
         width: 100%;
         padding-left: 25px!important;
         padding-right: 25px!important;
     }
 
-    
+
     .all-front-calendars .booking-calendar-wrapper {
         width: 100%;
     }
-    
+
     .col-md-4.flexdashbaord {
           width: calc(100% * (1/2) - 0px - 1px);
     }
-    
+
     #add_favorites,
     #contact_host{
         font-size: 12px;
         padding: 10px 0px;
     }
-    
-  
+
+
     #change_pass,
     #update_profile {
         margin-left: 7px;
     }
-    
-    #edit_prop_price{
-        margin-left: -7px;
-    }
+
+
      .social_share_wrapper{
         display:none;
     }
 
     .advanced_search_map_list_container .col-md-6,
     .advanced_search_map_list_container .col-md-3 {
-   
+
         width: 50%;
     }
-    
+
     #search_wrapper.type2 {
-   
+
         width: 850px;
         margin-left: -425px;
         left: 50%;
     }
-    
+
     .theme_slider_type2.theme_slider_search_type1 .listing-desc-slider span{
             width: 50%;
     }
@@ -713,7 +696,7 @@
         margin-left: -425px;
         left: 50%;
     }
-    
+
     .theme_slider_wrapper_type2 .slider-content {
         width: 80%;
         padding: 0px;
@@ -727,27 +710,27 @@
 }
 
 @media only screen and (min-width: 1024px){
-   
-    
+
+
     .custom_day_wrapper_mobile{
-        display: none; 
+        display: none;
     }
-    
+
     .boxed .theme_slider_wrapper_type2 #carousel-control-theme-prev,
     .boxed .theme_slider_wrapper_type2 #carousel-control-theme-next{
         display: none;
     }
-    
+
 }
 
-@media only screen and (max-width: 1024px){  
-    
+@media only screen and (max-width: 1024px){
+
     #drag-and-drop{
         width:100%;
         clear: both;
         float: none;
     }
-    
+
     .featured-article-date.blog_unit_full_row {
         top: 20px;
         left: 15px;
@@ -756,49 +739,49 @@
     #listing_main_image_photo_slider .slick-dots{
         width:100%;
     }
-    
+
     .wide .theme_slider_type2 .slider-content-wrapper {
         max-width: 1170px;
         width: 1170px;
         left: 0px;
         margin: 0px;
     }
-    
+
     .property_header2 .property_categs a:first-of-type {
         margin-left: 0px;
         margin-right: 0px;
     }
-    
+
     .category_details_wrapper{
         width:100%;
     }
-    
+
     #primary .listing-unit-img-wrapper .carousel-inner, #primary .listing-unit-img-wrapper img ,
     #colophon .listing-unit-img-wrapper .carousel-inner, #colophon .listing-unit-img-wrapper img {
         height: auto;
     }
-    
-  
-    
+
+
+
     #primary .category_tagline, #colophon .category_tagline {
         margin-left: 0px;
     }
     #primary .latest_listings .price_unit, #colophon .latest_listings .price_unit {
         left: 0px;
     }
-    
+
     #book_per_hour_close {
         right: 0px;
     }
-    
+
     #book_per_hour_wrapper{
-        z-index: 9999;
+        z-index: 9999999;
     }
-    
+
     #all-front-calendars_per_hour_internal {
         width: auto;
     }
-    
+
    #book_per_hour {
     top: 50%;
     left: 0px;
@@ -813,15 +796,9 @@
         height: 550px;
         width: auto;
     }
-    
+
     .page-template.page-template-user_dashboard_add_step1 .row.no_log_submit {
         margin: 0px 15px;
-    }
-    .submit_mandatory.col-md-12 {
-        width: 100%;
-        margin-left: 0px;
-        margin-right: 0px;
-        padding: 10px;
     }
 
     .custom_day_wrapper{
@@ -833,13 +810,13 @@
         width: 100%;
         margin-top: 20px;
     }
-    
-    .custom_day_wrapper_mobile .custom_day_name_checkout_change_over, 
-    .custom_day_wrapper_mobile .custom_day_name_change_over, 
-    .custom_day_wrapper_mobile .custom_day_name_price_per_weekedn, 
-    .custom_day_wrapper_mobile .custom_day_name_price_per_guest, 
-    .custom_day_wrapper_mobile .custom_price_per_day, 
-    .custom_day_wrapper_mobile .custom_day_min_days, 
+
+    .custom_day_wrapper_mobile .custom_day_name_checkout_change_over,
+    .custom_day_wrapper_mobile .custom_day_name_change_over,
+    .custom_day_wrapper_mobile .custom_day_name_price_per_weekedn,
+    .custom_day_wrapper_mobile .custom_day_name_price_per_guest,
+    .custom_day_wrapper_mobile .custom_price_per_day,
+    .custom_day_wrapper_mobile .custom_day_min_days,
     .custom_day_wrapper_mobile .custom_day_from_to {
         width: auto;
         height: auto;
@@ -849,22 +826,22 @@
         border-right: 0px;
         border-bottom: 1px solid #d0d5de;
     }
-    
+
     .custom_day_wrapper_mobile .custom_day_from_to{
         background-color: #4d5567;
         color: #CBCDD0;
     }
-    
+
     .custom_day_wrapper_mobile .custom_price_label {
         font-weight: 600;
     }
-    
+
     .custom_day_wrapper_mobile .custom_day {
         width: 48%;
-        margin-left: 5px; 
+        margin-left: 5px;
         margin-bottom: 5px;
     }
-    
+
     .boxed .theme_slider_type2.theme_slider_search_type1 .carousel_type2_control_wrapper,
     .theme_slider_type2.theme_slider_search_type1 .carousel_type2_control_wrapper,
     .theme_slider_type2 .carousel_type2_control_wrapper{
@@ -872,45 +849,45 @@
         margin-left: 0px;
         top: 68%;
     }
-    
-    
 
-    
+
+
+
     .theme_slider_type2 .carousel_type2_control_wrapper{
         width: 100%;
         left: 20px;
         margin-left: 0px;
         top: 56%;
     }
-    
-    
+
+
     .theme_slider_type2 .slider-content-wrapper {
         max-width: 100%;
         width: 100%;
         top: 8%;
     }
-    
-    
+
+
     .theme_slider_type2 .price-slider-wrapper {
         float: left;
         width: 100%;
     }
-    
+
     .theme_slider_type2 .slider-content {
         padding-left: 20px;
     }
-    
+
     .theme_slider_type2 .listing-desc-slider span {
         width: 70%;
     }
-    
+
     .featured_article_type2_title_wrapper,
     .featured_propery_type3_title_wrapper{
         width: 100%;
         padding: 0px 15px;
         bottom: 30px;
     }
-      
+
     .featured_property_type3 h2,
     .featured_article_type2 h2{
         width: 100%;
@@ -920,15 +897,14 @@
     .featured_article_type2 {
         height: 350px;
     }
-    
+
     .parallax_effect_yes {
         background-attachment: initial;
-    }   
- 
+    }
+
     .listingsidebar {
     /*  margin-top: 0px!important;*/
     }
-    
     #submit_booking_front_instant_wrap:after {
         content: "\f0e7";
         font-family: FontAwesome;
@@ -943,20 +919,20 @@
     .no_header_dash .user_tab_menu {
         top: 70px;
     }
-    
-    .item_captions, 
+
+    .item_captions,
     .item_captions_text {
         top: auto;
         bottom:0px
     }
-    
+
     #capthca_register_sh{
         transform: scale(0.7)!important;
         -webkit-transform: scale(0.7)!important;
         transform-origin: 0 0;
         -webkit-transform-origin: 0 0;
     }
-    
+
     .listing_content{
         padding: 0px;
     }
@@ -970,66 +946,52 @@
         margin: 0px 0px 25px 0px;
         top: auto;
     }
-    
+
     .carousel-control-theme-prev,
     .carousel-control-theme-next {
         top:50%;
         margin-top: -25px;
     }
-    
+
     .extended_search_checker {
       width: 50%;
     }
-    
+
     .slider-content{
-        
+
     }
     .user_dashboard_panel_guide a:before {
         min-width: auto;
     }
-    
+
     .price_panel{
         padding-left: 10px;
     }
-    
+
     .dashboard_amenities .col-md-4 {
         width: 40%;
     }
-    
+
     .dashboard_amenities .col-md-9 {
         padding-left: 5px;
     }
-    
+
     .property_icalendar_import_feed_new,
     .property_icalendar_import_name_new{
         width: 100%
     }
-    
+
     .col-md-3.city_fee_label, .col-md-3.extra_guest_label {
-        margin-top: 0px; 
+        margin-top: 0px;
     }
-    
+
     .sms_wrapper .col-md-9 {
         padding-left: 0px;
     }
 }
 
-@media only screen and (max-width: 1180px)and (min-width: 1024px){
 
-    
-    .user_dashboard_panel .col-md-12, 
-    .user_dashboard_panel .col-md-8, 
-    .user_dashboard_panel .col-md-6, 
-    .user_dashboard_panel .col-md-2, 
-    .user_dashboard_panel .col-md-3, 
-    .user_dashboard_panel .col-md-4 {
-        padding: 0px 10px;
-        float: left;
-    }
-    
-}
-
-@media only screen and (max-width: 992px) and (min-width: 650px){    
+@media only screen and (max-width: 992px) and (min-width: 650px){
 
     .advanced_search_map_list_container .col-md-2,
     .agent_list .col-md-3,
@@ -1038,15 +1000,15 @@
         width: 50%;
         float: left;
     }
-    
-    
-    
+
+
+
     .col-md-6.property_flex,
     .col-md-3.property_flex,
     .col-md-4.property_flex {
         width: calc(100% * (1/2) - 0px - 1px)!important;
     }
-    
+
     .user_dashboard_panel .col-md-8,
     .user_dashboard_panel .col-md-4,
     .third-form-wrapper .col-md-4 {
@@ -1055,88 +1017,90 @@
 }
 
 @media only screen and (min-width: 992px){
-    
+
     .user_tab_menu{
         display:block;
     }
-    
+
     .listing_type_1 .booking_form_mobile,
     .listing_type_1 .booking_form_mobile #booking_form_request{
         min-width: 100%;
         max-width: 100%;
-        
+
     }
-    .listing_type_1  #primary .listing_main_image_price, 
+    .listing_type_1  #primary .listing_main_image_price,
     .listing_type_1  #booking_form_request {
     }
 }
 
 @media only screen and (max-width: 991px){
-    
+    #search_wrapper {
+        display: none;
+    }
     .search_dashborad_header .wpb_btn-info.wpb_btn-small.wpestate_vc_button.vc_button {
         width: 100%;
         float: left;
         margin-bottom: 40px;
     }
-   
-    
+
+
     #book_per_hour {
         width: 700px;
         height: 500px;
         margin-top: -250px;
     }
-    
+
     #book_per_hour_calendar {
         height: 400px;
     }
-    
+
     .slider_radius_wrap {
         width: 100%;
        float: left;
    }
     .listing_type_1 .property_page_container.for_reviews {
         padding-left: 0px;
-        padding-right: 0px;  
+        padding-right: 0px;
     }
-    
+
     .owner-page-wrapper .verified_userid {
         margin: 10px 0px 0px 0px;
         float:left;
     }
-    
+
     .single-estate_property .owner-page-wrapper .verified_userid{
         margin-top: 130px;
         text-align: left;
         margin-left: 0px;
     }
-    
-    #colophon .listing-unit-img-wrapper .carousel-inner, 
+
+    #colophon .listing-unit-img-wrapper .carousel-inner,
     #colophon .listing-unit-img-wrapper img {
         height: auto;
     }
-    
+
     .listing_type_1 .booking_form_mobile,
     .listing_type_1 .booking_form_mobile #booking_form_request{
         min-width: 100%;
         max-width: 100%;
     }
-    
-    
+
+
     .master_header.google_map_list_header{
         position: relative!important;
     }
-    
+
     .booking-calendar-set table.booking-calendar {
         width: 700px;
     }
     .booking-calendar-wrapper-in-wrapper {
         max-width: 720px;
     }
-    
+
     .custom_day_wrapper{
-     max-width:100%;   
+     max-width:100%;
     }
-    
+
     .header_media {
         float: left;
         width: 100%;
@@ -1146,7 +1110,7 @@
         width:auto;
         margin: 0px 15px 30px 15px;
     }
-    
+
     .listing_type_1 .listingsidebar2 {
         margin-top: 0px;
     }
@@ -1161,12 +1125,12 @@
         max-width: -webkit-fill-available;
         width: calc(100% - 15px);
     }
-    
-    
+
+
     .next_submit_page_first_step {
         margin-top: 0px;
     }
-    
+
     .page-template.page-template-user_dashboard_add_step1 .row.no_log_submit {
         margin: 0px -10px;
     }
@@ -1174,32 +1138,32 @@
     #colophon{
         padding-top: 45px;
     }
-    
+
     #colophon .xoxo {
         padding-top: 0px;
         width: 100%;
     }
-    
+
     #footer-widget-area {
         padding: 30px 7px 25px 7px;
     }
-    
+
     #listing_reviews{
         width:100%;
     }
-    
+
     .third-form{
         margin-top:0px;
     }
-    
+
     .third-form-wrapper{
         padding-top:25px;
     }
-    
+
     .prop_social{
         padding-bottom: 10px;
     }
-    
+
     .loginwd_sidebar,
     .advanced_search_sidebar{
         max-width: 100%;
@@ -1208,11 +1172,7 @@
     #colophon .title-container {
         width: 100%;
     }
-    
-    .mess_reply_form, 
-    .mess_content{
-         padding: 10px 10px;
-    }
+
     .message_header {
         padding: 10px 0px;
     }
@@ -1226,20 +1186,25 @@
         float: left;
         width: 100%;
     }
-    #primary .category_tagline{
-        margin-left: 10px; 
+
+    .submit_mandatory{
+        width: auto;
     }
-    
+
+    #primary .category_tagline{
+        margin-left: 10px;
+    }
+
     #primary .category_tagline,
     #colophon .category_tagline {
         margin-left: 0px;
     }
-    
+
     #primary .latest_listings .price_unit,
     #colophon .latest_listings .price_unit{
         left:0px;
     }
-    
+
     #advanced_search_shortcode .col-md-6,
     .col-md-6.property_price {
         width: 100%;
@@ -1249,49 +1214,49 @@
     .invoice_unit_title .col-md-2 {
         width: 16.66666667%;
     }
-    
+
     .listing_filters_head .col-md-2{
         width: 25%;
         margin-bottom: 5px;
     }
-    
+
     #form-search-mobile .col-md-4,
     #form-search-mobile .col-md-2,
     #form-search-mobile .col-md-3{
         float:none;
         display: inline-block;
     }
-    
-    
+
+
     .text-right{
         text-align: left;
     }
-    
+
     #title{
         width:100%!important;
     }
-    
+
     #user_tab_menu_trigger {
         display: block;
         padding-left: 0px;
         float: left;
         width: 100%;
     }
-    
+
     .user_tab_menu{
         display:none;
     }
-    
+
     #user_tab_menu_container {
         display: none;
         z-index: 999;
     }
-    
+
     .dashboard-margin{
         margin-left: 10px;
         padding-right: 10px;
     }
-    
+
     .is_dashboard_page .dashboard-margin{
         padding: 0px;
         margin: 0px;
@@ -1299,42 +1264,21 @@
 
     #new_post2{
         float:left;
-    }    
-    
-    .inbox-wrapper {
-        margin-top: 35px;
-        padding: 20px 10px;
-        max-width: 1250px;
-        min-width: auto;
-        float: left;
-        width: 100%;
-        margin: 0px;  
     }
 
-    .inbox-wrapper .col-md-12{
-        float: left;
-        width: 100%;
-    }
-    
-    .user_dashboard_panel{
-        margin:0px;
-        width: 100%;
-    }
     .pack_unit_list{
         margin-bottom: 30px;
     }
-    
-    .is_dashboard_page  .user_dashboard_panel{
-        padding: 15px 15px;
-    }
+
+
     .user_dashboard_panel.price_panel {
         padding: 0px 15px;
     }
 
     .upload-container{
-        
+
     }
-    
+
     .booking-calendar-wrapper-in-wrapper {
         margin-left: 8px;
         margin-right: 8px;
@@ -1344,22 +1288,22 @@
         width:100%;
         max-width: 100%;
     }
-    
+
     .booking-price {
         max-width: 100%;
         width: 100%;
     }
-    
+
     .profile-page,
     .is_dashboard{
         margin:0px;
-    }    
-    
+    }
+
 
     #advanced_search_shortcode .map_icon:after {
         right:33px;
     }
-    
+
     .adv_sh_but,
     .guest_form_sh_wr,
     .checkout_sh {
@@ -1369,7 +1313,7 @@
     .advanced_search_shortcode .filter_menu {
         margin-left: 15px;
     }
-    
+
     .adv_search_sh{
         width:100%;
         margin: 0px 0px;
@@ -1388,20 +1332,20 @@
         margin-top: 20px;
         padding: 0px 25px 25px 25px;
     }
-    
+
     .secondrow{
         display: inline-block;
         width: 100%;
         height: 100%;
     }
-    
 
-    
+
+
     #adv_extended_close_adv{
         top: 0px;
         right: 0px;
     }
-    
+
     #advanced_search_map_list {
         width: 100%;
         padding: 20px 20px 20px 20px;
@@ -1410,7 +1354,7 @@
     #gmap-control-list {
         padding: 10px 10px 0px 25px;
     }
-   
+
     .admin-bar .master_header.google_map_list_header {
         top: 0px;
         z-index: 100;
@@ -1419,14 +1363,14 @@
     .admin-bar .top_bar_on #google_map_prop_list_wrapper, .admin-bar .top_bar_on #google_map_prop_list_sidebar {
         top: 0px!important;
     }
-    
-    .website-wrapper.is_half_map.topbar_show_mobile_no #google_map_prop_list_wrapper, 
+
+    .website-wrapper.is_half_map.topbar_show_mobile_no #google_map_prop_list_wrapper,
     .website-wrapper.is_half_map.topbar_show_mobile_no #google_map_prop_list_sidebar,
-    .website-wrapper.is_half_map.topbar_show_mobile_yes #google_map_prop_list_wrapper, 
+    .website-wrapper.is_half_map.topbar_show_mobile_yes #google_map_prop_list_wrapper,
     .website-wrapper.is_half_map.topbar_show_mobile_yes #google_map_prop_list_sidebar{
         top: 0px;
-    } 
-    
+    }
+
     #google_map_prop_list_wrapper,
     #google_map_prop_list_sidebar{
         width:100%;
@@ -1437,34 +1381,34 @@
         right:auto;
         overflow: hidden;
     }
-    
+
     .admin-bar #google_map_prop_list_wrapper{
         top:0px!important;
     }
-    
+
     #google_map_prop_list_sidebar{
         margin-bottom: 50px;
         padding-bottom: 40px;
     }
-    
+
     .full_map_container {
         width: 100%;
         overflow: hidden;
     }
-    
+
     .full_map_container .row{
         margin-left: 0px;
         margin-right: 0px;
     }
-    
+
     .featured_property .property_listing{
        /*max-width: 90%;*/
     }
-    
+
     .property_menu_wrapper_hidden{
         display:none!important;
     }
-    
+
     .img_listings_overlay{
         max-width: 100%;
         width:100%;
@@ -1475,12 +1419,12 @@
 
         padding: 0px 10px;
     }
-    
+
     .agent_listings_title_similar {
         float: left;
         width: 100%;
     }
-    
+
     .reservation_buttons,
     .submit_booking_front_wrapper{
         float:left;
@@ -1488,12 +1432,12 @@
         padding-left: 0px!important;
         padding-right: 0px!important;
     }
-    
+
     .listingsidebar {
         margin-top: -50px;
         padding: 0px 12px;
     }
-    
+
     .listing_reviews_wrapper {
         padding: 0px 25px;
     }
@@ -1506,8 +1450,8 @@
     .owner-wrapper {
         padding: 60px 10px;
     }
-    
-    
+
+
     .cost_row{
         max-width: 100%;
     }
@@ -1517,36 +1461,36 @@
         padding-bottom: 15px;
         position: relative!important;
     }
-    
+
     #contact_host{
         margin-bottom: 0px;
     }
-    
+
     #add_favorites{
         margin-bottom: 15px;
     }
-    
+
     .container{
         width:100%;
     }
-    
-    .slider-content{     
+
+    .slider-content{
     }
-    
-    .adv-1-wrapper,
-    .adv-search-1,
-    .adv-search-3,
-    .adv-search-4,
+
+    .header_media  .adv-1-wrapper,
+    .header_media  .adv-search-1,
+    .header_media  .adv-search-3,
+    .header_media  .adv-search-4,
     #search_wrapper.type2,
     #search_wrapper.sticky_adv {
         display: none;
     }
-    
+
     #adv-search-header-mobile{
         display: inline-block;
         width: 100%;
     }
-    
+
     .page-template-splash_page #adv-search-header-mobile {
         display: block;
         width: 100%;
@@ -1556,7 +1500,7 @@
         z-index: 9999;
         top: 70px;
     }
-    
+
     .page-template-splash_page #adv-search-mobile{
         z-index: 999999;
         float: left;
@@ -1564,7 +1508,7 @@
         position: absolute;
         top: 116px;
     }
-    
+
    .theme_slider_wrapper_type2 .slider-content-wrapper {
         top: 28%!important;
         width: 100%;
@@ -1573,20 +1517,20 @@
         right: auto;
         text-align: center;
     }
-    
+
     .theme_slider_wrapper_type2 .slider-content {
        max-width: 100%;
     }
-    
+
     .theme_slider_wrapper_type2 .listing-desc-slider {
-        text-align: center;  
+        text-align: center;
     }
-    
+
     #openmap {
         padding: 13px 11px 14px 11px;
         bottom: -50px;
     }
-    
+
     .gmap-controls,
     #gmap-controls-wrapper{
         width: 100%;
@@ -1594,8 +1538,8 @@
         left: 0px;
         padding: 0px 20px;
     }
-    
-    .wide .top_bar, 
+
+    .wide .top_bar,
     .page-template-property_list_half .top_bar {
         width: 100%;
         padding-left: 25px!important;
@@ -1605,7 +1549,7 @@
     .content_wrapper {
         width: 100%;
     }
-    
+
     #primary {
         position: relative;
         padding-top: 30px;
@@ -1618,17 +1562,17 @@
         width:75%;
         max-width: 500px;
     }
-    
+
     #colophon .widget_search .form-control,
     .widget_search .form-control {
         width:100%;
     }
-   
+
     .sub_footer {
         height: 100%;
-        float: left;   
+        float: left;
     }
-    
+
     .subfooter_menu {
         float: left;
         margin-right: 0px;
@@ -1638,45 +1582,45 @@
         margin-bottom: 10px;
         width: 100%;
     }
-    
+
     .subfooter_menu li {
         margin-left:0px;
     }
-    
+
     .review-list-content{
         padding-left:0px;
     }
-    
+
     .listing-reviews-wrapper{
         width: 100%;
         padding: 0px 10px;
     }
-    
+
     .owner-page-wrapper-reviews .owner-page-wrapper-inside {
         padding: 0px 0px 60px 0px;
     }
-    
+
     .owner-page-wrapper-inside {
         padding: 60px 10px
     }
-    
+
     .owner-page-wrapper-inside #primary{
         padding:0px 25px;
     }
-    
+
     .message-action {
         position: absolute;
         top: 0px;
         right: 0px;
     }
-    
+
     .reviewer_image{
         top:-5px;
     }
     .review-date{
         top:21px;
     }
-    
+
 
     .listing_type_1 .booking_form_request{
         max-width: 100%;
@@ -1686,29 +1630,24 @@
         padding-left: 10px;
         padding-right: 10px;
     }
-    .user_dashboard_panel .col-md-6, 
-    .user_dashboard_panel .col-md-3,
+
     .user_dashboard_panel select {
         width: 100%;
         max-width: 100%;
     }
-    
-    .user_dashboard_panel .row{
-        margin-left: 0px;
-        margin-right: 0px;
-        min-width:100%;
-    }
-    
+
+
+
     .user_dashboard_panel .col-md-12 .add_custom_detail {
         margin-left: 0px;
         padding: 10px 10px 0px 10px;
         margin-bottom: 15px;
     }
-    
+
     .add_custom_detail .col-md-4 {
         margin-bottom: 10px;
     }
-    
+
     .add_custom_detail .col-md-4 #add_extra_detail,
     .user_dashboard_panel .extra_details_label{
         padding-left: 0px;
@@ -1726,53 +1665,48 @@
         padding-left: 5px;
         padding-right: 5px;
     }
-    .dashboard_amenities .col-md-4{
-        width: 50%;
-        margin-left: -5px;
-        margin-right: -5px;
-        padding: 0px;        
-    }
-    
+
+
 }
 
 @media only screen and (max-width: 930px){
-   
+
     #estate-carousel_slick .slider-content {
         text-align: left;
         max-width: 100%;
     }
-    
+
     .entry-prop{
         bottom: 70px;
     }
-    
+
     .listing_main_image .property_ratings{
         position: absolute;
         left: 0px;
     }
-    
+
     .listing_slider.property_ratings{
         top:-35px;
     }
-    
-    
+
+
     .listing_main_image_location{
         bottom:55px;
     }
-     
+
     .listing_main_image_price{
         left: 0px;
         right: auto;
         text-align: left;
     }
-    
+
     .listing_filter_select {
     }
-    
+
     .order_filter {
         float: left;
     }
-    
+
 }
 
 @media only screen and (max-width: 840px){
@@ -1782,11 +1716,11 @@
         height: 320px;
         margin-top: -160px;
     }
-    
+
     #book_per_hour_calendar {
         height: 245px;
     }
-    
+
     .list_detail_prop_id {
         width: 100%;
         float: left;
@@ -1795,14 +1729,14 @@
         text-align: left;
         margin-top: 120px;
     }
-    
+
     .col-md-pull-8.booking_form_request{
         right:0px;
     }
-    
+
     .custom_day_header .custom_day_from_to,
-    .custom_day.custom_day_header .custom_price_per_day, 
-    .custom_day.custom_day_header .custom_day_min_days, 
+    .custom_day.custom_day_header .custom_price_per_day,
+    .custom_day.custom_day_header .custom_day_min_days,
     .custom_day.custom_day_header .custom_day_name_price_per_guest,
     .custom_day.custom_day_header .custom_day_name_price_per_weekedn,
     .custom_day.custom_day_header .custom_day_name_change_over,
@@ -1814,7 +1748,7 @@
     .custom_day_name_change_over,
     .custom_day_name_price_per_weekedn,
     .custom_day_name_price_per_guest,
-    .custom_price_per_day, 
+    .custom_price_per_day,
     .custom_day_min_days,
     .custom_day_from_to{
         width: 100%;
@@ -1822,61 +1756,105 @@
         border-bottom: 1px solid #d0d5de;
 
     }
-    
+
     .carouselvertical .carousel-inner{
         max-width: 100%;
         max-height: 100%;
         padding-right: 142px;
         float: left;
     }
-    
+
     .carousel-control.right.vertical {
         right: 150px;
         margin-top: -25px;
         top: 50%;
     }
-    
+
     .carouselvertical {
         height: auto!important;
     }
 }
 
 @media only screen and (max-width: 768px){
-   
+
+  #booking_form_mobile_close,
+  .mobile_booking_wrapper{
+    display: block;
+  }
+
+  #contact_owner_modal,
+  #instant_booking_modal,
+  #loginmodal{
+      z-index: 999990;
+      top: 10px;
+      background: #fff;
+  }
+
+  .mobile_booking_wrapper_flex{
+    display: flex;
+    width: 50%;
+    float: left;
+    flex-flow: column;
+    height: 66px;
+    padding: 10px 0px;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .daterangepicker{
+        z-index: 99999!important;
+  }
+
+
+  #booking_form_request{
+      display: none;
+  }
+
+  .mobile_booking_wrapper .listing_main_image_price{
+    text-shadow: none;
+    font-size: 20px;
+    bottom: auto;
+    position: relative;
+  }
+
+  .islive {
+      bottom: 80px;
+  }
+
     .all-front-calendars{
         margin-bottom: 15px;
     }
-    
+
     #contact_owner_modal .has_calendar{
         width:100%;
     }
-    
+
     #coupon_code{
         width:100%
     }
-    
+
     .woocommerce .cart .button, .woocommerce .cart input.button {
         width: 100%!important;
         margin-top: 5px;
     }
-    
-    
+
+
     #estate-carousel_slick .slider-content-wrapper{
         top:30%;
     }
-    
+
     .elementor-widget-container .shortcode_slider_list li,
     .shortcode_slider_list li{
         min-width: 49%;
         width:49%;
     }
-    
+
     .theme_slider_wrapper .slider-content, .theme_slider_wrapper_type2 .slider-content{
         width:100%;
         max-width: 100%;
         padding: 0px 20px;
     }
-    
+
     .reviwer-name {
         width: 100%;
         margin-top: 0px;
@@ -1885,16 +1863,16 @@
     .listing_type_1 .entry-prop {
         width: 100%;
     }
-    
+
     .list_detail_prop_id {
         width: 100%;
         float: left;
     }
-    
+
     .theme_slider_type2.theme_slider_search_type1 .listing-desc-slider span{
         width: 100%;
     }
-    
+
     .wide .theme_slider_type2 .slider-content-wrapper {
         top: calc(48% - 110px);
         width: 100%;
@@ -1903,105 +1881,89 @@
           top: 65%!important;
           z-index: 99999;
     }
-    
+
     .theme_slider_type2 .listing-desc-slider span,
     .theme_slider_type2 .slider-title h2{
         width: 100%;
         max-width: 100%;
     }
-    
+
     .theme_slider_type2 .slider-title h2 a {
         font-size: 30px;
     }
-    
+
     .theme_slider_type2 .price-slider{
         font-size: 25px;
     }
-    
+
     .theme_slider_type2 .theme-slider-price {
         display: block;
         font-size: 25px;
         width: 100%;
     }
-    
+
    .estate_places_slider .places_slider_wrapper_type_1 {
         width: auto;
         margin: 0px ;
     }
 
-
-    
-    .booking_form_stripe,
-    #stripe_form,
-    .stripe-button-el,         
-    #confirm_zero_instant_booking, 
-    #send_direct_bill_booking, 
-    #direct_pay_booking, 
-    #send_direct_bill, 
-    #direct_pay, 
-    #stripe_cancel, 
-    #paypal_booking, 
-    #pick_pack{
-        width: 100%;
-    }
-    
     #direct_pay_booking,
     #send_direct_bill_booking,
-    #send_direct_bill, 
+    #send_direct_bill,
     #direct_pay {
         margin: 5px 0px 0px 0px;
     }
-    
+
     #google_map_prop_list_sidebar .pagination {
         text-align: left;
         margin-left: 30px;
     }
-    
+
     #change_pass,
     #update_profile,
     #delete_profile,
     #view_profile{
         margin-left: 0px;
     }
-    
+
     #google_map_prop_list_sidebar,
     #google_map_prop_list_wrapper {
         top: 0px!important;
     }
-    
+
     .booking-calendar-set table.booking-calendar {
         width: 600px;
     }
     .booking-calendar-wrapper-in-wrapper {
         max-width: 620px;
     }
-    
+
     #capthca_register_sh{
         transform: scale(0.9)!important;
         -webkit-transform: scale(0.9)!important;
         transform-origin: 0 0;
         -webkit-transform-origin: 0 0;
     }
-    
+
     .custom_day_wrapper{
         margin: 33px -30px 0px -15px;
     }
-    
+
     .custom_day{
         margin-top:10px;
-    
+
     }
-    
+
     .custom_day_header .delete_custom_period{
         display:none;
     }
-    
-    .custom_day_name_checkout_change_over, 
-    .custom_day_name_change_over, 
-    .custom_day_name_price_per_weekedn, 
-    .custom_day_name_price_per_guest, 
-    .custom_price_per_day, 
-    .custom_day_min_days, 
+
+    .custom_day_name_checkout_change_over,
+    .custom_day_name_change_over,
+    .custom_day_name_price_per_weekedn,
+    .custom_day_name_price_per_guest,
+    .custom_price_per_day,
+    .custom_day_min_days,
     .custom_day_from_to {
         width: auto;
         height: auto;
@@ -2010,33 +1972,33 @@
     }
 
 
-    
-    #allinone_set_custom, 
+
+    #allinone_set_custom,
     #set_price_dates{
         width:auto;
     }
-    .new-listing-alert{ 
+    .new-listing-alert{
         width: auto;
         float: none;
         margin: 10px 37px 0px 37px;
     }
-    
-    
+
+
     .listing_type_1 .check_avalability{
         float:left;
     }
-    
+
     .check_avalability{
         float: left;
         display: block!important;
     }
-    
-    
+
+
     .custom_wpestate_rentals{
         display: block!important;
         margin-top: 20px;
     }
-    
+
     .places_wrapper1,
     .places_wrapper2,
     .places_wrapper3,
@@ -2045,20 +2007,20 @@
     .places_wrapper6{
         width: 100%;
     }
-    
+
     .blog_featured,
     .places_wrapper{
         max-width: 100%;
         margin-bottom: 30px!important;
     }
-    
-    .agent_unit,    
+
+    .agent_unit,
     .property_listing{
         margin-left: auto;
         margin-right: auto;
-       
+
     }
-    
+
     .more_list,
     .shortcode_title,
     #other_listings{
@@ -2071,13 +2033,13 @@
     .theme_slider_wrapper_type2 .theme-slider-price,
     .theme-slider-price{
     }
-    
+
     .blog_featured{
         width: 100%;
         max-width: 90%;
         margin: 0px auto;
     }
-   
+
     .pp_content_container .pp_details {
         float: left!important;
         margin: 30px 0 2px!important;
@@ -2088,17 +2050,17 @@
         width: 100%!important;
         left: 0px!important;
     }
-    
+
     .pp_content {
         height:auto!important;
         width: 100%!important;
     }
-    
+
     #fullResImage{
         width:100%!important;
         height: auto!important;
     }
-    
+
     .panel-title,
     .panel-body{
         width:100%;
@@ -2106,21 +2068,21 @@
     .video-body{
         margin-left: 0px;
     }
-        
+
     .all-front-calendars .booking-calendar-wrapper{
         width:100%;
     }
-    
+
     .featured_property .listing_wrapper .property_listing{
         margin:0px auto;
     }
-    
+
     #colophon .featured_property .listing_wrapper .property_listing,
     #primary .featured_property .listing_wrapper .property_listing{
         margin:0px;
     }
-    
-    
+
+
     .blog_featured,
     .places_wrapper{
         text-align: center;
@@ -2130,8 +2092,8 @@
         margin-bottom: 30px;
             display: table;
     }
-    
-    
+
+
     .featured_property,
     .featuredplace{
         margin-left: auto;
@@ -2139,40 +2101,67 @@
     }
 
     .featured_property{
-        margin-bottom: 30px;   
+        margin-bottom: 30px;
     }
 
     .featured_agent{
         max-width: 100%;
     }
-    
-    #colophon .featured_property, 
+
+    #colophon .featured_property,
     #colophon .featuredplace ,
-    #primary .featured_property, 
+    #primary .featured_property,
     #primary .featuredplace{
         margin-left: 0px;
     }
-    
+
     .listing_filters_head .col-md-2 {
         width: 50%;
         margin-bottom: 5px;
     }
+
+    #tab_prpg.wpestate_elementor_tabs .wpestate-elementor-nav-tabs ul {
+        display: block;
+        height: auto;
+    }
+
+    #tab_prpg.wpestate_elementor_tabs .nav-tabs>li {
+        border-bottom: 1px solid #eaeaea;
+    }
+
+    #tab_prpg.wpestate_elementor_tabs li {
+        background: 0 0;
+        border: none;
+        width: auto;
+        flex-grow: inherit;
+        flex-basis: unset;
+        width: 100%;
+    }
+
 }
 
 @media only screen and (max-width: 667px){
-    
+
+    .wpestate_stripe.wpestate_stripe_form_1 input{
+        width: auto;
+    }
+
+    .wpestate_stripe.wpestate_stripe_form_1 .row + .row {
+    border-top: 0px solid #819efc;
+}
+
     .category_details_wrapper_icon{
         width: 40%;
         float: left;
         margin-left: 0px;
         margin-bottom: 10px;
     }
-    
-    .single-estate_property .fc .fc-axis, 
+
+    .single-estate_property .fc .fc-axis,
     .single-estate_property .fc-day-header {
         font-size: 11px!important;
     }
-    
+
     #book_per_hour_close {
         width: 25px;
         height: 25px;
@@ -2184,11 +2173,11 @@
         width: 95%;
         height: auto;;
     }
-    
+
     #book_per_hour_calendar {
         height: 230px;
     }
-    
+
     .fc-today-button{
         font-size: 13px!important;
     }
@@ -2197,37 +2186,37 @@
         display: block;
         width: calc(100% - 200px);
     }
-    
+
     .fc-toolbar.fc-header-toolbar .fc-center h2 {
         font-size: 15px;
     }
-    
-    
+
+
     .fc-toolbar.fc-header-toolbar .fc-center .hour_selection {
         font-size: 11px;
     }
-    
+
     .fc th span {
         font-size: 13px!important;
     }
-    
+
     .custom_day_wrapper_mobile .custom_day {
         width: 100%;
-        margin-left: 0px; 
+        margin-left: 0px;
         margin-bottom: 0px;
     }
-        
-    .heading_over_image, 
+
+    .heading_over_image,
     .heading_over_video {
         font-size: 35px;
         padding: 0px 25px;
     }
-    
-    .subheading_over_image, 
+
+    .subheading_over_image,
     .subheading_over_video {
         font-size: 20px;
     }
-    
+
     .wpestate_header_image,
     .wpestate_header_video{
         height: 300px!important;
@@ -2236,26 +2225,26 @@
     .splash_page_widget{
         width: 100%;
     }
-    
+
     .splash-right-widet {
         float: none;
         width: auto;
         display: inline-block;
     }
-    .page-template-splash_page .is_search_type1 .heading_over_video_wrapper, 
+    .page-template-splash_page .is_search_type1 .heading_over_video_wrapper,
     .page-template-splash_page .is_search_type1 .heading_over_image_wrapper,
-    .page-template-splash_page .heading_over_video_wrapper, 
+    .page-template-splash_page .heading_over_video_wrapper,
     .page-template-splash_page .heading_over_image_wrapper {
         top: 40%;
     }
-    
+
     .splash_page_widgets_wrapper {
         width: 100%;
         padding: 0px 13px;
         margin: 0px auto;
         text-align: center;
     }
-    
+
     .import_ical, .export_ical {
         width: 100%;
         max-width: 600px;
@@ -2266,19 +2255,19 @@
         max-width: 600px;
         padding: 0px 7px;
     }
-    
+
     .wide_property.property_flex{
         max-width: 400px;
         width: 100%;
         padding: 0px;
         margin: 0px auto;
     }
-    
+
     .wide_property.property_flex .property_listing {
         max-width: 100%;
         padding-bottom: 12px;
     }
-    
+
     .category_tagline_wrapper {
         position: relative;
         bottom: auto;
@@ -2294,19 +2283,19 @@
         z-index: 100;
         width: 100%;
         padding-left: 0px;
-        float: left;       
+        float: left;
     }
-    
+
     .invoice_unit_title .col-md-2 ,
     .invoice_unit .col-md-2{
         width: 100%;
     }
-    
+
     .image_gallery {
         width: 33.3%!important;
         display: inline-block;
     }
-    
+
     .slider-content {
         padding: 0px 30px;
     }
@@ -2314,16 +2303,16 @@
     .theme_slider_type2 .slider-title h2 a{
         font-size:24px;
     }
-    
+
     .prop_social .share_facebook{
         margin-left:-15px;
     }
-    
+
     .invoice_table,
     .invoice_details{
-        width:100%;   
+        width:100%;
     }
-    
+
     .user_dashboard_panel .login-alert {
         max-width: 100%;
     }
@@ -2333,19 +2322,19 @@
         width:100%;
         min-width: 100%;
     }
-    
+
     .extended_search_checker{
         width:50%;
     }
-    
+
     .prop_social{
-        width:100%;   
+        width:100%;
     }
 
     .listing-desc-slider{
         display:none;
     }
-    
+
     .theme_slider_wrapper_type2 .slider-content-wrapper {
         top: 42%!important;
     }
@@ -2353,7 +2342,7 @@
     .slider-content-wrapper{
         width:100%;
     }
-    
+
     .slider-content-wrapper{
         bottom: 30px;
         height: 120px;
@@ -2363,8 +2352,8 @@
     #carousel-control-theme-prev{
         top:50%;
     }
-    
-    .theme_slider_type2 .carousel-control-theme-prev, 
+
+    .theme_slider_type2 .carousel-control-theme-prev,
     .theme_slider_type2 .carousel-control-theme-next{
         top: 60%!important;
         margin-top: -55px;
@@ -2374,15 +2363,15 @@
         right: 65px!important;
         margin-top: -60px!important;
     }
-    
+
     .theme_slider_type2 .carousel-control-theme-prev {
         margin-top: -70px;
     }
-    .theme_slider_type2 .slider-content, 
+    .theme_slider_type2 .slider-content,
     .theme_slider_type2 .listing-desc-slider{
         display: block;
     }
-    
+
     .wide .theme_slider_type2 .slider-content-wrapper {
         top: calc(56% - 110px);
     }
@@ -2392,43 +2381,45 @@
 }
 
 @media only screen and (max-width: 650px){
-    
+    .wpestate_front_bedrooms{
+      width: 100%;
+    }
     .dropdown.custom_icon_class.form-control.listing_filter_select {
         margin: 0px;
     }
-    
+
     .theme_slider_type2 .carousel_type2_control_wrapper {
         left: auto;
         height: 0px;
         top: auto!important;
     }
-    
-    
+
+
     .theme_slider_type2 .price-slider-wrapper {
         margin-bottom: 7px;
         font-size: 15px;
     }
-    
+
     .theme_slider_type2 .price-slider {
         font-size: 20px;
         padding: 0px!important;
     }
-    
+
     .theme_slider_type2 .slider-title h2 a{
         font-size: 25px;
     }
-    
+
     .col-md-6.property_flex, .col-md-3.property_flex, .col-md-4.property_flex {
         width: 100%!important;
         max-width: 100%;
             float: left;
     }
-    
+
     .theme_slider_type2 .carousel-control-theme-prev {
         left: auto;
         right: 15px
     }
-    
+
     .theme_slider_type2 .carousel-control-theme-prev {
         margin-top: -60px;
     }
@@ -2437,49 +2428,49 @@
     .title_prop{
         text-align: center;
     }
-    
+
     .blog_unit_back,
     .property_listing
     .agent_unit{
         margin-left:auto;
         margin-right: auto;
     }
-    
+
     .pagination{
         text-align: center;
     }
-    
-   
+
+
     .pagination > li{
         display:inline-block;
         float:none;
     }
 
     .related_posts h3{
-     text-align: center;   
+     text-align: center;
     }
     .price_explaning{
         display:none;
     }
-    
+
     .admin-bar, .admin-bar .header_wrapper.customnav {
         margin-top: 0px;
     }
-    
+
     .list_slider {
         display: inline-block;
         width: 100%;
     }
-    
- 
-    
+
+
+
     #booking_form_request .third-form,
     #booking_form_request .guest_icon,
     #booking_form_request .calendar_icon{
         float:left!important;
         width: 100%;
     }
-    
+
     .places2,
     .places1,
     .places3,
@@ -2494,12 +2485,12 @@
         width: 100%;
         float: none;
     }
-    
-    
+
+
     .message_header .col-md-4{
         float:left;
     }
-    
+
     .places_wrapper{
         margin: 0px auto;
     }
@@ -2507,45 +2498,45 @@
     .col-md-4.property_flex {
         width: 100%;
     }
-    
+
     .col-md-8 .listing_filter_select,
     .listing_filter_select {
         width: 100%;
         margin: 8px 15px 15px 0px;
     }
-    
+
     .col-md-8 .listing_filters_head .listing_filter_select {
         margin-top: 0px;
-    }   
-    
+    }
+
     .category_icon_wrapper{
         margin-right: 20px;
     }
-    
-   
+
+
 }
 
 @media only screen and (max-width: 568px){
-    
+
     .dashboard-margin>.row {
         float: none;
     }
-    
-    #custom_price_wrapper .booking-calendar-wrapper-in-price .has_future, 
+
+    #custom_price_wrapper .booking-calendar-wrapper-in-price .has_future,
     #custom_price_wrapper .booking-calendar-wrapper-in-price .has_past {
         max-width: 45px;
-    }   
-    
+    }
+
     .booking-calendar-wrapper-in-wrapper .custom_set_price, .booking-calendar-wrapper-in-wrapper .price-day {
         word-wrap: break-word;
         padding: 3px;
         white-space: normal;
     }
-    
+
     .booking-price{
         padding:5px;
     }
-    
+
     .daterangepicker {
         width: 100%!important;
     }
@@ -2562,7 +2553,7 @@
     .all-front-calendars{
         padding: 0px;
     }
-    
+
     #colophon .listing-unit-img-wrapper .carousel-inner,
     #colophon .listing-unit-img-wrapper img {
         height: 100%;
@@ -2572,15 +2563,16 @@
         margin: 0px;
         line-height: initial;
     }
-    
+
     .booking-calendar-set table.booking-calendar {
         width: 280px;
     }
     .row.is_dashboard .booking-calendar-wrapper-in-wrapper{
-        max-width: 100%;
-        margin: 0px;
+      max-width: initial!important;
+      margin: 0px;
+      width: 100%;
     }
-    
+
     .booking-calendar-wrapper-in-wrapper {
         max-width: 314px;
     }
@@ -2590,20 +2582,20 @@
     .booking-calendar-wrapper-in {
         min-height: 380px;
     }
-    
+
     .carouselvertical .carousel-inner{
         max-width: 100%;
         max-height: 338px;
         padding-right: 0px;
         float: left;
     }
-    
+
     .carousel-control.right.vertical {
         right: 0px;
         margin-top: -40px;
         top: 50%;
     }
-      
+
     .carouselvertical{
         height:auto!important;
     }
@@ -2613,7 +2605,7 @@
     #carousel-listing{
         background-color: transparent;
     }
-    
+
     #estate-carousel_slick .slider-content-wrapper {
         width: 100%;
         margin-left: 0;
@@ -2622,7 +2614,7 @@
         max-width: 100%;
         top: 40%;
     }
-    
+
     .item-slick {
         height: 400px!important;
     }
@@ -2632,36 +2624,29 @@
     #estate-carousel_slick .slick-dots{
         display: none!important;
     }
-    
-    .message-action {
-        position: relative;
-        bottom: auto;
-        left: auto;
-        margin-bottom: -10px;
-        border-top: 1px solid #e8ebf0;
-    }
-    
-    #custom_price_wrapper .booking-calendar-wrapper-in-price .has_future, 
+
+
+    #custom_price_wrapper .booking-calendar-wrapper-in-price .has_future,
     #custom_price_wrapper .booking-calendar-wrapper-in-price .has_past {
         padding: 6px 0px 10px 0px!important;
     }
-    
-    
+
+
     .image_gallery {
         width: 50%!important;
         display: inline-block;
     }
-    
-    
+
+
     .listing_filters_head .col-md-2 {
         width: 100%;
         margin-bottom: 5px;
     }
-    
+
     .mobile_header.top_bar_on {
         /*top: 80px;*/
     }
-    
+
     .top_bar {
         height: 80px;
         height: auto;
@@ -2675,7 +2660,7 @@
         float: left;
         height: auto;
     }
-    
+
     .right-top-widet,
     .left-top-widet {
         display: inline;
@@ -2683,11 +2668,11 @@
         width: 100%;
         text-align: center;
     }
-    
+
     .top_bar .widget-container .textwidget{
         /*float:left;*/
     }
-    
+
     .top_bar  .widget-container {
         margin-bottom: 30px;
         float: left;
@@ -2697,16 +2682,16 @@
         text-align: left;
         display: inline-block;
     }
-    
+
     .top_bar .multiple_currency_widget{
         min-width: 126px;
         margin-right: 15px;
     }
-    
+
     .right-top-widet {
-       
+
     }
-    
+
     .date_duration,
     .date_interval,
     .inv_exp,
@@ -2714,23 +2699,23 @@
     .inv_legend{
         width:100%;
     }
-    
-    
+
+
     .commentlist .children{
         padding-left: 0px;
     }
-    
+
     .category_icon_wrapper {
         margin-right: 8px;
         margin-bottom: 15px;
         width: 100%;
     }
-  
+
     #colophon .category_name {
         padding: 0px 0px;
         width: 100%;
     }
-    
+
     #gmap-full,
     #geolocation-button,
     #gmap-next,
@@ -2743,13 +2728,13 @@
         margin-top:2px;
         margin-left: 0px;
     }
-    
-    .dashboard-header{ 
+
+    .dashboard-header{
         display:none;
     }
-    
-   
- 
+
+
+
     .title_slider {
          text-align: left;
     }
@@ -2760,8 +2745,8 @@
 }
 
 @media only screen and (max-width: 480px){
-    
-    
+
+
     .header_masonry .col-md-6.image_gallery {
         min-height: 300px!important;
         height: 300px;
@@ -2786,12 +2771,12 @@
     .social_icons_owner i{
         margin-bottom: 10px;
     }
-    
-    
+
+
     .newsletter_input{
         font-size: 12px;
     }
-    
+
     .theme_slider_wrapper, .theme_slider_wrapper_type2 {
         height: 330px;
     }
@@ -2803,69 +2788,50 @@
     #book_per_hour {
         margin-top: -140px;
     }
-    
+
     #book_per_hour_calendar {
         height: 200px;
     }
-    
+
     #primary .multiple_currency_widget {
         width: 100%;
     }
-    
+
     .top_bar .multiple_currency_widget .form-control {
         margin-bottom: 5px;
     }
-    
-    .add_option_wrapper .add_option_input,
-    .extra_pay_option .add_option_input,
-    .add_option_wrapper #add_option_name,
-    .add_option_input.extra_option_value,
-    .add_option_wrapper .select_submit_price,
-    .extra_pay_option .select_submit_price,
-    .extra_pay_option .select_submit_price, 
-    .extra_pay_option .select_submit_price,
-     #add_extra_option,
-    .add_option_wrapper #add_option_value,
-    .add_option_wrapper #add_option_type{
-        width: 100%;
-        max-width: 100%;
-        margin-bottom: 10px!important;
-    }
-    
-    .delete_extra_option,
-    .add_option_wrapper #add_extra_option{
-        width: 100%;
-        max-width: 200px;
-    }
+
+
+
     .theme_slider_type2 .listing-desc-slider {
         display: none;
     }
-    
-    .comment-form-url, 
-    .comment-form-email, 
+
+    .comment-form-url,
+    .comment-form-email,
     .comment-form-author {
         width: 100%;
         margin-right: 1.6%;
         float: left;
         margin-bottom: 5px;
     }
-    
+
     .theme_slider_type2 .price-slider-wrapper{
         margin-bottom: 10px;
     }
-    
+
     .import_ical, .export_ical {
         width: 100%;
         max-width: 300px;
         padding: 0px 7px 0px 7px;
     }
-    
+
     #property_icalendar_import {
         width: 100%;
         max-width: 300px;
         padding: 0px 7px;
     }
-    
+
     .property_page_container {
         background-color: transparent;
         width: 100%;
@@ -2882,97 +2848,97 @@
         margin: 0px -10px;
         width: auto;
     }
-    
+
     .review-date{
         display:none;
     }
-    
+
     .advanced_search_map_list_container .col-md-6, .advanced_search_map_list_container .col-md-3 {
         width: 100%;
     }
-    
+
     .image_gallery {
         width: 50%!important;
         display: inline-block;
     }
-    
+
     .slider-content-wrapper{
         bottom:auto;
-        top:15px;    
+        top:15px;
     }
-    
+
     .item-version{
-     display:none!important; 
+     display:none!important;
     }
-    
+
     .listing_main_image_location .property_ratings,
     #listing_reviews .property_ratings {
         width: 100%;
         display: inline-block;
         margin-left: 0px;
     }
-      
+
     .entry-prop {
         bottom: 75px;
         font-size: 25px;
     }
-    
+
     .listing_main_image_price {
         font-size: 20px;
     }
 
-  
+
     .contact_info_details {
          width: 250px;
         margin-left: -29px;
     }
 
-    .info-container_booking span, 
+    .info-container_booking span,
     .info-container_booking span:first-child {
         margin: 15px 10px 0px 0px;
-    }   
-    
+    }
+
     .info-container_booking {
         padding: 0px 15px 15px;
     }
-    
+
     .booking_list .col-md-12 {
         padding: 0px;
         margin-bottom: 30px;
     }
-    
+
     .booking_list .col-md-12 .book_image {
         width: 100%;
         margin-right: 0px;
     }
-    
+
     .booking_list .col-md-12 .dasboard-prop-listing {
         border: 1px solid #e8ebf0;
         margin: 0px 15px;
     }
-    
+
     .booking_list .col-md-12 .create_invoice_form{
         padding: 15px 15px 15px 15px;
         margin: 0px 15px 0px 15px;
     }
-    
+
     .booking_list .prop-info {
         margin-left: -5px;
     }
 
-    .booking-calendar-wrapper-in-price, 
+    .booking-calendar-wrapper-in-price,
     .booking-calendar-wrapper-in {
         min-width:100%;
     }
-    
+
     .agent_contanct_form .third-form  {
         width:100%;
     }
-    
+
     .extended_search_checker{
         width:100%;
     }
-    
+
     .modal{
         padding-right: 0px!important;
     }
@@ -2982,17 +2948,17 @@
         left: 0px;
         margin: 0px auto;
     }
-    
+
     .modal-body #booking_guest_no,
     .modal-body #booking_from_date, .modal-body #booking_to_date {
         width: 100%;
     }
-    
+
     .modal-body .third-form {
         width:100%
     }
-    
-    
+
+
     #colophon .multiple_currency_widget .form-control {
         width:100%;
     }
@@ -3005,7 +2971,7 @@
         width: 100%;
         margin: 0px;
     }
-    
+
     .ll-skin-melon td .ui-state-default{
         padding: 7px 0em .5em 0em;
         height: 38px;
@@ -3015,11 +2981,11 @@
         margin-bottom: 15px;
     }
 
-    
+
     #search_wrapper{
         display:none;
     }
-    
+
     .single-post .prop_social {
         padding-bottom: 10px;
         text-align: right;
@@ -3036,52 +3002,54 @@
         padding: 0px!important;
         margin: 0px auto;
     }
-    
+
     .yelp_unit {
         display: flex;
         flex-flow: column;
         margin-bottom: 10px;
     }
-    
+
     .yelp_stars {
         order: 1;
         float: left;
         width: 82px!important;
         margin-bottom: 5px;
     }
-    
+
     .yelp_unit_name {
         order: 2;
     }
-    
+
     .yelp_unit_distance {
         order: 3;
     }
-    
+
     #book_per_hour {
         margin-top: -155px;
     }
-    
+
     #book_per_hour_calendar {
         height: 225px;
     }
-    
+
     #book_per_hour_calendar{
         padding: 10px;
     }
-    
+
     #book_per_hour_footer_toolbar {
         margin-left: 10px;
         margin-top: 10px;
     }
-    
+
     .fc-toolbar.fc-header-toolbar .fc-center {
         display: none;
     }
-    
+
     .booking-calendar-set table.booking-calendar {
-        width: 390px;
+        width: 100%;
     }
+
+
     .booking-calendar-wrapper-in-wrapper {
         max-width: 405px;
     }
@@ -3091,81 +3059,77 @@
     .booking-calendar-wrapper-in {
         min-height: 380px;
     }
-    
-    
+
+
     .shortcode_slider_list li ,
     .elementor-widget-container .shortcode_slider_list li {
         min-width: 100%;
         width: 100%;
     }
-    
+
     .booking-calendar-wrapper-in-wrapper {
         margin: 30px -12px;
     }
-    
+
     .booking-calendar-wrapper-in-wrapper .custom_set_price,
     .booking-calendar-wrapper-in-wrapper  .price-day {
         font-size: 13px;
         padding: 2px 5px;
     }
-    
+
     .dashboard_amenities .col-md-4 {
         width: 100%;
     }
 }
 
 @media only screen and (max-width:400px){
-    
-    .wpestate_front_bedrooms {
-        width: 100%;
-    }
-    
+
     #imagelist .uploaded_images {
         margin: 0px 5px 5px 5px;
         max-width: 46%;
     }
-    
+
     .property_unit_v3  .property_unit_action{
             top: 226px;
     }
-    
+
     .category_details_wrapper_icon {
         width: 100%;
     }
-    
+
     .listing_reviews_wrapper .rating_legend {
         width: 100%;
     }
-    
+
     #submit_booking_front_instant_wrap:after {
         content: "\f0e7";
         font-family: FontAwesome;
         left: 20px;
         float: left;
     }
-    
+
     .wide_property.property_flex {
         max-width: 100%;
     }
-    
+
     .image_gallery {
         width: 100%!important;
         display: inline-block;
         border:none!important;
     }
-    
+
     .single-estate_property .booking_form_request {
         width: auto;
     }
-    
+
     .booking_form_request{
         padding:15px;
     }
-    
+
     table.booking-calendar {
         width: 100%;
     }
-    
+
     .shortcode_slider_list .listing_title_unit {
         max-width: 350px;
         width: 215px;
@@ -3177,7 +3141,7 @@
         width: 100%;
         margin-top: 0px;
     }
-    
+
     .owner_area_wrapper_sidebar h3{
         width:100%;
         margin: 15px 0px 0px 0px;
@@ -3186,32 +3150,32 @@
     .owner_area_wrapper_sidebar .owner_read_more{
         margin-left: 0px;
     }
-    
-    #book_per_hour_calendar .fc-prev-button, 
-    #book_per_hour_calendar .fc-next-button, 
-    #all-front-calendars_per_hour .fc-prev-button, 
-    #all-front-calendars_per_hour .fc-next-button, 
-    #all-front-calendars_per_hour_internal .fc-prev-button, 
+
+    #book_per_hour_calendar .fc-prev-button,
+    #book_per_hour_calendar .fc-next-button,
+    #all-front-calendars_per_hour .fc-prev-button,
+    #all-front-calendars_per_hour .fc-next-button,
+    #all-front-calendars_per_hour_internal .fc-prev-button,
     #all-front-calendars_per_hour_internal .fc-next-button {
         width: 30px;
         height: 30px!important;
     }
-    
+
     .fc-icon-left-single-arrow:after {
         padding: 7px 10px 0px 0px;
         height: 30px;
         width: 30px;
     }
-    
-    
+
+
     .fc-icon-right-single-arrow:after {
         padding: 7px 8px 0px 1px;
         height: 30px;
         width: 30px;
     }
-    
-    #book_per_hour_calendar .fc-today-button, 
-    #all-front-calendars_per_hour .fc-today-button, 
+
+    #book_per_hour_calendar .fc-today-button,
+    #all-front-calendars_per_hour .fc-today-button,
     #all-front-calendars_per_hour_internal .fc-today-button {
         width: auto;
         height: 30px!important;
@@ -3219,77 +3183,77 @@
 }
 
 @media only screen and (max-width:360px){
-    
-        
+
+
     .theme-slider-view {
         font-size: 14px;
         display: block;
         text-align: center;
     }
-    
+
     .theme_slider_wrapper_type2 .theme-slider-price, .theme-slider-price {
         text-align: center;
     }
-    
+
     .slider-title h2 a, .theme_slider_type2 .slider-title h2 a {
         text-align: center;
         margin: auto;
         display: block;
         line-height: 1.2em;
     }
-    
+
     #primary .listing-unit-img-wrapper, #colophon .listing-unit-img-wrapper {
         margin-bottom: 0px;
         background-color: #f0f0f0;
     }
-    
+
     #colophon .property_listing {
         margin-bottom: 10px!important;
     }
-    
+
     #contact_owner_modal .modal-body {
         padding: 15px;
     }
-    
+
     #ajax_register_div .login_form, #ajax_login_div #login-div {
         padding: 15px 15px 0px 15px!important;
     }
-    
+
     .login-links {
         padding: 15px;
     }
-    
+
     h2.modal-title_big{
         font-size:25px!important;
     }
-    
+
     #forgot-pass-div_mod {
         padding: 15px 15px 40px 15px;
     }
-    
+
     .theme-slider-price .price-slider{
         padding: 0px 15px;
     }
-    
+
     .theme_slider_wrapper_type2 .slider-title {
         padding: 0px 15px;
         margin-top: -5px;
     }
-    
-    .carousel-control-theme-next i, 
+
+    .carousel-control-theme-next i,
     .carousel-control-theme-prev i{
         font-size: 30px;
     }
-    
+
     .theme_slider_wrapper_type2 .carousel-control-theme-prev {
         left: 0px;
     }
-    
+
     .theme_slider_wrapper_type2 .carousel-control-theme-next{
         right: 0px;
     }
-    
-    
+
+
     .right-top-widet {
         margin-top: 5px;
     }
@@ -3308,26 +3272,26 @@
     .top_bar .social_sidebar_internal{
         text-align: center;
     }
-    
-    .featured_property_type3 h2, 
+
+    .featured_property_type3 h2,
     .featured_article_type2 h2 {
         width: 100%;
         font-size: 35px;
     }
-    
+
     .comment-form #submit {
         width: 100%!important;
     }
-    
+
     .featured_property .property_listing:hover .category_name {
         top: 32%;
     }
-    
+
     .category_name_places,
     .featured_property .featured_listing_title {
         font-size: 20px;
     }
-    
+
     .title_slider {
         margin-bottom: 16px;
         padding-top: 0px;
@@ -3335,26 +3299,26 @@
         width: 80%;
         text-align: left;
     }
-    
+
     table.booking-calendar{
         width:100%;
     }
-   
+
     .property_listing{
 /*        min-height: 100%;*/
         min-height:auto;
     }
-    
+
     .adv_search_widget {
         margin-bottom: 15px;
     }
-      
-      
+
+
     #colophon .title-container {
         width: 100%;
         margin-top: 0px;
     }
-    
+
     #colophon .price_unit_wrapper {
         position: relative;
         top: auto;
@@ -3362,30 +3326,30 @@
         right: auto;
         margin-top: 10px;
     }
-    
+
     #colophon .category_name {
         padding: 0px 0px;
         width: 100%;
     }
-    
+
    #instant_booking_modal .modal-dialog,
     .modal-dialog{
         width: 300px;
     }
-    
+
     .shortcode-login #user_terms_register_sh_label {
         width: 237px;
         width: 80%;
         margin-top: 1px;
         line-height: 14px;
     }
-    
+
     .prop_social_share {
         width: 100%;
         float: left;
     }
-    
-    
+
+
 }
 
 @media only screen and (max-height:900px){
@@ -3405,4 +3369,3 @@
         flex-basis: calc(50% - 6px);
     }
 }
-

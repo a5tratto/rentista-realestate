@@ -169,8 +169,10 @@ wp_reset_postdata();
                     <?php print trim($content);?>
                 </div>
                 
-                <div id="contact_me_long_owner" class=" owner_read_more" data-postid="<?php print intval($agent_id);?>"><?php esc_html_e('Contact Owner','wprentals');?></div>
-           
+                <?php if( wprentals_get_option('wp_estate_replace_booking_form','') == 'no'){ ?>  
+                    <div id="contact_me_long_owner" class=" owner_read_more" data-postid="<?php print intval($agent_id);?>"><?php esc_html_e('Contact Owner','wprentals');?></div>
+                <?php } ?>
+                   
             </div>   
             
         </div> 

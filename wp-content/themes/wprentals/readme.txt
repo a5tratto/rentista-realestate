@@ -1,7 +1,7 @@
 Theme Name: WpRentals
 Theme URI: http://themeforest.net/user/wpestate
 Description: Ultimate WordPress Theme created by WP Estate for accomodation booking. WP Rentals is clean, flexible, fully responsive and retina Ready. Its smart settings allows you to build outstanding renting websites easy and fast.
-Version: 2.8.5
+Version: 3.2.1
 Author: http://wpestate.org/
 Author URI: http://themeforest.net/user/wpestate
 Text Domain: wpestate

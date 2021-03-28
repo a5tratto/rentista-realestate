@@ -93,7 +93,7 @@ if( $schema_flag==1) {
         <meta itemprop="position" content="<?php print esc_html($prop_selection->current_post);?>" />
     <?php } ?>
     
-    <div class="property_listing " >
+    <div class="property_listing " data-link="<?php print esc_attr($link);?>" >
         <?php
         
             $featured           =   intval  ( get_post_meta($post->ID, 'prop_featured', true) );

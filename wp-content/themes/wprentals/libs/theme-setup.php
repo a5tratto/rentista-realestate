@@ -62,10 +62,7 @@ function wpestate_convert_to_redux_framework(){
         'wp_estate_twilio_api_key',
         'wp_estate_twilio_auth_token',
         'wp_estate_sms_verification',
-        'wp_estate_rcapi_api_key',
-        'wp_estate_rcapi_api_secret_key',
-        'wp_estate_rcapi_api_username',
-        'wp_estate_rcapi_api_password',
+ 
         'wpestate_advanced_exteded',
         'wp_estate_stripe_secret_key',
         'wp_estate_stripe_publishable_key',

@@ -3,7 +3,7 @@ rooms,baths,cleanprice,size,single_first_type_name,single_first_action_name,pin,
         "use strict";
         this.city       =   city;
         this.area       =   area;
-        this.position   =   latlng;		
+        this.position   =   latlng;
         this.title      =   title;
         this.zIndex     =   counter;
         this.image      =   image;
@@ -30,9 +30,9 @@ rooms,baths,cleanprice,size,single_first_type_name,single_first_action_name,pin,
         this.spiderfied     =   false;
         this.div_ = null;
         this.map_ = map;
-	this.setMap(map);	
-  
-    
+	this.setMap(map);
+
+
 }
 
     WpstateMarker.prototype = new google.maps.OverlayView();
@@ -46,22 +46,22 @@ rooms,baths,cleanprice,size,single_first_type_name,single_first_action_name,pin,
 
         if (!div) {
             div = this.div = document.createElement('div');
-            div.className = 'wpestate_marker '+wpestate_makeSafeForCSS(this.category_name.trim() )+' '+wpestate_makeSafeForCSS(this.action_name.trim()); 
-        
+            div.className = 'wpestate_marker '+wpestate_makeSafeForCSS(this.category_name.trim() )+' '+wpestate_makeSafeForCSS(this.action_name.trim());
+
             if (typeof(self.price) !== 'undefined') {
                 if( mapfunctions_vars.use_price_pins_full_price==='no'){
                     div.innerHTML ='<div class="interior_pin_price">'+self.pin_price+'</div>';
                 }else{
                     div.innerHTML ='<div class="interior_pin_price">'+self.price+'</div>';
                 }
-                
+
             }
 
             google.maps.event.addDomListener(div, "mouseout", function(event) {
                 google.maps.event.trigger(self, "mouseout");
                 self.div.classList.remove("hover_z_pin");
             });
-            
+
             google.maps.event.addDomListener(div, "click", function(event) {
                 event.stopPropagation();
                 google.maps.event.trigger(self, "click");
@@ -69,10 +69,10 @@ rooms,baths,cleanprice,size,single_first_type_name,single_first_action_name,pin,
 
             google.maps.event.addDomListener(div, "mouseover", function(event) {
                 google.maps.event.trigger(self, "mouseover");
-                self.div.className +=' hover_z_pin '; 
+                self.div.className +=' hover_z_pin ';
             });
 
-            
+
             var panes = this.getPanes();
             panes.overlayImage.appendChild(div);
         }
@@ -81,7 +81,7 @@ rooms,baths,cleanprice,size,single_first_type_name,single_first_action_name,pin,
         var point = this.getProjection().fromLatLngToDivPixel(this.position);
 
         if (point) {
-           
+
             div.style.left = (point.x+0 ) + 'px';
             div.style.top = (point.y -14) + 'px';
         }
@@ -91,13 +91,13 @@ rooms,baths,cleanprice,size,single_first_type_name,single_first_action_name,pin,
         if (this.div) {
             this.div.parentNode.removeChild(this.div);
             this.div = null;
-        }	
+        }
     };
 
     WpstateMarker.prototype.getPosition = function() {
-        return this.position;	
+        return this.position;
     };
-        
+
     WpstateMarker.prototype.setPosition = function(newlatlng) {
         this.position=newlatlng;
         var point = this.getProjection().fromLatLngToDivPixel(this.position);
@@ -107,9 +107,9 @@ rooms,baths,cleanprice,size,single_first_type_name,single_first_action_name,pin,
             this.div.style.top = (point.y -14) + 'px';
         }
     };
-        
+
     WpstateMarker.prototype.getDraggable = function() {
-        return false;	
+        return false;
     };
 
     WpstateMarker.prototype.getVisible  = function() {
@@ -138,12 +138,10 @@ rooms,baths,cleanprice,size,single_first_type_name,single_first_action_name,pin,
     };
 
     WpstateMarker.prototype.getBounds = function()  {
-        return new google.maps.LatLngBounds(this.position, this.position); 
+        return new google.maps.LatLngBounds(this.position, this.position);
     };
 
 
     WpstateMarker.prototype.fromLatLngToDivPixel=function(){
 
     };
-
-

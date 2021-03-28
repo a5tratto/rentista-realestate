@@ -9,8 +9,8 @@ if(!function_exists('wpestate_load_google_map')):
                 if( intval( wprentals_get_option('wp_estate_kind_of_places') ) == 1 ){
                     $libraries ='&libraries=places&amp;language=en';
                 }
-                $google_maps_link_ssl   =   'https://maps-api-ssl.google.com/maps/api/js?v=3.38'.$libraries.'&key='.esc_html(wprentals_get_option('wp_estate_api_key', '') );
-                $google_maps_link       =   'http://maps.googleapis.com/maps/api/js?v=3.38'.$libraries.'&key='.esc_html(wprentals_get_option('wp_estate_api_key', '') );
+                $google_maps_link_ssl   =   'https://maps-api-ssl.google.com/maps/api/js?v=quarterly'.$libraries.'&key='.esc_html(wprentals_get_option('wp_estate_api_key', '') );
+                $google_maps_link       =   'http://maps.googleapis.com/maps/api/js?v=quarterly'.$libraries.'&key='.esc_html(wprentals_get_option('wp_estate_api_key', '') );
 
 
                 if ( is_ssl() ) {

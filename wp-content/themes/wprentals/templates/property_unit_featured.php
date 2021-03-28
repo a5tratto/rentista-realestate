@@ -31,64 +31,84 @@ if(isset($is_shortcode) && $is_shortcode==1 ){
 $link           =   esc_url(get_permalink());
 $preview        =   array();
 $preview[0]     =   '';
-?>  
+?>
 
-<div class="listing_wrapper" data-org="12" data-listid="<?php print intval($post->ID);?>" > 
+<div class="listing_wrapper" data-org="12" data-listid="<?php print intval($post->ID);?>" >
     <div class="property_listing" data-link="<?php print esc_attr($link);?>">
         <?php
         if ( has_post_thumbnail() ):
-           
-            $preview   = wp_get_attachment_image_src(get_post_thumbnail_id(), 'wpestate_property_listings');          
+
+            $preview   = wp_get_attachment_image_src(get_post_thumbnail_id(), 'wpestate_property_listings');
             $extra= array(
                 'data-original' =>  $preview[0],
-                'class'         =>  'lazyload img-responsive',    
+                'class'         =>  'lazyload img-responsive',
             );
 
             $thumb_prop         =   get_the_post_thumbnail($post->ID, 'wpestate_property_listings',$extra);
             $thumb_id           =   get_post_thumbnail_id($post->ID);
             $thumb_prop_url     =   wp_get_attachment_image_src($thumb_id,'wpestate_property_featured');
-            $featured           =   intval  ( get_post_meta($post->ID, 'prop_featured', true) );               
+            $featured           =   intval  ( get_post_meta($post->ID, 'prop_featured', true) );
             $property_city      =   get_the_term_list($post->ID, 'property_city', '', ', ', '') ;
             $property_area      =   get_the_term_list($post->ID, 'property_area', '', ', ', '');
-          
-          
-        
-            
-           
-           
-            print   '<div class="listing-hover-gradient"></div><div class="listing-hover" ></div>';           
-            print   '<div class="listing-unit-img-wrapper" style="background-image:url('.esc_url($thumb_prop_url[0]).')"></div>';
+
+            $title=get_the_title();
+            $title = mb_substr( html_entity_decode($title), 0, 40);
+            if(strlen($title)>40){
+                $title.= '...';
+              }
+            ?>
+
+
+
+
+            <div class="listing-unit-img-wrapper_color">
+              <div class="listing-hover-gradient"></div>
+              <div class="listing-unit-img-wrapper" style="background-image:url('<?php echo esc_url($thumb_prop_url[0]);?>')"></div>
+            </div>
+
+            <?php
             if($featured==1){
                 print '<div class="featured_div">'.esc_html__( 'featured','wprentals').'</div>';
             }
-                
+
             echo wpestate_return_property_status($post->ID);
-            
-            print   '<div class="category_name">';
-            
-            print'<div class="price_unit">';
-            wpestate_show_price($post->ID,$wpestate_currency,$wpestate_where_currency,0);
-            print '<span class="pernight"> '.wpestate_show_labels('per_night2',$rental_type,$booking_type).'</span></div> ';
-            
-            if(wpestate_has_some_review($post->ID)!==0){
-                print wpestate_display_property_rating( $post->ID ); 
+
+
+            $price_per_guest_from_one       =   floatval( get_post_meta($post->ID, 'price_per_guest_from_one', true) );
+
+            if($price_per_guest_from_one==1){
+                $price          =   floatval( get_post_meta($post->ID, 'extra_price_per_guest', true) );
+            }else{
+                $price          =   floatval( get_post_meta($post->ID, 'property_price', true) );
             }
-                
-            print   '<a class="featured_listing_title" href="'.esc_url($link).'">';
-                
-                $title=get_the_title();
-                echo mb_substr( html_entity_decode($title), 0, 40); 
-                if(strlen($title)>40){
-                    echo '...';   
+            ?>
+            <div class="category_name">
+                <div class="price_unit">
+                  <?php
+                  wpestate_show_price($post->ID,$wpestate_currency,$wpestate_where_currency,0);
+                  if($price!=0){
+                    print '<span class="pernight"> '.wpestate_show_labels('per_night2',$rental_type,$booking_type).'</span>';
+                  }
+                  ?>
+                </div>
+
+                <?php
+                if(wpestate_has_some_review($post->ID)!==0){
+                    print wpestate_display_property_rating( $post->ID );
                 }
-                
-                print   '</a><div class="category_tagline">';
-                if ($property_area != '') {
-                    print trim($property_area).', ';
-                }       
-                print trim($property_city).'</div>';
-            print '</div>';          
-        endif;        
+
+                print '<a class="featured_listing_title" href="'.esc_url($link).'">'.esc_html($title).'</a>';
+
+                print '<div class="category_tagline">';
+                  if ($property_area != '') {
+                      print trim($property_area).', ';
+                  }
+                  print trim($property_city);
+                print '</div>';?>
+
+          </div>
+        <?php
+        endif;
         ?>
-    </div>          
+    </div>
 </div>

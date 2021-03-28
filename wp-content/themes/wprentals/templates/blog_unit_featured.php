@@ -12,10 +12,17 @@ $link       =   esc_url(get_permalink());
         <?php 
         $title      =   get_the_title();
         $preview    =   wp_get_attachment_image_src(get_post_thumbnail_id(), 'wpestate_property_featured');
-        print   '<div class="listing-hover-gradient"></div><div class="listing-hover" ></div>';
+        
+        if( trim($design_class) =='type_1_class'){
+            print   '<div class="feature_agent_image_unit_wrapper_color">';
+        }else{
+            print   '<div class="listing-hover-gradient"></div><div class="listing-hover" ></div>';
+        }
+        
         print   '<div class="listing-unit-img-wrapper shortcodefull" style="background-image:url('.esc_url($preview[0]).')"></div>';
         if(trim($design_class)=='type_1_class'){
             print   '<div class="featured-article-date">'. get_the_date('M d, Y').'</div>'; 
+            print   '</div>';// end feature_agent_image_unit_wrapper_color
         }
         ?>
     </div>

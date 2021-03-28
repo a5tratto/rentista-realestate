@@ -89,10 +89,11 @@ if($coments_no>0){
                         <?php
                         printf( _n('%d Review', '%d Reviews', $coments_no, 'wprentals'), $nr_of_reviews->approved );
                         ?>
-                        <span class="property_ratings">
-                            <?php  print wpestate_display_rating($list_rating, 'complete'); ?>
-                        </span>
+                      
                 </h3>
+                  <div class="property_ratings">
+                            <?php  print wpestate_display_rating($list_rating, 'complete'); ?>
+                        </div>
 
                 <?php print trim($review_templates); ?>
                 <?php wpestate_review_pagination($review_pages, 2);?>

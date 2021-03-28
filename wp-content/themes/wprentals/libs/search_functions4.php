@@ -135,7 +135,7 @@ if( !function_exists('wpestate_show_search_field_new') ):
                         $return_string.='<input type="text"    id="'.$field_id.'"  name="'.sanitize_key($search_field).'"'
                                 . ' placeholder="'. stripslashes(wp_kses($label,$allowed_html)).'" ';
                         if($search_field=='check_out'){
-                            $return_string.= ' disabled ';
+                            //$return_string.= ' disabled ';
                         }
                         $return_string.= ' class="advanced_select form-control custom_icon_class_input" value="';
                         if (isset($_GET[sanitize_key($search_field)])) {
@@ -334,7 +334,7 @@ add_action( 'wp_ajax_wpestate_custom_ondemand_pin_load_new', 'wpestate_custom_on
 if( !function_exists('wpestate_custom_ondemand_pin_load_new') ):
     
     function wpestate_custom_ondemand_pin_load_new(){
-        check_ajax_referer( 'wprentals_ajax_filtering_nonce', 'security' );
+       // check_ajax_referer( 'wprentals_ajax_filtering_nonce', 'security' );
     
         wp_suspend_cache_addition(false);
         global $keyword;

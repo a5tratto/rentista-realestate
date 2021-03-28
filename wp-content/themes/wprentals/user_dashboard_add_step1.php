@@ -22,53 +22,53 @@ if( isset($_POST) && !empty($_POST) ) {
     if ( !sh_verify_onetime_nonce( $_POST['estatenonce'], 'thisestate') ){
        exit('');
     }
- 
+
     if ( !isset($_POST['new_estate']) || !wp_verify_nonce($_POST['new_estate'],'submit_new_estate') ){
-        exit(''); 
+        exit('');
     }
-   
-    
+
+
     $paid_submission_status    = esc_html ( wprentals_get_option('wp_estate_paid_submission','') );
-    if ( $paid_submission_status!='membership' || ( $paid_submission_status== 'membership' || wpestate_get_current_user_listings($userID) > 0)  ){ // if user can submit        
+    if ( $paid_submission_status!='membership' || ( $paid_submission_status== 'membership' || wpestate_get_current_user_listings($userID) > 0)  ){ // if user can submit
         if ( !isset($_POST['new_estate']) || !wp_verify_nonce($_POST['new_estate'],'submit_new_estate') ){
-           exit('Sorry, your not submiting from site'); 
+           exit('Sorry, your not submiting from site');
         }
-   
+
         if( !isset($_POST['prop_category']) ) {
-            $prop_category  = 0;           
+            $prop_category  = 0;
         }else{
             $prop_category  =  $prop_category_selected= intval($_POST['prop_category']);
         }
-  
+
         if( !isset($_POST['prop_action_category']) ) {
-            $prop_action_category   =   0;           
+            $prop_action_category   =   0;
         }else{
             $prop_action_category  = $prop_action_category_selected=  wp_kses($_POST['prop_action_category'],$allowed_html);
         }
-        
+
         if( !isset($_POST['property_city']) || $_POST['property_city']=='') {
             if( !isset($_POST['property_city_front'])) {
                 $property_city  =   '';
             }else{
-                $property_city  =   wp_kses($_POST['property_city_front'],$allowed_html); 
+                $property_city  =   wp_kses($_POST['property_city_front'],$allowed_html);
             }
         }else{
             $property_city  =   wp_kses($_POST['property_city'],$allowed_html);
         }
-        
+
         if( !isset($_POST['property_area_front']) ) {
-            $property_area  =   '';           
+            $property_area  =   '';
         }else{
             $property_area  =   wp_kses($_POST['property_area_front'],$allowed_html);
         }
-        
-        
+
+
         if( !isset($_POST['property_country']) ) {
-            $property_country   =   '';           
+            $property_country   =   '';
         }else{
             $property_country  =   wp_kses($_POST['property_country'],$allowed_html);
         }
-        
+
         $allowed_html_desc=array(
             'a' => array(
                 'href' => array(),
@@ -91,163 +91,163 @@ if( isset($_POST) && !empty($_POST) ) {
         );
 
         if( !isset($_POST['property_description']) ) {
-            $property_description   =   '';           
+            $property_description   =   '';
         }else{
             $property_description  =   wp_kses($_POST['property_description'],$allowed_html_desc);
         }
-        
+
         $property_admin_area='';
         if(isset($_POST['property_admin_area'])){
             $property_admin_area=   wp_kses($_POST['property_admin_area'],$allowed_html);
         }
-      
+
         $show_err                       =   '';
         $post_id                        =   '';
-        $submit_title                   =   wp_kses( $_POST['wpestate_title'],$allowed_html ); 
+        $submit_title                   =   wp_kses( $_POST['wpestate_title'],$allowed_html );
         $wpestate_guest_no              =   0;
         if(isset($_POST['guest_no'])){
             $wpestate_guest_no          =   intval( $_POST['guest_no']);
         }
-        
+
         if( !isset($_POST['property_affiliate']) ) {
-            $property_affiliate   =   '';           
+            $property_affiliate   =   '';
         }else{
             $property_affiliate  =   esc_url($_POST['property_affiliate']);
         }
-        
-        
+
+
         $has_errors                     =   false;
         $errors                         =   array();
-        
-        
+
+
         if($submit_title==''){
             $has_errors=true;
             $errors[]=esc_html__( 'Please submit a title for your listing','wprentals');
         }
-        
-        
-        if( is_array($mandatory_fields) && in_array('prop_category_submit', $mandatory_fields)) { 
+
+
+        if( is_array($mandatory_fields) && in_array('prop_category_submit', $mandatory_fields)) {
             if($prop_category=='' || $prop_category=='-1'){
                 $has_errors=true;
                 $errors[]=esc_html__( 'Please submit a category','wprentals');
             }
         }
-        
-        if( is_array($mandatory_fields) && in_array('prop_action_category_submit', $mandatory_fields)) { 
+
+        if( is_array($mandatory_fields) && in_array('prop_action_category_submit', $mandatory_fields)) {
             if($prop_action_category=='' || $prop_action_category=='-1'){
                 $has_errors=true;
                 $errors[]=esc_html__( 'Please submit the second category','wprentals');
             }
         }
-        
-        if( is_array($mandatory_fields) && in_array('property_city_front', $mandatory_fields)) { 
+
+        if( is_array($mandatory_fields) && in_array('property_city_front', $mandatory_fields)) {
             if($property_city==''){
                 $has_errors=true;
                 $errors[]=esc_html__( 'Please chose a city.','wprentals');
             }
         }
-        
-        if( is_array($mandatory_fields) && in_array('property_area_front', $mandatory_fields)) { 
+
+        if( is_array($mandatory_fields) && in_array('property_area_front', $mandatory_fields)) {
             if($property_area==''){
                 $has_errors=true;
                 $errors[]=esc_html__( 'Please chose an area.','wprentals');
             }
         }
-        
-        if( is_array($mandatory_fields) && in_array('property_description', $mandatory_fields)) { 
+
+        if( is_array($mandatory_fields) && in_array('property_description', $mandatory_fields)) {
             if($property_description==''){
                 $has_errors=true;
                 $errors[]=esc_html__( 'Please add the description.','wprentals');
             }
         }
-        
-        if( is_array($mandatory_fields) && in_array('property_affiliate', $mandatory_fields)) { 
+
+        if( is_array($mandatory_fields) && in_array('property_affiliate', $mandatory_fields)) {
             if($property_affiliate==''){
                 $has_errors=true;
                 $errors[]=esc_html__( 'Please add an affiliate link.','wprentals');
             }
         }
-        
-        
-        
+
+
+
         if($has_errors){
             foreach($errors as $key=>$value){
                 $show_err.='<div class="submit_error">'.esc_html($value).'</div>';
-            }            
+            }
         }else{
             $paid_submission_status = esc_html ( wprentals_get_option('wp_estate_paid_submission','') );
             $new_status             = 'pending';
-            
+
             $admin_submission_status= esc_html ( wprentals_get_option('wp_estate_admin_submission','') );
             if($admin_submission_status=='no' && $paid_submission_status!='per listing'){
-               $new_status='publish';  
+               $new_status='publish';
             }
-            
+
             if($current_user->ID==''){
                 $new_user_id=0;
             }else{
                 $new_user_id=$current_user->ID;
             }
-          
+
             $post = array(
                 'post_title'	=> $submit_title,
-                'post_status'	=> $new_status, 
+                'post_status'	=> $new_status,
                 'post_type'     => 'estate_property' ,
                 'post_author'   => $new_user_id ,
                 'post_content'  => $property_description
             );
-            $post_id =  wp_insert_post($post );  
-            
+            $post_id =  wp_insert_post($post );
+
             if( $paid_submission_status == 'membership'){ // update pack status
-                wpestate_update_listing_no($current_user->ID);                
+                wpestate_update_listing_no($current_user->ID);
             }
 
         }
-        
+
         if($post_id) {
             $prop_category                  =   get_term( $prop_category, 'property_category');
             if(isset($prop_category->term_id)){
                 $prop_category_selected         =   $prop_category->term_id;
             }
 
-            $prop_action_category           =   get_term( $prop_action_category, 'property_action_category');  
+            $prop_action_category           =   get_term( $prop_action_category, 'property_action_category');
             if(isset($prop_action_category->term_id)){
                 $prop_action_category_selected  =   $prop_action_category->term_id;
             }
-        
+
             $prop_category_name         =   '';
             $prop_action_category_name  =   '';
-        
-         
-            
+
+
+
             if( isset($prop_category->name) ){
                 $prop_category_name=$prop_category->name;
-                wp_set_object_terms($post_id,$prop_category->name,'property_category'); 
-            }  
+                wp_set_object_terms($post_id,$prop_category->name,'property_category');
+            }
             if ( isset ($prop_action_category->name) ){
                 $prop_action_category_name=$prop_action_category->name;
-                wp_set_object_terms($post_id,$prop_action_category->name,'property_action_category'); 
-            }  
+                wp_set_object_terms($post_id,$prop_action_category->name,'property_action_category');
+            }
             if( isset($property_city) && $property_city!='none' ){
-                wp_set_object_terms($post_id,$property_city,'property_city'); 
-            }  
-            
+                wp_set_object_terms($post_id,$property_city,'property_city');
+            }
+
             if( isset($property_area) && $property_area!='none' ){
                $property_area= wpestate_double_tax_cover($property_area,$property_city,$post_id);
-            }  
-  
-            
+            }
+
+
             if( isset($property_area) && $property_area!='none' && $property_area!=''){
-                $property_area_obj=   get_term_by('name', $property_area, 'property_area'); 
-           
+                $property_area_obj=   get_term_by('name', $property_area, 'property_area');
+
                     $t_id = $property_area_obj->term_id ;
                     $term_meta = get_option( "taxonomy_$t_id");
-                
+
                     $allowed_html   =   array();
                     $term_meta['cityparent'] =  wp_kses( $property_city,$allowed_html);
                     //save the option array
                      update_option( "taxonomy_$t_id", $term_meta );
-               
+
             }
 
             update_post_meta($post_id, 'prop_featured', 0);
@@ -257,47 +257,45 @@ if( isset($_POST) && !empty($_POST) ) {
             }
 
             $property_country = wprentals_agolia_dirty_hack($property_country);
-            
+
             update_post_meta($post_id, 'guest_no', $wpestate_guest_no);
             update_post_meta($post_id, 'property_affiliate',$property_affiliate);
-            update_post_meta($post_id, 'property_country', $property_country); 
+            update_post_meta($post_id, 'property_country', $property_country);
             if(isset($_POST['instant_booking'])){
                 update_post_meta($post_id,'instant_booking',intval($_POST['instant_booking']));
             }
-            update_post_meta($post_id, 'property_admin_area', $property_admin_area); 
-            
+            update_post_meta($post_id, 'property_admin_area', $property_admin_area);
+
             update_post_meta($post_id, 'pay_status', 'not paid');
             update_post_meta($post_id, 'page_custom_zoom', 16);
-            $sidebar =  wprentals_get_option( 'wp_estate_blog_sidebar'); 
+            $sidebar =  wprentals_get_option( 'wp_estate_blog_sidebar');
             update_post_meta($post_id, 'sidebar_option', $sidebar);
-            $sidebar_name   = wprentals_get_option( 'wp_estate_blog_sidebar_name'); 
+            $sidebar_name   = wprentals_get_option( 'wp_estate_blog_sidebar_name');
             update_post_meta($post_id, 'sidebar_select', $sidebar_name);
-                      
+
             wpestate_global_check_mandatory($post_id);
-            rcapi_create_new_listing($new_user_id,$post_id,$submit_title,$property_description,$new_status,$prop_category_name,$prop_action_category_name,$property_city,$property_area,$wpestate_guest_no,$property_admin_area,$property_country,'');
-  
-            
+
             // get user dashboard link
             $edit_link                       =   wpestate_get_template_link('user_dashboard_edit_listing.php');
             $edit_link_desc                  =   esc_url_raw ( add_query_arg( 'listing_edit', $post_id, $edit_link) ) ;
             $edit_link_desc                  =   esc_url_raw ( add_query_arg( 'action', 'description', $edit_link_desc) ) ;
             $edit_link_desc                  =   esc_url_raw ( add_query_arg( 'isnew', 1, $edit_link_desc) ) ;
-            
+
            $arguments=array(
                 'new_listing_url'   => esc_url (get_permalink($post_id)),
                 'new_listing_title' => $submit_title
             );
-            wpestate_select_email_type(get_option('admin_email'),'new_listing_submission',$arguments);  
-            
+            wpestate_select_email_type(get_option('admin_email'),'new_listing_submission',$arguments);
+
             wp_reset_query();
-            
+
             if ( intval($_POST['pointblank']!=1)){
                 wp_redirect( $edit_link_desc);
-                exit;   
+                exit;
             }
-         
-        }        
-        }//end if user can submit  
+
+        }
+        }//end if user can submit
 
 } // end post
 
@@ -324,7 +322,7 @@ function sh_verify_onetime_nonce( $_nonce, $action = -1) {
     if( ! wp_verify_nonce( $nonce, $generated.$action ) || $time > $expires ){
         return false;
     }
-    
+
     //Get used nonces
     $used_nonces = get_option('_sh_used_nonces');
 
@@ -335,7 +333,7 @@ function sh_verify_onetime_nonce( $_nonce, $action = -1) {
         return false;
     }
 
-    
+
     if($used_nonces!=''){
         //print '-la foreach - ';
         foreach ($used_nonces as $nonce=> $timestamp){
@@ -346,50 +344,52 @@ function sh_verify_onetime_nonce( $_nonce, $action = -1) {
             unset( $used_nonces[$nonce] );
         }
     }
-    
-    
+
+
     //Add nonce to used nonces and sort
     $used_nonces[$nonce] = $expires;
     asort( $used_nonces );
     update_option( '_sh_used_nonces',$used_nonces );
     return true;
-   
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 /////// Html Form Code below
 ///////////////////////////////////////////////////////////////////////////////////////////
-?> 
+?>
 
 <div id="cover"></div>
-<div class="row 
-    <?php 
+<div class="row
+    <?php
     if( is_user_logged_in() ){
-        echo 'is_dashboard'; 
+        echo 'is_dashboard';
         if ( !wpestate_check_user_level()){
-            wp_redirect(  esc_html( home_url('/') ) );exit(); 
+            wp_redirect(  esc_html( home_url('/') ) );exit();
         }
     }else{
         echo 'no_log_submit';
     }
     ?> ">
-       
+
     <?php
     if( wpestate_check_if_admin_page($post->ID) ){
-        if ( is_user_logged_in() ) {   
-            include(locate_template('templates/user_menu.php') ); 
-        }  
+        if ( is_user_logged_in() ) {
+            include(locate_template('templates/user_menu.php') );
+        }
     }
-    ?> 
-    
-    <div class="dashboard-margin 
+    ?>
+
+    <div class="dashboard-margin
     <?php if ( !is_user_logged_in() ) {
         echo 'dashboard-margin-nolog';
     }
     ?>
-    "> 
-    
-    <?php   
+    ">
+
+    <?php       wprentals_dashboard_header_display(); ?>
+
+    <?php
     $remaining_listings =   wpestate_get_remain_listing_user($userID,$user_pack);
 
     if($remaining_listings  === -1){
@@ -402,28 +402,21 @@ function sh_verify_onetime_nonce( $_nonce, $action = -1) {
         print '<h4 class="nosubmit">'.esc_html__( 'Your current package doesn\'t let you publish more properties! You need to upgrade your subscription.','wprentals' ).'</h4>';
     }else{
     ?>
-        
-        <div class="dashboard-header">
-            <?php include(locate_template('templates/submission_guide.php') );?>
-        </div>
-        
-        <?php include(locate_template('templates/ajax_container.php'));?>
-        
-        <?php while (have_posts()) : the_post(); ?>
-            <?php if (esc_html( get_post_meta($post->ID, 'page_show_title', true) ) != 'no') { ?>
-                <h1 class="entry-title new-dashtile"><?php the_title(); ?></h1>
-            <?php } ?>
-        <?php endwhile; // end of the loop. ?>
+
+    <div class="user_dashboard_panel">
+        <?php include(locate_template('templates/submission_guide.php') );?>
+
         <div class="row">
             <?php print trim($show_err); //escaped above?>
-            <?php include(locate_template('templates/submit_templates/property_description_first.php') ); ?> 
-        </div>   
-    <?php 
-    } 
-    ?>           
-                
+            <?php include(locate_template('templates/submit_templates/property_description_first.php') ); ?>
+        </div>
+    </div>    
+    <?php
+    }
+    ?>
+
     </div>
-</div>   
+</div>
 
 
 
@@ -441,8 +434,8 @@ if( isset($_POST) && !empty($_POST)  ) {
                     jQuery("#new_estate").val(random);
                     jQuery("#title,#prop_category_submit,#prop_action_category_submit,#guest_no,#property_city_front,#property_country,#property_city,#property_area_front,#property_description").val("");
                     jQuery("#new_post").remove();
-               
-                    wpestate_show_login_form(1,0,'.intval($post_id).'); 
+
+                    wpestate_show_login_form(1,0,'.intval($post_id).');
 
                 });
                 //]]>

@@ -1,37 +1,343 @@
 <?php
+/*
+ * Show contact form form
+ *
+ *
+ *
+ */
+
+if(!function_exists('wpestate_show_contact_form')):
+    function wpestate_show_contact_form($post_id){
+        if(is_singular('estate_property')){
+            $agent_id   =   0;
+        }else{
+            $agent_id   =   $post_id;
+           $post_id    =  intval($post_id);
+        }
+        $favorite_data  =   wpestate_generate_favorite_info($post_id);
 
 
+        print  '<h3 id="contact_for_reservation">'. esc_html__('Check Availability','wprentals').'</h3>';
+        wpestate_show_contact_form_simple($agent_id,$post_id);
+
+           print '<script type="text/javascript">
+                //<![CDATA[
+                    jQuery(document).ready(function(){
+                        enable_actions_modal_contact();
+                    });
+                //]]>
+                </script>';
+
+            print '<div class="col-md-12 reservation_buttons favorite_in_contact">
+                        <div id="add_favorites" class="'. esc_attr($favorite_data['favorite_class']).'" a2 data-postid="'. esc_attr($post_id).'">
+                            '.trim($favorite_data['favorite_text']).'
+                        </div>
+                </div>';
+
+        echo wpestate_share_unit_desing($post_id);
+        print '</div>';
+    }
+endif;
+
+
+
+/*
+ * Show booking form
+ *
+ *
+ *
+ */
+if(!function_exists('wpestate_show_booking_form')):
+function wpestate_show_booking_form($post_id,$wpestate_options='',$favorite_class='',$favorite_text='',$is_shortcode=''){
+
+
+    $rental_type        =   wprentals_get_option('wp_estate_item_rental_type');
+    $guest_list         =   wpestate_get_guest_dropdown('noany');
+    $container_class    =   " col-md-4 ";
+
+    if( isset($wpestate_options['sidebar_class']) ){
+        if( $wpestate_options['sidebar_class']=='' || $wpestate_options['sidebar_class']=='none' ){
+            $container_class= ' col-md-4 ';
+        }else{
+            $container_class= esc_attr($wpestate_options['sidebar_class']);
+        }
+    }
+
+
+
+    ob_start();
+    ?>
+
+    <div class="booking_form_request is_shortcode<?php echo intval($is_shortcode); ?> <?php echo esc_attr($container_class);?>" id="booking_form_request">
+
+        <?php
+        if( wprentals_get_option('wp_estate_replace_booking_form','') == 'yes'){
+            wpestate_show_contact_form($post_id);
+            return;
+        }
+        ?>
+
+
+        <div id="booking_form_request_mess"></div>
+        <div id="booking_form_mobile_close">&times;</div>
+
+            <h3 ><?php esc_html_e('Book Now','wprentals');?></h3>
+
+                <div class="has_calendar calendar_icon">
+                    <input type="text" id="start_date" placeholder="<?php  echo wpestate_show_labels('check_in',$rental_type); ?>"  class="form-control calendar_icon" size="40" name="start_date"
+                            value="<?php if( isset($_GET['check_in_prop']) ){
+                               echo sanitize_text_field ( $_GET['check_in_prop'] );
+                            }
+                            ?>">
+                </div>
+
+                <div class=" has_calendar calendar_icon">
+                    <input type="text" id="end_date"  placeholder="<?php  echo wpestate_show_labels('check_out',$rental_type); ?>" class="form-control calendar_icon" size="40" name="end_date"
+                            value="<?php if( isset($_GET['check_out_prop']) ){
+                               echo sanitize_text_field ( $_GET['check_out_prop'] );
+                            }
+                            ?>">
+                </div>
+
+                <?php
+
+                if($rental_type==0){
+                ?>
+
+                    <div class=" has_calendar guest_icon ">
+
+                        <div class="dropdown form-control">
+                            <div data-toggle="dropdown" id="booking_guest_no_wrapper" class="filter_menu_trigger" data-value="
+                                <?php
+                                    if(isset($_GET['guest_no_prop']) && $_GET['guest_no_prop']!=''){
+                                        echo  esc_html( $_GET['guest_no_prop'] );
+                                    }else{
+                                        echo 'all';
+                                    }
+                                ?>
+                            ">
+
+                                <div class="text_selection">
+                                    <?php
+                                        if(isset($_GET['guest_no_prop']) && $_GET['guest_no_prop']!=''){
+                                            echo esc_html( $_GET['guest_no_prop'] ).' '.esc_html__( 'guests','wprentals');
+                                        }else{
+                                            esc_html_e('Guests','wprentals');
+                                        }
+                                    ?>
+                                </div>
+                                <span class="caret caret_filter"></span>
+                            </div>
+
+
+                            <input type="hidden" name="booking_guest_no"  value="">
+                            <ul  class="dropdown-menu filter_menu" role="menu" aria-labelledby="booking_guest_no_wrapper" id="booking_guest_no_wrapper_list">
+                                <?php echo trim($guest_list);?>
+                            </ul>
+                        </div>
+
+                    </div>
+                <?php
+                }else{
+                ?>
+                   <input type="hidden" name="booking_guest_no"  value="1">
+                <?php
+                }
+                // show extra options
+                wpestate_show_extra_options_booking($post_id)
+                ?>
+
+                <p class="full_form " id="add_costs_here"></p>
+                <input type="hidden" id="listing_edit" name="listing_edit" value="<?php print intval($post_id);?>" />
+
+
+                <?php wpestate_show_booking_button($post_id);?>
+
+
+                <div class="third-form-wrapper">
+                    <div class="col-md-6 reservation_buttons">
+                        <div id="add_favorites" class=" <?php print esc_attr($favorite_class);?>"  data-postid="<?php echo esc_attr($post_id);?>">
+                            <?php print trim($favorite_text);?>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 reservation_buttons">
+                        <div id="contact_host" class="col-md-6"  data-postid="<?php esc_attr($post_id);?>">
+                            <?php esc_html_e('Contact Owner','wprentals');?>
+                        </div>
+                    </div>
+                </div>
+
+                <?php
+                echo wpestate_share_unit_desing($post_id);
+                ?>
+
+
+
+        </div>
+
+
+    <?php
+    /*
+     * Only for shortcode
+     *
+     *
+     * */
+    if($is_shortcode==1){
+
+        $ajax_nonce = wp_create_nonce( "wprentals_add_booking_nonce" );
+        print'<input type="hidden" id="wprentals_add_booking" value="'.esc_html($ajax_nonce).'" />';
+        ?>
+
+        <div class="modal fade" id="instant_booking_modal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                       <h2 class="modal-title_big" ><?php esc_html_e( 'Confirm your booking','wprentals');?></h2>
+                       <h4 class="modal-title" id="myModalLabel"><?php esc_html_e( 'Review the dates and confirm your booking','wprentals');?></h4>
+                    </div>
+
+                    <div class="modal-body"></div>
+
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <?php
+        if ( isset($_GET['check_in_prop']) && isset($_GET['check_out_prop'])   ){
+
+              print '<script type="text/javascript">
+                      //<![CDATA[
+                      jQuery(document).ready(function(){
+                        setTimeout(function(){
+
+                            jQuery("#end_date").trigger("change");
+                        },1000);
+                      });
+                      //]]>
+              </script>';
+
+        }
+        ?>
+
+    <?php
+    } // end for shortcode
+    ?>
+
+
+    <?php
+    $return = ob_get_contents();
+    ob_end_clean();
+    return $return;
+
+}
+endif;
+
+
+
+/*
+ * Show booking or affiliate button
+ *
+ *
+ *
+ */
 if(!function_exists('wpestate_show_booking_button')):
 function wpestate_show_booking_button($post_id){
     print '<div class="submit_booking_front_wrapper">';
-        
+
         $overload_guest                 =   floatval   ( get_post_meta($post_id, 'overload_guest', true) );
         $price_per_guest_from_one       =   floatval   ( get_post_meta($post_id, 'price_per_guest_from_one', true) );
-        $instant_booking                =   floatval   ( get_post_meta($post_id, 'instant_booking', true) ); 
+        $instant_booking                =   floatval   ( get_post_meta($post_id, 'instant_booking', true) );
         $max_guest                      =   floatval   ( get_post_meta($post_id, 'guest_no',true));
         $affiliate_link                 =   trim ( get_post_meta($post_id,'property_affiliate',true));
 
         if($affiliate_link==''){
-        
+
             if($instant_booking ==1){ ?>
                 <div id="submit_booking_front_instant_wrap"><input type="submit" id="submit_booking_front_instant"  data-maxguest="<?php print esc_attr($max_guest); ?>"  data-overload="<?php print esc_attr($overload_guest);?>" data-guestfromone="<?php print esc_attr($price_per_guest_from_one); ?>"  class="wpb_btn-info wpb_btn-small wpestate_vc_button  vc_button" value=" <?php esc_html_e('Instant Booking','wprentals');?>" /></div>
-            <?php }else{?>   
+            <?php }else{?>
                 <input type="submit" id="submit_booking_front" data-maxguest="<?php print esc_attr($max_guest); ?>" data-overload="<?php print esc_attr($overload_guest);?>"                      data-guestfromone="<?php print esc_attr($price_per_guest_from_one); ?>"  class="wpb_btn-info wpb_btn-small wpestate_vc_button  vc_button" value="<?php esc_html_e('Book Now','wprentals');?>" />
             <?php }
-        }else{ 
+        }else{
             print '<a href="'.esc_url($affiliate_link).'" id="submit_booking_front_link" target="_blank">'.esc_html__('Book Now','wprentals').'</a>';
         }
 
-        
+
 
         wp_nonce_field( 'booking_ajax_nonce', 'security-register-booking_front' );
    print '</div>';
 
-           
 
-            
+
+
 }
 endif;
+
+
+
+/*
+ * Show booking or affiliate button
+ *
+ *
+ *
+ */
+if(!function_exists('wpestate_generate_favorite_info')):
+    function wpestate_generate_favorite_info($post_id){
+
+        $current_user               =   wp_get_current_user();
+        $userID                     =   $current_user->ID;
+        $user_option                =   'favorites'.$userID;
+        $wpestate_curent_fav        =   get_option($user_option);
+        $favorite_class             =   'isnotfavorite';
+        $favorite_text              =   esc_html__( 'Add to Favorites','wprentals');
+
+
+        if($wpestate_curent_fav){
+            if ( in_array ($post_id,$wpestate_curent_fav) ){
+                $favorite_class =   'isfavorite';
+                $favorite_text  =   esc_html__( 'Favorite','wprentals').'<i class="fas fa-heart"></i>';
+            }
+        }
+
+        $favorite_data= array(
+            'favorite_text'     =>  $favorite_text,
+            'favorite_class'   =>  $favorite_class,
+        );
+
+        return $favorite_data;
+
+
+    }
+endif;
+
+
+
+
+/*
+ * Convert to cyrilic
+ *
+ *
+ *
+ */
+
+if(!function_exists('wpestate_convert_cyrilic')):
+function wpestate_convert_cyrilic($text){
+    $cyr  = array('а','б','в','г','д','е','ё','ж','з','и','й','к','л','м','н','о','п','р','с','т','у',
+            'ф','х','ц','ч','ш','щ','ъ', 'ы','ь', 'э', 'ю','я','А','Б','В','Г','Д','Е','Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У',
+            'Ф','Х','Ц','Ч','Ш','Щ','Ъ', 'Ы','Ь', 'Э', 'Ю','Я' );
+    $lat = array( 'a','b','v','g','d','e','io','zh','z','i','y','k','l','m','n','o','p','r','s','t','u',
+            'f' ,'h' ,'ts' ,'ch','sh' ,'sht' ,'a', 'i', 'y', 'e' ,'yu' ,'ya','A','B','V','G','D','E','Zh',
+            'Z','I','Y','K','L','M','N','O','P','R','S','T','U',
+            'F' ,'H' ,'Ts' ,'Ch','Sh' ,'Sht' ,'A' ,'Y' ,'Yu' ,'Ya' );
+
+    return  str_replace($cyr, $lat, $text);
+}
+endif;
+
+
+
 
 
 
@@ -40,20 +346,20 @@ function wpestate_print_property_unit_slider($post_id,$wpestate_property_unit_sl
     //$link               =   esc_url ( get_permalink($post_id));
     $title              =   get_the_title($post_id);
     $preview            =   wp_get_attachment_image_src(get_post_thumbnail_id($post_id), 'wpestate_property_listings');
-    $thumb_prop         =   '<img itemprop="image" src="'.esc_url($preview[0]).'"   class="b-lazy img-responsive wp-post-image lazy-hidden" alt="'.esc_html__('image','wprentals').'" />';   
+    $thumb_prop         =   '<img itemprop="image" src="'.esc_url($preview[0]).'"   class="b-lazy img-responsive wp-post-image lazy-hidden" alt="'.esc_html__('image','wprentals').'" />';
     $booking_type       =   wprentals_return_booking_type($post_id);
     $rental_type        =   wprentals_get_option('wp_estate_item_rental_type');
 
     if($preview[0] == ''){
         $thumb_prop_default =  get_stylesheet_directory_uri().'/img/defaultimage_prop.jpg';
-        $thumb_prop         =  '<img itemprop="image"  src="'.esc_url($thumb_prop_default).'" class="b-lazy img-responsive wp-post-image  lazy-hidden" alt="'.esc_html__('image','wprentals').'" />';   
+        $thumb_prop         =  '<img itemprop="image"  src="'.esc_url($thumb_prop_default).'" class="b-lazy img-responsive wp-post-image  lazy-hidden" alt="'.esc_html__('image','wprentals').'" />';
     }
 
-            
-      
+
+
     print '<div class="listing-unit-img-wrapper">';
-     
-              
+
+
             if(  $wpestate_property_unit_slider=='yes'){
                 //slider
                 $arguments      = array(
@@ -69,8 +375,8 @@ function wpestate_print_property_unit_slider($post_id,$wpestate_property_unit_sl
                 $post_attachments   =   get_posts($arguments);
                 $slides             =   '';
                 $no_slides          =   0;
-                
-                foreach ($post_attachments as $attachment) { 
+
+                foreach ($post_attachments as $attachment) {
                     $no_slides++;
                     $preview    =   wp_get_attachment_image_src($attachment->ID, 'wpestate_property_listings');
                     $slides     .= '<div class="item lazy-load-item">
@@ -82,9 +388,9 @@ function wpestate_print_property_unit_slider($post_id,$wpestate_property_unit_sl
                 $unique_prop_id=uniqid();
                 print '
                 <div id="property_unit_carousel_'.esc_attr($unique_prop_id).'" class="carousel property_unit_carousel slide  " data-ride="carousel" data-interval="false">
-                    <div class="carousel-inner">         
-                        <div class="item active">    
-                            <a href="'.esc_url($link).'">'.$thumb_prop.'</a>     
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <a href="'.esc_url($link).'">'.$thumb_prop.'</a>
                         </div>
                         '.$slides.'
                     </div>';// slides & thumb_prop are escaped above
@@ -100,23 +406,31 @@ function wpestate_print_property_unit_slider($post_id,$wpestate_property_unit_sl
                     </a>';
                 }
                 print'</div>';
-                
-           
-            }else{ 
+
+
+            }else{
                 print '<a href="'. esc_url($link).'">'. trim($thumb_prop).'</a>';
-            } 
-                    
+            }
+
                 print  '<div class="price_unit_wrapper"> </div>';
-                    
-             
-               
+
+                    $price_per_guest_from_one       =   floatval( get_post_meta($post_id, 'price_per_guest_from_one', true) );
+
+                    if($price_per_guest_from_one==1){
+                        $price          =   floatval( get_post_meta($post_id, 'extra_price_per_guest', true) );
+                    }else{
+                        $price          =   floatval( get_post_meta($post_id, 'property_price', true) );
+                    }
+
+
                     print'<div class="price_unit">';
                         wpestate_show_price($post_id,$wpestate_currency,$wpestate_where_currency,0);
-                        echo '<span class="pernight"> '.wpestate_show_labels('per_night2',$rental_type,$booking_type).'</span>';
-                       
+                        if($price!=0){
+                          echo '<span class="pernight"> '.wpestate_show_labels('per_night2',$rental_type,$booking_type).'</span>';
+                        }
                     print '</div>';
-               
-              
+
+
             print '</div>';
 }
 endif;
@@ -127,9 +441,9 @@ endif;
 if(!function_exists('wpestate_return_property_status')):
 function wpestate_return_property_status($post_id,$return_type=''){
     $property_status    =    get_the_terms( $post_id, 'property_status');
-    $to_return          =    '';   
-    
-    
+    $to_return          =    '';
+
+
     if($return_type=='pin'){
         if(!empty($property_status)){
             foreach ($property_status as $key=>$term){
@@ -138,7 +452,7 @@ function wpestate_return_property_status($post_id,$return_type=''){
         }
         $to_return= substr ($to_return, 0, -1);
         return $to_return;
-        
+
     }else{
         if(!empty($property_status)){
             foreach ($property_status as $key=>$term){
@@ -161,17 +475,17 @@ if(!function_exists('wpestate_check_gdpr_case')):
 function wpestate_check_show_address_user_rent_property(){
     if( wprentals_get_option('wp_estate_show_map_location','') == 'yes' ){
         global $post;
-        
-        
+
+
         if(!is_singular('estate_property')){
             return true;
         }else{
             if( !is_user_logged_in() ){
                 return false;
             }else{
-                
+
                 $current_user =     wp_get_current_user();
-                $userID       =     $current_user->ID;    
+                $userID       =     $current_user->ID;
                 $args = array(
                    'post_type'          =>  'wpestate_booking',
                    'post_status'        =>  'publish',
@@ -199,7 +513,7 @@ function wpestate_check_show_address_user_rent_property(){
                 if ( $selection->have_posts() ){
                     return true;
                 }
-            }  
+            }
         }
 
 
@@ -222,12 +536,12 @@ if(!function_exists('wpestate_check_gdpr_case')):
 function wpestate_check_gdpr_case($extra=''){
 
     if( wprentals_get_option('wp_estate_use_gdpr','') == 'yes' ){
-        
+
         print'<div class="gpr_wrapper"><input type="checkbox" id="wpestate_agree_gdpr'.$extra.'" class="wpestate_agree_gdpr" name="wpestate_agree_gdpr" />
             <label for="wpestate_agree_gdpr">'.esc_html__('I consent to the','wprentals').' <a target="_blank" href="'.wpestate_get_template_link('gdpr_terms.php').'">'.esc_html__('GDPR Terms','wprentals').'</a></label></div>
         ';
     }
-        
+
 }
 endif;
 
@@ -244,9 +558,9 @@ function wpestate_share_unit_desing($prop_id,$is_single=1){
     $twiter_status  =   urlencode( $title.''.$link);
     $email_link     =   'subject='.urlencode ( $title ) .'&body='. urlencode( esc_url($link));
     ob_start();
-    
+
     ?>
-  
+
 
     <div class="prop_social">
         <span class="prop_social_share"><?php esc_html_e('Share','wprentals');?></span>
@@ -254,16 +568,16 @@ function wpestate_share_unit_desing($prop_id,$is_single=1){
         <a href="http://twitter.com/home?status=<?php echo urlencode($title .' '.esc_url ($link)); ?>" class="share_tweet" target="_blank"><i class="fab fa-twitter"></i></a>
         <a href="mailto:email@email.com?<?php echo trim(esc_html($email_link));?>"  class="share_email" target="_blank" ><i class="far fa-envelope"></i></a>
         <?php if (isset($pinterest[0])){ ?>
-            <a href="http://pinterest.com/pin/create/button/?url=<?php echo esc_url ($link); ?>&amp;media=<?php print esc_url($pinterest[0]);?>&amp;description=<?php echo urlencode($title); ?>" target="_blank" class="share_pinterest"> <i class="fab fa-pinterest-p fa-2"></i> </a>      
+            <a href="http://pinterest.com/pin/create/button/?url=<?php echo esc_url ($link); ?>&amp;media=<?php print esc_url($pinterest[0]);?>&amp;description=<?php echo urlencode($title); ?>" target="_blank" class="share_pinterest"> <i class="fab fa-pinterest-p fa-2"></i> </a>
         <?php } ?>
         </div>
 
     <?php
-  
+
     $return = ob_get_contents();
     ob_end_clean();
-    return   $return ;    
-              
+    return   $return ;
+
 }
 endif;
 
@@ -273,13 +587,13 @@ endif;
 
 if ( ! function_exists( 'wpestate_request_transient_cache' ) ):
 function wpestate_request_transient_cache($transient_name){
-    
+
     if( wprentals_get_option('wp_estate_disable_theme_cache')=='yes'){
         return false;
     }else{
         return  get_transient( $transient_name );
     }
-    
+
 }
 endif;
 
@@ -298,7 +612,7 @@ if ( ! function_exists( 'wprentals_update_option' ) ):
     function wprentals_update_option( $theme_option,  $value ,$option = false) {
         global $wprentals_admin;
         if($option){
-            $option_array   =   array($option=>$value); 
+            $option_array   =   array($option=>$value);
             Redux::setOption('wprentals_admin',$theme_option, $option_array);
         }else{
             Redux::setOption('wprentals_admin',$theme_option, $value);
@@ -332,7 +646,7 @@ if ( ! function_exists( 'wprentals_get_option' ) ):
             $return = wpestate_reverse_convert_redux_wpestate_convert_redux_wp_estate_custom_infobox_fields();
             return $return;
         }
-        
+
 
         if( isset( $wprentals_admin[$theme_option]) && $wprentals_admin[$theme_option]!='' ){
             $return=$wprentals_admin[$theme_option];
@@ -352,7 +666,7 @@ endif;
 
 
 
- do_action('customize_save_after', 'wprentals_customizer_save', 99);
+add_action('customize_save_after', 'wprentals_customizer_save', 99);
 function wprentals_customizer_save(){
     if(has_site_icon()){
         $values= array();
@@ -369,14 +683,14 @@ function wprentals_customizer_save(){
 
 add_action('redux/options/wprentals_admin/saved', 'wprentals_redux_on_save',10,2);
 function wprentals_redux_on_save($value,$value2){
- 
-    
+
+
     if( isset(  $value['wp_estate_favicon_image']['id'] ) ){
        update_option( 'site_icon', $value['wp_estate_favicon_image']['id'] );
     }
-    
- 
-  
+
+
+
     if(isset(  $value['wpestate_set_search']['adv_search_what'])){
         Redux::setOption('wprentals_admin','wp_estate_adv_search_what',  $value['wpestate_set_search']['adv_search_what'] );
     }
@@ -389,61 +703,73 @@ function wprentals_redux_on_save($value,$value2){
     if(isset(  $value['wpestate_set_search']['search_field_label'])){
         Redux::setOption('wprentals_admin','wp_estate_search_field_label',  $value['wpestate_set_search']['search_field_label']);
     }
-   
- 
-   
-    
-    
-    
-    
+
+
+    if(isset(  $value['wpestate_set_search_half_map']['adv_search_what'])){
+        Redux::setOption('wprentals_admin','wp_estate_adv_search_what_half_map',  $value['wpestate_set_search_half_map']['adv_search_what'] );
+    }
+    if(isset(  $value['wpestate_set_search_half_map']['adv_search_how'])){
+        Redux::setOption('wprentals_admin','wp_estate_adv_search_how_half_map',  $value['wpestate_set_search_half_map']['adv_search_how']);
+    }
+    if(isset(  $value['wpestate_set_search_half_map']['adv_search_label'])){
+        Redux::setOption('wprentals_admin','wp_estate_adv_search_label_half_map', $value['wpestate_set_search_half_map']['adv_search_label']);
+    }
+    if(isset(  $value['wpestate_set_search_half_map']['search_field_label'])){
+        Redux::setOption('wprentals_admin','wp_estate_search_field_label_half_map',  $value['wpestate_set_search_half_map']['search_field_label']);
+    }
+
+
+
+
+
     if( isset( $value['wp_estate_adv_search_type'] ) && ( $value['wp_estate_adv_search_type'] =='newtype' || $value['wp_estate_adv_search_type'] =='oldtype') ){
             $adv_search_what    =   array('Location','check_in','check_out','guest_no');
             $adv_search_how     =   array('like','like','like','greater');
-            
-           
+
+
             Redux::setOption('wprentals_admin','wp_estate_adv_search_what_classic',$adv_search_what);
             Redux::setOption('wprentals_admin','wp_estate_adv_search_how_classic',$adv_search_how);
-                     
-                     
+
+
             $adv_search_what_classic_half    =   array('Location','check_in','check_out','guest_no','property_rooms','property_category','property_action_category','property_bedrooms','property_bathrooms','property_price');
             $adv_search_how_classic_half     =   array('like','like','like','greater','greater','like','like','greater','greater','between');
             Redux::setOption('wprentals_admin','wp_estate_adv_search_what_half',$adv_search_what_classic_half);
             Redux::setOption('wprentals_admin','wp_estate_adv_search_how_half',$adv_search_how_classic_half);
     }
-    
 
-    
-    
+
+
+
     if ( isset( $value['wp_estate_delete_orphan'] ) ){
         if( $value['wp_estate_delete_orphan']=='yes'){
-            wpestate_setup_wp_estate_delete_orphan_lists();  
+            wpestate_setup_wp_estate_delete_orphan_lists();
         }else{
             wp_clear_scheduled_hook('prefix_wp_estate_delete_orphan_lists');
         }
     }
-  
+
     if( $value['wp_estate_wpestate_autocomplete']=='no'){
         wprentals_event_wp_estate_create_auto_function();
     }
-        
+
     if ( isset( $value['wp_estate_paid_submission'] ) ){
         if( $value['wp_estate_paid_submission']=='membership'){
-            wprentals_schedule_user_check();  
+            wprentals_schedule_user_check();
         }else{
             wp_clear_scheduled_hook('wpestate_check_for_users_event');
         }
     }
-    
-    if( isset($value['wpestate_autocomplete'])  ){  
+
+    if( isset($value['wpestate_autocomplete'])  ){
         if( $value['wpestate_autocomplete']=='no' ){
             wpestate_create_auto_data();
         }else{
             wp_clear_scheduled_hook('event_wp_estate_create_auto');
-        }  
-     
+        }
+
     }
-    
-    
+
+
     if ( isset($value['wp_estate_auto_curency']) ){
         if( $value['wp_estate_auto_curency']=='yes' ){
             wpestate_enable_load_exchange();
@@ -451,24 +777,24 @@ function wprentals_redux_on_save($value,$value2){
             wp_clear_scheduled_hook('wpestate_load_exchange_action');
         }
     }
-    
+
     if( isset($value['wp_estate_book_down']) && floatval($value['wp_estate_book_down'])==100 ){
         Redux::setOption('wprentals_admin','wp_estate_include_expenses','yes');
     }
-    
- 
-    
-    
+
+
+
+
     if( isset($value['wpestate_custom_fields_list']) && $value['wpestate_custom_fields_list']!=''){
         update_option('wpestate_custom_fields_list',$value['wpestate_custom_fields_list']);
     }
-    
-    
-  
+
+
+
      if( isset($value['wp_estate_book_down']) && $value['wp_estate_book_down']=='100'){
         Redux::setOption('wprentals_admin','wp_estate_include_expenses','yes');
      }
-    
+
        if( isset($value['wp_estate_theme_slider_manual']) && $value['wp_estate_theme_slider_manual']!=''){
         $theme_slider           =  array();
         $new_ids= explode(',', $value['wp_estate_theme_slider_manual']);
@@ -480,21 +806,31 @@ function wprentals_redux_on_save($value,$value2){
             Redux::setOption('wprentals_admin','wp_estate_theme_slider',$theme_slider);
         }
     }
-    
+
+
+    if($value['wp_estate_url_rewrites']){
+        update_option('wp_estate_url_rewrites',$value['wp_estate_url_rewrites']);
+    }
+
+
+
+
+
+
     $api_options = array(
-   
+
             'wp_estate_measure_sys',
             'wp_estate_date_lang',
-            'wp_estate_setup_weekend',    
+            'wp_estate_setup_weekend',
             'wp_estate_separate_users',
             'wp_estate_publish_only',
             'wp_estate_prices_th_separator',
             'wp_estate_currency_symbol',
             'wp_estate_where_currency_symbol',
             'wp_estate_currency_label_main',
-            'wp_estate_auto_curency',       
+            'wp_estate_auto_curency',
             'wp_estate_where_currency_symbol',
-            'wp_estate_status_list',        
+            'wp_estate_status_list',
             'wp_estate_company_name',
             'wp_estate_email_adr',
             'wp_estate_telephone_no',
@@ -528,24 +864,20 @@ function wprentals_redux_on_save($value,$value2){
             'wp_estate_service_fee_fixed_fee',
             'wp_estate_service_fee'
         );
-   
+
     $theme_options_api_redux=array();
     foreach($api_options as $key=>$item_val){
         if(isset($value[$item_val])){
             $theme_options_api_redux[str_replace('wp_estate_','',$item_val)]=$value[$item_val];
         }
     }
-   
-    rcapi_udate_theme_options($theme_options_api_redux);
-    
-    
-    
-    if( isset($value['wp_estate_twilio_phone_no']) && $value['wp_estate_twilio_phone_no']!=''){
-        rcapi_save_sms($sms_content,$use_sms=array(),$value['wp_estate_twilio_api_key'],$value['wp_estate_twilio_auth_token'],$value['wp_estate_twilio_phone_no']);
-    }
-    
-    
-  
+
+
+
+
+
+
+
     return $value;
 }
 
@@ -553,114 +885,38 @@ function wprentals_redux_on_save($value,$value2){
 
 
 function wprentals_redux_advanced_exteded(){
-    
-    $return_array       =   array(); 
+
+    $return_array       =   array();
     $terms = get_terms( array(
         'taxonomy' => 'property_features',
         'hide_empty' => false,
     ) );
     foreach($terms as $key => $term){
-        $return_array[ $term->slug ]=$term->name;   
+        $return_array[ $term->slug ]=$term->name;
     }
 
-    
-    
+
+
     return $return_array;
-    
+
 }
 
 
 
 
 
-if(!function_exists('wpestate_sms_notice_managment_redux')):
-    function wpestate_sms_notice_managment_redux(){
-
-       $sms_data =( rcapi_retrive_sms());
-       $sms_data = json_decode($sms_data,true);
-
-
-        $sms_array=array(
-            'validation'                =>  __('Phone Number Validation','wprentals'),
-          // scos ca nu are logica  'new_user'                  =>  __('New user notification','wprentals'),
-            'admin_new_user'            =>  __('New user admin notification','wprentals'),
-            'password_reset_request'    =>  __('Password Reset Request','wprentals'),
-            'password_reseted'          =>  __('Password Reseted','wprentals'),
-            'approved_listing'          =>  __('Approved Listings','wprentals'),
-            'admin_expired_listing'     =>  __('Admin - Expired Listing','wprentals'),
-            'paid_submissions'          =>  __('Paid Submission','wprentals'),
-            'featured_submission'       =>  __('Featured Submission','wprentals'),
-            'account_downgraded'        =>  __('Account Downgraded','wprentals'),
-            'membership_cancelled'      =>  __('Membership Cancelled','wprentals'),
-            'free_listing_expired'      =>  __('Free Listing Expired','wprentals'),
-            'new_listing_submission'    =>  __('New Listing Submission','wprentals'),
-            'recurring_payment'         =>  __('Recurring Payment','wprentals'),
-            'membership_activated'      =>  __('Membership Activated','wprentals'),
-            'agent_update_profile'      =>  __('Update Profile','wprentals'),
-            'bookingconfirmeduser'      =>  __('Booking Confirmed - User','wprentals'),
-            'bookingconfirmed'          =>  __('Booking Confirmed','wprentals'),
-            'bookingconfirmed_nodeposit'=>  __('Booking Confirmed - no deposit','wprentals'),
-            'inbox'                     =>  __('Inbox- New Message','wprentals'),
-            'newbook'                   =>  __('New Booking Request','wprentals'),
-            'mynewbook'                 =>  __('User - New Booking Request','wprentals'),
-            'newinvoice'                =>  __('Invoice generation','wprentals'),
-            'deletebooking'             =>  __('Booking request rejected','wprentals'),
-            'deletebookinguser'         =>  __('Booking Request Cancelled','wprentals'),
-            'deletebookingconfirmed'    =>  __('Booking Period Cancelled ','wprentals'),
-            'new_wire_transfer'         =>  __('New wire Transfer','wprentals'),
-            'admin_new_wire_transfer'   =>  __('Admin - New wire Transfer','wprentals'),
-            'full_invoice_reminder'     =>  __('Invoice Payment Reminder','wprentals'),
-        );
-        
-              
-      
-     
-        
-        foreach ($sms_array as $key=>$label ){
-
-            print '<div class="sms_wrapper_redux">';
-            $value          = stripslashes( wprentals_get_option('wp_estate_'.$key,'') );
-            $value_subject  = stripslashes( wprentals_get_option('wp_estate_subject_'.$key,'') );
-            
-         
-            
-            
-            if( isset($sms_data['use_sms'][$key]) && $sms_data['use_sms'][$key]==1 ){
-                print '<label class="label_option_row"  for="'.$key.'">'.__('SMS for','wprentals').' '.$label.' '.__('is active','wprentals').'</label>'; 
-            }else{
-                print '<label class="label_option_row"  for="'.$key.'">'.__('SMS for','wprentals').' '.$label.' '.__('is NOT active','wprentals').'</label>'; 
-            }
-         
-            print '<div class="option_row_explain">'.__('SMS text for','wprentals').' '.$label.'</div>    ';
-
-            $sms_content='';
-            
-            if(isset($sms_data['sms_content'][$key])){
-                $sms_content = stripslashes($sms_data['sms_content'][$key]);
-            }
-            print '<div class="sms_content">'.$sms_content.'</div>';
-            print '<div class="extra_exp"> '.wpestate_emails_extra_details($key).'</div>';
-            print '</div>';
-
-        }
-
-       
-       
-    }
-endif;
-
 
 
 
 function wp_estate_redux_on_child_theme_customcss(){
     print '<textarea onclick="this.focus();this.select()" class="modal-content" style="height:250px;">';
-      
+
             $general_font   = esc_html(wprentals_get_option('wp_estate_general_font', ''));
             if ( $general_font != '' && $general_font != 'x'){
                 require_once get_theme_file_path('/libs/custom_general_font.php');
             }
             require_once get_theme_file_path('/libs/customcss.php');
-      
+
     print '</textarea><span style="margin-left:30px;">';
 }
 
@@ -668,7 +924,7 @@ function wp_estate_redux_on_child_theme_customcss(){
 
 if(!function_exists('wpestate_fields_type_select_redux')):
 function wpestate_fields_type_select_redux($name_drop,$real_value){
-         
+
     $select = '<select   name="'.$name_drop.'"   style="width:140px;">';
     $values = array('short text','long text','numeric','date','dropdown');
 
@@ -676,40 +932,40 @@ function wpestate_fields_type_select_redux($name_drop,$real_value){
         $select.='<option value="'.$option.'"';
             if( $option == $real_value ){
                  $select.= ' selected="selected"  ';
-            }       
+            }
         $select.= ' > '.$option.' </option>';
-    }   
+    }
     $select.= '</select>';
     return $select;
 }
 endif;
-    
-    
+
+
  if( !function_exists('wpestate_show_advanced_search_how_redux') ):
 function  wpestate_show_advanced_search_how_redux($adv_search_how_value){
     $return_string='';
     $curent_value='';
-     
+
     $admin_submission_how_array=array('equal',
                                       'greater',
                                       'smaller',
                                       'like',
                                       'date bigger',
                                       'date smaller');
-    
+
     foreach($admin_submission_how_array as $value){
-        $return_string.='<option value="'.$value.'" '; 
+        $return_string.='<option value="'.$value.'" ';
         if($adv_search_how_value==$value){
              $return_string.= ' selected="selected" ';
         }
-        $return_string.= '>'.$value.'</option>';    
+        $return_string.= '>'.$value.'</option>';
     }
     return $return_string;
 }
-endif; // end   wpestate_show_advanced_search_how  
+endif; // end   wpestate_show_advanced_search_how
 
-   
-    
+
+
 if( !function_exists('wpestate_show_advanced_search_options_redux') ):
 
 function  wpestate_show_advanced_search_options_redux($adv_search_what_value){
@@ -733,79 +989,79 @@ function  wpestate_show_advanced_search_options_redux($adv_search_what_value){
                                     'property_state'    =>  esc_html('State','wprentals'),
                                     'property_zip'      =>  esc_html('Zip','wprentals'),
                                     'property_country'  =>  esc_html('Country','wprentals'),
-                               
-        
+
+
                                 );
-    
+
     foreach($admin_submission_array as $key=>$value){
 
-        $return_string.='<option value="'.$key.'" '; 
+        $return_string.='<option value="'.$key.'" ';
         if($adv_search_what_value==$key){
              $return_string.= ' selected="selected" ';
         }
-        $return_string.= '>'.$value.'</option>';    
+        $return_string.= '>'.$value.'</option>';
     }
-    
+
     $i=0;
-    //$custom_fields = get_option( 'wp_estate_custom_fields', true); 
-//    $custom_fields = get_option( 'wpestate_custom_fields_list', true); 
-//    
-//    if( !empty($custom_fields)){  
-//        while($i< count($custom_fields) ){          
+    //$custom_fields = get_option( 'wp_estate_custom_fields', true);
+//    $custom_fields = get_option( 'wpestate_custom_fields_list', true);
+//
+//    if( !empty($custom_fields)){
+//        while($i< count($custom_fields) ){
 //            $name =   $custom_fields[$i][0];
 //            $type =   $custom_fields[$i][1];
 //            $slug =   str_replace(' ','-',$name);
-//            if($name!=''){    
-//                $return_string.='<option value="'.$slug.'" '; 
+//            if($name!=''){
+//                $return_string.='<option value="'.$slug.'" ';
 //                if($adv_search_what_value==$slug){
 //                   $return_string.= ' selected="selected" ';
 //                }
-//                $return_string.= '>'.$name.'</option>';  
+//                $return_string.= '>'.$name.'</option>';
 //            }
-//            $i++;  
+//            $i++;
 //        }
-//    }  
-//    
+//    }
+//
     $custom_fields =    get_option('wpestate_custom_fields_list');
- 
-    if( !empty($custom_fields)){  
+
+    if( !empty($custom_fields)){
         while($i< count( $custom_fields['add_field_name'] ) ){
-  
+
             $data= wprentals_prepare_non_latin($custom_fields['add_field_name'][$i],$custom_fields['add_field_label'][$i]);
-   
-            
-             $return_string.='<option value="'.$data['key'].'" '; 
+
+
+             $return_string.='<option value="'.$data['key'].'" ';
                 if($adv_search_what_value==$data['key'] ){
                    $return_string.= ' selected="selected" ';
                 }
-                $return_string.= '>'.$data['label'].'</option>';  
+                $return_string.= '>'.$data['label'].'</option>';
             $i++;
        }
     }
-    
-    
-    
-    
+
+
+
+
     $slug='none';
     $name='none';
-    $return_string.='<option value="'.$slug.'" '; 
+    $return_string.='<option value="'.$slug.'" ';
     if($adv_search_what_value==$slug){
         $return_string.= ' selected="selected" ';
     }
-    $return_string.= '>'.$name.'</option>';    
+    $return_string.= '>'.$name.'</option>';
 
-       
+
     return $return_string;
 }
-endif; // end   wpestate_show_advanced_search_options  
+endif; // end   wpestate_show_advanced_search_options
 
 
-    
+
 if(!function_exists('wprentals_return_booking_type')):
     function wprentals_return_booking_type($edit_id){
 //        1 => __("Per Day","wprentals"),
 //        2 => __("Per Hour","wprentals"),
-//                 
+//
         $global_type= wprentals_get_option('wp_estate_booking_type','');
         if($global_type==3){
             return  intval(get_post_meta($edit_id, 'local_booking_type', true));
@@ -814,21 +1070,21 @@ if(!function_exists('wprentals_return_booking_type')):
         }
 }
 endif;
-  
+
 
 if(!function_exists('wpestate_number_convert_currency')):
 function wpestate_number_convert_currency($price){
-    $custom_fields  =  wprentals_get_option('wpestate_currency',''); 
+    $custom_fields  =  wprentals_get_option('wpestate_currency','');
     if( !empty($custom_fields) && isset($_COOKIE['my_custom_curr']) &&  isset($_COOKIE['my_custom_curr_pos']) &&  isset($_COOKIE['my_custom_curr_symbol']) && $_COOKIE['my_custom_curr_pos']!=-1){
         $i              =   floatval($_COOKIE['my_custom_curr_pos']);
-        $custom_fields  = wprentals_get_option('wpestate_currency',''); 
+        $custom_fields  = wprentals_get_option('wpestate_currency','');
         if ($price != 0) {
             $price      = $price * $custom_fields[$i][2];
         }
     }
     return $price;
 
-  
+
 }
 endif;
 
@@ -855,14 +1111,14 @@ if ( ! function_exists( 'wpestate_admin_display_verifications' ) ) {
 			$verifications .= '</div> <!-- end .user-verifications -->' . PHP_EOL;
                         $ajax_nonce = wp_create_nonce( "wprentals_user_verfication_nonce" );
                         $verifications .= '<input type="hidden" id="wprentals_user_verfication" value="'.esc_html($ajax_nonce).'" />    ';
-                
-                
+
+
 			print trim($verifications);//escaped above
 		}
 	}
 
 	// display verification widget only for admin users on the admin user edit page
-	
+
 }
 
 
@@ -873,7 +1129,7 @@ function wpestate_category_labels_dropdowns($who){
     $category_main_dropdown_label = stripslashes( esc_html(wprentals_get_option('wp_estate_category_main_dropdown', '')));
     $category_second_dropdown_label = stripslashes( esc_html(wprentals_get_option('wp_estate_category_second_dropdown', '')));
 
-    
+
     if( $who=='main' ){
         if( $category_main_dropdown_label==''){
             return esc_html__( 'All Types','wprentals');
@@ -887,19 +1143,19 @@ function wpestate_category_labels_dropdowns($who){
             return $category_second_dropdown_label;
         }
     }
-    
+
 }
 endif;
 
 
 if(!function_exists('wpestate_city_submit_dropdown')):
     function wpestate_city_submit_dropdown($tax,$value){
-    
+
         $args = array(
             'orderby' => 'name',
             'hide_empty' => 0,
-        ); 
-        
+        );
+
         $terms  =   get_terms( $tax, $args );
         $list   =   '';
         foreach ( $terms as $term ) {
@@ -907,13 +1163,13 @@ if(!function_exists('wpestate_city_submit_dropdown')):
             $list.='<option name="'.$term->name.'"';
             if($value==$term->name) {
                 $list.=' selected = "selected" ';
-            }   
+            }
             $list.='>'.$term->name.'</option>';
         }
-        
+
         return $list;
     }
-    
+
 endif;
 
 if( !function_exists('wpestate_delete_cache') ):
@@ -924,7 +1180,7 @@ function wpestate_delete_cache(){
             WHERE `option_name` LIKE %s
             ORDER BY `option_name`";
 
-     
+
     $wild = '%';
     $find = 'transient_';
     $like = $wild . $wpdb->esc_like( $find ) . $wild;
@@ -950,42 +1206,42 @@ endif;
 
 if(!function_exists('wpestate_price_pin_converter')):
     function wpestate_price_pin_converter($pin_price,$wpestate_where_currency,$wpestate_currency){
-    
+
         if(isset($_COOKIE['my_custom_curr']) &&  isset($_COOKIE['my_custom_curr_pos']) &&  isset($_COOKIE['my_custom_curr_symbol']) && $_COOKIE['my_custom_curr_pos']!=-1){
             $i              =   floatval($_COOKIE['my_custom_curr_pos']);
             $th_separator   =   wprentals_get_option('wp_estate_prices_th_separator','');
-            $custom_fields  =  wprentals_get_option('wpestate_currency',''); 
+            $custom_fields  =  wprentals_get_option('wpestate_currency','');
             if ($pin_price != 0) {
                 $pin_price      = $pin_price * floatval($custom_fields[$i][2]);
-              
+
                 $pin_price      = number_format($pin_price,2,'.',$th_separator);
                 $pin_price      = wpestate_TrimTrailingZeroes($pin_price);
 
 
                 $wpestate_currency   = $custom_fields[$i][1];
 
-              
+
 
             }else{
                 $pin_price='';
             }
         }
-    
+
         $pin_price=floatval($pin_price);
         if(  10000 < $pin_price && $pin_price < 1000000 ){
             $pin_price  =   round( $pin_price / 1000 ,1);
             $pin_price  =   $pin_price.''.__('K','wprentals');
-            
+
         }
         if ( $pin_price >= 1000000 ){
             $pin_price  =  round ( $pin_price / 1000000,1 );
             $pin_price  =   $pin_price.''.__('M','wprentals');
-           
+
         }
-        
-        
-        
-        
+
+
+
+
         if($wpestate_where_currency=='before'){
             $pin_price=$wpestate_currency.' '.$pin_price;
         }else{
@@ -1011,7 +1267,7 @@ function wpestate_show_poi_onmap($where=''){
         'pharma'            =>  __('Pharmacies','wprentals'),
         'hospitals'         =>  __('Hospitals','wprentals'),
     );
-    
+
     $return_value = '<div class="google_map_poi_marker">';
         foreach($points as $key=>$value){
             $return_value .= '<div class="google_poi'.$where.'" id="'.$key.'"><img src="'.get_template_directory_uri().'/css/css-images/poi/'.$key.'_icon.png" class="dashboad-tooltip"  data-placement="right"  data-original-title="'.esc_attr($value).'" ></div>';
@@ -1024,17 +1280,17 @@ endif;
 
 if(!function_exists('wpestate_splash_page_header')):
 function wpestate_splash_page_header(){
-    
+
     $spash_header_type  = wprentals_get_option('wp_estate_spash_header_type','');
-    
+
     if($spash_header_type=='image'){
-        wpestate_header_image(''); 
+        wpestate_header_image('');
     }else if($spash_header_type=='video'){
         wpestate_video_header();
     }else if($spash_header_type=='image slider'){
         wpestate_splash_slider();
     }
-   
+
 }
 endif;
 
@@ -1044,14 +1300,14 @@ function wpestate_splash_slider(){
     $splash_slider_gallery      =   esc_html(wprentals_get_option('wp_estate_splash_slider_gallery','') );
     $splash_slider_transition   =   esc_html ( wprentals_get_option('wp_estate_splash_slider_transition','') );
 
-    
+
     $splash_slider_gallery_array= explode(',', $splash_slider_gallery);
     $slider='<div id="splash_slider_wrapper" class="carousel slide" data-ride="carousel" data-interval="'.esc_attr($splash_slider_transition).'">';
     $i=0;
- 
+
     if(is_array($splash_slider_gallery_array)){
         foreach ($splash_slider_gallery_array as $image_id) {
-            
+
             if(is_numeric($image_id) && $image_id!=''){
                 $i++;
                 if($i==1){
@@ -1060,26 +1316,26 @@ function wpestate_splash_slider(){
                      $class_active ='  ';
                 }
                 $preview            =   wp_get_attachment_image_src($image_id, 'full');
-             
-                if($preview[0]!=''){   
-                    $slider.= '<div class="item splash_slider_item'; 
+
+                if($preview[0]!=''){
+                    $slider.= '<div class="item splash_slider_item';
                     $slider.=$class_active.' "  style="background-image:url('.esc_url($preview[0]).');" >
                     </div>';
                 }
             }
         }
     }
-    
+
     $slider.='</div>';
-    
+
     $page_header_overlay_val            =   esc_html ( wprentals_get_option('wp_estate_splash_overlay_opacity','') );
     $page_header_overlay_color          =   esc_html ( wprentals_get_option('wp_estate_splash_overlay_color','') );
     $wp_estate_splash_overlay_image     =   esc_html ( wprentals_get_option('wp_estate_splash_overlay_image','url') );
     $page_header_title_over_image       =   stripslashes( esc_html ( wprentals_get_option('wp_estate_splash_page_title','') ) );
     $page_header_subtitle_over_image    =   stripslashes( esc_html ( wprentals_get_option('wp_estate_splash_page_subtitle','') ) );
-            
-  
-    
+
+
+
     if($page_header_overlay_color!='' || $wp_estate_splash_overlay_image!=''){
         $slider.= '<div class="wpestate_header_image_overlay" style="background-color:'.$page_header_overlay_color.';opacity:'.$page_header_overlay_val.';background-image:url('.esc_url($wp_estate_splash_overlay_image).');"></div>';
     }
@@ -1095,8 +1351,8 @@ function wpestate_splash_slider(){
 
         $slider.= '</div>';
     }
-            
-    
+
+
     print trim($slider);//escaped above
 }
 endif;
@@ -1104,7 +1360,7 @@ endif;
 
 if(!function_exists('wpestate_video_header')):
 function wpestate_video_header(){
-  
+
     global $post;
     $paralax_header = wprentals_get_option('wp_estate_paralax_header','');
     if( isset($post->ID)){
@@ -1133,30 +1389,30 @@ function wpestate_video_header(){
             $page_header_overlay_val_video      =   esc_html ( get_post_meta($post->ID, 'page_header_overlay_val_video', true) );
             $wp_estate_splash_overlay_image     =   '';
         }
-       
-    
+
+
         if($page_header_overlay_val_video==''){
             $page_header_overlay_val_video=1;
         }
         if($page_header_video_height==0){
             $page_header_video_height=580;
         }
-        
-        
-        print '<div class="wpestate_header_video full_screen_'.$img_full_screen.' parallax_effect_'.$paralax_header.'" style="'; 
+
+
+        print '<div class="wpestate_header_video full_screen_'.$img_full_screen.' parallax_effect_'.$paralax_header.'" style="';
 
             print ' height:'.$page_header_video_height.'px; ';
-           
+
         print '">';
 
-        
+
             print '<video id="hero-vid" class="header_video" poster="'.$page_custom_video_cover_image.'" width="100%" height="100%" autoplay controls muted loop>
 			<source src="'.esc_url($page_custom_video).'" type="video/mp4" />
 			<source src="'.esc_url($page_custom_video_webm).'" type="video/webm" />
                         <source src="'.esc_url($page_custom_video_ogv).'" type="video/ogg"/>
-    
+
 		</video>';
-        
+
             if($page_header_overlay_color_video!='' || $wp_estate_splash_overlay_image!=''){
                 print '<div class="wpestate_header_video_overlay" style="background-color:'.$page_header_overlay_color_video.';opacity:'.$page_header_overlay_val_video.';background-image:url('.esc_url($wp_estate_splash_overlay_image).');"></div>';
             }
@@ -1164,17 +1420,17 @@ function wpestate_video_header(){
             if($page_header_title_over_video!=''){
                 print '<div class="heading_over_video_wrapper" >';
                 print '<h1 class="heading_over_video">'.$page_header_title_over_video.'</h1>';
-                 
+
                 if($page_header_subtitle_over_video!=''){
                     print '<div class="subheading_over_video">'.$page_header_subtitle_over_video.'</div>';
                 }
-                
+
                 print '</div>';
             }
-            
-           
+
+
         print'</div>';
-        
+
     }
 }
 endif;
@@ -1189,7 +1445,7 @@ if(!function_exists('wpestate_calculate_new_mess')):
         $unread=intval ( get_user_meta($userID,'unread_mess',true) +1);
         update_user_meta($userID,'unread_mess',$unread);
     }
-endif;    
+endif;
 
 add_action('wp_login','wpestate_calculate_new_mess');
 if(!function_exists('wpestate_calculate_new_mess')):
@@ -1197,7 +1453,7 @@ if(!function_exists('wpestate_calculate_new_mess')):
         global $current_user;
         $current_user = wp_get_current_user();
         $userID                         =   $current_user->ID;
-        
+
         $args_mess = array(
                   'post_type'         => 'wpestate_message',
                   'post_status'       => 'publish',
@@ -1223,7 +1479,7 @@ if(!function_exists('wpestate_calculate_new_mess')):
 //                                          'key'       => 'first_content',
 //                                          'value'     => 1,
 //                                          'compare'   => '='
-//                                      ),  
+//                                      ),
                                       array(
                                           'key'       => 'delete_destination'.$userID,
                                           'value'     => 1,
@@ -1241,22 +1497,22 @@ if(!function_exists('wpestate_calculate_new_mess')):
 
         update_user_meta($userID,'unread_mess',$args_mess_selection->found_posts);
         //return $args_mess_selection->found_posts;
-        
+
     }
 endif;
 
 if(!function_exists('wpestate_booking_mark_confirmed')):
     function wpestate_booking_mark_confirmed($booking_id,$invoice_id,$userId,$depozit,$user_email,$is_stripe=0){
-    
+
         $is_full_pay                =   0;
         $booking_details            =   array();
         $booking_status             =   get_post_meta($booking_id, 'booking_status', true);
         $is_full_instant_booking    =   get_post_meta($booking_id, 'is_full_instant', true);
         $is_full_instant_invoice    =   get_post_meta($invoice_id, 'is_full_instant', true);
-           
-        
-        
-        
+
+
+
+
         if ($booking_status!='confirmed'){
             update_post_meta($booking_id, 'booking_status', 'confirmed');
             $booking_details['booking_status']='confirmed';
@@ -1267,33 +1523,33 @@ if(!function_exists('wpestate_booking_mark_confirmed')):
             $booking_details['balance']=0;
             update_post_meta($booking_id, 'balance', 0);
         }
-        
+
         if($is_full_instant_booking==1){
             update_post_meta($booking_id, 'booking_status_full', 'confirmed');
             $booking_details['booking_status_full']='confirmed';
             $booking_details['balance']=0;
             update_post_meta($booking_id, 'balance', 0);
         }
-        
+
         if($is_stripe==1){
             $depozit=  ($depozit/100);
         }
-        
-       
-       
-        
-        // reservation array       
+
+
+
+
+        // reservation array
         $curent_listng_id   =   get_post_meta($booking_id,'booking_id',true);
         $reservation_array  =   wpestate_get_booking_dates($curent_listng_id);
-        update_post_meta($curent_listng_id, 'booking_dates', $reservation_array); 
-        
+        update_post_meta($curent_listng_id, 'booking_dates', $reservation_array);
 
-        
-        
+
+
+
         $invoice_details    =   array();
         $invoice_status     =   get_post_meta($invoice_id, 'invoice_status', true);
-        
-        
+
+
         if($invoice_status!='confirmed'){
             update_post_meta($invoice_id, 'depozit_paid',$depozit  );
             update_post_meta($invoice_id, 'invoice_status', 'confirmed');
@@ -1304,66 +1560,68 @@ if(!function_exists('wpestate_booking_mark_confirmed')):
             $invoice_details['balance']=0;
             update_post_meta($invoice_id, 'balance', 0);
         }
-       
-        
+
+
         if($is_full_instant_invoice==1){
             update_post_meta($invoice_id, 'invoice_status_full', 'confirmed');
             $invoice_details['invoice_status_full']='confirmed';
             $invoice_details['balance']=0;
             update_post_meta($invoice_id, 'balance', 0);
         }
-        
+
         // 100% deposit
         $wp_estate_book_down            =   floatval( get_post_meta($invoice_id, 'invoice_percent', true) );
         $invoice_price                  =   floatval( get_post_meta($invoice_id, 'item_price', true)) ;
-      
+
         if($wp_estate_book_down==100){
             update_post_meta($booking_id, 'booking_status_full', 'confirmed');
             $booking_details['booking_status_full']='confirmed';
             $booking_details['balance']=0;
             update_post_meta($booking_id, 'balance', 0);
-            
+
             update_post_meta($invoice_id, 'invoice_status_full', 'confirmed');
             $invoice_details['invoice_status_full']='confirmed';
             $invoice_details['balance']=0;
             update_post_meta($invoice_id, 'balance', 0);
         }
         // end 100% deposit
-        
-    
-        wpestate_send_booking_email("bookingconfirmeduser",$user_email);
- 
-        $receiver_id    =   wpsestate_get_author($invoice_id);
-        $receiver_email =   get_the_author_meta('user_email', $receiver_id); 
-        $receiver_name  =   get_the_author_meta('user_login', $receiver_id); 
-        wpestate_send_booking_email("bookingconfirmed",$receiver_email);
 
 
-        // add messages to inbox
-        $subject        =   esc_html__( 'Booking Confirmation','wprentals');
-        $description    =   esc_html__( 'A booking was confirmed','wprentals');
-        wpestate_add_to_inbox($userId,$userId,$receiver_id,$subject,$description,1);
+
+        $woo_double_check = intval ( get_post_meta($booking_id, 'woo_double_check', true) ) ;
+
+        if($woo_double_check!=1){
+
+            wpestate_send_booking_email("bookingconfirmeduser",$user_email);
+
+            $receiver_id    =   wpsestate_get_author($invoice_id);
+            $receiver_email =   get_the_author_meta('user_email', $receiver_id);
+            $receiver_name  =   get_the_author_meta('user_login', $receiver_id);
+            wpestate_send_booking_email("bookingconfirmed",$receiver_email);
 
 
-    
-        
+            // add messages to inbox
+            $subject        =   esc_html__( 'Booking Confirmation','wprentals');
+            $description    =   esc_html__( 'A booking was confirmed','wprentals');
+            wpestate_add_to_inbox($userId,$userId,$receiver_id,$subject,$description,1);
+
+            //marl as email sent for woo
+            update_post_meta($booking_id, 'woo_double_check', 1);
+        }
+
+
            // rcapi code
-        $booking_guests     =   floatval(get_post_meta($booking_id, 'booking_guests', true));
-        $booking_from_date  =   esc_html(get_post_meta($booking_id, 'booking_from_date', true));
-        $booking_to_date    =   esc_html(get_post_meta($booking_id, 'booking_to_date', true));   
-        $booking_prop       =   esc_html(get_post_meta($booking_id, 'booking_id', true));
-        $booking_array      =   wpestate_booking_price($booking_guests,$invoice_id,$curent_listng_id, $booking_from_date, $booking_to_date);
-           
-        
-        
-        
-        $rcapi_booking_id = get_post_meta($booking_id,'rcapi_booking_id',true);
-        rcapi_edit_booking($booking_id,$rcapi_booking_id,$booking_details);
-        
-        $rcapi_invoice_id = get_post_meta($invoice_id,'rcapi_invoice_id',true);
-        rcapi_edit_invoice($invoice_id,$rcapi_invoice_id,$invoice_details);
-       // rcapi_update_invoice_as_paid($booking_id,$invoice_id,$booking_array);
-        
+//        $booking_guests     =   floatval(get_post_meta($booking_id, 'booking_guests', true));
+//        $booking_from_date  =   esc_html(get_post_meta($booking_id, 'booking_from_date', true));
+//        $booking_to_date    =   esc_html(get_post_meta($booking_id, 'booking_to_date', true));
+//        $booking_prop       =   esc_html(get_post_meta($booking_id, 'booking_id', true));
+//        $booking_array      =   wpestate_booking_price($booking_guests,$invoice_id,$curent_listng_id, $booking_from_date, $booking_to_date);
+//
+
+
+
+
+
     }
 endif;
 
@@ -1382,18 +1640,18 @@ function wpestate_wpml_after_post_meta( $meta_id, $post_id, $meta_key, $meta_val
 
 if(!function_exists('wpestate_update_booking_dates_for_wpml')):
 function    wpestate_update_booking_dates_for_wpml($listing_id,$reservation_array){
-  
+
     $trid = apply_filters( 'wpml_element_trid', NULL, $listing_id, 'post_page' );
     $translations = apply_filters( 'wpml_get_element_translations', NULL, $trid, 'post_page' );
-   
+
     foreach ($translations as $key=>$translate){
         $lan_id= $translate->element_id;
-        update_post_meta($lan_id, 'booking_dates', $reservation_array); 
+        update_post_meta($lan_id, 'booking_dates', $reservation_array);
     }
 }
 endif;
 
-   
+
 
 if(!function_exists('wpestate_check_reservation_period')):
     function wpestate_check_reservation_period($bookid){
@@ -1434,7 +1692,7 @@ if(!function_exists('wpestate_check_reservation_period')):
             }else{
                 $from_date->modify('tomorrow');
             }
-          
+
             $from_date_unix =   $from_date->getTimestamp();
         }
         return true;
@@ -1455,7 +1713,7 @@ function wpestate_show_extra_options_booking($post_id){
         $wpestate_currency      =   esc_html( wprentals_get_option('wp_estate_currency_label_main', '') );
         $wpestate_where_currency=   esc_html( wprentals_get_option('wp_estate_where_currency_symbol', '') );
         $extra_pay_options      =      ( get_post_meta($post_id,  'extra_pay_options', true) );
-     
+
         if(is_array($extra_pay_options)){
             foreach($extra_pay_options as $key=>$extra_options){
                 print'<div class="cost_row cost_row_extra wpestate_show_extra_options_booking"  data-value_add="'.esc_attr($extra_options[1]).'" data-value_how="'.esc_attr($extra_options[2]).'" data-value_name="'.$extra_options[0].'" >';
@@ -1477,7 +1735,7 @@ function wpestate_curency_submission_pick(){
         $submission_curency = esc_html( wprentals_get_option('wp_estate_submission_curency', '') );
     }
     return $submission_curency;
-    
+
 }
 endif;
 
@@ -1489,7 +1747,7 @@ if(!function_exists('wpml_custom_price_adjust')):
         if(!$return){
             $return=  get_post_meta($post_id, 'custom_price'.$post_id,true );
         }
-     
+
         return $return;
     }
 endif;
@@ -1498,12 +1756,12 @@ endif;
 if(!function_exists('wpml_mega_details_adjust')):
     function wpml_mega_details_adjust($post_id){
         $return =  get_post_meta($post_id, 'mega_details',true );
-    
-     
+
+
         if(!$return){
             $return=   get_post_meta($post_id, 'mega_details'.$post_id,true );
         }
-     
+
         return $return;
     }
 endif;
@@ -1534,7 +1792,7 @@ function wpestate_the_excerpt_max_charlength($charlength) {
 	$excerpt = get_the_excerpt();
 	$charlength++;
         $return='';
-        
+
 	if ( mb_strlen( $excerpt ) > $charlength ) {
 		$subex = mb_substr( $excerpt, 0, $charlength - 5 );
 		$exwords = explode( ' ', $subex );
@@ -1560,7 +1818,7 @@ if( !function_exists('wpestate_strip_words') ):
         }
         return implode(' ', $temp);
     }
-endif; // end   wpestate_strip_words 
+endif; // end   wpestate_strip_words
 
 
 
@@ -1569,9 +1827,9 @@ endif; // end   wpestate_strip_words
 if( !function_exists('wpestate_show_product_type')):
     function wpestate_show_product_type($item_id){
        return get_the_title($item_id);
-        
+
     }
-endif;    
+endif;
 
 
 if( !function_exists('wpestate_custom_vimdeo_video') ):
@@ -1583,7 +1841,7 @@ if( !function_exists('wpestate_custom_vimdeo_video') ):
             </div>';
 
     }
-endif; // end     
+endif; // end
 
 
 if( !function_exists('wpestate_custom_youtube_video') ):
@@ -1595,10 +1853,10 @@ if( !function_exists('wpestate_custom_youtube_video') ):
         </div>';
 
 }
-endif; // end     
+endif; // end
 
 
-if( !function_exists('wprentals_get_video_thumb') ): 
+if( !function_exists('wprentals_get_video_thumb') ):
     function wprentals_get_video_thumb($post_id){
         $video_id    = esc_html( get_post_meta($post_id, 'embed_video_id', true) );
         $video_type = esc_html( get_post_meta($post_id, 'embed_video_type', true) );
@@ -1606,10 +1864,10 @@ if( !function_exists('wprentals_get_video_thumb') ):
         $video_thumb='';
         if($video_type=='vimeo'){
             $hash2 = ( wp_remote_get($protocol."://vimeo.com/api/v2/video/$video_id.php") );
-    
+
             if( $hash2['response']['code']!='404' ){
                 $pre_tumb=(unserialize ( $hash2['body']) );
-                $video_thumb=$pre_tumb[0]['thumbnail_medium'];  
+                $video_thumb=$pre_tumb[0]['thumbnail_medium'];
             }
         }else{
             $video_thumb = $protocol.'://img.youtube.com/vi/' . $video_id . '/0.jpg';
@@ -1633,17 +1891,17 @@ if( !function_exists('wpestate_review_composer')):
             $return_array['templates']          ='';
             return $return_array;
         }
-        
+
         $post_array     =   array();
         $post_array[]   =   0;
         $return_array   =   array();
-        $paged          =   1; 
-        
+        $paged          =   1;
+
         if( isset( $_GET['pagelist']) ){
             $paged = intval( $_GET['pagelist'] );
-        }    
-    
-    
+        }
+
+
         $args = array(
             'post_type'         =>  'estate_property',
             'author'            =>  $owner_id,
@@ -1652,16 +1910,16 @@ if( !function_exists('wpestate_review_composer')):
             'post_status'       => 'publish'
         );
 
-     
-       
-      
+
+
+
         $prop_selection =   new WP_Query($args);
-      
+
         $return_array['prop_selection']=$prop_selection;
         wp_reset_postdata();
         wp_reset_query();
-            
-            
+
+
         $arg2_reviews = array(
             'post_type'         =>  'estate_property',
             'author'            =>  $owner_id,
@@ -1671,9 +1929,9 @@ if( !function_exists('wpestate_review_composer')):
         );
         $prop_selection_Reviews =   new WP_Query($arg2_reviews);
         if ( $prop_selection_Reviews->have_posts() ) {
-            while ($prop_selection_Reviews->have_posts()): 
-                $prop_selection_Reviews->the_post();                     
-        
+            while ($prop_selection_Reviews->have_posts()):
+                $prop_selection_Reviews->the_post();
+
                 $post_array[]=$post->ID;
             endwhile;
             wp_reset_postdata();
@@ -1683,7 +1941,7 @@ if( !function_exists('wpestate_review_composer')):
                 'number' => '15',
                 'post__in' => $post_array,
             );
-            
+
 
             $comments   =   get_comments($args);
             $coments_no =   0;
@@ -1699,7 +1957,7 @@ if( !function_exists('wpestate_review_composer')):
                     $reviewer_name=   $comment->comment_author;
                 }
 
-              
+
                 if($userid_agent==''){
                     $user_small_picture_id     =    get_the_author_meta( 'small_custom_picture' ,  $comment->user_id,true  );
                     $preview                   =    wp_get_attachment_image_src($user_small_picture_id,'wpestate_user_thumb');
@@ -1709,8 +1967,8 @@ if( !function_exists('wpestate_review_composer')):
                     $preview        =   wp_get_attachment_image_src($thumb_id, 'thumbnail');
                     $preview_img    =   $preview[0];
                 }
-    
-    
+
+
                 if($preview_img==''){
                     $preview_img    =   get_stylesheet_directory_uri().'/img/default_user_agent.gif';
                 }
@@ -1718,17 +1976,17 @@ if( !function_exists('wpestate_review_composer')):
                 $rating= get_comment_meta( $comment->comment_ID , 'review_stars', true );
                 $tmp_rating = json_decode( $rating, TRUE );
                 $rating=wpestate_get_star_total_value( $tmp_rating );
-                
+
                 $stars_total+=$rating;
                 $review_templates.='
                     <div class="listing-review">
-                       
+
                         <div class="col-md-12 review-list-content norightpadding">
                             <div class="reviewer_image"  style="background-image: url('.$preview_img.');"></div>
                             <div class="reviwer-name">'.$reviewer_name.'</div>
                             <div class="property_ratings">';
 	                    $review_templates.= wpestate_display_rating($rating);
-                            $review_templates.=' <span class="ratings-star">('. wpestate_get_star_total_value(wpestate_get_star_total_rating($rating)).' ' .esc_html__( 'of','wprentals').' 5)</span> 
+                            $review_templates.=' <span class="ratings-star">('. wpestate_get_star_total_value(wpestate_get_star_total_rating($rating)).' ' .esc_html__( 'of','wprentals').' 5)</span>
                             </div>
 
 
@@ -1736,7 +1994,7 @@ if( !function_exists('wpestate_review_composer')):
                                 '. $comment->comment_content .'
 
                                 <div class="review-date">
-                                '.esc_html__( 'Posted on ','wprentals' ). ' '. get_comment_date('j F Y',$comment->comment_ID).' 
+                                '.esc_html__( 'Posted on ','wprentals' ). ' '. get_comment_date('j F Y',$comment->comment_ID).'
                                 </div>
                             </div>
 
@@ -1746,23 +2004,23 @@ if( !function_exists('wpestate_review_composer')):
                     </div>   ';
 
             endforeach;
-            
+
             $return_array['templates'] = $review_templates;
             $list_rating=0;
             if($coments_no>0){
                 $list_rating= ceil($stars_total/$coments_no);
             }
 
-            
+
             $return_array['list_rating'] = $list_rating;
             $return_array['coments_no'] = $coments_no;
-           
+
         }// if has listings
 
-    
-    
-    
-    
+
+
+
+
     return $return_array;
     }
 endif;
@@ -1779,11 +2037,11 @@ endif;
 
 if( !function_exists('wpestate_show_media_header')):
     function wpestate_show_media_header($tip, $wpestate_global_header_type,$wpestate_header_type,$rev_slider,$custom_image){
-   
+
         if( is_page_template( 'splash_page.php' ) ){
                 $wpestate_header_type=20;
         }else
-        
+
         if( $tip=='global' ){
             switch ($wpestate_global_header_type) {
                 case 0://none
@@ -1795,8 +2053,8 @@ if( !function_exists('wpestate_show_media_header')):
                     }else if(is_singular('estate_agent')){
                         $global_header=  wprentals_get_option('wp_estate_global_header_image_user','url');
                     }
-                    
-                          
+
+
                     wpestate_header_image($global_header);
                     break;
                 case 2://theme slider
@@ -1819,7 +2077,7 @@ if( !function_exists('wpestate_show_media_header')):
                 case 20:
                     wpestate_splash_page_header();
                     break;
-            } 
+            }
         }else{ // is local
             switch ($wpestate_header_type) {
                 case 1://none
@@ -1840,23 +2098,23 @@ if( !function_exists('wpestate_show_media_header')):
                     break;
                 case 6:
                     wpestate_video_header();
-                    break; 
+                    break;
 
                 case 20:
                     wpestate_splash_page_header();
                     break;
-                }  
+                }
         }
-        
-        
-       
+
+
+
     }
 endif;
 
 
 function wprentals_increase_time_unit($wprentals_is_per_hour,$from_date){
     if($wprentals_is_per_hour==2){
-        $from_date->modify('+1 hour'); 
+        $from_date->modify('+1 hour');
     }else{
         $from_date->modify('tomorrow');
     }
@@ -1869,30 +2127,50 @@ function wprentals_compute_no_of_hours($start_date,$end_date,$listing_id){
     $booking_end_hour_string    =   get_post_meta($listing_id,'booking_end_hour',true);
     $booking_start_hour         =   intval($booking_start_hour_string);
     $booking_end_hour           =   intval($booking_end_hour_string);
-    
+
     $hour_count=0;
     $from_date          =   new DateTime($start_date);
     $to_date            =   new DateTime($end_date);
-    
+
     while($from_date<$to_date){
         $from_date->modify('+1 hour');
         $from_date_unix     =   $from_date->getTimestamp();
         $current_hour = $from_date->format('H');
-        
+
         if($booking_start_hour_string=='' && $booking_end_hour_string==''){
-            $hour_count++;   
+            $hour_count++;
         }else {
             if( $booking_end_hour > $current_hour && $booking_start_hour <= $current_hour){
-                $hour_count++;   
+                $hour_count++;
             }
         }
-           
 
-      
+
+
     }
     return $hour_count;
 }
 
+if( !function_exists('wprentals_return_standart_days_period')):
+function wprentals_return_standart_days_period(){
+      $return=array();
+
+      $week_days_no               =   intval(wprentals_get_option('wp_estate_week_days'));
+      if($week_days_no==0){
+        $week_days_no=7;
+      }
+
+      $month_days_no              =   intval(wprentals_get_option('wp_estate_month_days'));
+      if($month_days_no==0){
+        $month_days_no==30;
+      }
+
+      $return['week_days']  = $week_days_no;
+      $return['month_days'] = $month_days_no;
+
+      return $return;
+}
+endif;
 
 /////////////////////////////////////////////////////////////////////////////////
 // datepcker_translate
@@ -1900,22 +2178,27 @@ function wprentals_compute_no_of_hours($start_date,$end_date,$listing_id){
 
 if( !function_exists('wpestate_booking_price')):
     function wpestate_booking_price($curent_guest_no,$invoice_id, $property_id, $from_date, $to_date,$bookid='',$extra_options_array='',$manual_expenses=''){
-    
-        $wprentals_is_per_hour      =   wprentals_return_booking_type($property_id);
-     
 
-        $price_array                =   wpml_custom_price_adjust($property_id);    
+        $wprentals_is_per_hour      =   wprentals_return_booking_type($property_id);
+
+
+        $price_array                =   wpml_custom_price_adjust($property_id);
         $mega                       =   wpml_mega_details_adjust($property_id);
-     
+
         $cleaning_fee_per_day       =   floatval   ( get_post_meta($property_id,  'cleaning_fee_per_day', true) );
         $city_fee_per_day           =   floatval   ( get_post_meta($property_id, 'city_fee_per_day', true) );
-        $price_per_weekeend         =   floatval   ( get_post_meta($property_id, 'price_per_weekeend', true) );  
+        $price_per_weekeend         =   floatval   ( get_post_meta($property_id, 'price_per_weekeend', true) );
         $setup_weekend_status       =   esc_html ( wprentals_get_option('wp_estate_setup_weekend','') );
         $include_expeses            =   esc_html ( wprentals_get_option('wp_estate_include_expenses','') );
         $booking_from_date          =   $from_date;
         $booking_to_date            =   $to_date;
         $total_guests               =   floatval(get_post_meta($bookid, 'booking_guests', true));
-        
+
+        $classic_period_days = wprentals_return_standart_days_period();
+
+
+
+
         $numberDays=1;
         if( $invoice_id == 0){
             $price_per_day              =   floatval(get_post_meta($property_id, 'property_price', true));
@@ -1929,7 +2212,7 @@ if( !function_exists('wpestate_booking_price')):
             $security_deposit           =   floatval(get_post_meta($property_id, 'security_deposit', true));
             $early_bird_percent         =   floatval(get_post_meta($property_id, 'early_bird_percent', true));
             $early_bird_days            =   floatval(get_post_meta($property_id, 'early_bird_days', true));
-           
+
         }else{
             $price_per_day              =   floatval(get_post_meta($invoice_id, 'default_price', true));
             $week_price                 =   floatval(get_post_meta($invoice_id, 'week_price', true));
@@ -1943,7 +2226,7 @@ if( !function_exists('wpestate_booking_price')):
             $early_bird_percent         =   floatval(get_post_meta($invoice_id, 'early_bird_percent', true));
             $early_bird_days            =   floatval(get_post_meta($invoice_id, 'early_bird_days', true));
         }
-        
+
 
 
         $from_date          =   new DateTime($booking_from_date);
@@ -1960,43 +2243,43 @@ if( !function_exists('wpestate_booking_price')):
         $cover_weekend      =   0;
         $custom_period_quest=   0;
 
-        $custom_price_array =   array();        
+        $custom_price_array =   array();
         $timeDiff           =   abs( strtotime($booking_to_date) - strtotime($booking_from_date) );
         if($wprentals_is_per_hour==2){
             //per h
             $count_days=  wprentals_compute_no_of_hours($booking_from_date,$booking_to_date,$property_id);
-            
+
         }else{
             //per day
             $count_days         =   $timeDiff/86400;  // 86400 seconds in one day
-            
+
         }
-        
+
         $count_days         =   intval($count_days);
-        
+
         //check extra price per guest
         ///////////////////////////////////////////////////////////////////////////
-        $extra_price_per_guest          =   floatval   ( get_post_meta($property_id, 'extra_price_per_guest', true) );  
+        $extra_price_per_guest          =   floatval   ( get_post_meta($property_id, 'extra_price_per_guest', true) );
         $price_per_guest_from_one       =   floatval   ( get_post_meta($property_id, 'price_per_guest_from_one', true) );
         $overload_guest                 =   floatval   ( get_post_meta($property_id, 'overload_guest', true) );
         $guestnumber                    =   floatval   ( get_post_meta($property_id, 'guest_no', true) );
-     
+
         $booking_start_hour_string      =   get_post_meta($property_id,'booking_start_hour',true);
         $booking_end_hour_string        =   get_post_meta($property_id,'booking_end_hour',true);
         $booking_start_hour             =   intval($booking_start_hour_string);
         $booking_end_hour               =   intval($booking_end_hour_string);
-    
-    
+
+
         $has_guest_overload             =   0;
         $total_extra_price_per_guest    =   0;
         $extra_guests                   =   0;
-      
-        
-        
-      
-        
-        
-        
+
+
+
+
+
+
+
 
         if($price_per_guest_from_one == 0 ) {
             ///////////////////////////////////////////////////////////////
@@ -2005,11 +2288,11 @@ if( !function_exists('wpestate_booking_price')):
                 //period_price_per_month,period_price_per_week
                 //discoutn prices for month and week
                 ///////////////////////////////////////////////////////////////////////////
-                if( $count_days >= 7 && $week_price!=0){ // if more than 7 days booked
+                if( $count_days >= $classic_period_days['week_days'] && $week_price!=0){ // if more than 7 days booked
                     $price_per_day = $week_price;
                 }
 
-                if( $count_days >= 30 && $month_price!=0 ) {
+                if( $count_days >= $classic_period_days['month_days'] && $month_price!=0 ) {
                     $price_per_day = $month_price;
                 }
 
@@ -2023,7 +2306,7 @@ if( !function_exists('wpestate_booking_price')):
                 if( isset($mega[$date_checker]) && isset( $mega[$date_checker]['period_price_per_weekeend'] ) &&  $mega[$date_checker]['period_price_per_weekeend']!=0 ){
                     $has_wkend_price = 1;
                 }
-                  
+
                 if ($overload_guest==1){  // if we allow overload
                     if($curent_guest_no > $guestnumber){
                         $has_guest_overload   = 1;
@@ -2033,7 +2316,7 @@ if( !function_exists('wpestate_booking_price')):
                             $custom_period_quest=1;
                         }else{
                             $total_extra_price_per_guest = $total_extra_price_per_guest + $extra_guests * $extra_price_per_guest;
-                        
+
                         }
                     }
 
@@ -2043,54 +2326,51 @@ if( !function_exists('wpestate_booking_price')):
                     $has_wkend_price = 1;
                 }
 
-                $usable_price                           =   wpestate_return_custom_price($date_checker,$mega,$price_per_weekeend,$price_array,$price_per_day,$count_days);             
+                $usable_price                           =   wpestate_return_custom_price($date_checker,$mega,$price_per_weekeend,$price_array,$price_per_day,$count_days);
                 $total_price                            =   $total_price + $usable_price;
-              
+
                 $inter_price                            =   $inter_price + $usable_price;
                 $custom_price_array [$date_checker]   =   $usable_price;
-                
+
                 $from_date_unix_first_day= $from_date->getTimestamp();
-                
-                
-                
-             
+
+
+
+
                 $from_date      =   wprentals_increase_time_unit($wprentals_is_per_hour,$from_date);
                 $from_date_unix =   $from_date->getTimestamp();
                 $date_checker=  strtotime(date("Y-m-d 00:00", $from_date_unix));
                 $weekday = date('N', $from_date_unix_first_day); // 1-7
                 if( wpestate_is_cover_weekend($weekday,$has_wkend_price,$setup_weekend_status) ){
                     $cover_weekend=1;
-                } 
-                
-              
-             
-//                1534636800===
-//                1534582800
+                }
+
+
                 // loop trough the dates
                 //////////////////////////////////////////////////////////////////////////
                 while ($from_date_unix < $to_date_unix){
-                    
+
                     $skip_a_beat=1;
                     if($wprentals_is_per_hour==2){ //is per h
                         $current_hour = $from_date->format('H');
-                        
+
                         if($booking_start_hour_string=='' && $booking_end_hour_string==''){
-                            $skip_a_beat=1; 
+                            $skip_a_beat=1;
                         }else {
                             if( $booking_end_hour > $current_hour && $booking_start_hour <= $current_hour){
-                                $skip_a_beat=1;   
+                                $skip_a_beat=1;
                             }else{
-                                $skip_a_beat=0; 
+                                $skip_a_beat=0;
                             }
                         }
 
-        
-                       
+
+
                     }
-                    
-                  
-                    
-                    
+
+
+
+
                     if($skip_a_beat== 1){
                         $numberDays++;
 
@@ -2135,104 +2415,104 @@ if( !function_exists('wpestate_booking_price')):
                     $from_date      =   wprentals_increase_time_unit($wprentals_is_per_hour,$from_date);
                     $from_date_unix =   $from_date->getTimestamp();
                     $date_checker=  strtotime(date("Y-m-d 00:00", $from_date_unix));
-               
+
                 }
 
-        }else{  
+        }else{
                 $custom_period_quest=0;
-                  
+
                 ///////////////////////////////////////////////////////////////
                 //  per guest math
                 ////////////////////////////////////////////////////////////////
-              
+
                 if(isset($mega[$date_checker]['period_extra_price_per_guest']) ){
-                
+
                     $total_price                        =   $curent_guest_no* $mega[$date_checker]['period_extra_price_per_guest'];
-                    $inter_price                        =   $curent_guest_no*$mega[$date_checker]['period_extra_price_per_guest'];                    
-                    $custom_price_array [$date_checker] =   $curent_guest_no*$mega[$date_checker]['period_extra_price_per_guest']; 
+                    $inter_price                        =   $curent_guest_no*$mega[$date_checker]['period_extra_price_per_guest'];
+                    $custom_price_array [$date_checker] =   $curent_guest_no*$mega[$date_checker]['period_extra_price_per_guest'];
                     $custom_period_quest                =   1;
                 }else{
-              
+
                     $total_price     =   $curent_guest_no* $extra_price_per_guest;
                     $inter_price     =   $curent_guest_no* $extra_price_per_guest;
                 }
-                
-           
-             
+
+
+
                 $from_date      =   wprentals_increase_time_unit($wprentals_is_per_hour,$from_date);
                 $from_date_unix =   $from_date->getTimestamp();
                 $date_checker   =   strtotime(date("Y-m-d 00:00", $from_date_unix));
-                   
-                
 
-     
-                
+
+
+
+
                 while ($from_date_unix < $to_date_unix){
                     $skip_a_beat=1;
                     if($wprentals_is_per_hour==2){ //is per h
                         $current_hour = $from_date->format('H');
-                         
+
                         if($booking_start_hour_string=='' && $booking_end_hour_string==''){
-                            $skip_a_beat=1; 
+                            $skip_a_beat=1;
                         }else {
                             if( $booking_end_hour > $current_hour && $booking_start_hour <= $current_hour){
-                                $skip_a_beat=1;   
+                                $skip_a_beat=1;
                             }else{
-                                $skip_a_beat=0; 
+                                $skip_a_beat=0;
                             }
                         }
 
                     }
-                    
+
                     if($skip_a_beat== 1){
                         $numberDays++;
-                        
-                       
+
+
 
                         if( isset($mega[$date_checker]['period_extra_price_per_guest']) ) {
                             $total_price    =   $total_price+  $curent_guest_no* $mega[$date_checker]['period_extra_price_per_guest'];
                             $inter_price    =   $inter_price+  $curent_guest_no* $mega[$date_checker]['period_extra_price_per_guest'];
-                            $custom_price_array [$date_checker] =$curent_guest_no* $mega[$date_checker]['period_extra_price_per_guest']; 
-                            
-                         
+                            $custom_price_array [$date_checker] =$curent_guest_no* $mega[$date_checker]['period_extra_price_per_guest'];
+
+
                             $custom_period_quest=   1;
                         }else{
                             $total_price    =   $total_price+ $curent_guest_no * $extra_price_per_guest;
                             $inter_price    =   $inter_price+ $curent_guest_no * $extra_price_per_guest;
                         }
                     }
-                    
-                   
-                               
+
+
+
                     $from_date      =   wprentals_increase_time_unit($wprentals_is_per_hour,$from_date);
                     $from_date_unix =   $from_date->getTimestamp();
-                     
-                    if($wprentals_is_per_hour!=2){ 
+
+                    if($wprentals_is_per_hour!=2){
                         $date_checker   =   $from_date->getTimestamp();
                     }
-                    //$date_checker=  strtotime(date("Y-m-d 00:00", $from_date_unix));
-                       
+
+
                 }
-               
+
         }// end per guest math
 
         $wp_estate_book_down              =   floatval ( wprentals_get_option('wp_estate_book_down', '') );
         $wp_estate_book_down_fixed_fee    =   floatval ( wprentals_get_option('wp_estate_book_down_fixed_fee', '') );
-    
-     
- 
+
+
+
         if ( !empty ( $extra_options_array ) ){
             $extra_pay_options          =      ( get_post_meta($property_id,  'extra_pay_options', true) );
-         
+
             foreach ($extra_options_array as $key=>$value){
                 if( isset($extra_pay_options[$value][0]) ){
                     $extra_option_value     =   wpestate_calculate_extra_options_value($count_days,$total_guests,$extra_pay_options[$value][2],$extra_pay_options[$value][1]);
                     $total_price            =   $total_price + $extra_option_value;
                 }
             }
-        } 
-        
-    
+        }
+
+
 
         if( !empty ($manual_expenses) && is_array($manual_expenses) ) {
             foreach($manual_expenses as $key=>$value){
@@ -2241,55 +2521,41 @@ if( !function_exists('wpestate_booking_price')):
                 }
             }
         }
-       
-        // extra price per guest 
+
+        // extra price per guest
         if($has_guest_overload==1 && $total_extra_price_per_guest>0){
             $total_price=$total_price + $total_extra_price_per_guest;
         }
-      
-        
-         
-   
+
+
+
+
         //early bird discount
         ///////////////////////////////////////////////////////////////////////////
         $early_bird_discount = wpestate_early_bird($property_id,$early_bird_percent,$early_bird_days,$from_date_discount,$total_price);
-       
+
         if($early_bird_discount>0){
             $total_price= $total_price - $early_bird_discount;
         }
-        
-        
-  
-        
-        
+
+
+
+
+
         //security depozit - refundable
         ///////////////////////////////////////////////////////////////////////////
         if(intval ($security_deposit)!=0 ){
             $total_price =$total_price+$security_deposit;
         }
-        
-         
-   
-    
-        
-       
-        
-        
+
         $total_price_before_extra=$total_price;
-       
-        
-        
-        
-          
+
         //cleaning or city fee per day
         ///////////////////////////////////////////////////////////////////////////
- 
+
         $cleaning_fee   =   wpestate_calculate_cleaning_fee($property_id,$count_days,$curent_guest_no,$cleaning_fee,$cleaning_fee_per_day);
         $city_fee       =   wpestate_calculate_city_fee($property_id,$count_days,$curent_guest_no,$city_fee,$city_fee_per_day,$city_fee_percent,$inter_price);
-        
-        
-        
-        
+
         if($cleaning_fee!=0 && $cleaning_fee!=''){
             $total_price=$total_price+$cleaning_fee;
         }
@@ -2298,56 +2564,53 @@ if( !function_exists('wpestate_booking_price')):
             $total_price=$total_price+$city_fee;
         }
 
-      
-      
-        
-        
+
         if( $invoice_id == 0){
             $price_for_service_fee  =   $total_price - $security_deposit  -   floatval($city_fee)    -   floatval($cleaning_fee);
             $service_fee            =   wpestate_calculate_service_fee($price_for_service_fee,$invoice_id);
         }else{
             $service_fee  =  get_post_meta($invoice_id, 'service_fee', true);
         }
-        
-     
-        
-      
-        
-     
+
+
+
+
+
+
         if($include_expeses=='yes'){
             $deposit = wpestate_calculate_deposit($wp_estate_book_down,$wp_estate_book_down_fixed_fee,$total_price);
         }else{
             $deposit = wpestate_calculate_deposit($wp_estate_book_down,$wp_estate_book_down_fixed_fee,$total_price_before_extra);
         }
-  
-        
+
+
         if(intval($invoice_id)==0){
             $you_earn       =   $total_price   -   $security_deposit  -   floatval($city_fee)    -   floatval($cleaning_fee) - $service_fee;
             update_post_meta($bookid,'you_earn',$you_earn);
         }else{
             $you_earn  =    get_post_meta($bookid,'you_earn',true);
         }
-       
-        
-          
+
+
+
         $taxes          =   0;
-        
+
         if(intval($invoice_id)==0){
             $taxes_value    =   floatval(get_post_meta($property_id, 'property_taxes', true));
         }else{
             $taxes_value    =   floatval(get_post_meta($invoice_id, 'prop_taxed', true));
         }
         if($taxes_value>0){
-            $taxes          =   round ( $you_earn*$taxes_value/100,2); 
+            $taxes          =   round ( $you_earn*$taxes_value/100,2);
         }
-        
-        
+
+
         if(intval($invoice_id)==0){
             update_post_meta($bookid, 'custom_price_array', $custom_price_array);
         }else{
             $custom_price_array=get_post_meta($bookid, 'custom_price_array', true);
         }
-        
+
         $balance                                        =   $total_price - $deposit;
         $return_array=array();
         $return_array['book_type']                      =   $wprentals_is_per_hour;
@@ -2397,7 +2660,7 @@ function wpestate_extra_options_exp($extra_id,$edit_id=''){
          2   =>  esc_html__('Per Guest','wprentals'),
          3   =>  ucfirst( wpestate_show_labels('per_night',$rental_type,$booking_type)).' '.esc_html__('per Guest','wprentals')
      );
-    
+
     return $options_array[$extra_id];
 }
 endif;
@@ -2405,15 +2668,15 @@ endif;
 
 if(!function_exists('wpestate_early_bird')):
 function wpestate_early_bird($property_id,$early_bird_percent,$early_bird_days,$from_date_discount,$total_price){
-   
+
     $day_diffrence = ( $from_date_discount- time() ) / 60/60/24;
     $discount=0;
     if($day_diffrence >= $early_bird_days){
         $discount=( $total_price * $early_bird_percent ) /100;
     }
-            
+
     return $discount;
-    
+
 }
 endif;
 
@@ -2421,7 +2684,7 @@ endif;
 if(!function_exists('wpestate_calculate_cleaning_fee')):
     function wpestate_calculate_cleaning_fee($property_id,$count_days,$guests_no,$cleaning_fee,$cleaning_fee_per_day){
         $return_value=0;
-        
+
         $guests_no=intval($guests_no);
         if($guests_no==0){
             $guests_no=1;
@@ -2452,7 +2715,7 @@ if(!function_exists('wpestate_calculate_city_fee')):
             $guests_no=1;
         }
         if($city_fee_percent==0){
-         
+
             switch ($city_fee_per_day) {
                 case 0:// single fee
                     $return_value = $city_fee;
@@ -2470,13 +2733,13 @@ if(!function_exists('wpestate_calculate_city_fee')):
         }else{
             $return_value=$inter_fee*$city_fee/100;
         }
-        
-        
-        
+
+
+
         return $return_value;
     }
-endif;        
-        
+endif;
+
 
 
 
@@ -2502,22 +2765,22 @@ endif;
 
 if(!function_exists('wpestate_calculate_deposit')):
     function  wpestate_calculate_deposit($wp_estate_book_down,$wp_estate_book_down_fixed_fee,$total_price){
-    
+
         if ( $wp_estate_book_down_fixed_fee == 0) {
-          
+
             if($wp_estate_book_down =='' || $wp_estate_book_down == 0){
                 $deposit                =   0;
             }else{
-           
+
                 $deposit                =   floatval ($wp_estate_book_down*$total_price/100);
-           
+
                 $deposit = round($deposit,2);
             }
         }else{
             $deposit = $wp_estate_book_down_fixed_fee;
         }
         return $deposit;
-        
+
     }
 endif;
 
@@ -2527,7 +2790,7 @@ function wpestate_calculate_weekedn_price($mega,$from_date_unix,$price_per_weeke
     $new_price='';
     if( isset($mega[$from_date_unix]) && isset( $mega[$from_date_unix]['period_price_per_weekeend'] ) &&  $mega[$from_date_unix]['period_price_per_weekeend']!=0 ){
         $new_price =$mega[$from_date_unix]['period_price_per_weekeend'];
-    }else if($price_per_weekeend!=0){      
+    }else if($price_per_weekeend!=0){
         $new_price =$price_per_weekeend;
     }else{
        $new_price = wpestate_classic_price_return($price_per_day,$price_array, $from_date_unix,$count_days,$mega);
@@ -2546,14 +2809,14 @@ function wpestate_return_custom_price($from_date_unix,$mega,$price_per_weekeend,
     if( $setup_weekend_status ==0 && ( $weekday ==6 || $weekday==7) ){
        $new_price=wpestate_calculate_weekedn_price($mega,$from_date_unix,$price_per_weekeend,$price_per_day,$price_array,$count_days);
     }else if( $setup_weekend_status ==1 && ( $weekday ==5 || $weekday==6) ){
-       $new_price=wpestate_calculate_weekedn_price($mega,$from_date_unix,$price_per_weekeend,$price_per_day,$price_array,$count_days);    
+       $new_price=wpestate_calculate_weekedn_price($mega,$from_date_unix,$price_per_weekeend,$price_per_day,$price_array,$count_days);
     }else if( $setup_weekend_status ==2 && ( $weekday ==5 || $weekday ==6 || $weekday==7) ){
-       $new_price=wpestate_calculate_weekedn_price($mega,$from_date_unix,$price_per_weekeend,$price_per_day,$price_array,$count_days);    
+       $new_price=wpestate_calculate_weekedn_price($mega,$from_date_unix,$price_per_weekeend,$price_per_day,$price_array,$count_days);
     }else{
         $new_price = wpestate_classic_price_return($price_per_day,$price_array, $from_date_unix,$count_days,$mega);
     }
     return $new_price;
-            
+
 }
 endif;
 
@@ -2561,20 +2824,22 @@ endif;
 
 if( !function_exists('wpestate_classic_price_return') ):
     function wpestate_classic_price_return($price_per_day,$price_array, $from_date_unix,$count_days,$mega){
-        
-    
-            if($count_days>=7 && $count_days<30 && isset( $mega[$from_date_unix]['period_price_per_week'] ) && $mega[$from_date_unix]['period_price_per_week']!=0 ){
-             
+
+            $classic_period_days = wprentals_return_standart_days_period();
+
+            if($count_days>=$classic_period_days['week_days'] && $count_days<$classic_period_days['month_days'] &&
+                isset( $mega[$from_date_unix]['period_price_per_week'] ) && $mega[$from_date_unix]['period_price_per_week']!=0 ){
+
                 return $mega[$from_date_unix]['period_price_per_week'];
-            }else if($count_days>=30 && isset( $mega[$from_date_unix]['period_price_per_month'] ) &&  $mega[$from_date_unix]['period_price_per_month'] !=0 ){
+            }else if($count_days>=$classic_period_days['month_days'] && isset( $mega[$from_date_unix]['period_price_per_month'] ) &&  $mega[$from_date_unix]['period_price_per_month'] !=0 ){
                 return $mega[$from_date_unix]['period_price_per_month'];
             }else if( isset( $price_array[$from_date_unix] ) ) {
                 return $price_array[$from_date_unix];
             }else{
                 return $price_per_day;
-            }  
-    
-            
+            }
+
+
     }
 endif;
 
@@ -2588,7 +2853,7 @@ endif;
 ///////////////////////////////////////////////////////////////////////////////////
 if( !function_exists('wpestate_date_picker_translation') ):
 function wpestate_date_picker_translation($selector){
-   
+
     if( $selector !=='check_in' &&  $selector !=='check_out' ){
         $date_lang_status= esc_html ( wprentals_get_option('wp_estate_date_lang','') );
         $dates_types=array(
@@ -2610,7 +2875,7 @@ function wpestate_date_picker_translation($selector){
 //                    });
 //                    //]]>
 //            </script>';
-    
+
     }
 }
 endif;
@@ -2632,43 +2897,43 @@ endif;
 
 if( !function_exists('wpestate_show_price') ):
 function wpestate_show_price($post_id,$wpestate_currency,$wpestate_where_currency,$return=0){
-      
+
     $price_label    =   '<span class="price_label">'.esc_html ( get_post_meta($post_id, 'property_label', true) ).'</span>';
     $property_price_before_label    =   esc_html ( get_post_meta($post_id, 'property_price_before_label', true) );
     $property_price_after_label     =   esc_html ( get_post_meta($post_id, 'property_price_after_label', true) );
-    
+
     $price_label    =   '';
-    $price_per_guest_from_one       =   floatval( get_post_meta($post_id, 'price_per_guest_from_one', true) ); 
-    
+    $price_per_guest_from_one       =   floatval( get_post_meta($post_id, 'price_per_guest_from_one', true) );
+
     if($price_per_guest_from_one==1){
-        $price          =   floatval( get_post_meta($post_id, 'extra_price_per_guest', true) );  
+        $price          =   floatval( get_post_meta($post_id, 'extra_price_per_guest', true) );
     }else{
-        $price          =   floatval( get_post_meta($post_id, 'property_price', true) );  
-    }    
- 
+        $price          =   floatval( get_post_meta($post_id, 'property_price', true) );
+    }
+
     $th_separator   =   wprentals_get_option('wp_estate_prices_th_separator','');
-    $custom_fields  =   wprentals_get_option('wpestate_currency',''); 
-    
-    
-   
+    $custom_fields  =   wprentals_get_option('wpestate_currency','');
+
+
+
     if( !empty($custom_fields) && isset($_COOKIE['my_custom_curr']) &&  isset($_COOKIE['my_custom_curr_pos']) &&  isset($_COOKIE['my_custom_curr_symbol']) && $_COOKIE['my_custom_curr_pos']!=-1){
         $i              =   floatval($_COOKIE['my_custom_curr_pos']);
-        $custom_fields  =  wprentals_get_option('wpestate_currency',''); 
+        $custom_fields  =  wprentals_get_option('wpestate_currency','');
         if ($price != 0) {
             $price      = $price * floatval($custom_fields[$i][2]);
-          
+
             $price      = number_format($price,2,'.',$th_separator);
             $price      = wpestate_TrimTrailingZeroes($price);
 
-            
+
             $wpestate_currency   = $custom_fields[$i][1];
-            
+
             if ($custom_fields[$i][3] == 'before') {
                 $price = $wpestate_currency . ' ' . $price;
             } else {
                 $price = $price . ' ' . $wpestate_currency;
             }
-            
+
         }else{
             $price='';
         }
@@ -2682,14 +2947,14 @@ function wpestate_show_price($post_id,$wpestate_currency,$wpestate_where_currenc
             } else {
                 $price = $price . ' ' . $wpestate_currency;
             }
-              
+
         }else{
             $price='';
         }
     }
 
-  
-    
+
+
     if($return==0){
         print  trim($property_price_before_label.' '.$price.' '.$price_label.$property_price_after_label);
     }else{
@@ -2719,7 +2984,7 @@ if( !function_exists('wpestate_show_price_custom') ):
         $wpestate_currency  =   esc_html( wprentals_get_option('wp_estate_currency_label_main', '') );
         $wpestate_where_currency     =   esc_html( wprentals_get_option('wp_estate_where_currency_symbol', '') );
         $th_separator       =   wprentals_get_option('wp_estate_prices_th_separator','');
-        $custom_fields      =  wprentals_get_option('wpestate_currency',''); 
+        $custom_fields      =  wprentals_get_option('wpestate_currency','');
 
         if ($price != 0) {
             //$price  = westate_display_corection($price);
@@ -2735,9 +3000,9 @@ if( !function_exists('wpestate_show_price_custom') ):
             $price='';
         }
 
-   
+
         return $price.' '.$price_label;
-       
+
     }
 endif;
 
@@ -2747,7 +3012,7 @@ if( !function_exists('wpestate_show_price_custom_invoice') ):
         $wpestate_currency   =   wpestate_curency_submission_pick();
         $wpestate_where_currency      =   esc_html( get_option('wp_estate_where_currency_symbol', '') );
         $th_separator        =   wprentals_get_option('wp_estate_prices_th_separator','');
-        $custom_fields       =   wprentals_get_option('wpestate_currency',''); 
+        $custom_fields       =   wprentals_get_option('wpestate_currency','');
 
         if ($price != 0) {
             //$price  = westate_display_corection($price);
@@ -2763,9 +3028,9 @@ if( !function_exists('wpestate_show_price_custom_invoice') ):
             $price='';
         }
 
-       
+
         return $price.' '.$price_label;
-       
+
     }
 endif;
 
@@ -2776,25 +3041,25 @@ endif;
 
 if( !function_exists('wpestate_show_price_booking') ):
 function wpestate_show_price_booking($price,$wpestate_currency,$wpestate_where_currency,$return=0){
-    $price_label    =   '';    
+    $price_label    =   '';
     $th_separator   =   wprentals_get_option('wp_estate_prices_th_separator','');
-    $custom_fields  =  wprentals_get_option('wpestate_currency',''); 
+    $custom_fields  =  wprentals_get_option('wpestate_currency','');
 
     if( !empty($custom_fields) && isset($_COOKIE['my_custom_curr']) &&  isset($_COOKIE['my_custom_curr_pos']) &&  isset($_COOKIE['my_custom_curr_symbol']) && $_COOKIE['my_custom_curr_pos']!=-1){
         $i              =   intval($_COOKIE['my_custom_curr_pos']);
-        $custom_fields  =   wprentals_get_option('wpestate_currency',''); 
+        $custom_fields  =   wprentals_get_option('wpestate_currency','');
         if ($price != 0) {
             $price      =   $price * $custom_fields[$i][2];
             $price      =   number_format($price,2,'.',$th_separator);
             $price      =   wpestate_TrimTrailingZeroes($price);
             $wpestate_currency   =   $custom_fields[$i][1];
-            
+
             if ($custom_fields[$i][3] == 'before') {
                 $price = $wpestate_currency . ' ' . $price;
             } else {
                 $price = $price . ' ' . $wpestate_currency;
             }
-            
+
         }else{
             $price='';
         }
@@ -2803,18 +3068,18 @@ function wpestate_show_price_booking($price,$wpestate_currency,$wpestate_where_c
             //$price      = westate_display_corection($price);
             $price      = ( number_format($price,2,'.',$th_separator) );
             $price      = wpestate_TrimTrailingZeroes($price);
-            
+
             if ($wpestate_where_currency == 'before') {
                 $price = $wpestate_currency . ' ' . $price;
             } else {
                 $price = $price . ' ' . $wpestate_currency;
             }
-            
+
         }else{
             $price='';
         }
     }
-    
+
 
     if($return==0){
         print  trim($price.' '.$price_label);
@@ -2833,23 +3098,23 @@ endif;
 
 if( !function_exists('wpestate_show_price_booking_for_invoice') ):
 function wpestate_show_price_booking_for_invoice($price,$wpestate_currency,$wpestate_where_currency,$has_data=0,$return=0){
-      
-        
+
+
     $price_label='';
     $th_separator   =   wprentals_get_option('wp_estate_prices_th_separator','');
-    $custom_fields  =   wprentals_get_option('wpestate_currency',''); 
+    $custom_fields  =   wprentals_get_option('wpestate_currency','');
 
-    
+
     if (floatval($price) != 0) {
         $price=$clear_price=floatval($price);
         //$price      = westate_display_corection($price);
         $price      = number_format(($price),2,'.',$th_separator);
         $price      = wpestate_TrimTrailingZeroes($price);
- 
+
     if($has_data==1){
             $price = '<span class="inv_data_value" data-clearprice="'.esc_attr($clear_price).'"> '.$price.'</span>';
         }
-       
+
         if ($wpestate_where_currency == 'before') {
             $price = $wpestate_currency . ' ' . $price;
         } else {
@@ -2865,7 +3130,7 @@ function wpestate_show_price_booking_for_invoice($price,$wpestate_currency,$wpes
         }
     }
 
-    
+
     if($return==0){
         print trim($price.' '.$price_label);
     }else{
@@ -2881,10 +3146,10 @@ if( !function_exists('wpestate_show_top_bar') ):
     function  wpestate_show_top_bar(){
         global $post;
         $is_top_bar= wprentals_get_option('wp_estate_show_top_bar_user_menu','');
-      
+
         if( $is_top_bar =="yes" ){
             if(!is_tax() && !is_category() && !is_archive() && !is_404() && !is_tag() ){
-              
+
                 if ( !wpestate_check_if_admin_page($post->ID ) ){
                     return true;
                 }else{
@@ -2895,7 +3160,7 @@ if( !function_exists('wpestate_show_top_bar') ):
         }else{
             return false;
         }
-        
+
     }
 endif;
 
@@ -2911,29 +3176,30 @@ endif;
 if( !function_exists('wpestate_check_if_admin_page') ):
     function  wpestate_check_if_admin_page($page_id){
 
-    
+
         if (get_the_title($page_id)=='Dashboard Add Activities'){
             return true;
         }
-    
-        if( basename(get_page_template($page_id)) == 'user_dashboard.php' || 
-                basename(get_page_template($page_id)) == 'user_dashboard_add_step1.php' || 
-                basename(get_page_template($page_id)) == 'user_dashboard_edit_listing.php' || 
-                basename(get_page_template($page_id)) == 'user_dashboard_favorite.php' || 
-                basename(get_page_template($page_id)) == 'user_dashboard_profile.php'  || 
-                basename(get_page_template($page_id)) == 'user_dashboard_my_bookings.php'  || 
-                basename(get_page_template($page_id)) == 'user_dashboard_my_reservations.php'  || 
-                basename(get_page_template($page_id)) == 'user_dashboard_favorite'  || 
-                basename(get_page_template($page_id)) == 'user_dashboard_inbox.php'  || 
+
+        if(     basename(get_page_template($page_id)) == 'user_dashboard_main.php' ||
+                basename(get_page_template($page_id)) == 'user_dashboard.php' ||
+                basename(get_page_template($page_id)) == 'user_dashboard_add_step1.php' ||
+                basename(get_page_template($page_id)) == 'user_dashboard_edit_listing.php' ||
+                basename(get_page_template($page_id)) == 'user_dashboard_favorite.php' ||
+                basename(get_page_template($page_id)) == 'user_dashboard_profile.php'  ||
+                basename(get_page_template($page_id)) == 'user_dashboard_my_bookings.php'  ||
+                basename(get_page_template($page_id)) == 'user_dashboard_my_reservations.php'  ||
+                basename(get_page_template($page_id)) == 'user_dashboard_favorite'  ||
+                basename(get_page_template($page_id)) == 'user_dashboard_inbox.php'  ||
                 basename(get_page_template($page_id)) == 'user_dashboard_invoices.php'  ||
-                basename(get_page_template($page_id)) == 'user_dashboard_packs.php'  || 
+                basename(get_page_template($page_id)) == 'user_dashboard_packs.php'  ||
                 basename(get_page_template($page_id)) == 'user_dashboard_searches.php' ||
                 basename(get_page_template($page_id)) == 'user_dashboard_allinone.php'  )    {
             return true;
         }else{
             return false;
-        }   
-        
+        }
+
     }
 endif;
 
@@ -2943,24 +3209,24 @@ endif;
 
 
 if( !function_exists('wpestate_new_list_to_user') ):
-    function  wpestate_new_list_to_user($newlist, $userid){    
+    function  wpestate_new_list_to_user($newlist, $userid){
         //scheck
         if( wpsestate_get_author($newlist)==0 ){
             $user_pack              =   get_the_author_meta( 'package_id' , $userid );
             $remaining_listings     =   wpestate_get_remain_listing_user($userid,$user_pack);
-           
+
             if($remaining_listings  === -1){
                $remaining_listings=11;
             }
             $paid_submission_status= esc_html ( wprentals_get_option('wp_estate_paid_submission','') );
-          
-    
+
+
             if( $paid_submission_status == 'membership' && $remaining_listings != -1 && $remaining_listings < 1 ) {
                 $author_id=wpsestate_get_author($newlist);
                 if($author_id==0){
                     wp_delete_post($newlist);
                 }
-                return wpestate_get_template_link('user_dashboard_add_step1.php');  
+                return wpestate_get_template_link('user_dashboard_add_step1.php');
             }else{
                 $new_post = array(
                     'ID'            => $newlist,
@@ -2969,16 +3235,16 @@ if( !function_exists('wpestate_new_list_to_user') ):
                 wp_update_post( $new_post );
                 $paid_submission_status = esc_html ( wprentals_get_option('wp_estate_paid_submission','') );
                 if( $paid_submission_status == 'membership'){ // update pack status
-                    wpestate_update_listing_no($userid);                
+                    wpestate_update_listing_no($userid);
                 }
 
                 $edit_link                       =   wpestate_get_template_link('user_dashboard_edit_listing.php');
                 $edit_link_desc                  =   esc_url_raw ( add_query_arg( 'listing_edit', $newlist , $edit_link) ) ;
                 $edit_link_desc                  =   esc_url_raw ( add_query_arg( 'action', 'description', $edit_link_desc) ) ;
                 $edit_link_desc                  =   esc_url_raw ( add_query_arg( 'isnew', 1, $edit_link_desc) ) ;
-                return $edit_link_desc;   
+                return $edit_link_desc;
             }
-           
+
         }
     }
 endif;
@@ -2986,17 +3252,17 @@ endif;
 
 
 if( !function_exists('wpestate_email_to_admin') ):
-    function wpestate_email_to_admin($onlyfeatured){  
+    function wpestate_email_to_admin($onlyfeatured){
         $arguments=array();
         if($onlyfeatured==1){
             $arguments=array();
-            wpestate_select_email_type(wprentals_get_option('admin_email'),'featured_submission',$arguments); 
+            wpestate_select_email_type(wprentals_get_option('admin_email'),'featured_submission',$arguments);
         }else{
             $arguments=array();
-            wpestate_select_email_type(wprentals_get_option('admin_email'),'paid_submissions',$arguments); 
+            wpestate_select_email_type(wprentals_get_option('admin_email'),'paid_submissions',$arguments);
         }
 
-     
+
 
     }
 endif;
@@ -3009,15 +3275,15 @@ if( !function_exists('wpestate_show_stripe_form_upgrade') ):
 
         $is_stripe_live= esc_html ( wprentals_get_option('wp_estate_enable_stripe','') );
         if($is_stripe_live=='yes'){
-            
-            
+
+
             print '<div class="stripe_upgrade">';
             $current_user = wp_get_current_user();
             $userID                     =   $current_user->ID ;
             $user_email                 =   $current_user->user_email ;
             $submission_curency_status  =   esc_html( wprentals_get_option('wp_estate_submission_curency','') );
             $price_featured_submission  =   $price_featured_submission;
-            
+
             global $wpestate_global_payments;
             $metadata=array(
                 'listing_id'    =>  $post_id,
@@ -3026,16 +3292,16 @@ if( !function_exists('wpestate_show_stripe_form_upgrade') ):
                 'is_upgrade'    =>  1,
                 'pay_type'      =>  2,
                 'message'   =>  esc_html__( 'Upgrade to Featured','wprentals')
-                
+
             );
 
             $wpestate_global_payments->stripe_payments->wpestate_show_stripe_form($price_featured_submission,$metadata);
             print '</div>';
         }
-        
-        
 
-    
+
+
+
     }
 endif;
 
@@ -3048,8 +3314,8 @@ endif;
 
 if( !function_exists('wpestate_show_stripe_form_per_listing') ):
     function wpestate_show_stripe_form_per_listing($stripe_class,$post_id,$price_submission,$price_featured_submission){
-       
-       
+
+
         $processor_link=wpestate_get_template_link('stripecharge.php');
         $submission_curency_status = esc_html( wprentals_get_option('wp_estate_submission_curency','') );
         $current_user = wp_get_current_user();
@@ -3072,12 +3338,12 @@ if( !function_exists('wpestate_show_stripe_form_per_listing') ):
 
             $wpestate_global_payments->stripe_payments->wpestate_show_stripe_form($price_submission,$metadata);
         print'
-      
+
         </div>';
-        
-       
-      
-         
+
+
+
+
     }
 endif;
 
@@ -3089,7 +3355,7 @@ endif;
 ////////////////////////////////////////////////////////////////////////////////
 if( !function_exists('wpestate_show_stripe_form_membership') ):
     function wpestate_show_stripe_form_membership(){
-      
+
 
         $current_user = wp_get_current_user();
         $userID                 =   $current_user->ID;
@@ -3100,31 +3366,31 @@ if( !function_exists('wpestate_show_stripe_form_membership') ):
             $stripe_secret_key              =   esc_html( wprentals_get_option('wp_estate_stripe_secret_key','') );
             $stripe_publishable_key         =   esc_html( wprentals_get_option('wp_estate_stripe_publishable_key','') );
 
-          
+
 
         }
         $pay_ammout='0';
         $pack_id='0';
-        
+
         $processor_link             =   wpestate_get_template_link('stripecharge.php');
         $submission_curency_status  =   esc_html( wprentals_get_option('wp_estate_submission_curency','') );
 
 
-        print ' 
+        print '
         <form action="'.$processor_link.'" method="post" id="stripe_form">';
             wp_nonce_field( 'wpestate_stripe_payments', 'wpestate_stripe_payments_nonce' );
-           
+
             global $wpestate_global_payments;
             $metadata=array(
                 'user_id'       =>  $userID,
                 'pay_type'      =>  3
             );
             $price_submission='';
-            
-            
+
+
             $wpestate_global_payments->stripe_payments->wpestate_show_stripe_form($price_submission,$metadata);
 
-            
+
             print'<input type="hidden" id="pack_id" name="pack_id" value="'.$pack_id.'">
             <input type="hidden" name="userID" value="'.$userID.'">
             <input type="hidden" id="pay_ammout" name="pay_ammout" value="'.$pay_ammout.'">';
@@ -3160,11 +3426,11 @@ if( !function_exists('wpestate_user_for_agent') ):
         );
         $user_query = new WP_User_Query( $args );
         if(isset($user_query->results[0])){
-            $user_agent_id=$user_query->results[0]; 
+            $user_agent_id=$user_query->results[0];
         }else{
             $user_agent_id=1;
         }
-       
+
         return $user_agent_id;
     }
 endif;
@@ -3172,7 +3438,7 @@ endif;
 
 
 /////////////////////////////////////////////////////////////////////////////////
-/// check user vs agent id 
+/// check user vs agent id
 ////////////////////////////////////////////////////////////////////////////////
 if( !function_exists('wpestate_user_booked_from_agent') ):
     function wpestate_user_booked_from_agent($userid,$agent_id){
@@ -3192,18 +3458,18 @@ if( !function_exists('wpestate_user_booked_from_agent') ):
 
 
           );
-       
+
           $prop_selection = new WP_Query($args);
 
           if ($prop_selection->have_posts()){
-                while ($prop_selection->have_posts()): $prop_selection->the_post(); 
+                while ($prop_selection->have_posts()): $prop_selection->the_post();
 
                     $prop_id = intval  ( get_post_meta(get_the_ID(), 'booking_id', true) );
                     if( intval(wpsestate_get_author ($prop_id)) === intval($agent_id ) ){
                         return 1;
                     }
 
-                endwhile; // end of the loop.    
+                endwhile; // end of the loop.
                 return 0;
           }else{
               return 0;
@@ -3216,12 +3482,12 @@ endif;
 
 
 /////////////////////////////////////////////////////////////////////////////////
-/// check user vs agent id 
+/// check user vs agent id
 ////////////////////////////////////////////////////////////////////////////////
 if( !function_exists('wpestate_send_booking_email') ):
     function wpestate_send_booking_email($email_type,$receiver_email,$content=''){
         $user_email                 =   $receiver_email;
-        
+
         if ($email_type == 'bookingconfirmeduser'){
             $arguments=array();
             wpestate_select_email_type($user_email,'bookingconfirmeduser',$arguments);
@@ -3233,16 +3499,16 @@ if( !function_exists('wpestate_send_booking_email') ):
             wpestate_select_email_type($user_email,'bookingconfirmed_nodeposit',$arguments);
         }else if ($email_type == 'inbox'){
             $arguments=array('content'=>$content);
-            wpestate_select_email_type($user_email,'inbox',$arguments);           
+            wpestate_select_email_type($user_email,'inbox',$arguments);
         }else if ($email_type == 'newbook'){
             $property_id= intval($content);
-            $arguments= array(  
-                'booking_property_link'=> esc_url ( get_permalink($property_id)) 
+            $arguments= array(
+                'booking_property_link'=> esc_url ( get_permalink($property_id))
             );
             wpestate_select_email_type($user_email,'newbook',$arguments);
         }else if ($email_type == 'mynewbook'){
             $property_id= intval($content);
-            $arguments= array(  
+            $arguments= array(
                 'booking_property_link'=>esc_url ( get_permalink($property_id) )
             );
             wpestate_select_email_type($user_email,'mynewbook',$arguments);
@@ -3258,9 +3524,9 @@ if( !function_exists('wpestate_send_booking_email') ):
         }else if ($email_type == 'deletebookingconfirmed'){
             $arguments=array();
             wpestate_select_email_type($user_email,'deletebookingconfirmed',$arguments);
-        } 
+        }
 
-       
+
     }
 endif;
 
@@ -3278,13 +3544,13 @@ if( !function_exists('wpestate_get_guest_dropdown') ):
         if($with_any==''){
             $select_area_list.='<li role="presentation" data-value="0">'.esc_html__( 'any','wprentals').'</li>';
         }
-        
-        $select_area_list .=   '<li role="presentation" data-value="1"'; 
+
+        $select_area_list .=   '<li role="presentation" data-value="1"';
         if($selected==1){
             $select_area_list .=' selected="selected" ';
         }
         $select_area_list .= '>1 '.esc_html__( 'guest','wprentals').'</li>';
-        
+
         $guest_dropdown_no                    =   intval   ( wprentals_get_option('wp_estate_guest_dropdown_no','') );
         for($i=2;$i<=$guest_dropdown_no;$i++){
             $select_area_list .=   '<li role="presentation" data-value="'.esc_attr($i).'"';
@@ -3350,7 +3616,7 @@ if( !function_exists('wpestate_insert_attachment') ):
 
         if ($setthumb) update_post_meta($post_id,'_thumbnail_id',$attach_id);
         return $attach_id;
-    } 
+    }
 endif;
 
 
@@ -3362,13 +3628,13 @@ endif;
 
 if( !function_exists('wpestate_get_measure_unit') ):
     function wpestate_get_measure_unit() {
-        $measure_sys    =   esc_html ( wprentals_get_option('wp_estate_measure_sys','') ); 
+        $measure_sys    =   esc_html ( wprentals_get_option('wp_estate_measure_sys','') );
 
         if($measure_sys=='feet'){
             return 'ft<sup>2</sup>';
-        }else{ 
+        }else{
             return 'm<sup>2</sup>';
-        }              
+        }
     }
 endif;
 /////////////////////////////////////////////////////////////////////////////////
@@ -3376,13 +3642,13 @@ endif;
 ///////////////////////////////////////////////////////////////////////////////////
 
 if( !function_exists('wpestate_my_order') ):
-    function wpestate_my_order($orderby) { 
-        global $wpdb; 
+    function wpestate_my_order($orderby) {
+        global $wpdb;
         global $table_prefix;
         $orderby = $table_prefix.'postmeta.meta_value DESC, '.$table_prefix.'posts.ID DESC';
         return $orderby;
-    }    
-endif; // end   wpestate_my_order  
+    }
+endif; // end   wpestate_my_order
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -3390,9 +3656,9 @@ endif; // end   wpestate_my_order
 /////////////////////////////////////////////////////////////////////////////////////////
 
 if( !function_exists('wprentals_pagination') ):
-    function wprentals_pagination($pages = '', $range = 2){  
+    function wprentals_pagination($pages = '', $range = 2){
 
-        $showitems = ($range * 2)+1;  
+        $showitems = ($range * 2)+1;
         global $paged;
         if(empty($paged)) $paged = 1;
 
@@ -3405,7 +3671,7 @@ if( !function_exists('wprentals_pagination') ):
             {
                 $pages = 1;
             }
-        }   
+        }
 
         if(1 != $pages)
         {
@@ -3435,7 +3701,7 @@ if( !function_exists('wprentals_pagination') ):
             echo "<li class=\"roundright\"><a href='".$prev_page."'><i class=\"fas fa-chevron-right\"></i></a><li></ul>";
         }
     }
-endif; // end   wprentals_pagination  
+endif; // end   wprentals_pagination
 
 
 
@@ -3445,13 +3711,13 @@ endif; // end   wprentals_pagination
 
 if( !function_exists('wprentals_pagination_agent') ):
 
-    function wprentals_pagination_agent($pages = '', $range = 2){  
-        $showitems = ($range * 2)+1;  
+    function wprentals_pagination_agent($pages = '', $range = 2){
+        $showitems = ($range * 2)+1;
         $paged = (get_query_var('page')) ? get_query_var('page') : 1;
         if(empty($paged)) $paged = 1;
 
         if(1 != $pages)
-        { 
+        {
             $prev_pagex=  str_replace('page/','',get_pagenum_link($paged - 1) );
             echo '<ul class="pagination pagination_nojax">';
             echo "<li class=\"roundleft\"><a href='".$prev_pagex."'><i class=\"fas fa-chevron-left\"></i></a></li>";
@@ -3480,7 +3746,7 @@ if( !function_exists('wprentals_pagination_agent') ):
             echo "<li class=\"roundright\"><a href='".$prev_page."'><i class=\"fas fa-chevron-right\"></i></a><li></ul>";
         }
     }
-endif; // end   kriesi_pagination  
+endif; // end   kriesi_pagination
 
 
 if( !function_exists('wprentals_second_loop_pagination') ):
@@ -3490,13 +3756,13 @@ function wprentals_second_loop_pagination($pages = '', $range = 2,$paged,$link){
             $newpage=1;
         }
         $next_page  =   esc_url_raw ( add_query_arg('pagelist',$newpage, esc_url ($link) ) );
-        $showitems = ($range * 2)+1; 
+        $showitems = ($range * 2)+1;
         if($pages>1)
         {
             print "<ul class='pagination pagination_nojax pagination_agent'>";
             echo "<li class=\"roundleft\"><a href='".$next_page."'><i class=\"fas fa-chevron-left\"></i></a></li>";
-      
-             
+
+
             for ($i=1; $i <= $pages; $i++)
             {
                 if (1 != $pages &&( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems ))
@@ -3534,8 +3800,8 @@ endif;
 
 if( !function_exists('wprentals_pagination_ajax') ):
 
-function wprentals_pagination_ajax($pages = '', $range = 2,$paged,$where){  
-    $showitems = ($range * 2)+1;  
+function wprentals_pagination_ajax($pages = '', $range = 2,$paged,$where){
+    $showitems = ($range * 2)+1;
 
     if(1 != $pages)
     {
@@ -3562,22 +3828,22 @@ function wprentals_pagination_ajax($pages = '', $range = 2,$paged,$where){
         $prev_page= get_pagenum_link($paged + 1);
         if ( ($paged +1) > $pages){
            $prev_page= get_pagenum_link($paged );
-            echo "<li class=\"roundright\"><a href='".esc_url($prev_page)."' data-future='".esc_attr($paged)."'><i class=\"fas fa-chevron-right\"></i></a><li>"; 
+            echo "<li class=\"roundright\"><a href='".esc_url($prev_page)."' data-future='".esc_attr($paged)."'><i class=\"fas fa-chevron-right\"></i></a><li>";
         }else{
             $prev_page= get_pagenum_link($paged + 1);
-            echo "<li class=\"roundright\"><a href='".esc_url($prev_page)."' data-future='".esc_attr($paged+1)."'><i class=\"fas fa-chevron-right\"></i></a><li>"; 
+            echo "<li class=\"roundright\"><a href='".esc_url($prev_page)."' data-future='".esc_attr($paged+1)."'><i class=\"fas fa-chevron-right\"></i></a><li>";
         }
 
         echo "</ul>\n";
     }
 }
-endif; // end   kriesi_pagination  
+endif; // end   kriesi_pagination
 
 
 
 ////////////////////////////////////////////////////////////////////////////////
 /// force html5 validation -remove category list rel atttribute
-////////////////////////////////////////////////////////////////////////////////    
+////////////////////////////////////////////////////////////////////////////////
 
 add_filter( 'wp_list_categories', 'wpestate_remove_category_list_rel' );
 add_filter( 'the_category', 'wpestate_remove_category_list_rel' );
@@ -3587,26 +3853,26 @@ if( !function_exists('wpestate_remove_category_list_rel') ):
         // Remove rel attribute from the category list
         return str_replace( ' rel="category tag"', '', $output );
     }
-endif; // end   wpestate_remove_category_list_rel  
+endif; // end   wpestate_remove_category_list_rel
 
 
 
 ////////////////////////////////////////////////////////////////////////////////
 /// avatar url
-////////////////////////////////////////////////////////////////////////////////    
+////////////////////////////////////////////////////////////////////////////////
 
 if( !function_exists('wpestate_get_avatar_url') ):
     function wpestate_get_avatar_url($get_avatar) {
         preg_match("/src='(.*?)'/i", $get_avatar, $matches);
         return $matches[1];
     }
-endif; // end   wpestate_get_avatar_url  
+endif; // end   wpestate_get_avatar_url
 
 
 
 ////////////////////////////////////////////////////////////////////////////////
 ///  get current map height
-////////////////////////////////////////////////////////////////////////////////   
+////////////////////////////////////////////////////////////////////////////////
 
 if( !function_exists('wpestate_get_current_map_height') ):
     function wpestate_get_current_map_height($post_id){
@@ -3618,16 +3884,16 @@ if( !function_exists('wpestate_get_current_map_height') ):
             if($min_height==0){
                   $min_height =   intval ( wprentals_get_option('wp_estate_min_height','') );
             }
-       }    
+       }
        return $min_height;
     }
-endif; // end     
+endif; // end
 
 
 
 ////////////////////////////////////////////////////////////////////////////////
 ///  get  map open height
-////////////////////////////////////////////////////////////////////////////////   
+////////////////////////////////////////////////////////////////////////////////
 
 if( !function_exists('wpestate_get_map_open_height') ):
     function wpestate_get_map_open_height($post_id){
@@ -3643,18 +3909,18 @@ if( !function_exists('wpestate_get_map_open_height') ):
 
        return $max_height;
     }
-endif; // end     
+endif; // end
 
 
 
 
 
 ////////////////////////////////////////////////////////////////////////////////
-///  get  map open/close status 
-////////////////////////////////////////////////////////////////////////////////   
+///  get  map open/close status
+////////////////////////////////////////////////////////////////////////////////
 
 if( !function_exists('wpestate_get_map_open_close_status') ):
-    function wpestate_get_map_open_close_status($post_id){    
+    function wpestate_get_map_open_close_status($post_id){
        if ( $post_id == '' || is_home() ) {
             $keep_min =  esc_html( wprentals_get_option('wp_estate_keep_min','' ) ) ;
        } else{
@@ -3669,33 +3935,33 @@ if( !function_exists('wpestate_get_map_open_close_status') ):
 
        return $keep_min;
     }
-endif; // end     
+endif; // end
 
 
 
 
 ////////////////////////////////////////////////////////////////////////////////
 ///  get  map  longitude
-////////////////////////////////////////////////////////////////////////////////   
+////////////////////////////////////////////////////////////////////////////////
 if( !function_exists('wpestate_get_page_long') ):
     function wpestate_get_page_long($post_id){
           $wpestate_header_type  =   get_post_meta ( $post_id ,'header_type', true);
           if( $wpestate_header_type==5 ){
-            $page_long  = esc_html( get_post_meta($post_id, 'page_custom_long', true) );          
+            $page_long  = esc_html( get_post_meta($post_id, 'page_custom_long', true) );
           }
           else{
             $page_long  = esc_html( wprentals_get_option('wp_estate_general_longitude','') );
           }
-          return $page_long;   
-    }  
-endif; // end     
+          return $page_long;
+    }
+endif; // end
 
 
 
 
 ////////////////////////////////////////////////////////////////////////////////
 ///  get  map  lattitudine
-////////////////////////////////////////////////////////////////////////////////  
+////////////////////////////////////////////////////////////////////////////////
 
 if( !function_exists('wpestate_get_page_lat') ):
     function wpestate_get_page_lat($post_id){
@@ -3709,12 +3975,12 @@ if( !function_exists('wpestate_get_page_lat') ):
           return $page_lat;
 
 
-}  
-endif; // end     
+}
+endif; // end
 
 ////////////////////////////////////////////////////////////////////////////////
 ///  get  map  zoom
-////////////////////////////////////////////////////////////////////////////////  
+////////////////////////////////////////////////////////////////////////////////
 
 if( !function_exists('wpestate_get_page_zoom') ):
     function wpestate_get_page_zoom($post_id){
@@ -3728,24 +3994,24 @@ if( !function_exists('wpestate_get_page_zoom') ):
           return $page_zoom;
 
 
-    }  
-endif; // end     
+    }
+endif; // end
 
 
 //wpestate_get_template_link('user_dashboard_my_reservations.php');
 if( !function_exists('wpestate_get_template_link') ):
-    function wpestate_get_template_link( $template_name, $bypass=0){  
-        
+    function wpestate_get_template_link( $template_name, $bypass=0){
+
         $transient_name=$template_name;
-    
+
         if ( defined( 'ICL_LANGUAGE_CODE' ) ) {
             $transient_name.='_'. ICL_LANGUAGE_CODE;
         }
 
-        
+
         $template_link = wpestate_request_transient_cache( 'wpestate_get_template_link_' . $transient_name );
-        
-        if( $template_link === false || $bypass==1  ) {   
+
+        if( $template_link === false || $template_link==='' || $bypass==1  ) {
             $pages = get_pages(array(
                 'meta_key'      => '_wp_page_template',
                 'meta_value'    => $template_name
@@ -3756,24 +4022,24 @@ if( !function_exists('wpestate_get_template_link') ):
             }else{
                 $template_link='';
             }
-            
-          
+
+
             wpestate_set_transient_cache('wpestate_get_template_link_' . $transient_name,$template_link,60*60*24);
-           
+
         }
 
 
 
         return $template_link;
     }
-endif; // end  
+endif; // end
 
 
 
 
 
 
-  
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -3789,7 +4055,7 @@ if( !function_exists('wpestate_custom_vimdeo_video') ):
             </div>';
 
     }
-endif; // end     
+endif; // end
 
 
 if( !function_exists('wpestate_custom_youtube_video') ):
@@ -3801,7 +4067,7 @@ if( !function_exists('wpestate_custom_youtube_video') ):
             </div>';
 
     }
-endif; // end     
+endif; // end
 
 
 if( !function_exists('wpestate_get_video_thumb') ):
@@ -3812,7 +4078,7 @@ if( !function_exists('wpestate_get_video_thumb') ):
         if($video_type=='vimeo'){
              $hash2 = ( wp_remote_get($protocol."://vimeo.com/api/v2/video/$video_id.php") );
              $pre_tumb=(unserialize ( $hash2['body']) );
-             $video_thumb=$pre_tumb[0]['thumbnail_medium'];                                        
+             $video_thumb=$pre_tumb[0]['thumbnail_medium'];
         }else{
             $video_thumb = $protocol.'://img.youtube.com/vi/' . $video_id . '/0.jpg';
         }
@@ -3839,7 +4105,7 @@ endif;
 
 if( !function_exists('wpestate_show_extended_search') ):
     function wpestate_show_extended_search($tip){
-          
+
         $label_array       =   array();
 
         $terms = get_terms( array(
@@ -3847,8 +4113,8 @@ if( !function_exists('wpestate_show_extended_search') ):
             'hide_empty' => false,
          ) );
 
-        
-        if (defined('ICL_SITEPRESS_VERSION')) {
+
+        if (defined('ICL_SITEPRESS_VERSION') && !is_admin()) {
             $current_language = apply_filters('wpml_current_language', NULL);
             $default_language = apply_filters('wpml_default_language', NULL);
             if ($current_language != $default_language) {
@@ -3869,32 +4135,32 @@ if( !function_exists('wpestate_show_extended_search') ):
                 }
             }
         }
-        
-        
-        
-        
+
+
+
+
         foreach ($terms as $key => $term) {
             $label_array[ $term->slug ]=$term->name;
         }
         print '<div class="extended_search_check_wrapper" id="extended_search_check_filter">';
-        
-        print ' 
+
+        print '
         <div class="secondrow">
-            
-            
+
+
         </div>';
         print '<span id="adv_extended_close_adv"><i class="fas fa-times"></i></span>';
 
-                $advanced_exteded   =   wprentals_get_option( 'wp_estate_advanced_exteded'); 
+                $advanced_exteded   =   wprentals_get_option( 'wp_estate_advanced_exteded');
                 if(is_array($advanced_exteded)){
                     foreach($advanced_exteded as $checker => $value){
 
                         $input_name =   $value;
                         $label      =   $label_array[$input_name];
-                        
+
 
                         if($value!='none' &&     $label !='' ){
-                            print '<div class="extended_search_checker"><input type="checkbox" id="'.$input_name.$tip.'" name="'.$input_name.'" '; 
+                            print '<div class="extended_search_checker"><input type="checkbox" id="'.$input_name.$tip.'" name="'.$input_name.'" ';
                                 if(isset($_REQUEST[$input_name]) && $_REQUEST[$input_name]==1){
                                     print ' checked = "checked" ';
                                 }
@@ -3903,7 +4169,7 @@ if( !function_exists('wpestate_show_extended_search') ):
                     }
                 }
 
-        print '</div>';    
+        print '</div>';
     }
 endif;
 
@@ -3917,7 +4183,7 @@ endif;
 ////////////////////////////////////////////////////////////////////////////////
 
 if( !function_exists('wpestate_hierarchical_category_childen') ):
-  
+
      function wpestate_hierarchical_category_childen($taxonomy, $cat,$args,$base=1,$level=1  ) {
         $level++;
         $args['parent']             =   $cat;
@@ -3926,29 +4192,29 @@ if( !function_exists('wpestate_hierarchical_category_childen') ):
         $total_main[$level]=0;
         $children_categ_select_list =   '';
         foreach ($children as $categ) {
-            
+
             $area_addon =   '';
             $city_addon =   '';
 
             if($taxonomy=='property_city'){
-                $string       =     wpestate_limit45 ( sanitize_title ( $categ->slug ) );              
+                $string       =     wpestate_limit45 ( sanitize_title ( $categ->slug ) );
                 $slug         =     sanitize_key($string);
                 $city_addon   =     ' data-value2="'.esc_attr($slug).'" ';
             }
 
             if($taxonomy=='property_area'){
                 $term_meta    =   get_option( "taxonomy_$categ->term_id");
-                $string       =   wpestate_limit45 ( sanitize_title ( $term_meta['cityparent'] ) );              
+                $string       =   wpestate_limit45 ( sanitize_title ( $term_meta['cityparent'] ) );
                 $slug         =   sanitize_key($string);
                 $area_addon   =   ' data-parentcity="'.esc_attr($slug).'" ';
 
             }
-            
+
             $hold_base=  $base;
             $base_string='';
             $base++;
             $hold_base=  $base;
-            
+
             if($level==2){
                 $base_string='-';
             }else{
@@ -3958,38 +4224,38 @@ if( !function_exists('wpestate_hierarchical_category_childen') ):
                     $base_string.='-';
                     $i++;
                 }
-              
+
             }
-    
-            
+
+
             if($categ->parent!=0){
-                $received =wpestate_hierarchical_category_childen( $taxonomy, $categ->term_id,$args,$base,$level ); 
+                $received =wpestate_hierarchical_category_childen( $taxonomy, $categ->term_id,$args,$base,$level );
             }
-            
-            
+
+
             $counter = $categ->count;
             if(isset($received['count'])){
                 $counter = $counter+$received['count'];
             }
-            
+
             $children_categ_select_list     .=   '<li role="presentation" data-value="'.esc_attr($categ->slug).'" '.$city_addon.' '.$area_addon.' > '.$base_string.' '. ucwords ( urldecode( $categ->name ) ).' ('.$counter.')'.'</li>';
-           
+
             if(isset($received['html'])){
-                $children_categ_select_list     .=   $received['html'];  
+                $children_categ_select_list     .=   $received['html'];
             }
-          
+
             $total_main[$level]=$total_main[$level]+$counter;
-            
+
             $return_array['count']=$counter;
             $return_array['html']=$children_categ_select_list;
-            
-            
+
+
         }
       //  return $children_categ_select_list;
- 
+
         $return_array['count']=$total_main[$level];
-    
-     
+
+
         return $return_array;
     }
 endif;
@@ -4005,7 +4271,7 @@ if( !function_exists('wpestate_get_select_arguments') ):
                 'hierarchical'  => false,
                 'pad_counts '   => true,
                 'parent'        => 0
-                ); 
+                );
 
         $show_empty_city_status = esc_html ( wprentals_get_option('wp_estate_show_empty_city','') );
         if ($show_empty_city_status=='yes'){
@@ -4014,7 +4280,7 @@ if( !function_exists('wpestate_get_select_arguments') ):
                 'hierarchical'  => false,
                 'pad_counts '   => true,
                 'parent'        => 0
-                ); 
+                );
         }
         return $args;
     }
@@ -4025,22 +4291,22 @@ endif;
 ////////////////////////////////////////////////////////////////////////////////
 
 if( !function_exists('wpestate_get_action_select_list') ):
-   
+
     function wpestate_get_action_select_list($args){
         $transient_appendix =   '';
         $transient_appendix =   wpestate_add_language_currency_cache($transient_appendix,1);
-        
-       
+
+
         $categ_select_list  =   wpestate_request_transient_cache('wpestate_get_action_select_list_simple'.$transient_appendix);
         if($categ_select_list===false){
             $taxonomy           =   'property_action_category';
             $categories         =   get_terms($taxonomy,$args);
 
             $categ_select_list =   ' <li role="presentation" data-value="all">'. wpestate_category_labels_dropdowns('second').'</li>';
-            
+
             if(is_array($categories)){
                 foreach ($categories as $categ) {
-                    $received = wpestate_hierarchical_category_childen($taxonomy, $categ->term_id,$args ); 
+                    $received = wpestate_hierarchical_category_childen($taxonomy, $categ->term_id,$args );
                     $counter = $categ->count;
                     if(isset($received['count'])){
                         $counter = $counter+$received['count'];
@@ -4048,14 +4314,14 @@ if( !function_exists('wpestate_get_action_select_list') ):
 
                     $categ_select_list     .=   '<li role="presentation" data-value="'.esc_attr($categ->slug).'">'. ucwords ( urldecode( $categ->name ) ).' ('.$counter.')'.'</li>';
                     if(isset($received['html'])){
-                        $categ_select_list     .=   $received['html'];  
+                        $categ_select_list     .=   $received['html'];
                     }
 
                 }
             }
-        
+
             wpestate_set_transient_cache('wpestate_get_action_select_list_simple'.$transient_appendix,$categ_select_list,4*60*60);
-           
+
         }
         return $categ_select_list;
     }
@@ -4071,17 +4337,17 @@ if( !function_exists('wpestate_get_category_select_list') ):
         $transient_appendix =   '';
         $transient_appendix =   wpestate_add_language_currency_cache($transient_appendix,1);
         $categ_select_list  =   wpestate_request_transient_cache('wpestate_get_category_select_list_simple'.$transient_appendix);
-        
+
         if($categ_select_list===false){
-        
+
             $taxonomy           =   'property_category';
             $categories         =   get_terms($taxonomy,$args);
 
-            $categ_select_list  =  '<li role="presentation" data-value="all">'. wpestate_category_labels_dropdowns('main').'</li>'; 
+            $categ_select_list  =  '<li role="presentation" data-value="all">'. wpestate_category_labels_dropdowns('main').'</li>';
             if(is_array($categories)){
                 foreach ($categories as $categ) {
                     $counter = $categ->count;
-                    $received = wpestate_hierarchical_category_childen($taxonomy, $categ->term_id,$args ); 
+                    $received = wpestate_hierarchical_category_childen($taxonomy, $categ->term_id,$args );
 
                     if(isset($received['count'])){
                         $counter = $counter+$received['count'];
@@ -4089,14 +4355,14 @@ if( !function_exists('wpestate_get_category_select_list') ):
 
                     $categ_select_list     .=   '<li role="presentation" data-value="'.esc_attr($categ->slug).'">'. ucwords ( urldecode( $categ->name ) ).' ('.$counter.')'.'</li>';
                     if(isset($received['html'])){
-                        $categ_select_list     .=   $received['html'];  
+                        $categ_select_list     .=   $received['html'];
                     }
 
                 }
             }
-           
+
             wpestate_set_transient_cache('wpestate_get_category_select_list_simple'.$transient_appendix,$categ_select_list,4*60*60);
-           
+
         }
         return $categ_select_list;
     }
@@ -4109,22 +4375,22 @@ endif;
 /// show hieracy city
 ////////////////////////////////////////////////////////////////////////////////
 if( !function_exists('wpestate_get_city_select_list') ):
-   
-  
+
+
     function wpestate_get_city_select_list($args){
         $transient_appendix =   '';
         $transient_appendix =   wpestate_add_language_currency_cache($transient_appendix,1);
         $categ_select_list = wpestate_request_transient_cache('wpestate_get_city_select_list_simple'.$transient_appendix);
         if($categ_select_list===false){
-    
+
             $categ_select_list   =    '<li role="presentation" data-value="all" data-value2="all">'. __('All Cities','wprentals').'</li>';
             $taxonomy           =   'property_city';
             $categories     =   get_terms($taxonomy,$args);
             if(is_array($categories)){
                 foreach ($categories as $categ) {
-                    $string     =   wpestate_limit45 ( sanitize_title ( $categ->slug ) );              
+                    $string     =   wpestate_limit45 ( sanitize_title ( $categ->slug ) );
                     $slug       =   sanitize_key($string);
-                    $received   =   wpestate_hierarchical_category_childen($taxonomy, $categ->term_id,$args ); 
+                    $received   =   wpestate_hierarchical_category_childen($taxonomy, $categ->term_id,$args );
                     $counter    =   $categ->count;
                     if( isset($received['count'])   ){
                         $counter = $counter+$received['count'];
@@ -4132,14 +4398,14 @@ if( !function_exists('wpestate_get_city_select_list') ):
 
                     $categ_select_list  .=  '<li role="presentation" data-value="'.esc_attr($categ->slug).'" data-value2="'.esc_attr($slug).'">'. ucwords ( urldecode( $categ->name ) ).' ('.$counter.')'.'</li>';
                     if(isset($received['html'])){
-                        $categ_select_list     .=   $received['html'];  
+                        $categ_select_list     .=   $received['html'];
                     }
 
                 }
             }
-           
+
             wpestate_set_transient_cache('wpestate_get_city_select_list_simple'.$transient_appendix,$categ_select_list,4*60*60);
-          
+
         }
         return $categ_select_list;
     }
@@ -4150,13 +4416,13 @@ endif;
 /// show hieracy area
 ////////////////////////////////////////////////////////////////////////////////
 if( !function_exists('wpestate_get_area_select_list') ):
- 
-    
+
+
     function wpestate_get_area_select_list($args){
         $transient_appendix =   '';
         $transient_appendix =   wpestate_add_language_currency_cache($transient_appendix,1);
         $categ_select_list = wpestate_request_transient_cache('wpestate_get_area_select_list_simple'.$transient_appendix);
-    
+
         if($categ_select_list===false){
             $categ_select_list  =   '<li role="presentation" data-value="all">'.__('All Areas','wprentals').'</li>';
             $taxonomy           =   'property_area';
@@ -4164,9 +4430,9 @@ if( !function_exists('wpestate_get_area_select_list') ):
             if(is_array($categories)){
                 foreach ($categories as $categ) {
                     $term_meta      =   get_option( "taxonomy_$categ->term_id");
-                    $string         =   wpestate_limit45 ( sanitize_title ( $term_meta['cityparent'] ) );              
+                    $string         =   wpestate_limit45 ( sanitize_title ( $term_meta['cityparent'] ) );
                     $slug           =   sanitize_key($string);
-                    $received       =   wpestate_hierarchical_category_childen($taxonomy, $categ->term_id,$args ); 
+                    $received       =   wpestate_hierarchical_category_childen($taxonomy, $categ->term_id,$args );
                     $counter        =   $categ->count;
                     if( isset($received['count'])   ){
                         $counter = $counter+$received['count'];
@@ -4174,15 +4440,15 @@ if( !function_exists('wpestate_get_area_select_list') ):
 
                     $categ_select_list  .=  '<li role="presentation" data-value="'.esc_attr($categ->slug).'" data-parentcity="'.esc_attr($slug).'">'. ucwords ( urldecode( $categ->name ) ).' ('.$counter.')'.'</li>';
                     if(isset($received['html'])){
-                        $categ_select_list     .=   $received['html'];  
+                        $categ_select_list     .=   $received['html'];
                     }
 
                 }
             }
-         
+
             wpestate_set_transient_cache('wpestate_get_area_select_list_simple'.$transient_appendix,$categ_select_list,4*60*60);
-            
-        
+
+
         }
         return $categ_select_list;
     }
@@ -4200,16 +4466,16 @@ if( !function_exists('wpestate_get_area_select_list_area_tax') ):
             foreach ($tax_terms_area as $tax_term) {
 
                 $term_meta    =   get_option( "taxonomy_$tax_term->term_id");
-                $string       =   wpestate_limit45 ( sanitize_title ( $term_meta['cityparent'] ) );              
-                $parentcity   =   wpestate_limit45 ( sanitize_title ( $parentcity ) );   
+                $string       =   wpestate_limit45 ( sanitize_title ( $term_meta['cityparent'] ) );
+                $parentcity   =   wpestate_limit45 ( sanitize_title ( $parentcity ) );
                 $slug         =   sanitize_key($string);
 
                 if($parentcity!='' && $parentcity == $string){
                     $select_area_list .=   '<li style="display:none;" role="presentation" data-value="'.esc_attr($tax_term->slug).'" data-parentcity="'.esc_attr($slug).'">'. ucwords  (urldecode( $tax_term->name ) ).' ('.$tax_term->count.')'.'</li>';
-                    $select_area_list .=   wpestate_hierarchical_category_childen( $taxonomy, $tax_term->term_id,$args );  
+                    $select_area_list .=   wpestate_hierarchical_category_childen( $taxonomy, $tax_term->term_id,$args );
                 }else{
                     $select_area_list .=   '<li role="presentation" data-value="'.esc_attr($tax_term->slug).'" data-parentcity="'.esc_attr($slug).'">'. ucwords  (urldecode( $tax_term->name ) ).' ('.$tax_term->count.')'.'</li>';
-                    $select_area_list .=   wpestate_hierarchical_category_childen( $taxonomy, $tax_term->term_id,$args );  
+                    $select_area_list .=   wpestate_hierarchical_category_childen( $taxonomy, $tax_term->term_id,$args );
 
                 }
 
@@ -4228,10 +4494,10 @@ if( !function_exists('wpestate_get_custom_field_name') ):
     function wpestate_get_custom_field_name($query_name,$adv_search_what,$adv_search_label){
         $i=0;
         if(is_array($adv_search_what)){
-            foreach($adv_search_what as $key=>$term){    
+            foreach($adv_search_what as $key=>$term){
                     $term         =   str_replace(' ', '_', $term);
-                    $slug         =   wpestate_limit45(sanitize_title( $term )); 
-                    $slug         =   sanitize_key($slug); 
+                    $slug         =   wpestate_limit45(sanitize_title( $term ));
+                    $slug         =   sanitize_key($slug);
 
                     if($slug==$query_name){
                         return  $adv_search_label[$key];
@@ -4251,7 +4517,7 @@ endif;
 if( !function_exists('wpsestate_get_author') ):
     function wpsestate_get_author( $post_id = 0 ){
         $post = get_post( $post_id );
-        
+
         if( isset($post->post_author)   ) {
             return $post->post_author;
         }
@@ -4267,7 +4533,7 @@ function wpestate_convert_dateformat($date){
         return $date;
     }
     $format = wprentals_get_option('wp_estate_date_format','');
-     
+
     $dates_types=array(
         '0' =>'Y-m-d',
         '1' =>'Y-d-m',
@@ -4276,8 +4542,8 @@ function wpestate_convert_dateformat($date){
         '4' =>'d-Y-m',
         '5' =>'m-Y-d',
     );
-    
-    
+
+
     if (strpos($date, ' ') !== false) {
         $formatIn   =   $dates_types[$format]." H:i";
         $formatOut  =   'Y-m-d H:i';
@@ -4286,8 +4552,8 @@ function wpestate_convert_dateformat($date){
         $formatOut =   'Y-m-d';
     }
 
-  
-    
+
+
     $dateOut    = DateTime::createFromFormat($formatIn, $date);
 
     return $dateOut->format($formatOut);
@@ -4300,7 +4566,7 @@ function wpestate_convert_dateformat_twodig($date){
         return $date;
     }
     $format = wprentals_get_option('wp_estate_date_format','');
-     
+
     $dates_types=array(
         '0' =>'Y-m-d',
         '1' =>'Y-d-m',
@@ -4309,8 +4575,8 @@ function wpestate_convert_dateformat_twodig($date){
         '4' =>'d-Y-m',
         '5' =>'m-Y-d',
     );
-    
-    
+
+
     if (strpos($date, ' ') !== false) {
         $formatIn   =   $dates_types[$format]." H:i";
         $formatOut  =   'y-m-d H:i';
@@ -4319,8 +4585,8 @@ function wpestate_convert_dateformat_twodig($date){
         $formatOut =   'y-m-d';
     }
 
-  
-    
+
+
     $dateOut    = DateTime::createFromFormat($formatIn, $date);
 
     return $dateOut->format($formatOut);
@@ -4334,7 +4600,7 @@ function wpestate_convert_dateformat_remove_hours_twodig($date){
         return $date;
     }
     $format = wprentals_get_option('wp_estate_date_format','');
-     
+
     $dates_types=array(
         '0' =>'Y-m-d',
         '1' =>'Y-d-m',
@@ -4343,8 +4609,8 @@ function wpestate_convert_dateformat_remove_hours_twodig($date){
         '4' =>'d-Y-m',
         '5' =>'m-Y-d',
     );
-    
-    
+
+
     if (strpos($date, ' ') !== false) {
         $formatIn   =   $dates_types[$format]." H:i";
         $formatOut  =   'y-m-d 00:00';
@@ -4353,8 +4619,8 @@ function wpestate_convert_dateformat_remove_hours_twodig($date){
         $formatOut =   'y-m-d 00:00';
     }
 
-  
-    
+
+
     $dateOut    = DateTime::createFromFormat($formatIn, $date);
 
     return $dateOut->format($formatOut);
@@ -4367,7 +4633,7 @@ function wpestate_convert_dateformat_reverse($date){
         return $date;
     }
     $format = wprentals_get_option('wp_estate_date_format','');
-   
+
     $dates_types=array(
         '0' =>'y-m-d',
         '1' =>'y-d-m',
@@ -4376,8 +4642,8 @@ function wpestate_convert_dateformat_reverse($date){
         '4' =>'d-y-m',
         '5' =>'m-y-d',
     );
-    
- 
+
+
     if (strpos($date, ' ') !== false) {
         $formatOut  =   $dates_types[$format]." H:i";
         $formatIn   =   'Y-m-d H:i';
@@ -4387,11 +4653,11 @@ function wpestate_convert_dateformat_reverse($date){
     }
 
     $dateOut    =   DateTime::createFromFormat($formatIn, $date);
-    
-   
-    
+
+
+
     return $dateOut->format($formatOut);
-  
+
 }
 
 
@@ -4406,12 +4672,12 @@ if( !function_exists('wpestate_check_booking_valability') ):
         if($wpestate_book_from=='' || $wpestate_book_to==''){
             return true;
         }
-    
-    
+
+
         $wpestate_book_from  = wpestate_convert_dateformat($wpestate_book_from);
         $wpestate_book_to    = wpestate_convert_dateformat($wpestate_book_to);
-        $wprentals_is_per_hour  =   wprentals_return_booking_type($listing_id); 
-    
+        $wprentals_is_per_hour  =   wprentals_return_booking_type($listing_id);
+
         $days               =   ( strtotime($wpestate_book_to)-strtotime($wpestate_book_from) ) / (60 * 60 * 24) ;
         $reservation_array  =   wpestate_get_booking_dates_advanced_search($listing_id);
         $from_date          =   new DateTime($wpestate_book_from);
@@ -4419,17 +4685,17 @@ if( !function_exists('wpestate_check_booking_valability') ):
         $to_date            =   new DateTime($wpestate_book_to);
         $to_date->modify('yesterday');
         $to_date_unix       =   $to_date->getTimestamp();
-        
+
         $mega_details        =   wpml_mega_details_adjust($listing_id);
-       
-        
-    
-        
+
+
+
+
         if($from_date_unix===$to_date_unix){
             if( array_key_exists($from_date_unix,$reservation_array ) ){
                 return false;
             }
-            
+
             if($wprentals_is_per_hour!=2 && is_array($mega_details) ){ // if is not per hour
                 if( array_key_exists($from_date_unix,$mega_details ) ){
                     if( isset($mega_details[$from_date_unix]['period_min_days_booking']) &&  $mega_details[$from_date_unix]['period_min_days_booking']>$days ){
@@ -4438,14 +4704,14 @@ if( !function_exists('wpestate_check_booking_valability') ):
                 }
             }
         }
-          
-          
+
+
         while ($from_date_unix < $to_date_unix){
             $from_date_unix =   $from_date->getTimestamp();
             if( array_key_exists($from_date_unix,$reservation_array ) ){
                 return false;
             }
-        
+
             if( $wprentals_is_per_hour!=2  && is_array($mega_details) ){ // if is not per hour
                 if( isset($mega_details[$from_date_unix]['period_min_days_booking']) &&  $mega_details[$from_date_unix]['period_min_days_booking']>$days ){
                     return false;
@@ -4453,14 +4719,14 @@ if( !function_exists('wpestate_check_booking_valability') ):
             }
             $from_date->modify('tomorrow');
         }
-        
-        
+
+
         $min_days_booking = intval(get_post_meta($listing_id, 'min_days_booking',true));
-        
+
         if($wprentals_is_per_hour!=2 && $min_days_booking!=0 && $min_days_booking>$days){ // if is not per hour
             return false;
         }
-        
+
         return true;
     }
 endif;
@@ -4469,11 +4735,11 @@ endif;
 
 if( !function_exists('wpestate_get_booking_dates_advanced_search') ):
     function wpestate_get_booking_dates_advanced_search($listing_id){
-     
+
     $reservation_array = get_post_meta($listing_id, 'booking_dates',true);
     if( !is_array($reservation_array) || $reservation_array=='' ){
         $reservation_array  =   array();
-   
+
         $args=array(
             'post_type'        => 'wpestate_booking',
             'post_status'      => 'any',
@@ -4501,8 +4767,8 @@ if( !function_exists('wpestate_get_booking_dates_advanced_search') ):
 
             $fromd  = wpestate_convert_dateformat($fromd);
             $tod    = wpestate_convert_dateformat($tod);
-        
-        
+
+
             $from_date      =   new DateTime($fromd);
             $from_date_unix =   $from_date->getTimestamp();
             $to_date        =   new DateTime($tod);
@@ -4517,45 +4783,45 @@ if( !function_exists('wpestate_get_booking_dates_advanced_search') ):
                 $reservation_array[$from_date_unix]=$pid;
             }
         }
- 
-       
+
+
         }
-        
-     
+
+
         return $reservation_array;
     }
 endif;
 
 if( !function_exists('wpestate_yelp_details') ):
 function wpestate_yelp_details($post_id) {
-  
-    $yelp_terms_array = 
+
+    $yelp_terms_array =
             array (
                 'active'            =>  array( 'category' => __('Active Life','wprentals'),
                                                 'category_sign' => 'fas fa-motorcycle'),
-                'arts'              =>  array( 'category' => __('Arts & Entertainment','wprentals'), 
+                'arts'              =>  array( 'category' => __('Arts & Entertainment','wprentals'),
                                                'category_sign' => 'fas fa-music') ,
-                'auto'              =>  array( 'category' => __('Automotive','wprentals'), 
+                'auto'              =>  array( 'category' => __('Automotive','wprentals'),
                                                 'category_sign' => 'fas fa-car' ),
-                'beautysvc'         =>  array( 'category' => __('Beauty & Spas','wprentals'), 
+                'beautysvc'         =>  array( 'category' => __('Beauty & Spas','wprentals'),
                                                 'category_sign' => 'fas fa-female' ),
                 'education'         => array(  'category' => __('Education','wprentals'),
                                                 'category_sign' => 'fas fa-graduation-cap' ),
-                'eventservices'     => array(  'category' => __('Event Planning & Services','wprentals'), 
+                'eventservices'     => array(  'category' => __('Event Planning & Services','wprentals'),
                                                 'category_sign' => 'fas fa-birthday-cake' ),
-                'financialservices' => array(  'category' => __('Financial Services','wprentals'), 
-                                                'category_sign' => 'fas fa-money-bill' ),                
-                'food'              => array(  'category' => __('Food','wprentals'), 
+                'financialservices' => array(  'category' => __('Financial Services','wprentals'),
+                                                'category_sign' => 'fas fa-money-bill' ),
+                'food'              => array(  'category' => __('Food','wprentals'),
                                                 'category_sign' => 'fas fa-utensils' ),
-                'health'            => array(  'category' => __('Health & Medical','wprentals'), 
+                'health'            => array(  'category' => __('Health & Medical','wprentals'),
                                                 'category_sign' => 'fas fa-briefcase-medical' ),
-                'homeservices'      => array(  'category' =>__('Home Services ','wprentals'), 
+                'homeservices'      => array(  'category' =>__('Home Services ','wprentals'),
                                                 'category_sign' => 'fas fa-wrench' ),
-                'hotelstravel'      => array(  'category' => __('Hotels & Travel','wprentals'), 
+                'hotelstravel'      => array(  'category' => __('Hotels & Travel','wprentals'),
                                                 'category_sign' => 'fas fa-bed' ),
-                'localflavor'       => array(  'category' => __('Local Flavor','wprentals'), 
+                'localflavor'       => array(  'category' => __('Local Flavor','wprentals'),
                                                 'category_sign' => 'fas fa-coffee' ),
-                'localservices'     => array(  'category' => __('Local Services','wprentals'), 
+                'localservices'     => array(  'category' => __('Local Services','wprentals'),
                                                 'category_sign' => 'fas fa-dot-circle' ),
                 'massmedia'         => array(  'category' => __('Mass Media','wprentals'),
                                                 'category_sign' => 'fas fa-tv' ),
@@ -4563,13 +4829,13 @@ function wpestate_yelp_details($post_id) {
                                                 'category_sign' => 'fas fa-glass-martini-alt' ),
                 'pets'              => array(  'category' => __('Pets','wprentals'),
                                                 'category_sign' => 'fas fa-paw' ),
-                'professional'      => array(  'category' => __('Professional Services','wprentals'), 
+                'professional'      => array(  'category' => __('Professional Services','wprentals'),
                                                 'category_sign' => 'fas fa-suitcase' ),
                 'publicservicesgovt'=> array(  'category' => __('Public Services & Government','wprentals'),
                                                 'category_sign' => 'fas fa-university' ),
-                'realestate'        => array(  'category' => __('Real Estate','wprentals'), 
+                'realestate'        => array(  'category' => __('Real Estate','wprentals'),
                                                 'category_sign' => 'fas fa-building' ),
-                'religiousorgs'     => array(  'category' => __('Religious Organizations','wprentals'), 
+                'religiousorgs'     => array(  'category' => __('Religious Organizations','wprentals'),
                                                 'category_sign' => 'fas fa-cloud' ),
                 'restaurants'       => array(  'category' => __('Restaurants','wprentals'),
                                                 'category_sign' => 'fas fa-utensils' ),
@@ -4578,75 +4844,75 @@ function wpestate_yelp_details($post_id) {
                 'transport'         => array(  'category' => __('Transportation','wprentals'),
                                                 'category_sign' => 'fas fa-bus-alt' )
     );
-    
+
     $yelp_terms             = wprentals_get_option('wp_estate_yelp_categories','');
     $yelp_results_no        = wprentals_get_option('wp_estate_yelp_results_no','');
     $yelp_dist_measure      = wprentals_get_option('wp_estate_yelp_dist_measure','');
-   
+
     $yelp_client_id         =   wprentals_get_option('wp_estate_yelp_client_id','');
     $yelp_client_secret     =   wprentals_get_option('wp_estate_yelp_client_secret','');
     if($yelp_client_id=='' || $yelp_client_secret=='' ){
         return;
     }
-        
+
     //$location= "times square";
     $property_address           =   esc_html( get_post_meta($post_id, 'property_address', true) );
     $property_city_array        =   get_the_terms($post_id, 'property_city') ;
-   
+
     if(empty($property_city_array)){
         return;
     }
-  
+
     $property_city              =   $property_city_array[0]->name;
     $location                   =   $property_address.','.$property_city;
-    
+
     $start_lat  =   get_post_meta($post_id,'property_latitude',true);
     $start_long =   get_post_meta($post_id,'property_longitude',true);
- 
-    
+
+
     $yelp_to_display='';
-    
+
     $stored_yelp        =   get_post_meta($post_id,'stored_yelp',true);
     $stored_yelp_date   =   get_post_meta($post_id,'stored_yelp_data',true);
     $now                =   time();
- 
 
-    
+
+
     $yelp_to_display  =   wpestate_request_transient_cache('wpestate_yelp_'.$post_id);
-   
+
     if($yelp_to_display===false){
-       
+
         foreach ( $yelp_terms as $key=>$term ) {
-    
+
             $category_name      =   $yelp_terms_array[$term]['category'];
             $category_icon      =   $yelp_terms_array[$term]['category_sign'];
-           
+
             $args = array(
                 'term'          => $term,
                 'limit'         => $yelp_results_no,
                 'location'      => $location
             );
-      
-   
+
+
             $details = wpestate_query_api($term,$location);
-     
-            
+
+
             if( isset($details->businesses) ){
                 $category=$details->businesses;
-               
+
 
 
                 $yelp_to_display.= '<div class="yelp_bussines_wrapper"><div class="yelp_icon"><i class="'.$category_icon.'"></i></div> <h4 class="yelp_category">'.$category_name.'</h4>';
                     foreach($category as $wpestate_unit){
-                    
+
 
                         $yelp_to_display.= '<div class="yelp_unit">';
                             $yelp_to_display.= '<h5 class="yelp_unit_name">'.$wpestate_unit->name.'</h5>';
-                         
+
                             if(isset($wpestate_unit->coordinates->latitude) && isset($wpestate_unit->coordinates->longitude)){
                                 $yelp_to_display.= ' <span class="yelp_unit_distance"> '.wpestate_calculate_distance_geo($wpestate_unit->coordinates->latitude,$wpestate_unit->coordinates->longitude,$start_lat,$start_long,$yelp_dist_measure).'</span>';
                             }
-                            
+
                             $image_path=(string)$wpestate_unit->rating;
                             $image_path= str_replace('.5', '_half', $image_path);
                             $yelp_to_display.= '<img class="yelp_stars" src="'.get_template_directory_uri().'/img/yelp_small/small_'.$image_path.'.png" alt="'.esc_attr($wpestate_unit->name).'">';
@@ -4659,10 +4925,10 @@ function wpestate_yelp_details($post_id) {
         }// end forearch
         wpestate_set_transient_cache('wpestate_yelp_'.$post_id,$yelp_to_display,24*60*60);
     }
-    
+
     return trim($yelp_to_display);//escaped above
-        
-    
+
+
 
 }
 endif;
@@ -4670,12 +4936,12 @@ endif;
 
 if( !function_exists('wpestate_calculate_distance_geo') ):
 function wpestate_calculate_distance_geo($lat,$long,$start_lat,$start_long,$yelp_dist_measure){
-    
+
     $angle          = $start_long - $long;
     $distance       = sin( deg2rad( $start_lat ) ) * sin( deg2rad( $lat ) ) +  cos( deg2rad( $start_lat ) ) * cos( deg2rad( $lat ) ) * cos( deg2rad( $angle ) );
     $distance       = acos( $distance );
     $distance       = rad2deg( $distance );
-    
+
     if ($yelp_dist_measure=='miles'){
         $distance_miles = $distance * 60 * 1.1515;
         return  '('.round( $distance_miles, 2 ).' '.__('miles','wprentals').')';
@@ -4683,7 +4949,7 @@ function wpestate_calculate_distance_geo($lat,$long,$start_lat,$start_long,$yelp
         $distance_miles = $distance * 60 * 1.1515*1.6;
         return  '('.round( $distance_miles, 2 ).' '.__('km','wprentals').')';
     }
-    
+
 
 }
 endif;
@@ -4692,8 +4958,8 @@ if ( ! function_exists( 'wpestate_has_some_review')) :
 function  wpestate_has_some_review($property_id){
     $total_stars =  get_post_meta(  $property_id , 'property_stars', TRUE );
     $total_stars =  json_decode( $total_stars, TRUE );
-                
-             
+
+
     $total=0;
     if(is_array($total_stars)){
         foreach($total_stars as $key=>$value){
@@ -4701,7 +4967,7 @@ function  wpestate_has_some_review($property_id){
         }
     }
     return $total;
-                
+
 }
 endif;
 
@@ -4798,7 +5064,7 @@ if ( ! function_exists( 'wpestate_render_rating_stars' ) ) {
 			$star_rating .= sprintf( '<span class="rating_legend">%s</span>', esc_html( $field_value ) ) . PHP_EOL;
                         $star_rating .= wpestate_render_rating_stars( intval( $rating[ $field_key ] ) );
 			$star_rating .= sprintf( '</div><!-- end .%s -->', esc_attr( $field_key ) ) . PHP_EOL;
-		
+
                     }
                 }
 
@@ -4856,7 +5122,7 @@ if ( ! function_exists( 'wpestate_get_star_total_value' ) ) {
 if ( ! function_exists( 'wpestate_get_star_total_rating' ) ) {
 	/**
 	 * Returns the total rating
-	 * 
+	 *
 	 * @param $rating
 	 *
 	 * @return mixed
@@ -4896,10 +5162,10 @@ add_action('trash_comment', 'wpestate_delete_comment_admin' );
 add_action( 'untrash_comment','wpestate_delete_comment_admin' );
 
 function wpestate_delete_comment_admin ( $comment_id ) {
-    $comment = get_comment( $comment_id ); 
+    $comment = get_comment( $comment_id );
     $comment_post_id = $comment->comment_post_ID ;
-    wpestate_calculate_property_rating( $comment_post_id );  
-} 
+    wpestate_calculate_property_rating( $comment_post_id );
+}
 
 
 
@@ -4915,7 +5181,7 @@ if ( ! function_exists( 'wpestate_calculate_property_rating' ) ) {
 		if ( ! $property_id ) {
                     return;
 		}
-            
+
 
 		$reviews           = get_comments( array( 'post_id' => $property_id ) );
 		$category_fields   = wpestate_get_review_fields();
@@ -4968,20 +5234,20 @@ if ( ! function_exists( 'wpestate_calculate_property_rating' ) ) {
 		// Calc total rating
                 if( ($count_new_reviews + $count_old_reviews)!= 0  ){
                     $all_reviews_total        = array_sum( $stars_in_fields['total'] ) / ( ( $count_new_reviews + $count_old_reviews ) );
-                   
-                
+
+
                 }else{
                       $all_reviews_total  =0;
-                } 
-                
+                }
+
                 $property_rating['total'] = wpestate_round_to_nearest_05( $all_reviews_total );
                     // Construct rating string for db
                     $store[]     = sprintf( '"%s": %s', 'rating', $property_rating['total'] );
                     $star_rating = '{' . implode( ',', $store ) . '}';
                     update_post_meta( $property_id, 'property_stars', $star_rating );
                     return $star_rating;
-                
-		
+
+
 	}
 }
 
@@ -5132,7 +5398,7 @@ if ( ! function_exists( 'wpestate_review_pagination' ) ) {
 
 if(!function_exists('wpestate_return_all_fields') ):
 function wpestate_return_all_fields($is_mandatory=0){
-   
+
     $all_submission_fields=$all_mandatory_fields=array(
         'title'                         =>  __('Title','wprentals'),
         'prop_category_submit'          =>  __('Main Category','wprentals'),
@@ -5179,7 +5445,7 @@ function wpestate_return_all_fields($is_mandatory=0){
         'property_longitude'            =>  __('Property Longitude','wprentals'),
         'google_camera_angle'           =>  __('Google Camera Angle','wprentals'),
     //    'avalability_calendar'          =>  __('Avalability Calendar','wprentals'),
-   ); 
+   );
     if($is_mandatory==0){
         unset($all_submission_fields['title']);
     }else{
@@ -5187,44 +5453,44 @@ function wpestate_return_all_fields($is_mandatory=0){
         unset($all_submission_fields['avalability_calendar']);
         unset($all_mandatory_fields['extra_options']);
     }
-    
-    $i=0;
-    
-    $custom_fields =    get_option('wpestate_custom_fields_list');
- 
-    
 
-    
-    if( !empty($custom_fields)){  
-        while($i< count( $custom_fields['add_field_name'] ) ){            
-            $data= wprentals_prepare_non_latin($custom_fields['add_field_name'][$i],$custom_fields['add_field_label'][$i]); 
+    $i=0;
+
+    $custom_fields =    get_option('wpestate_custom_fields_list');
+
+
+
+
+    if( !empty($custom_fields)){
+        while($i< count( $custom_fields['add_field_name'] ) ){
+            $data= wprentals_prepare_non_latin($custom_fields['add_field_name'][$i],$custom_fields['add_field_label'][$i]);
             $all_submission_fields[ $data['key'] ]=$data['label'];
             $i++;
        }
     }
 
-//  
+//
 //    $feature_list       =   esc_html( get_option('wp_estate_feature_list','') );
 //    $feature_list_array =   explode( ',',$feature_list);
-//       
+//
 //    foreach ($feature_list_array as $key=>$checker) {
 //        $data= wprentals_prepare_non_latin($checker,$checker);
-//        $all_submission_fields[ $data['key'] ]=$data['label'];   
+//        $all_submission_fields[ $data['key'] ]=$data['label'];
 //    }
-    
-    
+
+
     $terms = get_terms( array(
         'taxonomy' => 'property_features',
         'hide_empty' => false,
     ) );
     foreach($terms as $key => $term){
-        $all_submission_fields[ $term->slug ]=$term->name;   
+        $all_submission_fields[ $term->slug ]=$term->name;
     }
 
-    
+
     return $all_submission_fields;
-    
-   
+
+
 }
 endif;
 
@@ -5232,14 +5498,14 @@ endif;
 function wprentals_prepare_non_latin($key,$label){
 
     $label  =  stripslashes( $label);
-    
+
     $slug   =   stripslashes($key);
     $slug   =   str_replace(' ','-',$key);
     $slug   =   htmlspecialchars ( $slug ,ENT_QUOTES);
     $slug   =   wpestate_limit45(sanitize_title( $slug ));
     $slug   =   sanitize_key($slug);
-            
-            
+
+
     $return=array();
     $return['key']=trim($slug);
     $return['label']=trim($label);
@@ -5264,15 +5530,15 @@ function wpestate_mandatory_array_non_latin($key){
 
 if(!function_exists('wpestate_return_custom_unit_fields') ):
 function wpestate_return_custom_unit_fields($selected_val,$for=''){
-      
+
     $all_fields=array(
         'none'                          =>  __('Leave Blank','wprentals'),
         'property_category'             =>  __('Main Category','wprentals'),
         'property_action_category'      =>  __('Second Category','wprentals'),
         'property_city'                 =>  __('Property/Item City','wprentals'),
-        'property_area'                 =>  __('Property/Item Area','wprentals'),     
+        'property_area'                 =>  __('Property/Item Area','wprentals'),
         'property_price'                =>  __('Property/Item Price','wprentals'),
-        'guest_no'                      =>  __('Property/Item Guests Capacity','wprentals'),           
+        'guest_no'                      =>  __('Property/Item Guests Capacity','wprentals'),
         'property_taxes'                =>  __('Property/Item Taxes','wprentals'),
         'property_price_per_week'       =>  __('Property/Item Price per day for 7 or more booked days','wprentals'),
         'property_price_per_month'      =>  __('Property/Item Price per day for 30 or more booked days','wprentals'),
@@ -5303,7 +5569,7 @@ function wpestate_return_custom_unit_fields($selected_val,$for=''){
         unset( $all_fields['city_fee']);
         unset( $all_fields['extra_price_per_guest']);
     }
-    
+
     if($for =='_property'){
         unset( $all_fields['property_price']);
         unset( $all_fields['property_price_per_week']);
@@ -5313,18 +5579,18 @@ function wpestate_return_custom_unit_fields($selected_val,$for=''){
         unset( $all_fields['city_fee']);
         unset( $all_fields['extra_price_per_guest']);
     }
-    
-    
+
+
     $i=0;
     $custom_fields = wprentals_get_option('wpestate_custom_fields_list','');
 
-    if( !empty($custom_fields)){  
+    if( !empty($custom_fields)){
         while($i< count($custom_fields) ){
             $name               =   stripslashes($custom_fields[$i][0]);
             $slug               =   str_replace(' ','-',$name);
             $label              =   stripslashes( $custom_fields[$i][1] );
             $slug               =   htmlspecialchars ( $slug ,ENT_QUOTES);
-            
+
             $all_fields[strtolower($slug)]=$label;
             $i++;
        }
@@ -5340,7 +5606,7 @@ function wpestate_return_custom_unit_fields($selected_val,$for=''){
     }
     $return_options.='</select>';
     return $return_options;
-   
+
 }
 endif;
 
@@ -5348,15 +5614,15 @@ endif;
 
 if(!function_exists('redux_wpestate_return_custom_unit_fields') ):
 function redux_wpestate_return_custom_unit_fields($select_name,$selected_val,$for=''){
-      
+
     $all_fields=array(
         'none'                          =>  __('Leave Blank','wprentals'),
         'property_category'             =>  __('Main Category','wprentals'),
         'property_action_category'      =>  __('Second Category','wprentals'),
         'property_city'                 =>  __('Property/Item City','wprentals'),
-        'property_area'                 =>  __('Property/Item Area','wprentals'),     
+        'property_area'                 =>  __('Property/Item Area','wprentals'),
         'property_price'                =>  __('Property/Item Price','wprentals'),
-        'guest_no'                      =>  __('Property/Item Guests Capacity','wprentals'),           
+        'guest_no'                      =>  __('Property/Item Guests Capacity','wprentals'),
         'property_taxes'                =>  __('Property/Item Taxes','wprentals'),
         'property_price_per_week'       =>  __('Property/Item Price per day for 7 or more booked days','wprentals'),
         'property_price_per_month'      =>  __('Property/Item Price per day for 30 or more booked days','wprentals'),
@@ -5387,7 +5653,7 @@ function redux_wpestate_return_custom_unit_fields($select_name,$selected_val,$fo
         unset( $all_fields['city_fee']);
         unset( $all_fields['extra_price_per_guest']);
     }
-    
+
     if($for =='_property'){
         unset( $all_fields['property_price']);
         unset( $all_fields['property_price_per_week']);
@@ -5397,18 +5663,18 @@ function redux_wpestate_return_custom_unit_fields($select_name,$selected_val,$fo
         unset( $all_fields['city_fee']);
         unset( $all_fields['extra_price_per_guest']);
     }
-    
-    
+
+
     $i=0;
     $custom_fields =wprentals_get_option('wpestate_custom_fields_list','');
 
-    if( !empty($custom_fields)){  
+    if( !empty($custom_fields)){
         while($i< count($custom_fields) ){
             $name               =   stripslashes($custom_fields[$i][0]);
             $slug               =   str_replace(' ','-',$name);
             $label              =   stripslashes( $custom_fields[$i][1] );
             $slug               =   htmlspecialchars ( $slug ,ENT_QUOTES);
-            
+
             $all_fields[strtolower($slug)]=$label;
             $i++;
        }
@@ -5424,14 +5690,14 @@ function redux_wpestate_return_custom_unit_fields($select_name,$selected_val,$fo
     }
     $return_options.='</select>';
     return $return_options;
-   
+
 }
 endif;
 
 
 if(!function_exists('wpestate_strip_array') ):
 function wpestate_strip_array($key){
-    $string =htmlspecialchars(stripslashes( ($key) ), ENT_QUOTES);          
+    $string =htmlspecialchars(stripslashes( ($key) ), ENT_QUOTES);
     return   wp_specialchars_decode ($string);
 }
 endif;
@@ -5454,9 +5720,9 @@ endif;
 
 if( !function_exists('wpestate_show_mandatory_fields') ):
 function wpestate_show_mandatory_fields(){
-           
+
     $mandatory_fields           =   ( wprentals_get_option('wp_estate_mandatory_page_fields','') );
-  
+
     if(is_array($mandatory_fields)){
         $mandatory_fields           =   array_map("wpestate_strip_array",$mandatory_fields);
     }
@@ -5479,6 +5745,8 @@ endif;
 
 if( !function_exists('wpestate_show_labels') ):
 function wpestate_show_labels($label,$type,$book_type=''){
+    $week_days_no               =   intval(wprentals_get_option('wp_estate_week_days'));
+    $month_days_no              =   intval(wprentals_get_option('wp_estate_month_days'));
     $labels = array(
         'check_in'  =>array(
                             '0'=>  esc_html__('Check-in','wprentals'),
@@ -5504,14 +5772,14 @@ function wpestate_show_labels($label,$type,$book_type=''){
                             '2'=>  esc_html__( 'Price per hour','wprentals'),
                             ),
         'price_week_label' => array(
-                            '0'=>  esc_html__( 'Price per night (7d+)','wprentals'),
-                            '1'=>  esc_html__( 'Price per day (7d+)','wprentals'),
-                            '2'=>  esc_html__( 'Price per hour (7h+)','wprentals'),
+                            '0'=> sprintf( esc_html__( 'Price per night (%sd+)','wprentals'),$week_days_no),
+                            '1'=> sprintf( esc_html__( 'Price per day (%sd+)','wprentals'),$week_days_no),
+                            '2'=> sprintf( esc_html__( 'Price per hour (%sh+)','wprentals'),$week_days_no),
                             ),
         'price_month_label' => array(
-                            '0'=>  esc_html__( 'Price per night (30d+)','wprentals'),
-                            '1'=>  esc_html__( 'Price per day (30d+)','wprentals'),
-                            '2'=>  esc_html__( 'Price per hour (30h+)','wprentals'),
+                            '0'=> sprintf( esc_html__( 'Price per night (%sd+)','wprentals'),$month_days_no),
+                            '1'=> sprintf( esc_html__( 'Price per day (%sd+)','wprentals'),$month_days_no),
+                            '2'=> sprintf( esc_html__( 'Price per hour (%sh+)','wprentals'),$month_days_no),
                             ),
         'nights'           => array(
                             '0'=>  esc_html__( 'nights','wprentals'),
@@ -5528,21 +5796,21 @@ function wpestate_show_labels($label,$type,$book_type=''){
                             '1'=>  esc_html__( 'days with custom price','wprentals'),
                             '2'=>  esc_html__( 'hours with custom price','wprentals'),
                             ),
-        
+
         'days_custom_price' => array(
                             '0'=>  esc_html__( 'nights with weekend price','wprentals'),
                             '1'=>  esc_html__( 'days with weekend price','wprentals'),
                             '2'=>  esc_html__( 'hours with weekend price','wprentals'),
                             ),
         'price_week_label_ext' => array(
-                            '0'=>  esc_html__( 'Price per night if the item is rented for more than 1 week (7 nights) or more than 1 month (30 nights)','wprentals'),
-                            '1'=>  esc_html__( 'Price per day if the item is rented for more than 1 week (7 days) or more than 1 month (30 days)','wprentals'),
-                            '2'=>  esc_html__( 'Price per hour if the item is rented for more than 7 hours or more than 30 hours','wprentals'),
+                            '0'=>  sprintf( esc_html__( 'Price per night if the item is rented for more than %s nights or more than %s nights','wprentals'),$week_days_no,$month_days_no),
+                            '1'=>  sprintf( esc_html__( 'Price per day if the item is rented for more than 1 week %s days or more than %s days','wprentals'),$week_days_no,$month_days_no),
+                            '2'=>  sprintf( esc_html__( 'Price per hour if the item is rented for more than %s hours or more than %s hours','wprentals'),$month_days_no,$week_days_no),
                             ),
         'price_month_label_ext' => array(
-                            '0'=>  esc_html__( 'Price per night (30d+)','wprentals'),
-                            '1'=>  esc_html__( 'Price per day (30d+)','wprentals'),
-                            '2'=>  esc_html__( 'Price per hour (30h+)','wprentals'),
+                            '0'=> sprintf(  esc_html__( 'Price per night (%sd+)','wprentals'),$month_days_no),
+                            '1'=> sprintf(  esc_html__( 'Price per day (%sd+)','wprentals'),$month_days_no),
+                            '2'=>  sprintf(  esc_html__( 'Price per hour (%sh+)','wprentals'),$month_days_no),
                             ),
         'min_unit' => array(
                             '0'=>  esc_html__( 'Minimum nights of booking','wprentals'),
@@ -5569,13 +5837,13 @@ function wpestate_show_labels($label,$type,$book_type=''){
                             '1'=>  esc_html__( 'Per Day per Guest','wprentals'),
                             '2'=>  esc_html__( 'Per Hour per Guest','wprentals'),
                             ),
-        
+
     );
-  
+
     $key='';
     if($type==0){
         $key = $type;
-        if($book_type==2){ 
+        if($book_type==2){
             $key=$book_type;
         }
     }else{
@@ -5598,7 +5866,7 @@ function wpestate_header_image($image){
     global $post;
     $paralax_header = wprentals_get_option('wp_estate_paralax_header','');
     if( isset($post->ID)){
-        
+
         if( is_page_template( 'splash_page.php' ) ){
             $wpestate_header_type=20;
             $image =esc_html( wprentals_get_option('wp_estate_splash_image','url') );
@@ -5610,17 +5878,17 @@ function wpestate_header_image($image){
             $page_header_overlay_val            =   esc_html ( wprentals_get_option('wp_estate_splash_overlay_opacity','') );
             $page_header_overlay_color          =   esc_html ( wprentals_get_option('wp_estate_splash_overlay_color','') );
             $wp_estate_splash_overlay_image     =   esc_html ( wprentals_get_option('wp_estate_splash_overlay_image','url') );
-            
+
         }else{
             $img_full_screen                    = esc_html ( get_post_meta($post->ID, 'page_header_image_full_screen', true) );
-            $img_full_back_type                 = esc_html ( get_post_meta($post->ID, 'page_header_image_back_type', true) );  
+            $img_full_back_type                 = esc_html ( get_post_meta($post->ID, 'page_header_image_back_type', true) );
             $page_header_title_over_image       = stripslashes( esc_html ( get_post_meta($post->ID, 'page_header_title_over_image', true) ) );
             $page_header_subtitle_over_image    = stripslashes( esc_html ( get_post_meta($post->ID, 'page_header_subtitle_over_image', true) ) );
             $page_header_image_height           = floatval ( get_post_meta($post->ID, 'page_header_image_height', true) );
             $page_header_overlay_val            = esc_html ( get_post_meta($post->ID, 'page_header_overlay_val', true) );
             $page_header_overlay_color          = esc_html ( get_post_meta($post->ID, 'page_header_overlay_color', true) );
             $wp_estate_splash_overlay_image     =   '';
-        }   
+        }
 
         if($page_header_overlay_val==''){
             $page_header_overlay_val=1;
@@ -5628,8 +5896,8 @@ function wpestate_header_image($image){
         if($page_header_image_height==0){
             $page_header_image_height=580;
         }
-        
-        print '<div class="wpestate_header_image full_screen_'.$img_full_screen.' parallax_effect_'.$paralax_header.'" style="background-image:url('.esc_url($image).');'; 
+
+        print '<div class="wpestate_header_image full_screen_'.$img_full_screen.' parallax_effect_'.$paralax_header.'" style="background-image:url('.esc_url($image).');';
             if($page_header_image_height!=0){
                 print ' height:'.$page_header_image_height.'px; ';
             }
@@ -5645,38 +5913,38 @@ function wpestate_header_image($image){
             if($page_header_title_over_image!=''){
                 print '<div class="heading_over_image_wrapper" >';
                 print '<h1 class="heading_over_image">'.$page_header_title_over_image.'</h1>';
-                 
+
                 if($page_header_subtitle_over_image!=''){
                     print '<div class="subheading_over_image">'.$page_header_subtitle_over_image.'</div>';
                 }
-                
+
                 print '</div>';
             }
-            
-           
+
+
         print'</div>';
-        
-        
-        
+
+
+
     }else{
         print '<div class="wpestate_header_image " style="background-image:url('.esc_url($image).')"></div>';
     }
-    
-    
-    
+
+
+
 }
 endif;
 
 
 if(!function_exists('wpestate_show_advanced_search')):
 function wpestate_show_advanced_search($post_id){
-  
+
     if( !wpestate_float_search_placement($post_id) && !wpestate_half_map_conditions ($post_id)   ){
         if( !wpestate_is_user_dashboard()  ){
-            include(locate_template( 'templates/advanced_search.php') );           
+            include(locate_template( 'templates/advanced_search.php') );
         }
-           
-    }   
+
+    }
 
 }
 
@@ -5690,16 +5958,16 @@ function wpestate_float_search_placement($post_id){
     $float_form_top_local   =   '';
     $float_search_form      =   esc_html ( wprentals_get_option('wp_estate_use_float_search_form','') );
     $search_float_type      =   0;
-  
-    
-    if ( isset($post->ID)){  
+
+
+    if ( isset($post->ID)){
         $search_float_type          =   intval (get_post_meta ( $post->ID, 'use_float_search_form_local_set', true));
     }
-    
+
     if( wpestate_half_map_conditions($post_id) ){
         return false;
     }
-    
+
     if( $search_float_type==0 && $float_search_form=='yes'){
         return true;
     }else if($search_float_type==2){
@@ -5707,9 +5975,9 @@ function wpestate_float_search_placement($post_id){
     }else{
         return false;
     }
-    
-    
-    
+
+
+
 }
 
 endif;
@@ -5717,14 +5985,14 @@ endif;
 
 if( !function_exists('wpestate_half_map_conditions')):
     function wpestate_half_map_conditions($pos_id){
-    
+
         if( !is_category() && !is_tax()  && basename(get_page_template($pos_id)) == 'property_list_half.php'){
             return true;
         } else if( (  is_tax('') ) &&  wprentals_get_option('wp_estate_property_list_type','')==2){
             $taxonomy    = get_query_var('taxonomy');
-            if( $taxonomy == 'property_category_agent' || 
-                $taxonomy == 'property_action_category_agent' || 
-                $taxonomy == 'property_city_agent' || 
+            if( $taxonomy == 'property_category_agent' ||
+                $taxonomy == 'property_action_category_agent' ||
+                $taxonomy == 'property_city_agent' ||
                 $taxonomy == 'property_area_agent' ||
                 $taxonomy == 'property_county_state_agent' ||
                 $taxonomy == 'category_agency' ||
@@ -5736,27 +6004,29 @@ if( !function_exists('wpestate_half_map_conditions')):
                 $taxonomy == 'property_action_developer' ||
                 $taxonomy == 'property_city_developer' ||
                 $taxonomy == 'property_area_developer' ||
-                $taxonomy == 'property_county_state_developer' 
-                    
+                $taxonomy == 'property_county_state_developer'
+
                     ){
                 return false;
             }else{
                 return true;
             }
         } else if(  is_page_template('advanced_search_results.php') &&  wprentals_get_option('wp_estate_property_list_type_adv','')==2){
-             return true;   
-        }else{ 
-            return false; 
+             return true;
+        }else{
+            return false;
         }
-        
+
     }
 endif;
 
 
 if( !function_exists('wpestate_is_user_dashboard') ):
 function wpestate_is_user_dashboard(){
-   
-    if ( basename( get_page_template() ) == 'user_dashboard.php'          || 
+
+    if (
+        basename( get_page_template() ) == 'user_dashboard_main.php' ||
+        basename( get_page_template() ) == 'user_dashboard.php'          ||
         basename( get_page_template() ) == 'user_dashboard_add_step1.php'      ||
         basename( get_page_template() ) == 'user_dashboard_allinone.php'  ||
         basename( get_page_template() ) == 'user_dashboard_edit_listing.php' ||
@@ -5765,16 +6035,18 @@ function wpestate_is_user_dashboard(){
         basename( get_page_template() ) == 'user_dashboard_invoices.php' ||
         basename( get_page_template() ) == 'user_dashboard_my_bookings.php' ||
         basename( get_page_template() ) == 'user_dashboard_my_reservations.php' ||
-        basename( get_page_template() ) == 'user_dashboard_packs.php' || 
+        basename( get_page_template() ) == 'user_dashboard_packs.php' ||
         basename( get_page_template() ) == 'user_dashboard_profile.php'
         ){
-     
+
+
+
         return true;
     }else{
         return false;
     }
-        
-   
+
+
 
 
 }
@@ -5784,7 +6056,7 @@ endif;
 if( !function_exists('wpestate_show_tax_header') ):
 function wpestate_show_tax_header(){
     $taxonmy    =   get_query_var('taxonomy');
-        
+
 //property_features
     $term       =   get_query_var( 'term' );
     $term_data  =   get_term_by('slug', $term, $taxonmy);
@@ -5815,11 +6087,11 @@ function wpestate_show_tax_header(){
     }
 
     if(isset($term_meta['category_tagline'])){
-        $category_tagline=stripslashes ( $term_meta['category_tagline'] );           
+        $category_tagline=stripslashes ( $term_meta['category_tagline'] );
     }
 
     if(isset($term_meta['page_tax'])){
-        $wpestate_page_tax=$term_meta['page_tax'];           
+        $wpestate_page_tax=$term_meta['page_tax'];
     }
     if( $taxonmy=='property_features'){
         $category_featured_image_url='';
@@ -5831,7 +6103,7 @@ function wpestate_show_tax_header(){
     print '<div class="tax_tagline">'.$category_tagline.'</div>';
     print '<div class="img-overlay"></div>';
     print '</div>';
-    
+
 }
 endif;
 
@@ -5843,7 +6115,7 @@ function wpestate_font_awesome_list(){
     print '<input type="text" id="icon_look_for" class="icon_look_for_class" value="" placeholder="'.esc_html__('Type to Search','wprentals').'">';
     print '<div class="iconpicker-items"><a role="button" href="#" class="iconpicker-item" title=".fab fa-500px"><i class="fab fa-500px"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-accessible-icon" data-search-terms="accessibility wheelchair handicap person wheelchair-alt "><i class="fab fa-accessible-icon"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-accusoft"><i class="fab fa-accusoft"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-address-book"><i class="fas fa-address-book"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-address-book"><i class="far fa-address-book"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-address-card"><i class="fas fa-address-card"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-address-card"><i class="far fa-address-card"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-adjust" data-search-terms="contrast "><i class="fas fa-adjust"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-adn"><i class="fab fa-adn"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-adversal"><i class="fab fa-adversal"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-affiliatetheme"><i class="fab fa-affiliatetheme"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-algolia"><i class="fab fa-algolia"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-align-center" data-search-terms="middle text "><i class="fas fa-align-center"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-align-justify" data-search-terms="text "><i class="fas fa-align-justify"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-align-left" data-search-terms="text "><i class="fas fa-align-left"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-align-right" data-search-terms="text "><i class="fas fa-align-right"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-amazon"><i class="fab fa-amazon"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-amazon-pay"><i class="fab fa-amazon-pay"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-ambulance" data-search-terms="vehicle support help "><i class="fas fa-ambulance"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-american-sign-language-interpreting"><i class="fas fa-american-sign-language-interpreting"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-amilia"><i class="fab fa-amilia"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-anchor" data-search-terms="link "><i class="fas fa-anchor"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-android" data-search-terms="robot "><i class="fab fa-android"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-angellist"><i class="fab fa-angellist"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-angle-double-down" data-search-terms="arrows "><i class="fas fa-angle-double-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-angle-double-left" data-search-terms="laquo quote previous back arrows "><i class="fas fa-angle-double-left"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-angle-double-right" data-search-terms="raquo quote next forward arrows "><i class="fas fa-angle-double-right"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-angle-double-up" data-search-terms="arrows "><i class="fas fa-angle-double-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-angle-down" data-search-terms="arrow "><i class="fas fa-angle-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-angle-left" data-search-terms="previous back arrow "><i class="fas fa-angle-left"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-angle-right" data-search-terms="next forward arrow "><i class="fas fa-angle-right"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-angle-up" data-search-terms="arrow "><i class="fas fa-angle-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-angrycreative"><i class="fab fa-angrycreative"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-angular"><i class="fab fa-angular"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-app-store"><i class="fab fa-app-store"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-app-store-ios"><i class="fab fa-app-store-ios"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-apper"><i class="fab fa-apper"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-apple" data-search-terms="osx food "><i class="fab fa-apple"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-apple-pay"><i class="fab fa-apple-pay"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-archive" data-search-terms="box storage package "><i class="fas fa-archive"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-arrow-alt-circle-down" data-search-terms="download arrow-circle-o-down "><i class="fas fa-arrow-alt-circle-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-arrow-alt-circle-down" data-search-terms="download arrow-circle-o-down "><i class="far fa-arrow-alt-circle-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-arrow-alt-circle-left" data-search-terms="previous back arrow-circle-o-left "><i class="fas fa-arrow-alt-circle-left"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-arrow-alt-circle-left" data-search-terms="previous back arrow-circle-o-left "><i class="far fa-arrow-alt-circle-left"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-arrow-alt-circle-right" data-search-terms="next forward arrow-circle-o-right "><i class="fas fa-arrow-alt-circle-right"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-arrow-alt-circle-right" data-search-terms="next forward arrow-circle-o-right "><i class="far fa-arrow-alt-circle-right"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-arrow-alt-circle-up" data-search-terms="arrow-circle-o-up "><i class="fas fa-arrow-alt-circle-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-arrow-alt-circle-up" data-search-terms="arrow-circle-o-up "><i class="far fa-arrow-alt-circle-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-arrow-circle-down" data-search-terms="download "><i class="fas fa-arrow-circle-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-arrow-circle-left" data-search-terms="previous back "><i class="fas fa-arrow-circle-left"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-arrow-circle-right" data-search-terms="next forward "><i class="fas fa-arrow-circle-right"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-arrow-circle-up"><i class="fas fa-arrow-circle-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-arrow-down" data-search-terms="download "><i class="fas fa-arrow-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-arrow-left" data-search-terms="previous back "><i class="fas fa-arrow-left"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-arrow-right" data-search-terms="next forward "><i class="fas fa-arrow-right"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-arrow-up"><i class="fas fa-arrow-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-arrows-alt" data-search-terms="expand enlarge fullscreen bigger move reorder resize arrow arrows "><i class="fas fa-arrows-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-arrows-alt-h" data-search-terms="resize arrows-h "><i class="fas fa-arrows-alt-h"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-arrows-alt-v" data-search-terms="resize arrows-v "><i class="fas fa-arrows-alt-v"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-assistive-listening-systems"><i class="fas fa-assistive-listening-systems"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-asterisk" data-search-terms="details "><i class="fas fa-asterisk"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-asymmetrik"><i class="fab fa-asymmetrik"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-at" data-search-terms="email e-mail "><i class="fas fa-at"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-audible"><i class="fab fa-audible"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-audio-description"><i class="fas fa-audio-description"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-autoprefixer"><i class="fab fa-autoprefixer"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-avianex"><i class="fab fa-avianex"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-aviato"><i class="fab fa-aviato"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-aws"><i class="fab fa-aws"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-backward" data-search-terms="rewind previous "><i class="fas fa-backward"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-balance-scale"><i class="fas fa-balance-scale"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-ban" data-search-terms="delete remove trash hide block stop abort cancel ban prohibit "><i class="fas fa-ban"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-band-aid" data-search-terms="bandage ouch boo boo "><i class="fas fa-band-aid"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-bandcamp"><i class="fab fa-bandcamp"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-barcode" data-search-terms="scan "><i class="fas fa-barcode"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-bars" data-search-terms="menu drag reorder settings list ul ol checklist todo list hamburger "><i class="fas fa-bars"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-baseball-ball"><i class="fas fa-baseball-ball"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-basketball-ball"><i class="fas fa-basketball-ball"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-bath"><i class="fas fa-bath"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-battery-empty" data-search-terms="power status "><i class="fas fa-battery-empty"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-battery-full" data-search-terms="power status "><i class="fas fa-battery-full"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-battery-half" data-search-terms="power status "><i class="fas fa-battery-half"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-battery-quarter" data-search-terms="power status "><i class="fas fa-battery-quarter"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-battery-three-quarters" data-search-terms="power status "><i class="fas fa-battery-three-quarters"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-bed" data-search-terms="travel "><i class="fas fa-bed"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-beer" data-search-terms="alcohol stein drink mug bar liquor "><i class="fas fa-beer"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-behance"><i class="fab fa-behance"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-behance-square"><i class="fab fa-behance-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-bell" data-search-terms="alert reminder notification "><i class="fas fa-bell"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-bell" data-search-terms="alert reminder notification "><i class="far fa-bell"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-bell-slash"><i class="fas fa-bell-slash"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-bell-slash"><i class="far fa-bell-slash"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-bicycle" data-search-terms="vehicle bike gears "><i class="fas fa-bicycle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-bimobject"><i class="fab fa-bimobject"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-binoculars"><i class="fas fa-binoculars"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-birthday-cake"><i class="fas fa-birthday-cake"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-bitbucket" data-search-terms="git bitbucket-square "><i class="fab fa-bitbucket"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-bitcoin"><i class="fab fa-bitcoin"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-bity"><i class="fab fa-bity"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-black-tie"><i class="fab fa-black-tie"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-blackberry"><i class="fab fa-blackberry"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-blind"><i class="fas fa-blind"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-blogger"><i class="fab fa-blogger"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-blogger-b"><i class="fab fa-blogger-b"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-bluetooth"><i class="fab fa-bluetooth"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-bluetooth-b"><i class="fab fa-bluetooth-b"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-bold"><i class="fas fa-bold"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-bolt" data-search-terms="lightning weather "><i class="fas fa-bolt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-bomb"><i class="fas fa-bomb"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-book" data-search-terms="read documentation "><i class="fas fa-book"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-bookmark" data-search-terms="save "><i class="fas fa-bookmark"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-bookmark" data-search-terms="save "><i class="far fa-bookmark"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-bowling-ball"><i class="fas fa-bowling-ball"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-box"><i class="fas fa-box"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-boxes"><i class="fas fa-boxes"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-braille"><i class="fas fa-braille"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-briefcase" data-search-terms="work business office luggage bag "><i class="fas fa-briefcase"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-btc"><i class="fab fa-btc"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-bug" data-search-terms="report insect "><i class="fas fa-bug"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-building" data-search-terms="work business apartment office company "><i class="fas fa-building"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-building" data-search-terms="work business apartment office company "><i class="far fa-building"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-bullhorn" data-search-terms="announcement share broadcast louder megaphone "><i class="fas fa-bullhorn"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-bullseye" data-search-terms="target "><i class="fas fa-bullseye"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-buromobelexperte"><i class="fab fa-buromobelexperte"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-bus" data-search-terms="vehicle "><i class="fas fa-bus"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-buysellads"><i class="fab fa-buysellads"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-calculator"><i class="fas fa-calculator"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-calendar" data-search-terms="date time when event calendar-o "><i class="fas fa-calendar"></i></a><a role="button" href="#" class="iconpicker-item iconpicker-selected bg-primary" title=".far fa-calendar" data-search-terms="date time when event calendar-o "><i class="far fa-calendar"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-calendar-alt" data-search-terms="date time when event calendar "><i class="fas fa-calendar-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-calendar-alt" data-search-terms="date time when event calendar "><i class="far fa-calendar-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-calendar-check" data-search-terms="ok "><i class="fas fa-calendar-check"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-calendar-check" data-search-terms="ok "><i class="far fa-calendar-check"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-calendar-minus"><i class="fas fa-calendar-minus"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-calendar-minus"><i class="far fa-calendar-minus"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-calendar-plus"><i class="fas fa-calendar-plus"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-calendar-plus"><i class="far fa-calendar-plus"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-calendar-times"><i class="fas fa-calendar-times"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-calendar-times"><i class="far fa-calendar-times"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-camera" data-search-terms="photo picture record "><i class="fas fa-camera"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-camera-retro" data-search-terms="photo picture record "><i class="fas fa-camera-retro"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-car" data-search-terms="vehicle "><i class="fas fa-car"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-caret-down" data-search-terms="more dropdown menu triangle down arrow "><i class="fas fa-caret-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-caret-left" data-search-terms="previous back triangle left arrow "><i class="fas fa-caret-left"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-caret-right" data-search-terms="next forward triangle right arrow "><i class="fas fa-caret-right"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-caret-square-down" data-search-terms="more dropdown menu caret-square-o-down "><i class="fas fa-caret-square-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-caret-square-down" data-search-terms="more dropdown menu caret-square-o-down "><i class="far fa-caret-square-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-caret-square-left" data-search-terms="previous back caret-square-o-left "><i class="fas fa-caret-square-left"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-caret-square-left" data-search-terms="previous back caret-square-o-left "><i class="far fa-caret-square-left"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-caret-square-right" data-search-terms="next forward caret-square-o-right "><i class="fas fa-caret-square-right"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-caret-square-right" data-search-terms="next forward caret-square-o-right "><i class="far fa-caret-square-right"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-caret-square-up" data-search-terms="caret-square-o-up "><i class="fas fa-caret-square-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-caret-square-up" data-search-terms="caret-square-o-up "><i class="far fa-caret-square-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-caret-up" data-search-terms="triangle up arrow "><i class="fas fa-caret-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-cart-arrow-down" data-search-terms="shopping "><i class="fas fa-cart-arrow-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-cart-plus" data-search-terms="add shopping "><i class="fas fa-cart-plus"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-cc-amazon-pay"><i class="fab fa-cc-amazon-pay"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-cc-amex" data-search-terms="amex "><i class="fab fa-cc-amex"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-cc-apple-pay"><i class="fab fa-cc-apple-pay"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-cc-diners-club"><i class="fab fa-cc-diners-club"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-cc-discover"><i class="fab fa-cc-discover"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-cc-jcb"><i class="fab fa-cc-jcb"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-cc-mastercard"><i class="fab fa-cc-mastercard"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-cc-paypal"><i class="fab fa-cc-paypal"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-cc-stripe"><i class="fab fa-cc-stripe"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-cc-visa"><i class="fab fa-cc-visa"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-centercode"><i class="fab fa-centercode"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-certificate" data-search-terms="badge star "><i class="fas fa-certificate"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chart-area" data-search-terms="graph analytics area-chart "><i class="fas fa-chart-area"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chart-bar" data-search-terms="graph analytics bar-chart "><i class="fas fa-chart-bar"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-chart-bar" data-search-terms="graph analytics bar-chart "><i class="far fa-chart-bar"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chart-line" data-search-terms="graph analytics line-chart dashboard "><i class="fas fa-chart-line"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chart-pie" data-search-terms="graph analytics pie-chart "><i class="fas fa-chart-pie"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-check" data-search-terms="checkmark done todo agree accept confirm tick ok select "><i class="fas fa-check"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-check-circle" data-search-terms="todo done agree accept confirm ok select "><i class="fas fa-check-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-check-circle" data-search-terms="todo done agree accept confirm ok select "><i class="far fa-check-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-check-square" data-search-terms="checkmark done todo agree accept confirm ok select "><i class="fas fa-check-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-check-square" data-search-terms="checkmark done todo agree accept confirm ok select "><i class="far fa-check-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chess"><i class="fas fa-chess"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chess-bishop"><i class="fas fa-chess-bishop"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chess-board"><i class="fas fa-chess-board"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chess-king"><i class="fas fa-chess-king"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chess-knight"><i class="fas fa-chess-knight"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chess-pawn"><i class="fas fa-chess-pawn"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chess-queen"><i class="fas fa-chess-queen"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chess-rook"><i class="fas fa-chess-rook"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chevron-circle-down" data-search-terms="more dropdown menu arrow "><i class="fas fa-chevron-circle-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chevron-circle-left" data-search-terms="previous back arrow "><i class="fas fa-chevron-circle-left"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chevron-circle-right" data-search-terms="next forward arrow "><i class="fas fa-chevron-circle-right"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chevron-circle-up" data-search-terms="arrow "><i class="fas fa-chevron-circle-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chevron-down"><i class="fas fa-chevron-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chevron-left" data-search-terms="bracket previous back "><i class="fas fa-chevron-left"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chevron-right" data-search-terms="bracket next forward "><i class="fas fa-chevron-right"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-chevron-up"><i class="fas fa-chevron-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-child"><i class="fas fa-child"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-chrome" data-search-terms="browser "><i class="fab fa-chrome"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-circle" data-search-terms="dot notification circle-thin "><i class="fas fa-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-circle" data-search-terms="dot notification circle-thin "><i class="far fa-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-circle-notch" data-search-terms="circle-o-notch "><i class="fas fa-circle-notch"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-clipboard" data-search-terms="paste "><i class="fas fa-clipboard"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-clipboard" data-search-terms="paste "><i class="far fa-clipboard"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-clipboard-check"><i class="fas fa-clipboard-check"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-clipboard-list"><i class="fas fa-clipboard-list"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-clock" data-search-terms="watch timer late timestamp date "><i class="fas fa-clock"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-clock" data-search-terms="watch timer late timestamp date "><i class="far fa-clock"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-clone" data-search-terms="copy "><i class="fas fa-clone"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-clone" data-search-terms="copy "><i class="far fa-clone"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-closed-captioning" data-search-terms="cc "><i class="fas fa-closed-captioning"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-closed-captioning" data-search-terms="cc "><i class="far fa-closed-captioning"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-cloud" data-search-terms="save "><i class="fas fa-cloud"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-cloud-download-alt" data-search-terms="cloud-download "><i class="fas fa-cloud-download-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-cloud-upload-alt" data-search-terms="cloud-upload "><i class="fas fa-cloud-upload-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-cloudscale"><i class="fab fa-cloudscale"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-cloudsmith"><i class="fab fa-cloudsmith"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-cloudversify"><i class="fab fa-cloudversify"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-code" data-search-terms="html brackets "><i class="fas fa-code"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-code-branch" data-search-terms="git fork vcs svn github rebase version branch code-fork "><i class="fas fa-code-branch"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-codepen"><i class="fab fa-codepen"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-codiepie"><i class="fab fa-codiepie"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-coffee" data-search-terms="morning mug breakfast tea drink cafe "><i class="fas fa-coffee"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-cog" data-search-terms="settings "><i class="fas fa-cog"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-cogs" data-search-terms="settings gears "><i class="fas fa-cogs"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-columns" data-search-terms="split panes dashboard "><i class="fas fa-columns"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-comment" data-search-terms="speech notification note chat bubble feedback message texting sms conversation "><i class="fas fa-comment"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-comment" data-search-terms="speech notification note chat bubble feedback message texting sms conversation "><i class="far fa-comment"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-comment-alt" data-search-terms="speech notification note chat bubble feedback message texting sms conversation commenting commenting "><i class="fas fa-comment-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-comment-alt" data-search-terms="speech notification note chat bubble feedback message texting sms conversation commenting commenting "><i class="far fa-comment-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-comments" data-search-terms="speech notification note chat bubble feedback message texting sms conversation "><i class="fas fa-comments"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-comments" data-search-terms="speech notification note chat bubble feedback message texting sms conversation "><i class="far fa-comments"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-compass" data-search-terms="safari directory menu location "><i class="fas fa-compass"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-compass" data-search-terms="safari directory menu location "><i class="far fa-compass"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-compress" data-search-terms="collapse combine contract merge smaller "><i class="fas fa-compress"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-connectdevelop"><i class="fab fa-connectdevelop"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-contao"><i class="fab fa-contao"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-copy" data-search-terms="duplicate clone file files-o "><i class="fas fa-copy"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-copy" data-search-terms="duplicate clone file files-o "><i class="far fa-copy"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-copyright"><i class="fas fa-copyright"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-copyright"><i class="far fa-copyright"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-cpanel"><i class="fab fa-cpanel"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-creative-commons"><i class="fab fa-creative-commons"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-credit-card" data-search-terms="money buy debit checkout purchase payment credit-card-alt "><i class="fas fa-credit-card"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-credit-card" data-search-terms="money buy debit checkout purchase payment credit-card-alt "><i class="far fa-credit-card"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-crop" data-search-terms="design "><i class="fas fa-crop"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-crosshairs" data-search-terms="picker gpd "><i class="fas fa-crosshairs"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-css3" data-search-terms="code "><i class="fab fa-css3"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-css3-alt"><i class="fab fa-css3-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-cube" data-search-terms="package "><i class="fas fa-cube"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-cubes" data-search-terms="packages "><i class="fas fa-cubes"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-cut" data-search-terms="scissors scissors "><i class="fas fa-cut"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-cuttlefish"><i class="fab fa-cuttlefish"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-d-and-d"><i class="fab fa-d-and-d"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-dashcube"><i class="fab fa-dashcube"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-database"><i class="fas fa-database"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-deaf"><i class="fas fa-deaf"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-delicious"><i class="fab fa-delicious"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-deploydog"><i class="fab fa-deploydog"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-deskpro"><i class="fab fa-deskpro"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-desktop" data-search-terms="monitor screen desktop computer demo device pc "><i class="fas fa-desktop"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-deviantart"><i class="fab fa-deviantart"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-digg"><i class="fab fa-digg"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-digital-ocean"><i class="fab fa-digital-ocean"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-discord"><i class="fab fa-discord"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-discourse"><i class="fab fa-discourse"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-dna" data-search-terms="double helix helix "><i class="fas fa-dna"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-dochub"><i class="fab fa-dochub"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-docker"><i class="fab fa-docker"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-dollar-sign" data-search-terms="usd price "><i class="fas fa-dollar-sign"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-dolly"><i class="fas fa-dolly"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-dolly-flatbed"><i class="fas fa-dolly-flatbed"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-dot-circle" data-search-terms="target bullseye notification "><i class="fas fa-dot-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-dot-circle" data-search-terms="target bullseye notification "><i class="far fa-dot-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-download" data-search-terms="import "><i class="fas fa-download"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-draft2digital"><i class="fab fa-draft2digital"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-dribbble"><i class="fab fa-dribbble"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-dribbble-square"><i class="fab fa-dribbble-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-dropbox"><i class="fab fa-dropbox"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-drupal"><i class="fab fa-drupal"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-dyalog"><i class="fab fa-dyalog"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-earlybirds"><i class="fab fa-earlybirds"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-edge" data-search-terms="browser ie "><i class="fab fa-edge"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-edit" data-search-terms="write edit update pencil pen "><i class="fas fa-edit"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-edit" data-search-terms="write edit update pencil pen "><i class="far fa-edit"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-eject"><i class="fas fa-eject"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-elementor"><i class="fab fa-elementor"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-ellipsis-h" data-search-terms="dots "><i class="fas fa-ellipsis-h"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-ellipsis-v" data-search-terms="dots "><i class="fas fa-ellipsis-v"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-ember"><i class="fab fa-ember"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-empire"><i class="fab fa-empire"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-envelope" data-search-terms="email e-mail letter support mail message notification "><i class="fas fa-envelope"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-envelope" data-search-terms="email e-mail letter support mail message notification "><i class="far fa-envelope"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-envelope-open" data-search-terms="email e-mail letter support mail message notification "><i class="fas fa-envelope-open"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-envelope-open" data-search-terms="email e-mail letter support mail message notification "><i class="far fa-envelope-open"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-envelope-square" data-search-terms="email e-mail letter support mail message notification "><i class="fas fa-envelope-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-envira" data-search-terms="leaf "><i class="fab fa-envira"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-eraser" data-search-terms="remove delete "><i class="fas fa-eraser"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-erlang"><i class="fab fa-erlang"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-ethereum"><i class="fab fa-ethereum"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-etsy"><i class="fab fa-etsy"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-euro-sign" data-search-terms="eur eur "><i class="fas fa-euro-sign"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-exchange-alt" data-search-terms="transfer arrows arrow exchange swap "><i class="fas fa-exchange-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-exclamation" data-search-terms="warning error problem notification notify alert danger "><i class="fas fa-exclamation"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-exclamation-circle" data-search-terms="warning error problem notification notify alert danger "><i class="fas fa-exclamation-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-exclamation-triangle" data-search-terms="warning error problem notification notify alert danger "><i class="fas fa-exclamation-triangle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-expand" data-search-terms="enlarge bigger resize "><i class="fas fa-expand"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-expand-arrows-alt" data-search-terms="enlarge bigger resize move arrows-alt "><i class="fas fa-expand-arrows-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-expeditedssl"><i class="fab fa-expeditedssl"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-external-link-alt" data-search-terms="open new external-link "><i class="fas fa-external-link-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-external-link-square-alt" data-search-terms="open new external-link-square "><i class="fas fa-external-link-square-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-eye" data-search-terms="show visible views "><i class="fas fa-eye"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-eye-dropper" data-search-terms="eyedropper "><i class="fas fa-eye-dropper"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-eye-slash" data-search-terms="toggle show hide visible visiblity views "><i class="fas fa-eye-slash"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-eye-slash" data-search-terms="toggle show hide visible visiblity views "><i class="far fa-eye-slash"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-facebook" data-search-terms="social network facebook-official "><i class="fab fa-facebook"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-facebook-f" data-search-terms="facebook "><i class="fab fa-facebook-f"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-facebook-messenger"><i class="fab fa-facebook-messenger"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-facebook-square" data-search-terms="social network "><i class="fab fa-facebook-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-fast-backward" data-search-terms="rewind previous beginning start first "><i class="fas fa-fast-backward"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-fast-forward" data-search-terms="next end last "><i class="fas fa-fast-forward"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-fax"><i class="fas fa-fax"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-female" data-search-terms="woman human user person profile "><i class="fas fa-female"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-fighter-jet" data-search-terms="fly plane airplane quick fast travel "><i class="fas fa-fighter-jet"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-file" data-search-terms="new page pdf document "><i class="fas fa-file"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-file" data-search-terms="new page pdf document "><i class="far fa-file"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-file-alt" data-search-terms="new page pdf document file-text "><i class="fas fa-file-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-file-alt" data-search-terms="new page pdf document file-text "><i class="far fa-file-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-file-archive"><i class="fas fa-file-archive"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-file-archive"><i class="far fa-file-archive"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-file-audio"><i class="fas fa-file-audio"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-file-audio"><i class="far fa-file-audio"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-file-code"><i class="fas fa-file-code"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-file-code"><i class="far fa-file-code"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-file-excel"><i class="fas fa-file-excel"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-file-excel"><i class="far fa-file-excel"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-file-image"><i class="fas fa-file-image"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-file-image"><i class="far fa-file-image"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-file-pdf"><i class="fas fa-file-pdf"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-file-pdf"><i class="far fa-file-pdf"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-file-powerpoint"><i class="fas fa-file-powerpoint"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-file-powerpoint"><i class="far fa-file-powerpoint"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-file-video"><i class="fas fa-file-video"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-file-video"><i class="far fa-file-video"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-file-word"><i class="fas fa-file-word"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-file-word"><i class="far fa-file-word"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-film" data-search-terms="movie "><i class="fas fa-film"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-filter" data-search-terms="funnel options "><i class="fas fa-filter"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-fire" data-search-terms="flame hot popular "><i class="fas fa-fire"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-fire-extinguisher"><i class="fas fa-fire-extinguisher"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-firefox" data-search-terms="browser "><i class="fab fa-firefox"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-first-aid"><i class="fas fa-first-aid"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-first-order"><i class="fab fa-first-order"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-firstdraft"><i class="fab fa-firstdraft"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-flag" data-search-terms="report notification notify "><i class="fas fa-flag"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-flag" data-search-terms="report notification notify "><i class="far fa-flag"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-flag-checkered" data-search-terms="report notification notify "><i class="fas fa-flag-checkered"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-flask" data-search-terms="science beaker experimental labs "><i class="fas fa-flask"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-flickr"><i class="fab fa-flickr"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-flipboard"><i class="fab fa-flipboard"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-fly"><i class="fab fa-fly"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-folder"><i class="fas fa-folder"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-folder"><i class="far fa-folder"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-folder-open"><i class="fas fa-folder-open"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-folder-open"><i class="far fa-folder-open"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-font" data-search-terms="text "><i class="fas fa-font"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-font-awesome" data-search-terms="meanpath "><i class="fab fa-font-awesome"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-font-awesome-alt"><i class="fab fa-font-awesome-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-font-awesome-flag"><i class="fab fa-font-awesome-flag"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-fonticons"><i class="fab fa-fonticons"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-fonticons-fi"><i class="fab fa-fonticons-fi"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-football-ball"><i class="fas fa-football-ball"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-fort-awesome" data-search-terms="castle "><i class="fab fa-fort-awesome"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-fort-awesome-alt" data-search-terms="castle "><i class="fab fa-fort-awesome-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-forumbee"><i class="fab fa-forumbee"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-forward" data-search-terms="forward next "><i class="fas fa-forward"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-foursquare"><i class="fab fa-foursquare"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-free-code-camp"><i class="fab fa-free-code-camp"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-freebsd"><i class="fab fa-freebsd"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-frown" data-search-terms="face emoticon sad disapprove rating "><i class="fas fa-frown"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-frown" data-search-terms="face emoticon sad disapprove rating "><i class="far fa-frown"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-futbol"><i class="fas fa-futbol"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-futbol"><i class="far fa-futbol"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-gamepad" data-search-terms="controller "><i class="fas fa-gamepad"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-gavel" data-search-terms="judge lawyer opinion hammer "><i class="fas fa-gavel"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-gem" data-search-terms="diamond "><i class="fas fa-gem"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-gem" data-search-terms="diamond "><i class="far fa-gem"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-genderless"><i class="fas fa-genderless"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-get-pocket"><i class="fab fa-get-pocket"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-gg"><i class="fab fa-gg"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-gg-circle"><i class="fab fa-gg-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-gift" data-search-terms="present "><i class="fas fa-gift"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-git"><i class="fab fa-git"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-git-square"><i class="fab fa-git-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-github" data-search-terms="octocat "><i class="fab fa-github"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-github-alt" data-search-terms="octocat "><i class="fab fa-github-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-github-square" data-search-terms="octocat "><i class="fab fa-github-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-gitkraken"><i class="fab fa-gitkraken"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-gitlab" data-search-terms="Axosoft "><i class="fab fa-gitlab"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-gitter"><i class="fab fa-gitter"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-glass-martini" data-search-terms="martini drink bar alcohol liquor glass "><i class="fas fa-glass-martini"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-glide"><i class="fab fa-glide"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-glide-g"><i class="fab fa-glide-g"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-globe" data-search-terms="world planet map place travel earth global translate all language localize location coordinates country gps "><i class="fas fa-globe"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-gofore"><i class="fab fa-gofore"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-golf-ball"><i class="fas fa-golf-ball"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-goodreads"><i class="fab fa-goodreads"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-goodreads-g"><i class="fab fa-goodreads-g"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-google"><i class="fab fa-google"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-google-drive"><i class="fab fa-google-drive"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-google-play"><i class="fab fa-google-play"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-google-plus" data-search-terms="google-plus-circle google-plus-official "><i class="fab fa-google-plus"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-google-plus-g" data-search-terms="social network google-plus "><i class="fab fa-google-plus-g"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-google-plus-square" data-search-terms="social network "><i class="fab fa-google-plus-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-google-wallet"><i class="fab fa-google-wallet"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-graduation-cap" data-search-terms="learning school student "><i class="fas fa-graduation-cap"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-gratipay" data-search-terms="heart like favorite love "><i class="fab fa-gratipay"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-grav"><i class="fab fa-grav"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-gripfire"><i class="fab fa-gripfire"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-grunt"><i class="fab fa-grunt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-gulp"><i class="fab fa-gulp"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-h-square" data-search-terms="hospital hotel "><i class="fas fa-h-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-hacker-news"><i class="fab fa-hacker-news"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-hacker-news-square"><i class="fab fa-hacker-news-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hand-lizard"><i class="fas fa-hand-lizard"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-hand-lizard"><i class="far fa-hand-lizard"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hand-paper" data-search-terms="stop "><i class="fas fa-hand-paper"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-hand-paper" data-search-terms="stop "><i class="far fa-hand-paper"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hand-peace"><i class="fas fa-hand-peace"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-hand-peace"><i class="far fa-hand-peace"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hand-point-down" data-search-terms="point finger hand-o-down "><i class="fas fa-hand-point-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-hand-point-down" data-search-terms="point finger hand-o-down "><i class="far fa-hand-point-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hand-point-left" data-search-terms="point left previous back finger hand-o-left "><i class="fas fa-hand-point-left"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-hand-point-left" data-search-terms="point left previous back finger hand-o-left "><i class="far fa-hand-point-left"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hand-point-right" data-search-terms="point right next forward finger hand-o-right "><i class="fas fa-hand-point-right"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-hand-point-right" data-search-terms="point right next forward finger hand-o-right "><i class="far fa-hand-point-right"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hand-point-up" data-search-terms="point finger hand-o-up "><i class="fas fa-hand-point-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-hand-point-up" data-search-terms="point finger hand-o-up "><i class="far fa-hand-point-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hand-pointer" data-search-terms="select "><i class="fas fa-hand-pointer"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-hand-pointer" data-search-terms="select "><i class="far fa-hand-pointer"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hand-rock"><i class="fas fa-hand-rock"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-hand-rock"><i class="far fa-hand-rock"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hand-scissors"><i class="fas fa-hand-scissors"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-hand-scissors"><i class="far fa-hand-scissors"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hand-spock"><i class="fas fa-hand-spock"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-hand-spock"><i class="far fa-hand-spock"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-handshake"><i class="fas fa-handshake"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-handshake"><i class="far fa-handshake"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hashtag"><i class="fas fa-hashtag"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hdd" data-search-terms="harddrive hard drive storage save "><i class="fas fa-hdd"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-hdd" data-search-terms="harddrive hard drive storage save "><i class="far fa-hdd"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-heading" data-search-terms="header header "><i class="fas fa-heading"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-headphones" data-search-terms="sound listen music audio "><i class="fas fa-headphones"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-heart" data-search-terms="love like favorite "><i class="fas fa-heart"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-heart" data-search-terms="love like favorite "><i class="far fa-heart"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-heartbeat" data-search-terms="ekg vital signs "><i class="fas fa-heartbeat"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-hips"><i class="fab fa-hips"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-hire-a-helper"><i class="fab fa-hire-a-helper"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-history"><i class="fas fa-history"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hockey-puck"><i class="fas fa-hockey-puck"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-home" data-search-terms="main house "><i class="fas fa-home"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-hooli"><i class="fab fa-hooli"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hospital" data-search-terms="building medical center emergency room "><i class="fas fa-hospital"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-hospital" data-search-terms="building medical center emergency room "><i class="far fa-hospital"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hospital-symbol"><i class="fas fa-hospital-symbol"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-hotjar"><i class="fab fa-hotjar"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hourglass"><i class="fas fa-hourglass"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-hourglass"><i class="far fa-hourglass"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hourglass-end"><i class="fas fa-hourglass-end"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hourglass-half"><i class="fas fa-hourglass-half"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-hourglass-start"><i class="fas fa-hourglass-start"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-houzz"><i class="fab fa-houzz"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-html5"><i class="fab fa-html5"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-hubspot"><i class="fab fa-hubspot"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-i-cursor"><i class="fas fa-i-cursor"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-id-badge"><i class="fas fa-id-badge"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-id-badge"><i class="far fa-id-badge"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-id-card"><i class="fas fa-id-card"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-id-card"><i class="far fa-id-card"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-image" data-search-terms="photo album picture picture "><i class="fas fa-image"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-image" data-search-terms="photo album picture picture "><i class="far fa-image"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-images" data-search-terms="photo album picture "><i class="fas fa-images"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-images" data-search-terms="photo album picture "><i class="far fa-images"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-imdb"><i class="fab fa-imdb"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-inbox"><i class="fas fa-inbox"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-indent"><i class="fas fa-indent"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-industry" data-search-terms="factory "><i class="fas fa-industry"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-info" data-search-terms="help information more details "><i class="fas fa-info"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-info-circle" data-search-terms="help information more details "><i class="fas fa-info-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-instagram"><i class="fab fa-instagram"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-internet-explorer" data-search-terms="browser ie "><i class="fab fa-internet-explorer"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-ioxhost"><i class="fab fa-ioxhost"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-italic" data-search-terms="italics "><i class="fas fa-italic"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-itunes"><i class="fab fa-itunes"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-itunes-note"><i class="fab fa-itunes-note"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-jenkins"><i class="fab fa-jenkins"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-joget"><i class="fab fa-joget"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-joomla"><i class="fab fa-joomla"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-js"><i class="fab fa-js"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-js-square"><i class="fab fa-js-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-jsfiddle"><i class="fab fa-jsfiddle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-key" data-search-terms="unlock password "><i class="fas fa-key"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-keyboard" data-search-terms="type input "><i class="fas fa-keyboard"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-keyboard" data-search-terms="type input "><i class="far fa-keyboard"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-keycdn"><i class="fab fa-keycdn"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-kickstarter"><i class="fab fa-kickstarter"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-kickstarter-k"><i class="fab fa-kickstarter-k"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-korvue"><i class="fab fa-korvue"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-language"><i class="fas fa-language"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-laptop" data-search-terms="demo computer device pc "><i class="fas fa-laptop"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-laravel"><i class="fab fa-laravel"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-lastfm"><i class="fab fa-lastfm"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-lastfm-square"><i class="fab fa-lastfm-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-leaf" data-search-terms="eco nature plant "><i class="fas fa-leaf"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-leanpub"><i class="fab fa-leanpub"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-lemon" data-search-terms="food "><i class="fas fa-lemon"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-lemon" data-search-terms="food "><i class="far fa-lemon"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-less"><i class="fab fa-less"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-level-down-alt" data-search-terms="level-down "><i class="fas fa-level-down-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-level-up-alt" data-search-terms="level-up "><i class="fas fa-level-up-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-life-ring" data-search-terms="support "><i class="fas fa-life-ring"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-life-ring" data-search-terms="support "><i class="far fa-life-ring"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-lightbulb" data-search-terms="idea inspiration "><i class="fas fa-lightbulb"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-lightbulb" data-search-terms="idea inspiration "><i class="far fa-lightbulb"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-line"><i class="fab fa-line"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-link" data-search-terms="chain "><i class="fas fa-link"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-linkedin" data-search-terms="linkedin-square "><i class="fab fa-linkedin"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-linkedin-in" data-search-terms="linkedin "><i class="fab fa-linkedin-in"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-linode"><i class="fab fa-linode"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-linux" data-search-terms="tux "><i class="fab fa-linux"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-lira-sign" data-search-terms="try turkish try "><i class="fas fa-lira-sign"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-list" data-search-terms="ul ol checklist finished completed done todo "><i class="fas fa-list"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-list-alt" data-search-terms="ul ol checklist finished completed done todo "><i class="fas fa-list-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-list-alt" data-search-terms="ul ol checklist finished completed done todo "><i class="far fa-list-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-list-ol" data-search-terms="ul ol checklist list todo list numbers "><i class="fas fa-list-ol"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-list-ul" data-search-terms="ul ol checklist todo list "><i class="fas fa-list-ul"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-location-arrow" data-search-terms="map coordinates location address place where gps "><i class="fas fa-location-arrow"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-lock" data-search-terms="protect admin security "><i class="fas fa-lock"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-lock-open" data-search-terms="protect admin password lock open "><i class="fas fa-lock-open"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-long-arrow-alt-down" data-search-terms="long-arrow-down "><i class="fas fa-long-arrow-alt-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-long-arrow-alt-left" data-search-terms="previous back long-arrow-left "><i class="fas fa-long-arrow-alt-left"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-long-arrow-alt-right" data-search-terms="long-arrow-right "><i class="fas fa-long-arrow-alt-right"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-long-arrow-alt-up" data-search-terms="long-arrow-up "><i class="fas fa-long-arrow-alt-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-low-vision"><i class="fas fa-low-vision"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-lyft"><i class="fab fa-lyft"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-magento"><i class="fab fa-magento"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-magic" data-search-terms="wizard automatic autocomplete "><i class="fas fa-magic"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-magnet"><i class="fas fa-magnet"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-male" data-search-terms="man human user person profile "><i class="fas fa-male"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-map"><i class="fas fa-map"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-map"><i class="far fa-map"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-map-marker" data-search-terms="map pin location coordinates localize address travel where place gps "><i class="fas fa-map-marker"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-map-marker-alt" data-search-terms="map-marker gps "><i class="fas fa-map-marker-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-map-pin"><i class="fas fa-map-pin"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-map-signs"><i class="fas fa-map-signs"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-mars" data-search-terms="male "><i class="fas fa-mars"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-mars-double"><i class="fas fa-mars-double"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-mars-stroke"><i class="fas fa-mars-stroke"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-mars-stroke-h"><i class="fas fa-mars-stroke-h"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-mars-stroke-v"><i class="fas fa-mars-stroke-v"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-maxcdn"><i class="fab fa-maxcdn"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-medapps"><i class="fab fa-medapps"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-medium"><i class="fab fa-medium"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-medium-m"><i class="fab fa-medium-m"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-medkit" data-search-terms="first aid firstaid help support health "><i class="fas fa-medkit"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-medrt"><i class="fab fa-medrt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-meetup"><i class="fab fa-meetup"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-meh" data-search-terms="face emoticon rating neutral "><i class="fas fa-meh"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-meh" data-search-terms="face emoticon rating neutral "><i class="far fa-meh"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-mercury" data-search-terms="transgender "><i class="fas fa-mercury"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-microchip"><i class="fas fa-microchip"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-microphone" data-search-terms="record voice sound "><i class="fas fa-microphone"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-microphone-slash" data-search-terms="record voice sound mute "><i class="fas fa-microphone-slash"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-microsoft"><i class="fab fa-microsoft"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-minus" data-search-terms="hide minify delete remove trash hide collapse "><i class="fas fa-minus"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-minus-circle" data-search-terms="delete remove trash hide "><i class="fas fa-minus-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-minus-square" data-search-terms="hide minify delete remove trash hide collapse "><i class="fas fa-minus-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-minus-square" data-search-terms="hide minify delete remove trash hide collapse "><i class="far fa-minus-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-mix"><i class="fab fa-mix"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-mixcloud"><i class="fab fa-mixcloud"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-mizuni"><i class="fab fa-mizuni"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-mobile" data-search-terms="cell phone cellphone text call iphone number telephone "><i class="fas fa-mobile"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-mobile-alt" data-search-terms="mobile "><i class="fas fa-mobile-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-modx"><i class="fab fa-modx"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-monero"><i class="fab fa-monero"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-money-bill-alt" data-search-terms="cash money buy checkout purchase payment price "><i class="fas fa-money-bill-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-money-bill-alt" data-search-terms="cash money buy checkout purchase payment price "><i class="far fa-money-bill-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-moon" data-search-terms="night darker contrast "><i class="fas fa-moon"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-moon" data-search-terms="night darker contrast "><i class="far fa-moon"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-motorcycle" data-search-terms="vehicle bike "><i class="fas fa-motorcycle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-mouse-pointer" data-search-terms="select "><i class="fas fa-mouse-pointer"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-music" data-search-terms="note sound "><i class="fas fa-music"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-napster"><i class="fab fa-napster"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-neuter"><i class="fas fa-neuter"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-newspaper" data-search-terms="press article "><i class="fas fa-newspaper"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-newspaper" data-search-terms="press article "><i class="far fa-newspaper"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-nintendo-switch"><i class="fab fa-nintendo-switch"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-node"><i class="fab fa-node"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-node-js"><i class="fab fa-node-js"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-npm"><i class="fab fa-npm"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-ns8"><i class="fab fa-ns8"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-nutritionix"><i class="fab fa-nutritionix"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-object-group" data-search-terms="design "><i class="fas fa-object-group"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-object-group" data-search-terms="design "><i class="far fa-object-group"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-object-ungroup" data-search-terms="design "><i class="fas fa-object-ungroup"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-object-ungroup" data-search-terms="design "><i class="far fa-object-ungroup"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-odnoklassniki"><i class="fab fa-odnoklassniki"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-odnoklassniki-square"><i class="fab fa-odnoklassniki-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-opencart"><i class="fab fa-opencart"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-openid"><i class="fab fa-openid"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-opera"><i class="fab fa-opera"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-optin-monster"><i class="fab fa-optin-monster"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-osi"><i class="fab fa-osi"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-outdent"><i class="fas fa-outdent"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-page4"><i class="fab fa-page4"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-pagelines" data-search-terms="leaf leaves tree plant eco nature "><i class="fab fa-pagelines"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-paint-brush"><i class="fas fa-paint-brush"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-palfed"><i class="fab fa-palfed"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-pallet"><i class="fas fa-pallet"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-paper-plane"><i class="fas fa-paper-plane"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-paper-plane"><i class="far fa-paper-plane"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-paperclip" data-search-terms="attachment "><i class="fas fa-paperclip"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-paragraph"><i class="fas fa-paragraph"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-paste" data-search-terms="copy clipboard "><i class="fas fa-paste"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-patreon"><i class="fab fa-patreon"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-pause" data-search-terms="wait "><i class="fas fa-pause"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-pause-circle"><i class="fas fa-pause-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-pause-circle"><i class="far fa-pause-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-paw" data-search-terms="pet "><i class="fas fa-paw"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-paypal"><i class="fab fa-paypal"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-pen-square" data-search-terms="write edit update pencil-square "><i class="fas fa-pen-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-pencil-alt" data-search-terms="write edit update pencil design "><i class="fas fa-pencil-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-percent"><i class="fas fa-percent"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-periscope"><i class="fab fa-periscope"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-phabricator"><i class="fab fa-phabricator"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-phoenix-framework"><i class="fab fa-phoenix-framework"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-phone" data-search-terms="call voice number support earphone telephone "><i class="fas fa-phone"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-phone-square" data-search-terms="call voice number support telephone "><i class="fas fa-phone-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-phone-volume" data-search-terms="telephone volume-control-phone "><i class="fas fa-phone-volume"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-php"><i class="fab fa-php"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-pied-piper"><i class="fab fa-pied-piper"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-pied-piper-alt"><i class="fab fa-pied-piper-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-pied-piper-pp"><i class="fab fa-pied-piper-pp"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-pills" data-search-terms="medicine drugs "><i class="fas fa-pills"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-pinterest"><i class="fab fa-pinterest"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-pinterest-p"><i class="fab fa-pinterest-p"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-pinterest-square"><i class="fab fa-pinterest-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-plane" data-search-terms="travel trip location destination airplane fly mode "><i class="fas fa-plane"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-play" data-search-terms="start playing music sound "><i class="fas fa-play"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-play-circle" data-search-terms="start playing "><i class="fas fa-play-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-play-circle" data-search-terms="start playing "><i class="far fa-play-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-playstation"><i class="fab fa-playstation"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-plug" data-search-terms="power connect "><i class="fas fa-plug"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-plus" data-search-terms="add new create expand "><i class="fas fa-plus"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-plus-circle" data-search-terms="add new create expand "><i class="fas fa-plus-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-plus-square" data-search-terms="add new create expand "><i class="fas fa-plus-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-plus-square" data-search-terms="add new create expand "><i class="far fa-plus-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-podcast"><i class="fas fa-podcast"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-pound-sign" data-search-terms="gbp gbp "><i class="fas fa-pound-sign"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-power-off" data-search-terms="on "><i class="fas fa-power-off"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-print"><i class="fas fa-print"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-product-hunt"><i class="fab fa-product-hunt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-pushed"><i class="fab fa-pushed"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-puzzle-piece" data-search-terms="addon add-on section "><i class="fas fa-puzzle-piece"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-python"><i class="fab fa-python"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-qq"><i class="fab fa-qq"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-qrcode" data-search-terms="scan "><i class="fas fa-qrcode"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-question" data-search-terms="help information unknown support "><i class="fas fa-question"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-question-circle" data-search-terms="help information unknown support "><i class="fas fa-question-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-question-circle" data-search-terms="help information unknown support "><i class="far fa-question-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-quidditch"><i class="fas fa-quidditch"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-quinscape"><i class="fab fa-quinscape"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-quora"><i class="fab fa-quora"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-quote-left"><i class="fas fa-quote-left"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-quote-right"><i class="fas fa-quote-right"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-random" data-search-terms="sort shuffle "><i class="fas fa-random"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-ravelry"><i class="fab fa-ravelry"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-react"><i class="fab fa-react"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-rebel"><i class="fab fa-rebel"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-recycle"><i class="fas fa-recycle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-red-river"><i class="fab fa-red-river"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-reddit"><i class="fab fa-reddit"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-reddit-alien"><i class="fab fa-reddit-alien"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-reddit-square"><i class="fab fa-reddit-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-redo" data-search-terms="forward repeat repeat "><i class="fas fa-redo"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-redo-alt" data-search-terms="forward repeat "><i class="fas fa-redo-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-registered"><i class="fas fa-registered"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-registered"><i class="far fa-registered"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-rendact"><i class="fab fa-rendact"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-renren"><i class="fab fa-renren"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-reply"><i class="fas fa-reply"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-reply-all"><i class="fas fa-reply-all"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-replyd"><i class="fab fa-replyd"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-resolving"><i class="fab fa-resolving"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-retweet" data-search-terms="refresh reload share swap "><i class="fas fa-retweet"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-road" data-search-terms="street "><i class="fas fa-road"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-rocket" data-search-terms="app "><i class="fas fa-rocket"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-rocketchat"><i class="fab fa-rocketchat"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-rockrms"><i class="fab fa-rockrms"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-rss" data-search-terms="blog "><i class="fas fa-rss"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-rss-square" data-search-terms="feed blog "><i class="fas fa-rss-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-ruble-sign" data-search-terms="rub rub "><i class="fas fa-ruble-sign"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-rupee-sign" data-search-terms="indian inr "><i class="fas fa-rupee-sign"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-safari" data-search-terms="browser "><i class="fab fa-safari"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-sass"><i class="fab fa-sass"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-save" data-search-terms="floppy floppy-o "><i class="fas fa-save"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-save" data-search-terms="floppy floppy-o "><i class="far fa-save"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-schlix"><i class="fab fa-schlix"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-scribd"><i class="fab fa-scribd"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-search" data-search-terms="magnify zoom enlarge bigger "><i class="fas fa-search"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-search-minus" data-search-terms="magnify minify zoom smaller "><i class="fas fa-search-minus"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-search-plus" data-search-terms="magnify zoom enlarge bigger "><i class="fas fa-search-plus"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-searchengin"><i class="fab fa-searchengin"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-sellcast" data-search-terms="eercast "><i class="fab fa-sellcast"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-sellsy"><i class="fab fa-sellsy"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-server"><i class="fas fa-server"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-servicestack"><i class="fab fa-servicestack"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-share"><i class="fas fa-share"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-share-alt"><i class="fas fa-share-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-share-alt-square"><i class="fas fa-share-alt-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-share-square" data-search-terms="social send "><i class="fas fa-share-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-share-square" data-search-terms="social send "><i class="far fa-share-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-shekel-sign" data-search-terms="ils ils "><i class="fas fa-shekel-sign"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-shield-alt" data-search-terms="shield "><i class="fas fa-shield-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-ship" data-search-terms="boat sea "><i class="fas fa-ship"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-shipping-fast"><i class="fas fa-shipping-fast"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-shirtsinbulk"><i class="fab fa-shirtsinbulk"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-shopping-bag"><i class="fas fa-shopping-bag"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-shopping-basket"><i class="fas fa-shopping-basket"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-shopping-cart" data-search-terms="checkout buy purchase payment "><i class="fas fa-shopping-cart"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-shower"><i class="fas fa-shower"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-sign-in-alt" data-search-terms="enter join log in login sign up sign in signin signup arrow sign-in "><i class="fas fa-sign-in-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-sign-language"><i class="fas fa-sign-language"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-sign-out-alt" data-search-terms="log out logout leave exit arrow sign-out "><i class="fas fa-sign-out-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-signal" data-search-terms="graph bars status "><i class="fas fa-signal"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-simplybuilt"><i class="fab fa-simplybuilt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-sistrix"><i class="fab fa-sistrix"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-sitemap" data-search-terms="directory hierarchy organization "><i class="fas fa-sitemap"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-skyatlas"><i class="fab fa-skyatlas"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-skype"><i class="fab fa-skype"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-slack" data-search-terms="hashtag anchor hash "><i class="fab fa-slack"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-slack-hash" data-search-terms="hashtag anchor hash "><i class="fab fa-slack-hash"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-sliders-h" data-search-terms="settings sliders "><i class="fas fa-sliders-h"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-slideshare"><i class="fab fa-slideshare"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-smile" data-search-terms="face emoticon happy approve satisfied rating "><i class="fas fa-smile"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-smile" data-search-terms="face emoticon happy approve satisfied rating "><i class="far fa-smile"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-snapchat"><i class="fab fa-snapchat"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-snapchat-ghost"><i class="fab fa-snapchat-ghost"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-snapchat-square"><i class="fab fa-snapchat-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-snowflake"><i class="fas fa-snowflake"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-snowflake"><i class="far fa-snowflake"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-sort" data-search-terms="order "><i class="fas fa-sort"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-sort-alpha-down" data-search-terms="sort-alpha-asc "><i class="fas fa-sort-alpha-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-sort-alpha-up" data-search-terms="sort-alpha-desc "><i class="fas fa-sort-alpha-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-sort-amount-down" data-search-terms="sort-amount-asc "><i class="fas fa-sort-amount-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-sort-amount-up" data-search-terms="sort-amount-desc "><i class="fas fa-sort-amount-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-sort-down" data-search-terms="arrow descending sort-desc "><i class="fas fa-sort-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-sort-numeric-down" data-search-terms="numbers sort-numeric-asc "><i class="fas fa-sort-numeric-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-sort-numeric-up" data-search-terms="numbers sort-numeric-desc "><i class="fas fa-sort-numeric-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-sort-up" data-search-terms="arrow ascending sort-asc "><i class="fas fa-sort-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-soundcloud"><i class="fab fa-soundcloud"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-space-shuttle"><i class="fas fa-space-shuttle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-speakap"><i class="fab fa-speakap"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-spinner" data-search-terms="loading progress "><i class="fas fa-spinner"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-spotify"><i class="fab fa-spotify"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-square" data-search-terms="block box "><i class="fas fa-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-square" data-search-terms="block box "><i class="far fa-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-square-full"><i class="fas fa-square-full"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-stack-exchange"><i class="fab fa-stack-exchange"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-stack-overflow"><i class="fab fa-stack-overflow"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-star" data-search-terms="award achievement night rating score favorite "><i class="fas fa-star"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-star" data-search-terms="award achievement night rating score favorite "><i class="far fa-star"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-star-half" data-search-terms="award achievement rating score star-half-empty star-half-full "><i class="fas fa-star-half"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-star-half" data-search-terms="award achievement rating score star-half-empty star-half-full "><i class="far fa-star-half"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-staylinked"><i class="fab fa-staylinked"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-steam"><i class="fab fa-steam"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-steam-square"><i class="fab fa-steam-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-steam-symbol"><i class="fab fa-steam-symbol"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-step-backward" data-search-terms="rewind previous beginning start first "><i class="fas fa-step-backward"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-step-forward" data-search-terms="next end last "><i class="fas fa-step-forward"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-stethoscope"><i class="fas fa-stethoscope"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-sticker-mule"><i class="fab fa-sticker-mule"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-sticky-note"><i class="fas fa-sticky-note"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-sticky-note"><i class="far fa-sticky-note"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-stop" data-search-terms="block box square "><i class="fas fa-stop"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-stop-circle"><i class="fas fa-stop-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-stop-circle"><i class="far fa-stop-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-stopwatch" data-search-terms="time "><i class="fas fa-stopwatch"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-strava"><i class="fab fa-strava"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-street-view" data-search-terms="map "><i class="fas fa-street-view"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-strikethrough"><i class="fas fa-strikethrough"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-stripe"><i class="fab fa-stripe"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-stripe-s"><i class="fab fa-stripe-s"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-studiovinari"><i class="fab fa-studiovinari"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-stumbleupon"><i class="fab fa-stumbleupon"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-stumbleupon-circle"><i class="fab fa-stumbleupon-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-subscript"><i class="fas fa-subscript"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-subway"><i class="fas fa-subway"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-suitcase" data-search-terms="trip luggage travel move baggage "><i class="fas fa-suitcase"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-sun" data-search-terms="weather contrast lighter brighten day "><i class="fas fa-sun"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-sun" data-search-terms="weather contrast lighter brighten day "><i class="far fa-sun"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-superpowers"><i class="fab fa-superpowers"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-superscript" data-search-terms="exponential "><i class="fas fa-superscript"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-supple"><i class="fab fa-supple"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-sync" data-search-terms="reload refresh refresh "><i class="fas fa-sync"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-sync-alt" data-search-terms="reload refresh "><i class="fas fa-sync-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-syringe" data-search-terms="immunizations needle "><i class="fas fa-syringe"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-table" data-search-terms="data excel spreadsheet "><i class="fas fa-table"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-table-tennis"><i class="fas fa-table-tennis"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-tablet" data-search-terms="ipad device "><i class="fas fa-tablet"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-tablet-alt" data-search-terms="tablet "><i class="fas fa-tablet-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-tachometer-alt" data-search-terms="tachometer dashboard "><i class="fas fa-tachometer-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-tag" data-search-terms="label "><i class="fas fa-tag"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-tags" data-search-terms="labels "><i class="fas fa-tags"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-tasks" data-search-terms="progress loading downloading downloads settings "><i class="fas fa-tasks"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-taxi" data-search-terms="vehicle "><i class="fas fa-taxi"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-telegram"><i class="fab fa-telegram"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-telegram-plane"><i class="fab fa-telegram-plane"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-tencent-weibo"><i class="fab fa-tencent-weibo"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-terminal" data-search-terms="command prompt code "><i class="fas fa-terminal"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-text-height"><i class="fas fa-text-height"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-text-width"><i class="fas fa-text-width"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-th" data-search-terms="blocks squares boxes grid "><i class="fas fa-th"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-th-large" data-search-terms="blocks squares boxes grid "><i class="fas fa-th-large"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-th-list" data-search-terms="ul ol checklist finished completed done todo "><i class="fas fa-th-list"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-themeisle"><i class="fab fa-themeisle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-thermometer" data-search-terms="temperature fever "><i class="fas fa-thermometer"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-thermometer-empty" data-search-terms="status "><i class="fas fa-thermometer-empty"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-thermometer-full" data-search-terms="status "><i class="fas fa-thermometer-full"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-thermometer-half" data-search-terms="status "><i class="fas fa-thermometer-half"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-thermometer-quarter" data-search-terms="status "><i class="fas fa-thermometer-quarter"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-thermometer-three-quarters" data-search-terms="status "><i class="fas fa-thermometer-three-quarters"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-thumbs-down" data-search-terms="dislike disapprove disagree hand thumbs-o-down "><i class="fas fa-thumbs-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-thumbs-down" data-search-terms="dislike disapprove disagree hand thumbs-o-down "><i class="far fa-thumbs-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-thumbs-up" data-search-terms="like favorite approve agree hand thumbs-o-up "><i class="fas fa-thumbs-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-thumbs-up" data-search-terms="like favorite approve agree hand thumbs-o-up "><i class="far fa-thumbs-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-thumbtack" data-search-terms="marker pin location coordinates thumb-tack "><i class="fas fa-thumbtack"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-ticket-alt" data-search-terms="ticket "><i class="fas fa-ticket-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-times" data-search-terms="close exit x cross "><i class="fas fa-times"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-times-circle" data-search-terms="close exit x "><i class="fas fa-times-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-times-circle" data-search-terms="close exit x "><i class="far fa-times-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-tint" data-search-terms="raindrop waterdrop drop droplet "><i class="fas fa-tint"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-toggle-off" data-search-terms="switch "><i class="fas fa-toggle-off"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-toggle-on" data-search-terms="switch "><i class="fas fa-toggle-on"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-trademark"><i class="fas fa-trademark"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-train"><i class="fas fa-train"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-transgender" data-search-terms="intersex "><i class="fas fa-transgender"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-transgender-alt"><i class="fas fa-transgender-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-trash" data-search-terms="garbage delete remove hide "><i class="fas fa-trash"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-trash-alt" data-search-terms="garbage delete remove hide trash trash-o "><i class="fas fa-trash-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-trash-alt" data-search-terms="garbage delete remove hide trash trash-o "><i class="far fa-trash-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-tree"><i class="fas fa-tree"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-trello"><i class="fab fa-trello"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-tripadvisor"><i class="fab fa-tripadvisor"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-trophy" data-search-terms="award achievement cup winner game "><i class="fas fa-trophy"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-truck" data-search-terms="shipping "><i class="fas fa-truck"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-tty"><i class="fas fa-tty"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-tumblr"><i class="fab fa-tumblr"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-tumblr-square"><i class="fab fa-tumblr-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-tv" data-search-terms="display computer monitor television "><i class="fas fa-tv"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-twitch"><i class="fab fa-twitch"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-twitter" data-search-terms="tweet social network "><i class="fab fa-twitter"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-twitter-square" data-search-terms="tweet social network "><i class="fab fa-twitter-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-typo3"><i class="fab fa-typo3"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-uber"><i class="fab fa-uber"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-uikit"><i class="fab fa-uikit"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-umbrella"><i class="fas fa-umbrella"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-underline"><i class="fas fa-underline"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-undo" data-search-terms="back "><i class="fas fa-undo"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-undo-alt" data-search-terms="back "><i class="fas fa-undo-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-uniregistry"><i class="fab fa-uniregistry"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-universal-access"><i class="fas fa-universal-access"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-university" data-search-terms="bank institution "><i class="fas fa-university"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-unlink" data-search-terms="remove chain chain-broken "><i class="fas fa-unlink"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-unlock" data-search-terms="protect admin password lock "><i class="fas fa-unlock"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-unlock-alt" data-search-terms="protect admin password lock "><i class="fas fa-unlock-alt"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-untappd"><i class="fab fa-untappd"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-upload" data-search-terms="import "><i class="fas fa-upload"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-usb"><i class="fab fa-usb"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-user" data-search-terms="person man head profile account "><i class="fas fa-user"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-user" data-search-terms="person man head profile account "><i class="far fa-user"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-user-circle" data-search-terms="person man head profile account "><i class="fas fa-user-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-user-circle" data-search-terms="person man head profile account "><i class="far fa-user-circle"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-user-md" data-search-terms="doctor profile medical nurse job occupation "><i class="fas fa-user-md"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-user-plus" data-search-terms="sign up signup "><i class="fas fa-user-plus"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-user-secret" data-search-terms="whisper spy incognito privacy "><i class="fas fa-user-secret"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-user-times"><i class="fas fa-user-times"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-users" data-search-terms="people profiles persons "><i class="fas fa-users"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-ussunnah"><i class="fab fa-ussunnah"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-utensil-spoon" data-search-terms="spoon "><i class="fas fa-utensil-spoon"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-utensils" data-search-terms="food restaurant spoon knife dinner eat cutlery "><i class="fas fa-utensils"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-vaadin"><i class="fab fa-vaadin"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-venus" data-search-terms="female "><i class="fas fa-venus"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-venus-double"><i class="fas fa-venus-double"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-venus-mars"><i class="fas fa-venus-mars"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-viacoin"><i class="fab fa-viacoin"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-viadeo"><i class="fab fa-viadeo"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-viadeo-square"><i class="fab fa-viadeo-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-viber"><i class="fab fa-viber"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-video" data-search-terms="film movie record camera video-camera "><i class="fas fa-video"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-vimeo"><i class="fab fa-vimeo"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-vimeo-square"><i class="fab fa-vimeo-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-vimeo-v" data-search-terms="vimeo "><i class="fab fa-vimeo-v"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-vine"><i class="fab fa-vine"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-vk"><i class="fab fa-vk"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-vnv"><i class="fab fa-vnv"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-volleyball-ball"><i class="fas fa-volleyball-ball"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-volume-down" data-search-terms="audio lower quieter sound music "><i class="fas fa-volume-down"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-volume-off" data-search-terms="audio mute sound music "><i class="fas fa-volume-off"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-volume-up" data-search-terms="audio higher louder sound music "><i class="fas fa-volume-up"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-vuejs"><i class="fab fa-vuejs"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-warehouse"><i class="fas fa-warehouse"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-weibo"><i class="fab fa-weibo"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-weight" data-search-terms="scale "><i class="fas fa-weight"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-weixin"><i class="fab fa-weixin"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-whatsapp"><i class="fab fa-whatsapp"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-whatsapp-square"><i class="fab fa-whatsapp-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-wheelchair" data-search-terms="handicap person "><i class="fas fa-wheelchair"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-whmcs"><i class="fab fa-whmcs"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-wifi"><i class="fas fa-wifi"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-wikipedia-w"><i class="fab fa-wikipedia-w"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-window-close"><i class="fas fa-window-close"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-window-close"><i class="far fa-window-close"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-window-maximize"><i class="fas fa-window-maximize"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-window-maximize"><i class="far fa-window-maximize"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-window-minimize"><i class="fas fa-window-minimize"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-window-minimize"><i class="far fa-window-minimize"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-window-restore"><i class="fas fa-window-restore"></i></a><a role="button" href="#" class="iconpicker-item" title=".far fa-window-restore"><i class="far fa-window-restore"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-windows" data-search-terms="microsoft "><i class="fab fa-windows"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-won-sign" data-search-terms="krw krw "><i class="fas fa-won-sign"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-wordpress"><i class="fab fa-wordpress"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-wordpress-simple"><i class="fab fa-wordpress-simple"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-wpbeginner"><i class="fab fa-wpbeginner"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-wpexplorer"><i class="fab fa-wpexplorer"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-wpforms"><i class="fab fa-wpforms"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-wrench" data-search-terms="settings fix update spanner tool "><i class="fas fa-wrench"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-xbox"><i class="fab fa-xbox"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-xing"><i class="fab fa-xing"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-xing-square"><i class="fab fa-xing-square"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-y-combinator"><i class="fab fa-y-combinator"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-yahoo"><i class="fab fa-yahoo"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-yandex"><i class="fab fa-yandex"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-yandex-international"><i class="fab fa-yandex-international"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-yelp"><i class="fab fa-yelp"></i></a><a role="button" href="#" class="iconpicker-item" title=".fas fa-yen-sign" data-search-terms="jpy jpy "><i class="fas fa-yen-sign"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-yoast"><i class="fab fa-yoast"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-youtube" data-search-terms="video film youtube-play youtube-square "><i class="fab fa-youtube"></i></a><a role="button" href="#" class="iconpicker-item" title=".fab fa-youtube-square"><i class="fab fa-youtube-square"></i></a></div>';
     print '</div>';
-    
+
 }
 endif;
 
@@ -5958,6 +6230,7 @@ function wprentals_return_country_array(){
                             'Ireland'               => esc_html__('Ireland','wprentals'),
                             'Israel'                => esc_html__('Israel','wprentals'),
                             'Italy'                 => esc_html__('Italy','wprentals'),
+                            'Island of Saba'        => esc_html__('Island of Saba','wprentals'),
                             'Jamaica'               => esc_html__('Jamaica','wprentals'),
                             'Japan'                 => esc_html__('Japan','wprentals'),
                             'Jordan'                => esc_html__('Jordan','wprentals'),
@@ -5976,6 +6249,7 @@ function wprentals_return_country_array(){
                             'Libyan Arab Jamahiriya'=> esc_html__('Libyan Arab Jamahiriya','wprentals'),
                             'Liechtenstein'         => esc_html__('Liechtenstein','wprentals'),
                             'Lithuania'             => esc_html__('Lithuania','wprentals'),
+                            'Les Saintes'           => esc_html__('Les Saintes','wprentals'),
                             'Luxembourg'            => esc_html__('Luxembourg','wprentals'),
                             'Macau'                 => esc_html__('Macau','wprentals'),
                             'Macedonia, The Former Yugoslav Republic of'    => esc_html__('Macedonia, The Former Yugoslav Republic of','wprentals'),
@@ -5985,6 +6259,7 @@ function wprentals_return_country_array(){
                             'Maldives'              => esc_html__('Maldives','wprentals'),
                             'Mali'                  => esc_html__('Mali','wprentals'),
                             'Malta'                 => esc_html__('Malta','wprentals'),
+                            'Marie-Galante'         => esc_html__('Marie-Galante','wprentals'),
                             'Marshall Islands'      => esc_html__('Marshall Islands','wprentals'),
                             'Martinique'            => esc_html__('Martinique','wprentals'),
                             'Mauritania'            => esc_html__('Mauritania','wprentals'),
@@ -6034,6 +6309,9 @@ function wprentals_return_country_array(){
                             'Saint Kitts and Nevis' => esc_html__('Saint Kitts and Nevis','wprentals'),
                             'Saint Lucia'           => esc_html__('Saint Lucia','wprentals'),
                             'Saint Vincent and the Grenadines' => esc_html__('Saint Vincent and the Grenadines','wprentals'),
+                            'Saint Barthélemy'      => esc_html__('Saint Barthélemy','wprentals'),
+                            'Saint Martin'          => esc_html__('Saint Martin','wprentals'),
+                            'Sint Maarten'          => esc_html__('Sint Maarten','wprentals'),
                             'Samoa'                 => esc_html__('Samoa','wprentals'),
                             'San Marino'            => esc_html__('San Marino','wprentals'),
                             'Sao Tome and Principe' => esc_html__('Sao Tome and Principe','wprentals'),
@@ -6115,14 +6393,14 @@ function wprentals_return_theme_slider_list(){
     );
 
     $recent_posts = new WP_Query($args);
-  
+
     while ($recent_posts->have_posts()): $recent_posts->the_post();
         $theid                  =   get_the_ID();
         $return_array[$theid]   =   get_the_title();
 
     endwhile;
 
-    return   $return_array;       
+    return   $return_array;
 }
 
 
@@ -6130,10 +6408,10 @@ function wprentals_add_pins_icons(  $pin_fields ){
     $taxonomy = 'property_action_category';
     $tax_terms = get_terms($taxonomy,'hide_empty=0');
 
-  
-   
+
+
     if(is_array($tax_terms)){
-        foreach ($tax_terms as $tax_term) { 
+        foreach ($tax_terms as $tax_term) {
             $limit54   =  $post_name  =   sanitize_key(wpestate_limit54($tax_term->slug));
 
             $name = 'wp_estate_'.$post_name;
@@ -6145,13 +6423,13 @@ function wprentals_add_pins_icons(  $pin_fields ){
                 'subtitle' =>   esc_html__( 'Image size must be 44px x 50px. ', 'wprentals' ),
                 'default'  =>   'no',
             );
-        }   
+        }
     }
     $taxonomy_cat = 'property_category';
     $categories = get_terms($taxonomy_cat,'hide_empty=0');
-    
+
     if(is_array($categories)){
-        foreach ($categories as $categ) {  
+        foreach ($categories as $categ) {
             $limit54   =  $post_name  =   sanitize_key(wpestate_limit54($categ->slug));
             $name = 'wp_estate_'.$post_name;
             $pin_fields[]=array(
@@ -6185,7 +6463,7 @@ function wprentals_add_pins_icons(  $pin_fields ){
 
         }
     }
-    
+
     $pin_fields[]=array(
         'id'       =>   'wp_estate_userpin',
         'type'     =>   'media',
@@ -6193,10 +6471,10 @@ function wprentals_add_pins_icons(  $pin_fields ){
         'subtitle' =>   esc_html__( 'Image size must be 44px x 50px. ', 'wprentals' ),
         'default'  =>   'no',
     );
-    
+
     return $pin_fields;
-    
-    
+
+
 }
 
 
@@ -6205,7 +6483,7 @@ function wprentals_add_pins_icons(  $pin_fields ){
 function wprentals_redux_font_google(){
     $return=array();
     $return['']='- original font -';
-    
+
     $google_fonts_array=wprentals_return_google_fonts();
     foreach($google_fonts_array as $key=>$value){
         $return[$key]=$value;
@@ -6215,33 +6493,33 @@ function wprentals_redux_font_google(){
 
 
 function wprentals_redux_yelp(){
-    $yelp_terms_array = 
+    $yelp_terms_array =
             array (
                'active'            =>  array( 'category' => __('Active Life','wprentals'),
                                                 'category_sign' => 'fas fa-motorcycle'),
-                'arts'              =>  array( 'category' => __('Arts & Entertainment','wprentals'), 
+                'arts'              =>  array( 'category' => __('Arts & Entertainment','wprentals'),
                                                'category_sign' => 'fas fa-music') ,
-                'auto'              =>  array( 'category' => __('Automotive','wprentals'), 
+                'auto'              =>  array( 'category' => __('Automotive','wprentals'),
                                                 'category_sign' => 'fas fa-car' ),
-                'beautysvc'         =>  array( 'category' => __('Beauty & Spas','wprentals'), 
+                'beautysvc'         =>  array( 'category' => __('Beauty & Spas','wprentals'),
                                                 'category_sign' => 'fas fa-female' ),
                 'education'         => array(  'category' => __('Education','wprentals'),
                                                 'category_sign' => 'fas fa-graduation-cap' ),
-                'eventservices'     => array(  'category' => __('Event Planning & Services','wprentals'), 
+                'eventservices'     => array(  'category' => __('Event Planning & Services','wprentals'),
                                                 'category_sign' => 'fas fa-birthday-cake' ),
-                'financialservices' => array(  'category' => __('Financial Services','wprentals'), 
-                                                'category_sign' => 'fas fa-money-bill' ),                
-                'food'              => array(  'category' => __('Food','wprentals'), 
+                'financialservices' => array(  'category' => __('Financial Services','wprentals'),
+                                                'category_sign' => 'fas fa-money-bill' ),
+                'food'              => array(  'category' => __('Food','wprentals'),
                                                 'category_sign' => 'fas fa-utensils' ),
-                'health'            => array(  'category' => __('Health & Medical','wprentals'), 
+                'health'            => array(  'category' => __('Health & Medical','wprentals'),
                                                 'category_sign' => 'fas fa-briefcase-medical' ),
-                'homeservices'      => array(  'category' =>__('Home Services ','wprentals'), 
+                'homeservices'      => array(  'category' =>__('Home Services ','wprentals'),
                                                 'category_sign' => 'fas fa-wrench' ),
-                'hotelstravel'      => array(  'category' => __('Hotels & Travel','wprentals'), 
+                'hotelstravel'      => array(  'category' => __('Hotels & Travel','wprentals'),
                                                 'category_sign' => 'fas fa-bed' ),
-                'localflavor'       => array(  'category' => __('Local Flavor','wprentals'), 
+                'localflavor'       => array(  'category' => __('Local Flavor','wprentals'),
                                                 'category_sign' => 'fas fa-coffee' ),
-                'localservices'     => array(  'category' => __('Local Services','wprentals'), 
+                'localservices'     => array(  'category' => __('Local Services','wprentals'),
                                                 'category_sign' => 'fas fa-dot-circle' ),
                 'massmedia'         => array(  'category' => __('Mass Media','wprentals'),
                                                 'category_sign' => 'fas fa-tv' ),
@@ -6249,13 +6527,13 @@ function wprentals_redux_yelp(){
                                                 'category_sign' => 'fas fa-glass-martini-alt' ),
                 'pets'              => array(  'category' => __('Pets','wprentals'),
                                                 'category_sign' => 'fas fa-paw' ),
-                'professional'      => array(  'category' => __('Professional Services','wprentals'), 
+                'professional'      => array(  'category' => __('Professional Services','wprentals'),
                                                 'category_sign' => 'fas fa-suitcase' ),
                 'publicservicesgovt'=> array(  'category' => __('Public Services & Government','wprentals'),
                                                 'category_sign' => 'fas fa-university' ),
-                'realestate'        => array(  'category' => __('Real Estate','wprentals'), 
+                'realestate'        => array(  'category' => __('Real Estate','wprentals'),
                                                 'category_sign' => 'fas fa-building' ),
-                'religiousorgs'     => array(  'category' => __('Religious Organizations','wprentals'), 
+                'religiousorgs'     => array(  'category' => __('Religious Organizations','wprentals'),
                                                 'category_sign' => 'fas fa-cloud' ),
                 'restaurants'       => array(  'category' => __('Restaurants','wprentals'),
                                                 'category_sign' => 'fas fa-utensils' ),
@@ -6264,20 +6542,20 @@ function wprentals_redux_yelp(){
                 'transport'         => array(  'category' => __('Transportation','wprentals'),
                                                 'category_sign' => 'fas fa-bus-alt' )
     );
-    
+
     $return = array();
     foreach($yelp_terms_array as $key=>$term){
         $return[$key]   =   $term['category'];
     }
     return $return;
-    
-    
+
+
 }
 
 
 if(!function_exists('wprentals_return_google_fonts')):
 function wprentals_return_google_fonts(){
-    $google_fonts_array = array(                          
+    $google_fonts_array = array(
             "Abel" => "Abel",
             "Abril Fatface" => "Abril Fatface",
             "Aclonica" => "Aclonica",
@@ -6817,21 +7095,61 @@ if(!function_exists('wpestate_show_virtual_tour')){
             'style' => array(),
             'allowFullScreen' => array() // add any other attributes you wish to allow
          ) );
-         
+
         $virtual_tour =  get_post_meta($post_id, 'virtual_tour', true);
-        
+
         if($virtual_tour==''){
             return;
         }
-        
+
         print '<div class="panel-wrapper virtual_tour_wrapper">';
         print '<a class="panel-title" id="virtual_tour_wrapper" data-toggle="collapse" data-parent="#virtual_tour_wrapper" href="#collapsevirtualtour"><span class="panel-title-arrow"></span>'.esc_html__( 'Virtual Tour', 'wprentals').'</a>';
         print '<div id="collapsevirtualtour" class="panel-collapse collapse in">
                     <div class="panel-body panel-body-border">';
-                        print    wp_kses($virtual_tour,$iframe);   
+                        print    wp_kses($virtual_tour,$iframe);
                     print '</div>
                 </div>
         </div>';
 
     }
 }
+
+
+
+if(!function_exists('wpestate_ready_to_load_stripe')):
+    function wpestate_ready_to_load_stripe(){
+        global $post;
+        $enable_stripe_status   =   esc_html ( wprentals_get_option('wp_estate_enable_stripe','') );
+        if($enable_stripe_status==='yes'  ){
+            if( isset($post->ID) &&  ( basename(get_page_template($post->ID)) == 'user_dashboard_my_reservations.php' ||
+                                       basename(get_page_template($post->ID)) == 'user_dashboard_packs.php' ||
+                                       basename(get_page_template($post->ID)) == 'user_dashboard.php' ) ){
+                return true;
+            }else if(isset ($post->ID) && is_singular('estate_property') &&  floatval(get_post_meta($post->ID, 'instant_booking', true) )==1 ){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+    }
+endif;
+
+
+if(!function_exists('wpestate_starts_reviews_core')):
+function wpestate_starts_reviews_core($stars){
+    $whole          =   floor($stars);
+    $fraction       =   $stars - $whole;
+    $return_string  =   '';
+
+    for ($i = 1; $i <= $whole; $i++) {
+        $return_string.='<i class="fas fa-star"></i>';
+    }
+    if($fraction>0){
+        $return_string.='<i class="fas fa-star-half"></i>';
+    }
+    return $return_string;
+}
+endif;

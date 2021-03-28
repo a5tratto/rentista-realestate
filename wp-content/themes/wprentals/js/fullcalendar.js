@@ -3885,7 +3885,7 @@ var View = /** @class */ (function (_super) {
         if (dateMutation) {
             eventInstance.dateProfile = dateMutation.buildNewDateProfile(eventInstance.dateProfile, this.calendar);
         }
-        this.triggerEventDrop(eventInstance, 
+        this.triggerEventDrop(eventInstance,
         // a drop doesn't necessarily mean a date mutation (ex: resource change)
         (dateMutation && dateMutation.dateDelta) || moment.duration(), undoFunc, el, ev);
     };
@@ -4359,15 +4359,17 @@ var EventRenderer = /** @class */ (function () {
             // Then, compute the 'el' for each segment. An el might be null if the eventRender callback returned false.
             $(html).each(function (i, node) {
                 var seg = segs[i];
-                var el = $(node);
-                if (hasEventRenderHandlers) {
-                    el = _this.filterEventRenderEl(seg.footprint, el);
-                }
-                if (el) {
-                    el.data('fc-seg', seg); // used by handlers
-                    seg.el = el;
-                    renderedSegs.push(seg);
-                }
+								if(typeof(seg)!=='undefined'){
+	                var el = $(node);
+	                if (hasEventRenderHandlers) {
+	                    el = _this.filterEventRenderEl(seg.footprint, el);
+	                }
+	                if (el) {
+	                    el.data('fc-seg', seg); // used by handlers
+	                    seg.el = el;
+	                    renderedSegs.push(seg);
+	                }
+								}
             });
         }
         return renderedSegs;

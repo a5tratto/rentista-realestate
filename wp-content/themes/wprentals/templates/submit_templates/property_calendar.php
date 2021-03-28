@@ -8,7 +8,7 @@ global $submission_page_fields;
 
     $reservation_array                  =   get_post_meta($edit_id, 'booking_dates',true);
     $property_icalendar_import_multi    =   get_post_meta($edit_id, 'property_icalendar_import_multi', true);
-      
+
     //update from singular feed to multifeed
     if($property_icalendar_import!=''){
         $tmp_feed_array=array();
@@ -21,17 +21,17 @@ global $submission_page_fields;
         wpestate_clear_ical_imported($edit_id);
         wpestate_import_calendar_feed_listing_global($edit_id);
     }
-      $wprentals_is_per_hour  =   wprentals_return_booking_type($edit_id); 
-    
+      $wprentals_is_per_hour  =   wprentals_return_booking_type($edit_id);
+
 ?>
 
 
 
 
 <div class="col-md-12">
-    <div class="user_dashboard_panel">
+
     <h4 class="user_dashboard_panel_title"><?php  esc_html_e('When is your listing available','wprentals');?></h4>
-    
+
         <?php
         print'<div class="col-md-12" id="profile_message"></div>';
         if($wprentals_is_per_hour==2 ){
@@ -39,11 +39,11 @@ global $submission_page_fields;
         }else{ ?>
             <div class="price_explaning"> <?php   esc_html_e('*Click to select the period you wish to mark as booked for visitors.','wprentals');?></div>
             <div class="col-md-12" id="profile_message"></div>
-  
+
             <div class="booking-calendar-wrapper-in-wrapper booking-calendar-set">
 
-                <?php 
-                    $reservation_array  = get_post_meta($edit_id, 'booking_dates',true  ); 
+                <?php
+                    $reservation_array  = get_post_meta($edit_id, 'booking_dates',true  );
                     if(!is_array($reservation_array)){
                         $reservation_array=array();
                     }
@@ -59,16 +59,16 @@ global $submission_page_fields;
             <div class="col-md-12 calendar-actions">
                 <div class="calendar-legend-today"></div><span><?php  esc_html_e('Today','wprentals');?></span>
                 <div class="calendar-legend-reserved"></div><span><?php esc_html_e('Dates Booked','wprentals');?></span>
-            </div>  
+            </div>
 
         <?php } ?>
-    
-   
+
+
         <h4 class="user_dashboard_panel_title"><?php esc_html_e('Import/Export iCalendar feeds','wprentals'); ?> </h4>
         <div class="export_ical">
         <strong> <?php esc_html_e('This is the listing iCalendar feed to export','wprentals'); ?> </strong>
 
-        <?php 
+        <?php
         $unique_code_ical = get_post_meta($edit_id, 'unique_code_ica',true  );
         if($unique_code_ical==''){
             $unique_code_ical= md5(uniqid(mt_rand(), true));
@@ -81,7 +81,7 @@ global $submission_page_fields;
 
         ?>
         </div>
- 
+
         <div class="import_ical">
              <div  id="profile_message2"></div>
 
@@ -118,39 +118,39 @@ global $submission_page_fields;
         <?php
         $ajax_nonce = wp_create_nonce( "wprentals_edit_calendar_nonce" );
         print'<input type="hidden" id="wprentals_edit_calendar_nonce" value="'.esc_html($ajax_nonce).'" />    ';
-                
+
         ?>
-        
+
         </div>
 
-    <div class="col-md-12" style="display: inline-block;">  
+    <div class="col-md-12" style="display: inline-block;">
         <input type="hidden" name="" id="listing_edit" value="<?php print intval($edit_id);?>">
     </div>
 </div>
 
-    
-    
+
+
  <!-- Modal -->
 <div class="modal fade" id="owner_reservation_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
 
-            <div class="modal-header"> 
+            <div class="modal-header">
               <button type="button" id="close_reservation_internal" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h2 class="modal-title_big"><?php esc_html_e('Reserve a period','wprentals');?></h2>
               <h4 class="modal-title" id="myModalLabel"><?php esc_html_e('Mark dates as booked.','wprentals');?></h4>
             </div>
 
             <div class="modal-body">
-             
-                <div id="booking_form_request_mess_modal"></div>    
-                
+
+                <div id="booking_form_request_mess_modal"></div>
+
                 <label for="start_date_owner_book"><?php esc_html_e('Check-In','wprentals');?></label>
                 <input type="text" id="start_date_owner_book" size="40" name="booking_from_date" class="form-control" value="" readonly>
 
                 <label for="end_date_owner_book"><?php  esc_html_e('Check-Out','wprentals');?></label>
                 <input type="text" id="end_date_owner_book" size="40" name="booking_to_date" class="form-control" value="" readonly>
-            
+
                 <?php
                 $booking_type           =   wprentals_return_booking_type($edit_id);
                 if($booking_type==2 ){
@@ -166,14 +166,14 @@ global $submission_page_fields;
                                  if( $i<10 ){
                                      $value = '0'.$i.':00';
                                  }else{
-                                     $value = $i.':00'; 
+                                     $value = $i.':00';
                                  }
 
                                  print '<option value="'.esc_attr($value).'">'.esc_html($value).'</option>';
                              endwhile;
                         ?>
                     </select>
-                   
+
                     <select id="end_date_owner_book_hour">
                         <option value=""><?php  esc_html_e('End Hour','wprentals');?></option>
                         <?php
@@ -184,7 +184,7 @@ global $submission_page_fields;
                                  if( $i<10 ){
                                      $value = '0'.$i.':00';
                                  }else{
-                                     $value = $i.':00'; 
+                                     $value = $i.':00';
                                  }
                                  print '<option value="'.esc_attr($value).'">'.esc_html($value).'</option>';
                              endwhile;
@@ -194,10 +194,10 @@ global $submission_page_fields;
                 }
                 ?>
 
-              
+
                 <input type="hidden" id="property_id" name="property_id" value="" />
                 <input name="prop_id" type="hidden"  id="agent_property_id" value="">
-               
+
 
                 <p class="full_form">
                     <label for="coment"><?php esc_html_e('Your notes','wprentals');?></label>
@@ -210,14 +210,14 @@ global $submission_page_fields;
                 ?>
             </div><!-- /.modal-body -->
 
-        
+
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-    
-    
-    
-    
+
+
+
+
 
 <?php
 global $start_reservation;
@@ -242,7 +242,7 @@ $reservation_class  =   '';
         $thisyear   = gmdate('Y', $time_now);
         $unixmonth  = mktime(0, 0 , 0, $thismonth, 1, $thisyear);
         $last_day   = date('t', $unixmonth);
-        
+
         $max_month_no   =   intval   ( wprentals_get_option('wp_estate_month_no_show','') );
         $month_no       =   1;
         while ($month_no < $max_month_no){
@@ -276,7 +276,7 @@ $reservation_class  =   '';
                    $table_style='style="display:none;"';
             }
 
-   
+
             $calendar_output = '<div class="booking-calendar-wrapper-in col-md-12" data-mno="'.esc_attr($month_no).'" '.trim($table_style).'>
                 <div class="month-title"> '. date_i18n("F", mktime(0, 0, 0, $thismonth, 10)).' '.esc_html($thisyear).' </div>
                 <table class="wp-calendar booking-calendar">
@@ -349,18 +349,18 @@ $reservation_class  =   '';
                             $reservation_class  =   ' start_reservation';
                             $start_reservation  =   0;
                         }
-                    
-                    
+
+
                         $calendar_output .= '<td class="calendar-reserved '.esc_attr($has_past_class.$reservation_class).' "     data-curent-date="'.esc_attr($timestamp_java).'">'. wpestate_draw_reservation($reservation_array[$timestamp_java]);
                     }
                     else{// is not today and no resrvation
-                         
+
                         $start_reservation=1;
                         if($end_reservation===1){
                             $reservation_class=' end_reservation ';
                             $end_reservation=0;
                         }
-          
+
                         $calendar_output .= '<td class="calendar-free '.esc_attr($has_past_class.$reservation_class).'"          data-curent-date="'.esc_attr($timestamp_java).'">';
                     }
 
@@ -398,9 +398,9 @@ function wpestate_draw_reservation($reservation_note){
         }
     }else{
         return '<div class="rentals_reservation external_reservation">'.esc_html($reservation_note).'</div>';
-       
+
     }
-    
+
 }
 
 
@@ -408,6 +408,6 @@ function wpestate_draw_reservation($reservation_note){
 
 if (wp_script_is( 'wpestate_dashboard-control', 'enqueued' )) {
     $booking_array   =   json_encode(get_post_meta($edit_id, 'booking_dates',true  ));
-    wp_localize_script('wpestate_dashboard-control', 'dashboard_vars2', 
+    wp_localize_script('wpestate_dashboard-control', 'dashboard_vars2',
         array('booking_array'          =>  $booking_array));
 }

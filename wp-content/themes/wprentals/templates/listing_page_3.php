@@ -106,16 +106,22 @@ $guest_list= wpestate_get_guest_dropdown('noany');
         <?php echo wpestate_property_yelp_wrapper($post->ID);?>
         <?php wpestate_show_virtual_tour($post->ID);?>
         
+        <div class="property_page_container boxed_calendar">
+            <?php
+            include(locate_template ('/templates/show_avalability.php') );
+            wp_reset_query();
+            ?>  
+        </div>
         
-        <?php
-        include(locate_template ('/templates/show_avalability.php') );
-        wp_reset_query();
-        ?>  
-         
         <?php
         endwhile; // end of the loop
         $show_compare=1;
         ?>
+        
+
+        <?php include(locate_template ('/templates/listing_reviews.php')); ?>
+        
+        
         </div><!-- end single content -->
     </div><!-- end 8col container-->
     
@@ -140,7 +146,7 @@ $guest_list= wpestate_get_guest_dropdown('noany');
 </div>   
 
 <div class="full_width_row">    
-    <?php include(locate_template ('/templates/listing_reviews.php') ); ?>
+    <?php //include(locate_template ('/templates/listing_reviews.php') ); ?>
     <div class="owner-page-wrapper">
         <div class="owner-wrapper  content-fixed-listing row" id="listing_owner">
             <?php include(locate_template ('/templates/owner_area.php' ) ); ?>
