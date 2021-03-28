@@ -40,7 +40,7 @@ if( !function_exists('estate_sidebar_meta') ):
         //add_meta_box('wpestate-header',             esc_html__( 'Header Options','wprentals-core'), 'estate_header_function', 'estate_property', 'normal', 'low');
         add_meta_box('wpestate-header', esc_html__('Stars','wprentals-core'), 'estate_comment_starts', 'comment', 'normal');
     }
-endif; // end   estate_sidebar_meta  
+endif; // end   estate_sidebar_meta
 
 
 
@@ -71,7 +71,7 @@ if( !function_exists('estate_header_function') ):
            if($key==$header_type){
                $header_select.=' selected="selected" ';
            }
-           $header_select.='>'.$value.'</option>'; 
+           $header_select.='>'.$value.'</option>';
         }
 
 
@@ -87,14 +87,14 @@ if( !function_exists('estate_header_function') ):
                 $transparent_symbol.='>'.$value.'</option>';
         }
 
-        
+
         print'
             <h3 class="pblankh">'.__('Use transparent header','wprentals-core').'</h3>
             <select name="transparent_status">
                 '.$transparent_symbol.'
             </select>';
-        
-        print '   
+
+        print '
             <h3 class = "pblankh">'.__('Select header type','wprentals-core').'</h3>
             <select id = "page_header_type" name = "header_type">
             '.$header_select.'
@@ -115,16 +115,16 @@ endif;
 if( !function_exists('estate_prop_advanced_function') ):
 function estate_prop_advanced_function(){
     global $post;
-    
+
     if( basename(get_page_template($post->ID))!= 'property_list.php' && basename(get_page_template($post->ID))!= 'property_list_half.php' ){
         esc_html_e('Only for "Properties List" page template ! ','wprentals-core');
         return;
     }
-    
+
     $args = array(
-        'hide_empty'    => false 
-    );  
-    
+        'hide_empty'    => false
+    );
+
     $actions_select     =   '';
     $categ_select       =   '';
     $taxonomy           =   'property_action_category';
@@ -134,26 +134,26 @@ function estate_prop_advanced_function(){
     if($current_adv_filter_search_action==''){
         $current_adv_filter_search_action=array();
     }
-    
-    
+
+
     $all_selected='';
     if(!empty($current_adv_filter_search_action) && $current_adv_filter_search_action[0]=='all'){
-      $all_selected=' selected="selected" ';  
+      $all_selected=' selected="selected" ';
     }
-   
+
     $actions_select.='<option value="all" '.$all_selected.'>'.esc_html__( 'all','wprentals-core').'</option>';
-    if( !empty( $tax_terms ) ){                       
+    if( !empty( $tax_terms ) ){
         foreach ($tax_terms as $tax_term) {
             $actions_select.='<option value="'.$tax_term->name.'" ';
             if( in_array  ( $tax_term->name,$current_adv_filter_search_action) ){
-              $actions_select.=' selected="selected" ';  
+              $actions_select.=' selected="selected" ';
             }
-            $actions_select.=' />'.$tax_term->name.'</option>';      
-        } 
+            $actions_select.=' />'.$tax_term->name.'</option>';
+        }
     }
-      
-   
-    
+
+
+
     //////////////////////////////////////////////////////////////////////////////////////////
     $taxonomy           =   'property_category';
     $tax_terms          =   get_terms($taxonomy,$args);
@@ -162,53 +162,53 @@ function estate_prop_advanced_function(){
     if($current_adv_filter_search_category==''){
         $current_adv_filter_search_category=array();
     }
-    
+
     $all_selected='';
     if( !empty($current_adv_filter_search_category) && $current_adv_filter_search_category[0]=='all'){
-      $all_selected=' selected="selected" ';  
+      $all_selected=' selected="selected" ';
     }
-    
+
     $categ_select.='<option value="all" '.$all_selected.'>'.esc_html__( 'all','wprentals-core').'</option>';
-    if( !empty( $tax_terms ) ){                       
+    if( !empty( $tax_terms ) ){
         foreach ($tax_terms as $tax_term) {
             $categ_select.='<option value="'.$tax_term->name.'" ';
             if( in_array  ( $tax_term->name, $current_adv_filter_search_category) ){
-              $categ_select.=' selected="selected" ';  
+              $categ_select.=' selected="selected" ';
             }
-            $categ_select.=' />'.$tax_term->name.'</option>';      
-        } 
+            $categ_select.=' />'.$tax_term->name.'</option>';
+        }
     }
-    
-  
- //////////////////////////////////////////////////////////////////////////////////////////   
-    
+
+
+ //////////////////////////////////////////////////////////////////////////////////////////
+
     $select_city='';
     $taxonomy = 'property_city';
     $tax_terms_city = get_terms($taxonomy,$args);
     $current_adv_filter_city = get_post_meta ( $post->ID, 'current_adv_filter_city', true);
-    
+
     if($current_adv_filter_city==''){
         $current_adv_filter_city=array();
     }
 
     $all_selected='';
     if( !empty($current_adv_filter_city) && $current_adv_filter_city[0]=='all'){
-      $all_selected=' selected="selected" ';  
+      $all_selected=' selected="selected" ';
     }
-    
+
     $select_city.='<option value="all" '.$all_selected.' >'.esc_html__( 'all','wprentals-core').'</option>';
     foreach ($tax_terms_city as $tax_term) {
-        
+
         $select_city.= '<option value="' . $tax_term->name . '" ';
         if( in_array  ( $tax_term->name, $current_adv_filter_city) ){
-              $select_city.=' selected="selected" ';  
+              $select_city.=' selected="selected" ';
         }
         $select_city.= '>' . $tax_term->name . '</option>';
-    } 
-  
-     
- //////////////////////////////////////////////////////////////////////////////////////////   
-    
+    }
+
+
+ //////////////////////////////////////////////////////////////////////////////////////////
+
     $select_area='';
     $taxonomy = 'property_area';
     $tax_terms_area = get_terms($taxonomy,$args);
@@ -216,30 +216,30 @@ function estate_prop_advanced_function(){
     if($current_adv_filter_area==''){
         $current_adv_filter_area=array();
     }
-    
+
     $all_selected='';
     if(!empty($current_adv_filter_area) && $current_adv_filter_area[0]=='all'){
-      $all_selected=' selected="selected" ';  
+      $all_selected=' selected="selected" ';
     }
-    
+
     $select_area.='<option value="all" '.$all_selected.'>'.esc_html__( 'all','wprentals-core').'</option>';
     foreach ($tax_terms_area as $tax_term) {
         $term_meta=  get_option( "taxonomy_$tax_term->term_id");
         $select_area.= '<option value="' . $tax_term->name . '" ';
         if( in_array  ( $tax_term->name, $current_adv_filter_area) ){
-              $select_area.=' selected="selected" ';  
+              $select_area.=' selected="selected" ';
         }
         $select_area.= '>' . $tax_term->name . '</option>';
-    } 
+    }
 
-//////////////////////////////////   
-    
-    
-    
+//////////////////////////////////
+
+
+
     $show_filter_area_select='';
     $cache_array=array('yes','no');
     $show_filter_area  =   get_post_meta($post->ID, 'show_filter_area', true);
-    
+
     foreach($cache_array as $value){
          $show_filter_area_select.='<option value="'.$value.'"';
          if ( $show_filter_area == $value ){
@@ -247,16 +247,16 @@ function estate_prop_advanced_function(){
          }
          $show_filter_area_select.='>'.$value.'</option>';
     }
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
     $show_featured_only_select='';
     $show_featured_only  =   get_post_meta($post->ID, 'show_featured_only', true);
     foreach($cache_array as $value){
-       
+
          $show_featured_only_select.='<option value="'.$value.'" ';
          if ( $show_featured_only == $value ){
                  $show_featured_only_select.=' selected="selected" ';
@@ -271,8 +271,8 @@ function estate_prop_advanced_function(){
                             "2"=>"Price Low to High",
                             "0"=>"default"
                             );
-    
-    
+
+
  print '
      *press CTRL for multiple selection
      <table>
@@ -285,7 +285,7 @@ function estate_prop_advanced_function(){
              </select>
         </p>
     </td>
-    
+
     <td width="33%" valign="top" align="left">
         <p class="meta-options">
            <label for="adv_filter_search_category[]">Pick category</label> </br>
@@ -294,9 +294,9 @@ function estate_prop_advanced_function(){
            </select>
         </p>
     </td>
-    
+
     </tr>
-    
+
 
     <tr>
         <td width="33%" valign="top" align="left">
@@ -317,7 +317,7 @@ function estate_prop_advanced_function(){
         </td>
 
     </tr>
-    
+
     <tr>
         <td width="33%" valign="top" align="left">
             <p class="meta-options">
@@ -328,8 +328,8 @@ function estate_prop_advanced_function(){
                       if($key==$listing_filter){
                           print ' selected="selected" ';
                       }
-                  print '>'.$value.'</option>'; 
-               }        
+                  print '>'.$value.'</option>';
+               }
                print '
                </select>
             </p>
@@ -344,7 +344,7 @@ function estate_prop_advanced_function(){
         </td>
 
     </tr>
-    
+
     <tr>
         <td width="33%" valign="top" align="left">
             <p class="meta-options">
@@ -356,21 +356,21 @@ function estate_prop_advanced_function(){
         </td>
         <td width="33%" valign="top" align="left">
             <p class="meta-options">
-              
-             
+
+
             </p>
         </td>
 
     </tr>
-  
+
 
 
      </table>
 
-     
-    
- 
-     
+
+
+
+
 <style media="screen" type="text/css">
 
 .adv_prop_container{
@@ -391,7 +391,7 @@ endif;
 if( !function_exists('estate_listing_options') ):
     function estate_listing_options(){
 
-      
+
         global $post;
         if ( 'property_list.php'== basename( get_page_template() )){
 
@@ -401,8 +401,8 @@ if( !function_exists('estate_listing_options') ):
             $listing_area    =   get_post_meta($post->ID, 'listing_area', true);
 
             $args = array(
-            'hide_empty'    => false  
-            ); 
+            'hide_empty'    => false
+            );
 
             $taxonomy = 'property_action_category';
             $tax_terms = get_terms($taxonomy,$args);
@@ -415,22 +415,22 @@ if( !function_exists('estate_listing_options') ):
 
 
             ///////////////////////// actions
-            if( !empty( $tax_terms ) ){                       
+            if( !empty( $tax_terms ) ){
                 foreach ($tax_terms as $tax_term) {
                   $actions_select.='<option value="'.$tax_term->name.'" ';
                   if ($tax_term->name == $listing_action ){
                        $actions_select.=' selected="selected" ';
                   }
                   $actions_select.=' >'.$tax_term->name.'</option>';
-                } 
+                }
             }
 
 
             /////////////////////////categ
 
-            if( !empty( $tax_terms_categ ) ){                       
+            if( !empty( $tax_terms_categ ) ){
                 foreach ($tax_terms_categ as $categ) {
-                  $categ_select.='<option value="'.$categ->name.'" ';   
+                  $categ_select.='<option value="'.$categ->name.'" ';
                    if ($categ->name == $listing_categ ){
                        $categ_select.=' selected="selected" ';
                   }
@@ -439,7 +439,7 @@ if( !function_exists('estate_listing_options') ):
             }
 
 
-            ///////////////////////// city 
+            ///////////////////////// city
             $select_city='';
             $taxonomy = 'property_city';
             $tax_terms = get_terms($taxonomy,$args);
@@ -457,7 +457,7 @@ if( !function_exists('estate_listing_options') ):
 
 
 
-            /////////////////////////area 
+            /////////////////////////area
             $select_area='';
             $taxonomy = 'property_area';
             $tax_terms = get_terms($taxonomy,$args);
@@ -533,25 +533,25 @@ if( !function_exists('estate_page_slider_box') ):
     function estate_page_slider_box($post) {
         global $post;
         $rev_slider           = get_post_meta($post->ID, 'rev_slider', true);
-        print '  
+        print '
         <div class="header_admin_options revolution_slider">
             <p class="meta-options pblank">
                 <h3 class="pblankh">'.esc_html__( 'Options for Revolution Slider (if Header Type "revolution slider" is selected)','wprentals-core').'</h3>
             </p>
-            <p class="meta-options">	
+            <p class="meta-options">
                 <label for="page_custom_lat">'.esc_html__( 'Revolution Slider Name','wprentals-core').'</label><br />
                 <input type="text" id="rev_slider" name="rev_slider" size="40" value="'.$rev_slider.'">
             </p>
             </div>
         ';
     }
-endif; // end   estate_page_slider_box  
+endif; // end   estate_page_slider_box
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // Manage Google Maps
 ////////////////////////////////////////////////////////////////////////////////////////////////
-if( !function_exists('estate_page_map_box') ): 
+if( !function_exists('estate_page_map_box') ):
 function estate_page_map_box($post) {
     global $post;
     $page_lat           = get_post_meta($post->ID, 'page_custom_lat', true);
@@ -571,7 +571,7 @@ function estate_page_map_box($post) {
             }
             $keep_min_symbol.='>'.$value.'</option>';
     }
-    
+
     if ($page_custom_zoom==''){
         $page_custom_zoom=15;
     }
@@ -579,19 +579,19 @@ function estate_page_map_box($post) {
         <p class="meta-options pblank">
         <h3 class="pblankh">'.esc_html__( 'Options for Google Maps (if Header Type "google map" is selected)','wprentals-core').'</h3>
         </p>';
-    
+
     if( get_post_type($post->ID)!="estate_property" ){
         print '
-       
+
         <p class="meta-options pblank">
         '.esc_html__( '  Leave these blank in order to get the general map settings.','wprentals-core').'
         </p>
-        <p class="meta-options third-meta-options">	
+        <p class="meta-options third-meta-options">
         <label for="page_custom_lat">'.esc_html__( 'Map - Center point  Latitudine: ','wprentals-core').'</label><br />
         <input type="text" id="page_custom_lat" name="page_custom_lat" size="36" value="'.$page_lat.'">
         </p>
 
-        <p class="meta-options third-meta-options">	
+        <p class="meta-options third-meta-options">
         <label for="page_custom_long">'.esc_html__( 'Map - Center point  Longitudine: ','wprentals-core').'</label><br />
         <input type="text" id="page_custom_long" name="page_custom_long" size="36" value="'.$page_long.'">
         </p>
@@ -613,7 +613,7 @@ function estate_page_map_box($post) {
         </select>
     </p>';
     }
- 
+
     print'
     <p class="meta-options third-meta-options">
      <label for="min_height">'.esc_html__( 'Height of the map when closed','wprentals-core').'</label><br />
@@ -630,9 +630,9 @@ function estate_page_map_box($post) {
        <select id="keep_min" name="keep_min">
        <option value=""></option>
           '.$keep_min_symbol.'
-       </select>           
-    </p> 
-    
+       </select>
+    </p>
+
 
     <p class="meta-options">
         <label for="bypass_fit_bounds">'.esc_html__( 'ByPass fit bounds (auto zoom and pan of the map around visible markers) ','wprentals-core').'</label><br />
@@ -643,51 +643,51 @@ function estate_page_map_box($post) {
         }
     print '/>
      </p></div>';
-   
-    
 
-    
+
+
+
     $cache_array        =   array('yes','no');
     $cache_array_rev    =   array('no','yes');
     $cache_array_fix    =   array('cover','contain');
     $img_full_screen                    = wpestate_dropdowns_theme_admin_option($post->ID,$cache_array_rev,'page_header_image_full_screen');
-    $img_full_back_type                 = wpestate_dropdowns_theme_admin_option($post->ID,$cache_array_fix,'page_header_image_back_type');   
+    $img_full_back_type                 = wpestate_dropdowns_theme_admin_option($post->ID,$cache_array_fix,'page_header_image_back_type');
     $page_header_title_over_image       = stripslashes ( esc_html ( get_post_meta($post->ID, 'page_header_title_over_image', true) ) );
     $page_header_subtitle_over_image    = stripslashes ( esc_html ( get_post_meta($post->ID, 'page_header_subtitle_over_image', true) ) );
     $page_header_image_height           = esc_html ( get_post_meta($post->ID, 'page_header_image_height', true) );
     $page_header_overlay_val            = esc_html ( get_post_meta($post->ID, 'page_header_overlay_val', true) );
     $page_header_overlay_color          = esc_html ( get_post_meta($post->ID, 'page_header_overlay_color', true) );
-    
+
 print'<div class="header_admin_options image_header">
     <p class="meta-options pblank">
     <h3 class="pblankh">'.esc_html__( 'Options for Static Image  (if Header Type "image" is selected)','wprentals-core').'</h3>
     </p>
-     
+
    <p class="meta-options">
         <label for="page_custom_image">'.esc_html__( 'Header Image','wprentals-core').'</label><br />
         <input id="page_custom_image" type="text" size="36" name="page_custom_image" value="'.$page_custom_image.'" />
 	<input id="page_custom_image_button" type="button"   size="40" class="upload_button button" value="'.esc_html__( 'Upload Image','wprentals-core').'" />
     </p>
-    
+
     <p class="meta-options third-meta-options">
         <label for="page_header_image_full_screen">'.__('Full Screen?','wprentals-core').'</label><br />
         <select id="page_header_image_full_screen" name="page_header_image_full_screen">
             '.$img_full_screen.'
         </select>
     </p>
-        
+
     <p class="meta-options third-meta-options">
         <label for="page_header_image_back_type">'.__('Full Screen Background Type?','wprentals-core').'</label><br />
         <select id="page_header_image_back_type" name="page_header_image_back_type">
             '.$img_full_back_type.'
         </select>
     </p>
-        
+
     <p class="meta-options third-meta-options">
         <label for="page_header_title_over_image">'.__('Title Over Image','wprentals-core').'</label><br />
         <input id="page_header_title_over_image" type="text" size="36" name="page_header_title_over_image" value="'.$page_header_title_over_image.'" />
     </p>
-        
+
     <p class="meta-options third-meta-options">
         <label for="page_header_subtitle_over_image">'.__('SubTitle Over Image','wprentals-core').'</label><br />
         <input id="page_header_subtitle_over_image" type="text" size="36" name="page_header_subtitle_over_image" value="'.$page_header_subtitle_over_image.'" />
@@ -696,7 +696,7 @@ print'<div class="header_admin_options image_header">
     <p class="meta-options third-meta-options">
         <label for="page_header_image_height">'.__('Image Height(Ex:700, Default:580px)','wprentals-core').'</label><br />
         <input id="page_header_image_height" type="text" size="36" name="page_header_image_height" value="'.$page_header_image_height.'" />
-    </p>    
+    </p>
 
         <div class="meta-options third-meta-options">
             <label for="page_header_overlay_color">'.__('Overlay Color','wprentals-core').'</label><br />
@@ -712,7 +712,7 @@ print'<div class="header_admin_options image_header">
         <p class="meta-options pblank">
         </p></div>';
 }
-endif; // end   estate_page_map_box 
+endif; // end   estate_page_map_box
 
 
 
@@ -721,7 +721,7 @@ function estate_page_video_box($post) {
     global $post;
     //page_custom_video
 
-    
+
     $cache_array                        =   array('yes','no');
     $cache_array_reverse                =   array('no','yes');
     $cache_array_fix                    =   array('screen','auto');
@@ -735,53 +735,53 @@ function estate_page_video_box($post) {
     $page_header_video_height           =   esc_html ( get_post_meta($post->ID, 'page_header_video_height', true) );
     $page_header_overlay_color_video    =   esc_html ( get_post_meta($post->ID, 'page_header_overlay_color_video', true) );
     $page_header_overlay_val_video      =   esc_html ( get_post_meta($post->ID, 'page_header_overlay_val_video', true) );
-    
-    print ' 
+
+    print '
     <div class="header_admin_options video_header">
         <p class="meta-options pblank">
             <h3 class="pblankh">'.__('Options for Video Header','wprentals-core').'</h3>
         </p>
-      
- 
-   
+
+
+
         <p class="meta-options ">
             <label for="page_custom_image">'.__('Video MP4 version','wprentals-core').'</label><br />
             <input id="page_custom_video" type="text" size="36" name="page_custom_video" value="'.$page_custom_video.'" />
             <input id="page_custom_video_button" type="button"   size="40" class="upload_button button" value="'.__('Upload Video','wprentals-core').'" />
         </p>
-        
+
         <p class="meta-options ">
             <label for="page_custom_image">'.__('Video WEBM version','wprentals-core').'</label><br />
             <input id="page_custom_video_webbm" type="text" size="36" name="page_custom_video_webbm" value="'.$page_custom_video_webbm.'" />
             <input id="page_custom_video_webbm_button" type="button"   size="40" class="upload_button button" value="'.__('Upload Video','wprentals-core').'" />
         </p>
-        
+
         <p class="meta-options ">
             <label for="page_custom_image">'.__('Video OGV version','wprentals-core').'</label><br />
             <input id="page_custom_video_ogv" type="text" size="36" name="page_custom_video_ogv" value="'.$page_custom_video_ogv.'" />
             <input id="page_custom_video_ogv_button" type="button"   size="40" class="upload_button button" value="'.__('Upload Video','wprentals-core').'" />
         </p>
-        
+
         <p class="meta-options ">
             <label for="page_custom_video_cover_image">'.__('Cover Image','wprentals-core').'</label><br />
             <input id="page_custom_video_cover_image" type="text" size="36" name="page_custom_video_cover_image" value="'.$page_custom_video_cover_image.'" />
             <input id="page_custom_video_cover_image_button" type="button"   size="40" class="upload_button button" value="'.__('Upload Image','wprentals-core').'" />
         </p>
-        
+
         <p class="meta-options third-meta-options">
             <label for="page_header_video_full_screen">'.__('Full Screen?','wprentals-core').'</label><br />
             <select id="page_header_video_full_screen" name="page_header_video_full_screen">
                 '.$img_full_screen.'
             </select>
         </p>
-        
-       
-        
+
+
+
         <p class="meta-options third-meta-options">
             <label for="page_header_title_over_video">'.__('Title Over Image','wprentals-core').'</label><br />
             <input id="page_header_title_over_video" type="text" size="36" name="page_header_title_over_video" value="'.$page_header_title_over_video.'" />
         </p>
-        
+
         <p class="meta-options third-meta-options">
             <label for="page_header_subtitle_over_video">'.__('SubTitle Over Image','wprentals-core').'</label><br />
             <input id="page_header_subtitle_over_video" type="text" size="36" name="page_header_subtitle_over_video" value="'.$page_header_subtitle_over_video.'" />
@@ -790,11 +790,11 @@ function estate_page_video_box($post) {
         <p class="meta-options third-meta-options">
             <label for="page_header_video_height">'.__('Video Height(Ex:700, Default:580px)','wprentals-core').'</label><br />
             <input id="page_header_video_height" type="text" size="36" name="page_header_video_height" value="'.$page_header_video_height.'" />
-        </p>    
+        </p>
 
         <div class="meta-options third-meta-options">
             <label for="page_header_overlay_color_video">'.__('Overlay Color','wprentals-core').'</label><br />
-          
+
             <div id="page_header_overlay_color_video" class="colorpickerHolder"><div class="sqcolor" style="background-color:#'.$page_header_overlay_color_video.';"  ></div></div>  <input type="text" name="page_header_overlay_color_video" maxlength="7" class="inptxt " value="'.$page_header_overlay_color_video.'"/>
         </div>
 
@@ -806,28 +806,29 @@ function estate_page_video_box($post) {
 
         <p class="meta-options pblank">
         </p></div>';
-   
+
 }
-endif; // end   estate_page_slider_box  
+endif; // end   estate_page_slider_box
 
 
 
 if( !function_exists('estate_page_theme_slider') ):
 function estate_page_theme_slider($post) {
+    return;
     global $post;
     $rev_slider           = get_post_meta($post->ID, 'rev_slider', true);
-    print ' 
+    print '
     <div class="header_admin_options theme_slider">
         <p class="meta-options pblank">
             <h3 class="pblankh">'.__('Options for Theme Slider','wprentals-core').'</h3>
         </p>
-        <p class="meta-options">	
-           
+        <p class="meta-options">
+
         </p>
     </div>
     ';
 }
-endif; // end   estate_page_slider_box  
+endif; // end   estate_page_slider_box
 
 
 
@@ -877,7 +878,7 @@ if( !function_exists('estate_page_map_box_agent') ):
         ';
 
     }
-endif; // end   estate_page_map_box_agent  
+endif; // end   estate_page_map_box_agent
 
 
 
@@ -902,7 +903,7 @@ if( !function_exists('estate_page_options_box') ):
         }
 
         print '
-        <p class="meta-options">	
+        <p class="meta-options">
         <label for="page_show_title">'.esc_html__( 'Show Title: ','wprentals-core').'</label><br />
         <select id="page_show_title" name="page_show_title" style="width: 200px;">
                 <option value="yes" ' . $selected_yes . '>yes</option>
@@ -910,7 +911,7 @@ if( !function_exists('estate_page_options_box') ):
         </select></p>';
 
     }
-endif; // end   estate_page_options_box  
+endif; // end   estate_page_options_box
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -932,7 +933,7 @@ if( !function_exists('estate_post_options_box') ):
             $option.='>' . $value . '</option>';
         }
 
-        print   '<p class="meta-options">	
+        print   '<p class="meta-options">
                     <label for="post_show_title">'.esc_html__( 'Show Title:','wprentals-core').' </label><br />
                     <select id="post_show_title" name="post_show_title" style="width: 200px;">
                             ' . $option . '
@@ -950,7 +951,7 @@ if( !function_exists('estate_post_options_box') ):
             $option.='>' . $value . '</option>';
         }
 
-        print'  <p class="meta-options">	
+        print'  <p class="meta-options">
                     <label for="group_pictures">'.esc_html__( 'Group pictures in slider?(*only for blog posts)','wprentals-core').' </label><br />
                     <select id="group_pictures" name="group_pictures" style="width: 200px;">
                             ' . $option . '
@@ -958,7 +959,7 @@ if( !function_exists('estate_post_options_box') ):
                 </p>';
 
     }
-endif; // end   estate_post_options_box  
+endif; // end   estate_post_options_box
 
 
 
@@ -976,8 +977,8 @@ if( !function_exists('estate_sidebar_box') ):
         $sidebar_name   = get_post_meta($post->ID, 'sidebar_select', true);
         $sidebar_option = get_post_meta($post->ID, 'sidebar_option', true);
 
-        $sidebar_values = array(   0=>'right', 
-                                   1=>'left', 
+        $sidebar_values = array(   0=>'right',
+                                   1=>'left',
                                    2=>'none');
 
         $option         = '';
@@ -990,7 +991,7 @@ if( !function_exists('estate_sidebar_box') ):
             $option.='>' . $value . '</option>';
         }
 
-        print '   
+        print '
         <p class="meta-options"><label for="sidebar_option">'.esc_html__( 'Where to show the sidebar: ','wprentals-core').' </label><br />
             <select id="sidebar_option" name="sidebar_option" style="width: 200px;">
             ' . $option . '
@@ -998,7 +999,7 @@ if( !function_exists('estate_sidebar_box') ):
         </p>';
 
         print'
-        <p class="meta-options"><label for="sidebar_select">'.esc_html__( 'Select the sidebar: ','wprentals-core').'</label><br />                  
+        <p class="meta-options"><label for="sidebar_select">'.esc_html__( 'Select the sidebar: ','wprentals-core').'</label><br />
             <select name="sidebar_select" id="sidebar_select" style="width: 200px;">';
             foreach ($GLOBALS['wp_registered_sidebars'] as $sidebar) {
                 print'<option value="' . ($sidebar['id'] ) . '"';
@@ -1011,7 +1012,7 @@ if( !function_exists('estate_sidebar_box') ):
             </select>
         </p>';
     }
-endif; // end   estate_sidebar_box  
+endif; // end   estate_sidebar_box
 
 
 
@@ -1023,13 +1024,13 @@ endif; // end   estate_sidebar_box
 if( !function_exists('estate_save_postdata') ):
 function estate_save_postdata($post_id) {
     global $post;
- 
+
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
         return $post_id;
     }
-    
-    ///////////////////////////////////// Check permissions   
-    if(isset($_POST['post_type'])){       
+
+    ///////////////////////////////////// Check permissions
+    if(isset($_POST['post_type'])){
         if ('page' == $_POST['post_type'] or 'post' == $_POST['post_type'] or 'estate_property' == $_POST['post_type']) {
             if (!current_user_can('edit_page', $post_id))
                 return;
@@ -1040,8 +1041,9 @@ function estate_save_postdata($post_id) {
         }
     }
 
-     
+
     $allowed_keys=array(
+        'local_booking_type',
         'instant_booking',
         'smoking_allowed',
         'party_allowed',
@@ -1176,29 +1178,29 @@ function estate_save_postdata($post_id) {
         'min_days_booking',
         'image_to_attach'
         );
-   
-    
-    
-    $custom_fields = wprentals_get_option('wpestate_custom_fields_list','');    
-    if( !empty($custom_fields)){  
+
+
+
+    $custom_fields = wprentals_get_option('wpestate_custom_fields_list','');
+    if( !empty($custom_fields)){
         $i=0;
-        while($i< count($custom_fields) ){     
-            $name =   $custom_fields[$i][0]; 
-            $slug           =     wpestate_limit45(sanitize_title( $name )); 
-            $slug           =     sanitize_key($slug); 
+        while($i< count($custom_fields) ){
+            $name =   $custom_fields[$i][0];
+            $slug           =     wpestate_limit45(sanitize_title( $name ));
+            $slug           =     sanitize_key($slug);
             $allowed_keys[] =     $slug;
             $i++;
        }
     }
 
-    
+
 
     foreach ($_POST as $key => $value) {
         if( !is_array ($value) ){
             if (in_array ($key, $allowed_keys)) {
-                $postmeta = wp_filter_kses( $value ); 
-                
-                if( $key == 'property_price' ||$key == 'property_price_per_week' ||$key == 'property_price_per_month'  ){  
+                $postmeta = wp_filter_kses( $value );
+
+                if( $key == 'property_price' ||$key == 'property_price_per_week' ||$key == 'property_price_per_month'  ){
                     update_post_meta($post_id, sanitize_key($key),intval ($postmeta) );
                 }else if( $key == 'property_affiliate'){
                     update_post_meta($post_id,property_affiliate,esc_url($_POST['property_affiliate']) );
@@ -1211,25 +1213,25 @@ function estate_save_postdata($post_id) {
                             'style' => array(),
                             'allowFullScreen' => array() // add any other attributes you wish to allow
                         ) );
-                     
+
                     $virtual_tour   =   wp_kses (trim($_POST['virtual_tour']),$iframe);
                     update_post_meta($post_id, 'virtual_tour',$virtual_tour );
                 }else{
                     update_post_meta($post_id, sanitize_key($key), $postmeta );
                 }
             }
-        }       
+        }
     }
- 
-    
- 
-    
-    
-    
+
+
+
+
+
+
     //////////////////////////////////////////////////////////////////
     //// change listing owner
     //////////////////////////////////////////////////////////////////
-  
+
     if ( isset($_POST['property_agent'])){
         remove_action('save_post', 'estate_save_postdata',1);
         $new_user_as_agent  =   intval($_POST['property_agent']);
@@ -1238,23 +1240,23 @@ function estate_save_postdata($post_id) {
         if($new_user_id==0){
             $new_user_id=1;
         }
-        
+
         // change author
         $curpost = array(
             'ID'            => $post->ID,
             'post_author'   => $new_user_as_agent
         );
-   
-        wp_update_post($curpost ); 
-        update_user_meta( $new_user_as_agent, 'user_agent_id', $new_user_id ); 
+
+        wp_update_post($curpost );
+        update_user_meta( $new_user_as_agent, 'user_agent_id', $new_user_id );
         add_action('save_post', 'estate_save_postdata', 1, 2);
     }
-    
-    ///////////////////////////// end change author 
-    
-    
-    
-    if(isset($_POST['adv_filter_search_action'])){        
+
+    ///////////////////////////// end change author
+
+
+
+    if(isset($_POST['adv_filter_search_action'])){
         update_post_meta($post->ID, 'adv_filter_search_action',wpestate_sanitize_array ( $_POST['adv_filter_search_action'] ) );
      }else{
         if(isset($post->ID)){
@@ -1266,16 +1268,16 @@ function estate_save_postdata($post_id) {
         update_post_meta($post->ID, 'adv_filter_search_category', wpestate_sanitize_array ($_POST['adv_filter_search_category']) );
      }else{
         if(isset($post->ID)){
-            update_post_meta($post->ID, 'adv_filter_search_category','' ); 
-        } 
+            update_post_meta($post->ID, 'adv_filter_search_category','' );
+        }
      }
 
      if(isset($_POST['current_adv_filter_city'])){
         update_post_meta($post->ID, 'current_adv_filter_city',wpestate_sanitize_array($_POST['current_adv_filter_city']) );
      }else{
         if(isset($post->ID)){
-            update_post_meta($post->ID, 'current_adv_filter_city','' ); 
-        } 
+            update_post_meta($post->ID, 'current_adv_filter_city','' );
+        }
      }
 
 
@@ -1283,13 +1285,13 @@ function estate_save_postdata($post_id) {
         update_post_meta($post->ID, 'current_adv_filter_area',wpestate_sanitize_array ($_POST['current_adv_filter_area']) );
     }else{
         if(isset($post->ID)){
-            update_post_meta($post->ID, 'current_adv_filter_area','' ); 
-        } 
+            update_post_meta($post->ID, 'current_adv_filter_area','' );
+        }
     }
-    
-    
+
+
     if(isset($_POST['property_custom_details_admin_value'])){
- 
+
         if(is_array($_POST['property_custom_details_admin_value'])){
             $extra_details_array = array();
             foreach( $_POST['property_custom_details_admin_value'] as $key=>$value){
@@ -1297,14 +1299,16 @@ function estate_save_postdata($post_id) {
             }
              update_post_meta($post_id, 'property_custom_details', $extra_details_array);
         }
-        
-         
+
+
     }
 
+    $order=0;
+    $parent_post=$post->ID;
     if( isset( $_POST['image_to_attach'] ) &&  isset($post->ID) ){
         $all_media = explode(',',$_POST['image_to_attach']);
 
-        
+
         if(is_array($all_media)){
             foreach($all_media as $value){
                 $order++;
@@ -1312,7 +1316,7 @@ function estate_save_postdata($post_id) {
                 if($value!=0){
                     wp_update_post( array(
                         'ID'            =>  $value,
-                        'post_parent'   =>  $post->ID,
+                        'post_parent'   =>   $parent_post,
                         'menu_order'    =>  $order
                 ));
 
@@ -1321,11 +1325,11 @@ function estate_save_postdata($post_id) {
             }
         }
     }
-    
-    
-    
+    wp_reset_postdata();
+
+
 }
-endif; // end   estate_save_postdata  
+endif; // end   estate_save_postdata
 
 if (!function_exists('wpestate_sanitize_array')):
 function wpestate_sanitize_array($original){
@@ -1398,7 +1402,7 @@ if ( ! function_exists( 'estate_comment_starts' ) ):
 	 * depending on old or new rating system
 	 */
 	function estate_comment_starts( $comment ) {
-		
+
 		$stars         = get_comment_meta( $comment->comment_ID, 'review_stars', TRUE );
 		$rating_fields = wpestate_get_review_fields();
 		$max_stars     = wpestate_get_max_stars();
@@ -1428,19 +1432,19 @@ if ( ! function_exists( 'estate_comment_starts' ) ):
 			$fields .= sprintf( '<select name="review_stars">%s</select>', $starts_select );
 		}
 		wp_nonce_field( 'extend_comment_update', 'extend_comment_update', FALSE );
-		print '  
+		print '
         <table>
         <tr>
             <td width="33%" valign="top" align="left">
                 ' . esc_html__( 'Stars', 'wprentals-core' ) . '
             </td>
             <td width="33%" valign="top" align="left">
-              
+
               ' . $fields . '
-                
+
             </td>
         </tr>
-        
+
          </table>';
 	}
 

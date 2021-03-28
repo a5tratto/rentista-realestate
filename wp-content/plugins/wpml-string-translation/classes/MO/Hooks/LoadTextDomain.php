@@ -2,12 +2,15 @@
 
 namespace WPML\ST\MO\Hooks;
 
-use WPML_ST_Translations_File_Locale;
-use WPML\ST\MO\LoadedMODictionary;
 use WPML\ST\MO\File\Manager;
+use WPML\ST\MO\LoadedMODictionary;
+use WPML_ST_Translations_File_Locale;
+use function WPML\FP\partial;
 
 
 class LoadTextDomain implements \IWPML_Action {
+
+	const PRIORITY_OVERRIDE = 10;
 
 	/** @var Manager $file_manager */
 	private $file_manager;
@@ -32,6 +35,8 @@ class LoadTextDomain implements \IWPML_Action {
 	}
 
 	public function add_hooks() {
+		$this->reloadAlreadyLoadedMOFiles();
+
 		add_filter( 'override_load_textdomain', [ $this, 'overrideLoadTextDomain' ], 10, 3 );
 		add_filter( 'override_unload_textdomain', [ $this, 'overrideUnloadTextDomain' ], 10, 2 );
 		add_action( 'wpml_language_has_switched', [ $this, 'languageHasSwitched' ] );
@@ -59,21 +64,14 @@ class LoadTextDomain implements \IWPML_Action {
 			return $override;
 		}
 
+		if ( ! $this->isCustomMOLoaded( $domain ) ) {
+			remove_filter( 'override_load_textdomain', [ $this, 'overrideLoadTextDomain' ], 10 );
+			$locale      = $this->file_locale->get( $mofile, $domain );
+			$this->loadCustomMOFile( $domain, $mofile, $locale );
+			add_filter( 'override_load_textdomain', [ $this, 'overrideLoadTextDomain' ], 10, 3 );
+		}
+
 		$this->loaded_mo_dictionary->addFile( $domain, $mofile );
-
-		$locale = $this->file_locale->get( $mofile, $domain );
-
-		if ( $this->isCustomMOLoaded( $domain ) ) {
-			return $override;
-		}
-
-		$wpml_mofile = $this->file_manager->get( $domain, $locale );
-
-		if ( $wpml_mofile && $wpml_mofile !== $mofile ) {
-			$this->loadCustomMOFile( $domain, $wpml_mofile );
-		}
-
-		$this->setCustomMOLoaded( $domain );
 
 		return $override;
 	}
@@ -103,14 +101,23 @@ class LoadTextDomain implements \IWPML_Action {
 		return in_array( $domain, $this->loaded_domains, true );
 	}
 
-	/**
-	 * @param string $domain
-	 * @param string $wpml_mofile
-	 */
-	private function loadCustomMOFile( $domain, $wpml_mofile ) {
-		remove_filter( 'override_load_textdomain', [ $this, 'overrideLoadTextDomain' ], 10, 3 );
-		load_textdomain( $domain, $wpml_mofile );
-		add_filter( 'override_load_textdomain', [ $this, 'overrideLoadTextDomain' ], 10, 3 );
+	private function loadCustomMOFile( $domain, $mofile, $locale ) {
+		$wpml_mofile = $this->file_manager->get( $domain, $locale );
+
+		if ( $wpml_mofile && $wpml_mofile !== $mofile ) {
+			load_textdomain( $domain, $wpml_mofile );
+		}
+
+		$this->setCustomMOLoaded( $domain );
+	}
+
+	private function reloadAlreadyLoadedMOFiles() {
+		$this->loaded_mo_dictionary->getEntities()->each( function ( $entity ) {
+			unload_textdomain( $entity->domain );
+			$locale = $this->file_locale->get( $entity->mofile, $entity->domain );
+			$this->loadCustomMOFile( $entity->domain, $entity->mofile, $locale );
+			load_textdomain( $entity->domain, $entity->mofile );
+		} );
 	}
 
 	/**

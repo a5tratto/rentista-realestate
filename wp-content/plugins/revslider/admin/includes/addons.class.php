@@ -19,7 +19,7 @@ class RevSliderAddons extends RevSliderFunctions { //before: Rev_addon_Admin
 		'revslider-sharing-addon' => '2.0.0',
 		'revslider-maintenance-addon' => '2.0.0',
 		'revslider-snow-addon' => '2.0.0',
-		'revslider-particles-addon' => '2.0.0',
+		'revslider-particles-addon' => '2.3.1',
 		'revslider-polyfold-addon' => '2.0.0',
 		'revslider-404-addon' => '2.0.0',
 		'revslider-prevnext-posts-addon' => '2.0.0',
@@ -27,7 +27,7 @@ class RevSliderAddons extends RevSliderFunctions { //before: Rev_addon_Admin
 		'revslider-login-addon' => '2.0.0',
 		'revslider-featured-addon' => '2.0.0',
 		'revslider-slicey-addon' => '2.0.0',
-		'revslider-beforeafter-addon' => '2.0.0',
+		'revslider-beforeafter-addon' => '2.0.9',
 		'revslider-weather-addon' => '2.0.0',
 		'revslider-panorama-addon' => '2.0.0',
 		'revslider-duotonefilters-addon' => '2.0.0',
@@ -67,6 +67,14 @@ class RevSliderAddons extends RevSliderFunctions { //before: Rev_addon_Admin
 		}
 		
 		return $addons;
+	}
+	
+	/**
+	 * get a specific addon version
+	 **/
+	public function get_addon_version($handle){
+		$list = $this->get_addon_list();
+		return $this->get_val($list, array($handle, 'installed'), false);
 	}
 
 	/**
@@ -109,7 +117,7 @@ class RevSliderAddons extends RevSliderFunctions { //before: Rev_addon_Admin
 		//check if downloaded already
 		$plugins	= get_plugins();
 		$addon_path = $addon.'/'.$addon.'.php';
-		if(!array_key_exists($addon_path, $plugins) || $force == true){
+		if(!array_key_exists($addon_path, $plugins) || $force == true || !file_exists(WP_PLUGIN_DIR.'/'.$addon_path)){
 			//download if nessecary
 			return $this->download_addon($addon);
 		}
@@ -160,11 +168,10 @@ class RevSliderAddons extends RevSliderFunctions { //before: Rev_addon_Admin
 			$count++;
 		}while($done == false && $count < 5);
 		
-		if(!$get || wp_remote_retrieve_response_code($get) != 200){
-		}else{
+		if($get && $get['body'] != 'invalid' && wp_remote_retrieve_response_code($get) == 200){
 			$upload_dir	= wp_upload_dir();
 			$file		= $upload_dir['basedir']. '/revslider/templates/' . $plugin_slug . '.zip';
-			@mkdir(dirname($file));
+			@mkdir(dirname($file), 0777, true);
 			$ret		= @file_put_contents($file, $get['body']);
 
 			WP_Filesystem();

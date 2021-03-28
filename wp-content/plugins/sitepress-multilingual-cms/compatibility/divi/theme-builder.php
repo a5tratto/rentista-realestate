@@ -4,7 +4,7 @@ namespace WPML\Compatibility\Divi;
 
 use SitePress;
 
-class ThemeBuilder implements \IWPML_DIC_Action, \IWPML_Backend_Action, \IWPML_Frontend_Action {
+class ThemeBuilder implements \IWPML_Action {
 
 	/** @var SitePress */
 	private $sitepress;
@@ -20,6 +20,10 @@ class ThemeBuilder implements \IWPML_DIC_Action, \IWPML_Backend_Action, \IWPML_F
 	 * Add filters and actions.
 	 */
 	public function add_hooks() {
+		if ( ! defined( 'ET_THEME_BUILDER_DIR' ) ) {
+			return;
+		}
+
 		if ( $this->sitepress->is_setup_complete() ) {
 			if ( is_admin() ) {
 				add_action( 'init', [ $this, 'make_layouts_editable' ], 1000 ); // Before WPML_Sticky_Links::init.

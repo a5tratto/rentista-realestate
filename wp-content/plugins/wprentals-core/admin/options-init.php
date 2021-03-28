@@ -9,7 +9,7 @@
     if ( ! class_exists( 'Redux' ) ) {
         return;
     }
- 
+
 
     // This is your option name where all the Redux data is stored.
     $opt_name = "wprentals_admin";
@@ -37,7 +37,7 @@
     $sample_patterns_path = ReduxFramework::$_dir . '../sample/patterns/';
     $sample_patterns_url  = ReduxFramework::$_url . '../sample/patterns/';
     $sample_patterns      = array();
-    
+
     if ( is_dir( $sample_patterns_path ) ) {
 
         if ( $sample_patterns_dir = opendir( $sample_patterns_path ) ) {
@@ -99,7 +99,7 @@
         // Set a different name for your global variable other than the opt_name
         'dev_mode'             => false,
         // Show the time the page took to load, etc
-        
+
         'forced_dev_mode_off' => true,
         'update_notice'        => false,
         // If dev_mode is enabled, will notify developer of updated versions available in the GitHub Repo
@@ -247,15 +247,15 @@
 
      */
   if( !wpestate_check_license_plugin()){
-        
+
         Redux::setSection( $opt_name, array(
             'title' => __( 'General', 'wprentals-core' ),
             'id'    => 'general_settings_sidebar',
             'icon'  => 'el el-adjust-alt'
         ) );
-        
+
         Redux::setSection( $opt_name, array(
-           
+
             'title'      => __( 'General Settings', 'wprentals-core' ),
             'id'         => 'global_settings_tab',
             'subsection' => true,
@@ -268,11 +268,11 @@
                 ),
                 )
         ));
-         
+
         return;
     }
 
-    
+
     //-> Start General  Section
 
     Redux::setSection( $opt_name, array(
@@ -280,8 +280,8 @@
         'id'    => 'wp_estate_general_settings_sidebar',
         'icon'  => 'el el-adjust-alt'
     ) );
-    
-    
+
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'General Settings', 'wprentals-core' ),
         'id'         => 'wp_estate_general_settings_sidebar_tab',
@@ -293,8 +293,8 @@
                 'title'    => __( 'Country', 'wprentals-core' ),
                 'subtitle' => __( 'Select default country', 'wprentals-core' ),
                 'options'  =>  wprentals_return_country_array(),
-                'default'  => 'United States' 
-               
+                'default'  => 'United States'
+
             ),
             array(
                 'id'       => 'wp_estate_measure_sys',
@@ -303,7 +303,7 @@
                 'subtitle' => __( 'Select the measurement unit you will use on the website', 'wprentals-core' ),
                 'options'  => array(
                     esc_html__( 'ft','wprentals-core')       =>  esc_html__( 'square feet -ft','wprentals-core').'<sup>2</sup>',
-                    esc_html__( 'm','wprentals-core')        =>  esc_html__( 'square meters -m','wprentals-core').'<sup>2</sup>' 
+                    esc_html__( 'm','wprentals-core')        =>  esc_html__( 'square meters -m','wprentals-core').'<sup>2</sup>'
                 ),
                 'default' => 'ft'
             ),
@@ -370,7 +370,7 @@
                 'type'     => 'select',
                 'title'    => __( 'Language for datepicker', 'wprentals-core' ),
                 'subtitle' => __( 'Select the language for booking form datepicker and search by date datepicker', 'wprentals-core' ),
-                'options'  => array(  
+                'options'  => array(
                             'xx'=> 'default',
                             'af'=>'Afrikaans',
                             'ar'=>'Arabic',
@@ -456,7 +456,7 @@
                 'subtitle' => __( 'Theme Cache will cache only the heavy database queries. Use this feature along classic cache plugins like WpRocket!', 'wprentals-core' ),
                 'options'  => array(
                                 'no' => 'no',
-                                'yes'  => 'yes'                 
+                                'yes'  => 'yes'
                             ),
                 'default'  => 'no',
             ),
@@ -466,10 +466,10 @@
                 'title'    => __( 'Google Analytics Tracking id (ex UA-41924406-1', 'wprentals-core' ),
                 'subtitle' => __( 'Google Analytics Tracking id (ex UA-41924406-1)', 'wprentals-core' ),
             ),
-   
+
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
     'title'      => __( 'Appearance', 'wprentals-core' ),
     'id'         => 'appearance_options_tab',
@@ -506,10 +506,10 @@
                 'type'     => 'select',
                 'title'    => __( 'Blog Category/Archive Sidebar', 'wprentals-core' ),
                 'subtitle' => __( 'What sidebar to show for blog category/archive list.', 'wprentals-core' ),
-                
+
                 'data'  =>  'sidebars',
                 'default'  => 'primary-widget-area'
-                
+
             ),
             array(
                 'id'       => 'wp_estate_property_list_type',
@@ -538,7 +538,7 @@
                 'type'     => 'button_set',
                 'title'    => __( 'Map position in Half Map template', 'wprentals-core' ),
                 'subtitle' => __( 'Select map position in Half Map template', 'wprentals-core' ),
-                'options'  =>array( 
+                'options'  =>array(
                                 '1' => esc_html__( 'Map on the Left','wprentals-core'),
                                 '2' => esc_html__( 'Map on the Right','wprentals-core')
                                 ),
@@ -546,7 +546,7 @@
             ),
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Logos & Favicon', 'wprentals-core' ),
         'id'         => 'logos_favicon_tab',
@@ -557,54 +557,54 @@
                 'type'     => 'media',
                 'url'      => true,
                 'title'    => __( 'Your Favicon', 'wprentals-core' ),
-                'subtitle' => __( 'Upload site favicon in .ico, .png, .jpg or .gif format', 'wprentals-core' ),         
+                'subtitle' => __( 'Upload site favicon in .ico, .png, .jpg or .gif format', 'wprentals-core' ),
             ),
-            
+
             array(
                 'id'       => 'wp_estate_logo_image',
                 'type'     => 'media',
                 'url'      => true,
                 'title'    => __( 'Your Logo', 'wprentals-core' ),
-                'subtitle' => __( 'Use the "Upload" button and "Insert into Post" button from the pop up window.', 'wprentals-core' ),         
+                'subtitle' => __( 'Use the "Upload" button and "Insert into Post" button from the pop up window.', 'wprentals-core' ),
             ),
             array(
                 'id'       => 'wp_estate_transparent_logo_image',
                 'type'     => 'media',
                 'url'      => true,
                 'title'    => __( 'Your Transparent Header Logo', 'wprentals-core' ),
-                'subtitle' => __( 'Use the "Upload" button and "Insert into Post" button from the pop up window.', 'wprentals-core' ),         
+                'subtitle' => __( 'Use the "Upload" button and "Insert into Post" button from the pop up window.', 'wprentals-core' ),
             ),
             array(
                 'id'       => 'wp_estate_mobile_logo_image',
                 'type'     => 'media',
                 'url'      => true,
                 'title'    => __( 'Mobile/Tablets Logo', 'wprentals-core' ),
-                'subtitle' => __( 'Upload mobile logo in jpg or png format.', 'wprentals-core' ),         
+                'subtitle' => __( 'Upload mobile logo in jpg or png format.', 'wprentals-core' ),
             ),
             array(
                 'id'       => 'wp_estate_logo_image_retina',
                 'type'     => 'media',
                 'url'      => true,
                 'title'    => __( 'Your Retina Logo', 'wprentals-core' ),
-                'subtitle' => __( 'To create retina logo, add _2x at the end of name of the original file (for ex logo_2x.jpg)', 'wprentals-core' ),         
+                'subtitle' => __( 'To create retina logo, add _2x at the end of name of the original file (for ex logo_2x.jpg)', 'wprentals-core' ),
             ),
             array(
                 'id'       => 'wp_estate_transparent_logo_image_retina',
                 'type'     => 'media',
                 'url'      => true,
                 'title'    => __( 'Your Transparent Retina Logo', 'wprentals-core' ),
-                'subtitle' => __( 'To create retina logo, add _2x at the end of name of the original file (for ex logo_2x.jpg)', 'wprentals-core' ),         
+                'subtitle' => __( 'To create retina logo, add _2x at the end of name of the original file (for ex logo_2x.jpg)', 'wprentals-core' ),
             ),
             array(
                 'id'       => 'wp_estate_mobile_logo_image_retina',
                 'type'     => 'media',
                 'url'      => true,
                 'title'    => __( 'Your Mobile Retina Logo', 'wprentals-core' ),
-                'subtitle' => __( 'To create retina logo, add _2x at the end of name of the original file (for ex logo_2x.jpg)', 'wprentals-core' ),         
+                'subtitle' => __( 'To create retina logo, add _2x at the end of name of the original file (for ex logo_2x.jpg)', 'wprentals-core' ),
             ),
         ),
     ) );
-    
+
     Redux::setSection($opt_name, array(
         'title' => __('Header', 'wprentals-core'),
         'id' => 'header_settings_tab',
@@ -655,14 +655,14 @@
                     ),
                 'default'  => 'yes',
             ),
-            
+
             array(
                 'id'       => 'wp_estate_show_menu_dashboard',
                 'type'     => 'button_set',
                 'title'    => __( 'Show the header menu in user dashboard pages?', 'wprentals-core' ),
                 'subtitle' => __( 'Show the header menu in user dashboard pages?', 'wprentals-core' ),
                 'options'  =>  array(
-                            'no'  => 'no', 
+                            'no'  => 'no',
                             'yes' => 'yes'
                             ),
                 'default'  => 'yes',
@@ -689,7 +689,7 @@
                     'right' =>  __( 'right','wprentals-core')
                 ),
                 'default'  => 'left'
-            ), 
+            ),
             array(
                 'id'       => 'wp_estate_header_type',
                 'type'     => 'button_set',
@@ -704,7 +704,7 @@
                             ),
                 'default' => '4'
             ),
-            
+
             array(
                 'id'       => 'wp_estate_global_revolution_slider',
                 'required'  => array('wp_estate_header_type','=','3'),
@@ -718,12 +718,12 @@
                 'type'     => 'media',
                 'url'      => true,
                 'title'    => __( 'Global Header Static Image', 'wprentals-core' ),
-                'subtitle' => __( 'If media header is set to image, add the image below.', 'wprentals-core' ),         
+                'subtitle' => __( 'If media header is set to image, add the image below.', 'wprentals-core' ),
             ),
-            
-            
-            
-            
+
+
+
+
             array(
                 'id'       => 'wp_estate_user_header_type',
                 'type'     => 'button_set',
@@ -738,7 +738,7 @@
                 ),
                 'default' => '0'
             ),
-           
+
             array(
                 'id'       => 'wp_estate_global_revolution_slider_user',
                 'required'  => array('wp_estate_user_header_type','=','3'),
@@ -752,12 +752,12 @@
                 'type'     => 'media',
                 'url'      => true,
                 'title'    => __( 'Global Header Static Image', 'wprentals-core' ),
-                'subtitle' => __( 'If media header is set to image, add the image below.', 'wprentals-core' ),         
+                'subtitle' => __( 'If media header is set to image, add the image below.', 'wprentals-core' ),
             ),
-            
-            
-            
-            
+
+
+
+
             array(
                 'id'       => 'wp_estate_header_type_taxonomy',
                 'type'     => 'button_set',
@@ -772,7 +772,7 @@
                     ),
                 'default'  => 4,
             ),
-            
+
             array(
                     'id'       => 'wp_estate_header_taxonomy_revolution_slider',
                     'type'     => 'text',
@@ -780,20 +780,20 @@
                     'title'    => __( 'Taxonomy Header -  Revolution Slider', 'wprentals-core' ),
                     'subtitle' => __( 'If media header is set to Revolution Slider, type the slider name and save.', 'wprentals-core' ),
             ),
-            
+
             array(
                 'id'       => 'wp_estate_header_taxonomy_image',
                 'type'     => 'media',
                 'url'      => true,
                 'required'  => array('wp_estate_header_type_taxonomy','=','1'),
                 'title'    => __( 'Taxonomy Header Static Image', 'wprentals-core' ),
-                'subtitle' => __( 'If media header is set to image, and no image is added we will use the taxonomy featured image', 'wprentals-core' ),         
+                'subtitle' => __( 'If media header is set to image, and no image is added we will use the taxonomy featured image', 'wprentals-core' ),
             ),
-            
-            
-            
-            
-            
+
+
+
+
+
             array(
                 'id'       => 'wp_estate_paralax_header',
                 'type'     => 'button_set',
@@ -849,10 +849,10 @@
                             ),
                 'default'  => 'no'
             ),
-           
+
         ),
     ));
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Footer', 'wprentals-core' ),
         'id'         => 'footer_settings_tab',
@@ -863,7 +863,7 @@
                 'type'     => 'media',
                 'url'      => true,
                 'title'    => __( 'Background for Footer', 'wprentals-core' ),
-                'subtitle' => __( 'Insert background footer image below.', 'wprentals-core' ),         
+                'subtitle' => __( 'Insert background footer image below.', 'wprentals-core' ),
             ),
             array(
                 'id'       => 'wp_estate_repeat_footer_back',
@@ -888,7 +888,7 @@
                         'yes'=> 'yes'
                     ),
                 'default'  => 'no'
-            ), 
+            ),
             array(
                 'id'       => 'wp_estate_copyright_message',
                 'type'		=> 'textarea',
@@ -924,7 +924,7 @@
                 'title'    => __( 'Where to show the currency symbol?', 'wprentals-core' ),
                 'subtitle' => __( 'Where to show the currency symbol?', 'wprentals-core' ),
                 'options'  =>  array(
-                        'before' => 'before', 
+                        'before' => 'before',
                         'after'  => 'after'
                     ),
                 'default'  => 'before'
@@ -954,19 +954,19 @@
                 'subtitle' => __( 'Get the free api key from here https://free.currencyconverterapi.com/free-api-key', 'wprentals-core' ),
                 'default'  => '',
             ),
-            
+
             array(
                'id'       => 'wpestate_currency',
                'type'     => 'wpestate_currency',
                'title'    => __( 'Add Currencies for Multi Currency Widget.', 'wprentals-core' ),
                'class'    => 'class_wpestate_currency',
                'full_width' => true,
-             
+
            ),
         ),
     ) );
 
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Booking Settings', 'wprentals-core' ),
         'id'         => 'booking_settings_tab',
@@ -977,7 +977,7 @@
                'type'     => 'button_set',
                'title'    => __( 'Select Booking Type', 'wprentals-core' ),
                'subtitle' => __( 'Select Global Booking Type', 'wprentals-core' ),
-               'options'  => array( 
+               'options'  => array(
                             '1' => __('Per Day for all Listings','wprentals-core'),
                             '2' => __('Per Hour for all Listings','wprentals-core'),
                             '3' => __('Mixt - Owner chooses price by hour or by day','wprentals-core')
@@ -989,7 +989,7 @@
                'type'     => 'button_set',
                'title'    => __( 'Select Weekend days', 'wprentals-core' ),
                'subtitle' => __( 'Users can set a different price per day for weekend days', 'wprentals-core' ),
-               'options'  => array( 
+               'options'  => array(
                             '0' => __('Sunday and Saturday','wprentals-core'),
                             '1' => __('Friday and Saturday','wprentals-core'),
                             '2' => __('Friday, Saturday and Sunday','wprentals-core')
@@ -1001,7 +1001,7 @@
                'type'     => 'button_set',
                'title'    => __( 'Select Date Format for datepickers', 'wprentals-core' ),
                'subtitle' => __( 'You can set a dateformat that will be applied for all your datepickers', 'wprentals-core' ),
-               'options'  => array( 
+               'options'  => array(
                             '0' =>'yy-mm-dd',
                             '1' =>'yy-dd-mm',
                             '2' =>'dd-mm-yy',
@@ -1025,22 +1025,36 @@
                 'subtitle' => __( 'Set maximum number of months to be shown on listing page. 12 is the recommended number. A higher number may result in page slowness.', 'wprentals-core' ),
                 'default'  => '12',
             ),
+            array(
+                'id'       => 'wp_estate_week_days',
+                'type'     => 'text',
+                'title'    => __( 'Your number or nights / hours you wish to use instead of 7days (7hours)', 'wprentals-core' ),
+                'subtitle' => __( 'It allows owner to set a difference price per night / hour for longer periods. Changes apply to NEW bookings only.', 'wprentals-core' ),
+                'default'  => '7',
+            ),
+            array(
+                'id'       => 'wp_estate_month_days',
+                'type'     => 'text',
+                'title'    => __( 'Your number or nights / hours you wish to use instead of 30days (30hours)', 'wprentals-core' ),
+                'subtitle' => __( 'It allows owner to set a difference price per night / hour for longer periods. Changes apply to NEW bookings only.', 'wprentals-core' ),
+                'default'  => '30',
+            ),
         ),
     ) );
 
-    
+
     $default_custom_field   =   array();
     $def_add_field_name     =   array('Check-in hour','Check-Out hour','Late Check-in','Optional services','Outdoor facilities','Extra People','Cancellation');
     $def_add_field_label        =   array('Check-in hour','Check-Out hour','Late Check-in','Optional services','Outdoor facilities','Extra People','Cancellation');
     $def_add_field_order        =   array(1,2,3,4,5,6,7);
     $def_add_field_type         =   array('short text','short text','short text','short text','short text','short text','short text');
-    
+
     $default_custom_field['add_field_name']=$def_add_field_name;
     $default_custom_field['add_field_label']=$def_add_field_label;
     $default_custom_field['add_field_order']=$def_add_field_order;
     $default_custom_field['add_field_type']=$def_add_field_type;
-    
-    
+
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Custom Fields', 'wprentals-core' ),
         'id'         => 'custom_fields_tab',
@@ -1055,10 +1069,10 @@
            ),
         ),
     ) );
-    
-    
+
+
     $default_feature_list='Kitchen,Internet,Smoking Allowed,TV,Wheelchair Accessible,Elevator in Building,Indoor Fireplace,Heating,Essentials,Doorman,Pool,Washer,Hot Tub,Dryer,Gym,Free Parking on Premises,Wireless Internet,Pets Allowed,Family/Kid Friendly,Suitable for Events,Non Smoking,Phone (booth/lines),Projector(s),Bar / Restaurant,Air Conditioner,Scanner / Printer,Fax';
-       
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Features & Amenities', 'wprentals-core' ),
         'id'         => 'ammenities_features_tab',
@@ -1068,8 +1082,8 @@
                'id'       => 'wp_estate_feature_list',
                'type'     => 'info',
                 'desc'   =>  __( 'Starting with v2.6 all features & amenities are converted to taxonomy (category) terms. Manage Features & Amenities from the left sidebar, Listings -> Features & Amenities menu or from Edit Property in wp-admin.', 'wprentals-core' ),
-              
-  
+
+
            ),
             array(
                 'id'       => 'wp_estate_show_no_features',
@@ -1082,10 +1096,10 @@
                     ),
                 'default'  => 'yes',
             ),
-          
+
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Listings Labels', 'wprentals-core' ),
         'id'         => 'listing_labels_tab',
@@ -1149,15 +1163,15 @@
             ),
         ),
     ) );
-    
-    
+
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Theme Slider', 'wprentals-core' ),
         'id'         => 'theme_slider_tab',
         'subsection' => true,
         'fields'     => array(
-            
-            
+
+
             array(
                 'id'       => 'wp_estate_theme_slider',
                 'type'     => 'select',
@@ -1173,8 +1187,8 @@
                             ),
                 // 'options'  => wprentals_return_theme_slider_list(),
             ),
-            
-            
+
+
             array(
                 'id'       => 'wp_estate_theme_slider_manual',
                 'type'     => 'text',
@@ -1194,14 +1208,14 @@
                 'title'    => __( 'Design Type?', 'wprentals-core' ),
                 'subtitle' => __( 'Select the design type.', 'wprentals-core' ),
                 'options'  => array(
-                             'type1' => 'type1', 
+                             'type1' => 'type1',
                              'type2' => 'type2'
                     ),
                 'default'  => 'type1',
             ),
         ),
     ) );
-  
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Splash Page', 'wprentals-core' ),
         'id'         => 'splash_page_page_tab',
@@ -1213,15 +1227,15 @@
                 'title'    => __( 'Select the splash page type.', 'wprentals-core' ),
                 'subtitle' => __( 'Important: Create also a page with template "Splash Page" to see how your splash settings apply', 'wprentals-core' ),
                 'options'  => array(
-                        'image'       => 'image' , 
+                        'image'       => 'image' ,
                         'video'       => 'video',
                         'image slider' => 'image slider'
                     ),
                 'default' =>  'image'
-                
+
             ),
-            
-            
+
+
             array(
                 'id'       => 'wp_estate_splash_slider_gallery',
                 'type'     => 'gallery',
@@ -1229,10 +1243,10 @@
                 'required' => array('wp_estate_spash_header_type', '=', 'image slider'),
                 'title'    => __( 'Slider Images', 'wprentals-core' ),
                 'subtitle' => __( 'Slider Images, .png, .jpg or .gif format', 'wprentals-core' ),
-                
+
             ),
-            
-            
+
+
              array(
                 'id'       => 'wp_estate_splash_slider_transition',
                 'type'     => 'text',
@@ -1240,12 +1254,12 @@
                 'required' => array('wp_estate_spash_header_type', '=', 'image slider'),
                 'title'    => __( 'Slider Transition', 'wprentals-core' ),
                 'subtitle' => __( 'Number of milisecons before auto cycling an item (5000=5sec).Put 0 if you don\'t want to autoslide.', 'wprentals-core' ),
-                
+
             ),
-            
-            
-            
-            
+
+
+
+
             array(
                 'id'       => 'wp_estate_splash_image',
                 'type'     => 'media',
@@ -1253,11 +1267,11 @@
                 'required' => array('wp_estate_spash_header_type', '=', 'image'),
                 'title'    => __( 'Splash Image', 'wprentals-core' ),
                 'subtitle' => __( 'Splash Image, .png, .jpg or .gif format', 'wprentals-core' ),
-                
+
             ),
-            
-            
-            
+
+
+
               array(
                 'id'       => 'wp_estate_splash_video_mp4',
                 'type'     => 'media',
@@ -1269,11 +1283,11 @@
                 'title'    => __( 'Splash Video in mp4 format', 'wprentals-core' ),
                 'subtitle' => __( 'Splash Video in mp4 format', 'wprentals-core' ),
             ),
-            
-           
-            
-            
-            
+
+
+
+
+
             array(
                 'id'       => 'wp_estate_splash_video_webm',
                 'type'     => 'media',
@@ -1304,44 +1318,44 @@
                 'title'    => __( 'Cover Image for video', 'wprentals-core' ),
                 'subtitle' => __( 'Cover Image for videot', 'wprentals-core' ),
             ),
-           
 
-            
+
+
             array(
                 'id'       => 'wp_estate_splash_overlay_image',
                 'type'     => 'media',
                 'title'    => __( 'Overlay Image', 'wprentals-core' ),
                 'subtitle' => __( 'Overlay Image, .png, .jpg or .gif format', 'wprentals-core' ),
             ),
-            
+
             array(
                 'id'       => 'wp_estate_splash_overlay_color',
                 'type'     => 'color',
                 'title'    => __( 'Overlay Color', 'wprentals-core' ),
                 'subtitle' => __( 'Overlay Color', 'wprentals-core' ),
                 'transparent' => false,
-                
+
             ),
             array(
                 'id'       => 'wp_estate_splash_overlay_opacity',
                 'type'     => 'text',
                 'title'    => __( 'Overlay Opacity', 'wprentals-core' ),
                 'subtitle' => __( 'Overlay Opacity- values from 0 to 1 , Ex: 0.4', 'wprentals-core' ),
-                
+
             ),
             array(
                 'id'       => 'wp_estate_splash_page_title',
                 'type'     => 'text',
                 'title'    => __( 'Splash Page Title', 'wprentals-core' ),
                 'subtitle' => __( 'Splash Page Title', 'wprentals-core' ),
-                
+
             ),
             array(
                 'id'       => 'wp_estate_splash_page_subtitle',
                 'type'     => 'text',
                 'title'    => __( 'Splash Page Subtitle', 'wprentals-core' ),
                 'subtitle' => __( 'Splash Page Subtitle', 'wprentals-core' ),
-                
+
             ),
             array(
                 'id'       => 'wp_estate_splash_page_logo_link',
@@ -1350,19 +1364,57 @@
                 'title'    => __( 'Logo Link', 'wprentals-core' ),
                 'subtitle' => __( 'In case you want to send users to another page', 'wprentals-core' ),
             ),
-            
 
-            
+
+
         ),
     ) );
-    
+
+
+    Redux::setSection( $opt_name, array(
+        'title'      => __( 'Listing and Owner Links', 'wprentals-core' ),
+        'id'         => 'property_rewrite_page_tab',
+        'subsection' => true,
+        'fields'     => array(
+            array(
+                'id'     => 'opt-info_links',
+                'type'   => 'info',
+                'notice' => false,
+                'title'   => __( 'You cannot use special characters like "&". After changing the url you may need to wait for a few minutes until WordPress changes all the urls. In case your new names do not update automatically, go to Settings - Permalinks and Save again the "Permalinks Settings" - option "Post name"', 'wprentals-core' )
+            ),
+             array(
+                'id'     => 'opt-info_links2',
+                'type'   => 'info',
+                'notice' => false,
+                'title'   => __( ' DO NOT USE "type" as this name is reserved by WordPress ', 'wprentals-core' ).'<a href="https://codex.wordpress.org/Reserved_Terms" target="_blank">https://codex.wordpress.org/Reserved_Terms</a>'
+            ),
+            array(
+                'id'     => 'wp_estate_url_rewrites',
+                'type'   => 'wpestate_custom_url_rewrite',
+                'notice' => false,
+                'full_width'    => true,
+
+            ),
+
+        ),
+    ) );
+
+
+
+
+
+
+
+
+
+
     //->STRAT Social & Contact
     Redux::setSection( $opt_name, array(
         'title' => __( 'Social & Contact', 'wprentals-core' ),
         'id'    => 'social_contact_sidebar',
         'icon'  => 'el el-address-book'
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Contact Page Details', 'wprentals-core' ),
         'id'         => 'contact_details_tab',
@@ -1396,7 +1448,7 @@
                 'type'     => 'text',
                 'title'    => __( 'Email', 'wprentals-core' ),
                 'subtitle' => __( 'Company email', 'wprentals-core' ),
-            ), 
+            ),
             array(
                 'id'       => 'wp_estate_duplicate_email_adr',
                 'type'     => 'text',
@@ -1427,7 +1479,7 @@
                 'title'    => __( 'Skype', 'wprentals-core' ),
                 'subtitle' => __( 'Company Skype', 'wprentals-core' ),
             ),
-          
+
             array(
                 'id'       => 'wp_estate_hq_latitude',
                 'type'     => 'text',
@@ -1444,8 +1496,8 @@
             ),
         ),
     ) );
-    
-    
+
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Social Accounts', 'wprentals-core' ),
         'id'         => 'social_accounts_tab',
@@ -1495,7 +1547,7 @@
             ),
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Social Login', 'wprentals-core' ),
         'id'         => 'social_login_tab',
@@ -1511,11 +1563,11 @@
                              'yes' => 'yes'
                             ),
                 'default'  => 'no',
-            ), 
+            ),
             array(
                 'id'       => 'wp_estate_facebook_login',
                 'type'     => 'button_set',
-              
+
                 'title'    => __( 'Allow login via Facebook ?', 'wprentals-core' ),
                 'subtitle' => __( 'Allow login via Facebook ?', 'wprentals-core' ),
                 'options'  => array(
@@ -1570,10 +1622,10 @@
                 'title'    => __( 'Google api key', 'wprentals-core' ),
                 'subtitle' => __( 'Google api key is required for Google Login.', 'wprentals-core' ),
             ),
-          
+
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Twitter Login & Widget ', 'wprentals-core' ),
         'id'         => 'twitter_widget_tab',
@@ -1582,7 +1634,7 @@
             array(
                 'id'       => 'wp_estate_twiter_login',
                 'type'     => 'button_set',
-              
+
                 'title'    => __( 'Allow login via Twitter ?', 'wprentals-core' ),
                 'subtitle' => __( 'Allow login via Twitter ?(works only over https)', 'wprentals-core' ),
                 'options'  => array(
@@ -1621,17 +1673,17 @@
                 'title'    => __( 'Twitter Cache Time', 'wprentals-core' ),
                 'subtitle' => __( 'Twitter Cache Time', 'wprentals-core' ),
             ),
-            
+
         ),
     ) );
-    
+
     // -> START Map options
     Redux::setSection( $opt_name, array(
         'title' => __( 'Map', 'wprentals-core' ),
         'id'    => 'map_settings_sidebar',
         'icon'  => 'el el-map-marker'
     ) );
-    
+
      Redux::setSection( $opt_name, array(
         'title'      => __( 'Map Settings', 'wprentals-core' ),
         'id'         => 'general_map_tab',
@@ -1641,10 +1693,10 @@
                 'id'       => 'swithc_info',
                 'type'     => 'info',
                 'title'    => __( 'VERY IMPORTANT: For already published properties, switching from Google Places to Algolia Places/OpenStreet Places (or from Algolia/Openstreet to Google Places) may require adding properties City & address again. The 2 systems can have different names for city, area and country and search by location may not work.', 'wprentals-core' ),
-                
-                
+
+
             ),
-            
+
              array(
                 'id'       => 'wp_estate_kind_of_map',
                 'type'     => 'button_set',
@@ -1652,13 +1704,13 @@
                 'subtitle' => __( 'What map system you want to use', 'wprentals-core' ),
                 'options'  => array(
                             2 => 'open street',
-                            1  => 'google maps' 
+                            1  => 'google maps'
                             ),
                 'default'  => 1,
             ),
-            
-            
-            
+
+
+
             array(
                 'id'       => 'wp_estate_kind_of_places',
                 'type'     => 'button_set',
@@ -1666,53 +1718,53 @@
                 'subtitle' => __( 'Google Places work only with Google Maps activated.', 'wprentals-core' ),
                 'options'  => array(
                             2 => 'algolia',
-                            1  => 'google places' 
+                            1  => 'google places'
                             ),
                 'default'  => 1,
             ),
-            
+
 //            array(
 //                'id'       => 'wp_estate_google_lang',
 //                'type'     => 'select',
 //                'title'    => __( 'Select language for Google Maps and Places', 'wprentals-core' ),
 //                'subtitle' => '<p style="color:red;">'.__( 'Google Places work only with Google Maps activated.', 'wprentals-core' ).'</p>',
 //                'options'  => array(
-//                            'af'=>	'Afrikaans',	
-//                            'sq'=>	'Albanian',	
+//                            'af'=>	'Afrikaans',
+//                            'sq'=>	'Albanian',
 //                            'am'=>	'Amharic',
-//                            'ar'=>	'Arabic',	
-//                            'hy'=>	'Armenian',	
-//                            'az'=>	'Azerbaijani',	
+//                            'ar'=>	'Arabic',
+//                            'hy'=>	'Armenian',
+//                            'az'=>	'Azerbaijani',
 //                            'eu'=>	'Basque',
-//                            'be'=>	'Belarusian',	
+//                            'be'=>	'Belarusian',
 //                            'bn'=>	'Bengali',
-//                            'bs'=>	'Bosnian',	
-//                            'bg'=>	'Bulgarian',	
-//                            'my'=>	'Burmese',	
-//                            'ca'=>	'Catalan',	
+//                            'bs'=>	'Bosnian',
+//                            'bg'=>	'Bulgarian',
+//                            'my'=>	'Burmese',
+//                            'ca'=>	'Catalan',
 //                            'zh'=>	'Chinese',
-//                            'zh-CN'=>	'Chinese (Simplified)',	
-//                            'zh-HK'=>	'Chinese (Hong Kong)',	
-//                            'zh-TW'=>	'Chinese (Traditional)',	
-//                            'hr'=>	'Croatian',	
-//                            'cs'=>	'Czech',	
-//                            'da'=>	'Danish',	
-//                            'nl'=>	'Dutch',	
-//                            'en'=>	'English',	
-//                            'en-AU'=>	'English (Australian)',	
+//                            'zh-CN'=>	'Chinese (Simplified)',
+//                            'zh-HK'=>	'Chinese (Hong Kong)',
+//                            'zh-TW'=>	'Chinese (Traditional)',
+//                            'hr'=>	'Croatian',
+//                            'cs'=>	'Czech',
+//                            'da'=>	'Danish',
+//                            'nl'=>	'Dutch',
+//                            'en'=>	'English',
+//                            'en-AU'=>	'English (Australian)',
 //                            'en-GB'=>	'English (Great Britain)',
-//                            'et'=>	'Estonian',	
-//                            'fa'=>	'Farsi',	
-//                            'fi'=>	'Finnish',	
+//                            'et'=>	'Estonian',
+//                            'fa'=>	'Farsi',
+//                            'fi'=>	'Finnish',
 //                            'fil'=>	'Filipino',
-//                            'fr'=>	'French',	
-//                            'fr-CA'=>	'French (Canada)',	
-//                            'gl'=>	'Galician',	
-//                            'ka'=>	'Georgian',	
-//                            'de'=>	'German',	
+//                            'fr'=>	'French',
+//                            'fr-CA'=>	'French (Canada)',
+//                            'gl'=>	'Galician',
+//                            'ka'=>	'Georgian',
+//                            'de'=>	'German',
 //                            'el'=>	'Greek',
-//                            'gu'=>	'Gujarati',	
-//                            'iw'=>	'Hebrew',	
+//                            'gu'=>	'Gujarati',
+//                            'iw'=>	'Hebrew',
 //                            'hi'=>	'Hindi',
 //                            'hu'=>	'Hungarian',
 //                            'is'=>	'Icelandic',
@@ -1759,11 +1811,11 @@
 //                            'vi'=>	'Vietnamese',
 //                            'zu'=>	'Zulu',
 //
-//                    
+//
 //                            ),
 //                'default'  => 'en',
 //            ),
-            
+
             array(
                 'id'       => 'wp_estate_readsys',
                 'type'     => 'button_set',
@@ -1771,7 +1823,7 @@
                 'subtitle' => __( 'Use file reading for pins? (*recommended for over 200 listings. File reading is faster than mysql reading and improves page speed)', 'wprentals-core' ),
                 'options'  => array(
                             'yes' => 'yes',
-                            'no'  => 'no' 
+                            'no'  => 'no'
                             ),
                 'default'  => 'no',
             ),
@@ -1806,8 +1858,8 @@
                 'title'    => __( 'Algolia API Key', 'wprentals-core' ),
                 'subtitle' => __( 'You can get it from here:  https://community.algolia.com/places/', 'wprentals-core' ),
             ),
-            
-            
+
+
             array(
                 'id'       => 'wp_estate_general_latitude',
                 'type'     => 'text',
@@ -1836,7 +1888,7 @@
                 'subtitle' => __( 'If yes, it groups nearby pins in cluster.', 'wprentals-core' ),
                 'options'  => array(
                             'yes' => 'yes',
-                            'no'  => 'no' 
+                            'no'  => 'no'
                             ),
                 'default'  => 'yes',
             ),
@@ -1868,14 +1920,14 @@
                 'title'    => __( 'Height of Google Map when open', 'wprentals-core' ),
                 'subtitle' => __( 'Applies for header google maps when set as global header media type.', 'wprentals-core' ),
                 'default'  => '650'
-            ),          
+            ),
             array(
                 'id'       => 'wp_estate_keep_min',
                 'type'     => 'button_set',
                 'title'    => __( 'Force Google Map at the "closed" size ?', 'wprentals-core' ),
                 'subtitle' => __( 'Applies for header google maps when set as global header media type, except listing page.', 'wprentals-core' ),
                 'options'  => array(
-                            'no'  => 'no', 
+                            'no'  => 'no',
                             'yes' => 'yes'
                             ),
                 'default'  => 'no',
@@ -1888,69 +1940,69 @@
             ),
         ),
     ) );
-     
-    
-     
-     
-     
-    $pin_fields=array(); 
-     
+
+
+
+
+
+    $pin_fields=array();
+
     $pin_fields[]=array(
                 'id'       => 'wp_estate_use_price_pins',
                 'type'     => 'button_set',
                 'title'    => __( 'Use price Pins ?', 'wprentals-core' ),
                 'subtitle' => __( 'Use price Pins ?(The css class for price pins is "wpestate_marker" . Each pin has also receive a class with the name of the category or action: For example "wpestate_marker apartments sales")', 'wprentals-core' ),
                 'options'  => array(
-                            'no'  => 'no', 
+                            'no'  => 'no',
                             'yes' => 'yes'
                             ),
                 'default'  => 'no',
             );
-    
+
      $pin_fields[]=array(
                 'id'       => 'wp_estate_use_price_pins_full_price',
                 'type'     => 'button_set',
                 'title'    => __( 'Use Full Price Pins ?', 'wprentals-core' ),
                 'subtitle' => __( 'If not we will show prices without before and after label and in this format : 5,23m or 6.83k', 'wprentals-core' ),
                 'options'  =>  array(
-                            'no'  => 'no', 
+                            'no'  => 'no',
                             'yes' => 'yes'
                             ),
                 'default'  => 'no',
             );
-     
-     
+
+
     $pin_fields[]=array(
                 'id'       => 'wp_estate_use_single_image_pin',
                 'type'     => 'button_set',
                 'title'    => __( 'Use single Image Pin ?', 'wprentals-core' ),
                 'subtitle' => __( 'We will use 1 single pins for all markers. This option will decrease the loading time on you maps.', 'wprentals-core' ),
                 'options'  =>  array(
-                            'no'  => 'no', 
+                            'no'  => 'no',
                             'yes' => 'yes'
                             ),
                 'default'  => 'no',
             );
-    
+
     $pin_fields[]=array(
                 'id'       => 'wp_estate_single_pin',
                 'type'     => 'media',
                 'title'    => __( 'Single Pin Marker / Contact page marker', 'wprentals-core' ),
-                'subtitle' => __( 'Image size must be 44px x 50px.', 'wprentals-core' ),         
+                'subtitle' => __( 'Image size must be 44px x 50px.', 'wprentals-core' ),
             );
-    
+
      $pin_fields[]=array(
                 'id'       => 'wp_estate_cloud_pin',
                 'type'     => 'media',
                 'title'    => __( 'Cloud Marker Image', 'wprentals-core' ),
-                'subtitle' => __( 'Image must be 70px x 70px', 'wprentals-core' ),         
+                'subtitle' => __( 'Image must be 70px x 70px', 'wprentals-core' ),
             );
-     
-     
-     
-     
+
+
+
+
     $pin_fields = wprentals_add_pins_icons(  $pin_fields );
-     
+
     Redux::setSection( $opt_name, array(
         'title'      =>     __( 'Pin Management', 'wprentals-core' ),
         'id'         =>     'pin_management_tab',
@@ -1961,14 +2013,14 @@
         'subsection' => true,
         'fields'     => $pin_fields,
     ) );
-     
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Generate Data & Pins', 'wprentals-core' ),
         'id'         => 'generare_pins_tab',
@@ -1977,19 +2029,19 @@
             array(
                 'id'       => 'wp_estate_generate_pins',
                 'type'     => 'wpestate_generate_pins',
-               
+
                 'title'    => __( 'Generate Pins and Autocomplete data', 'wprentals-core' ),
                 'subtitle' => __( 'Generate Pins for Google Map and Autocomplete data for Advanced Search with theme auto-complete enabled', 'wprentals-core' ),
-            ), 
+            ),
         ),
     ) );
-     
+
        // -> START Design Selection
     Redux::setSection( $opt_name, array(
         'title' => __( 'Design', 'wprentals-core' ),
         'id'    => 'design_settings_sidebar',
         'icon'  => 'el el-brush'
-    ) ); 
+    ) );
     Redux::setSection( $opt_name, array(
         'title'      => __( 'General Design Settings', 'wprentals-core' ),
         'id'         => 'general_design_settings_tab',
@@ -2000,19 +2052,19 @@
                 'type'     => 'text',
                 'title'    => __( 'Header Height', 'wprentals-core' ),
                 'subtitle' => __( 'Header Height in px', 'wprentals-core' ),
-            ), 
+            ),
             array(
                 'id'       => 'wp_estate_sticky_header_height',
                 'type'     => 'text',
                 'title'    => __( 'Sticky Header Height', 'wprentals-core' ),
                 'subtitle' => __( 'Sticky Header Height in px', 'wprentals-core' ),
-            ), 
+            ),
             array(
                 'id'       => 'wp_estate_border_bottom_header',
                 'type'     => 'text',
                 'title'    => __( 'Border Bottom Header Height', 'wprentals-core' ),
                 'subtitle' => __( 'Header Border Bottom Height', 'wprentals-core' ),
-            ), 
+            ),
             array(
                 'id'       => 'wp_estate_border_bottom_header_color',
                 'type'     => 'color',
@@ -2020,10 +2072,10 @@
                 'subtitle' => __( 'Header Border Bottom Color', 'wprentals-core' ),
                 'transparent'  => false,
             ),
-            
+
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Listing Page Settings', 'wprentals-core' ),
         'id'         => 'property_page_settings_tab',
@@ -2034,33 +2086,73 @@
                 'type'     => 'button_set',
                 'title'    => __( 'Listing Page Design Type', 'wprentals-core' ),
                 'subtitle' => __( 'Select design type for Listing Page .', 'wprentals-core' ),
-                'options'  => array( 
-                            '1' => esc_html__( 'Type 1','wprentals-core'), 
+                'options'  => array(
+                            '1' => esc_html__( 'Type 1','wprentals-core'),
                             '2' => esc_html__( 'Type 2','wprentals-core'),
                             '3' => esc_html__( 'Type 3','wprentals-core'),
                             '4' => esc_html__( 'Type 4','wprentals-core'),
                         ),
                 'default'  => '1',
             ),
+
+
+            array(
+                'id'       => 'wp_estate_replace_booking_form',
+                'type'     => 'button_set',
+                'title'    => __( 'Show Contact form instead of Booking Form ?', 'wprentals-core' ),
+                'subtitle' => __( 'Show Contact form instead of Booking Form ?', 'wprentals-core' ),
+                'options'  => array(
+                            'yes' => esc_html__( 'Yes','wprentals-core'),
+                            'no' => esc_html__( 'No','wprentals-core')
+                        ),
+                'default'  => 'no',
+            ),
+
+
+
+            array(
+                'id'       => 'wp_estate_show_sleeping_arrangements',
+                'type'     => 'button_set',
+                'title'    => __( 'Show Sleeping Arrangments?', 'wprentals-core' ),
+                'subtitle' => __( 'If "yes" we will  show the sleeping arrangments section on property page.', 'wprentals-core' ),
+                'options'  => array(
+                            'yes' => esc_html__( 'Yes','wprentals-core'),
+                            'no' => esc_html__( 'No','wprentals-core')
+                        ),
+                'default'  => 'yes',
+            ),
+
+            array(
+                'id'       => 'wp_estate_show_terms_conditions',
+                'type'     => 'button_set',
+                'title'    => __( 'Show Terms and Conditions?', 'wprentals-core' ),
+                'subtitle' => __( 'If "yes" we will  show the terms&conditions section on property page.', 'wprentals-core' ),
+                'options'  => array(
+                            'yes' => esc_html__( 'Yes','wprentals-core'),
+                            'no' => esc_html__( 'No','wprentals-core')
+                        ),
+                'default'  => 'yes',
+            ),
+
             array(
                 'id'       => 'wp_estate_show_map_location',
                 'type'     => 'button_set',
                 'title'    => __( 'Hide map location and address for unbooked properties?', 'wprentals-core' ),
                 'subtitle' => __( 'If "yes" we will not show the address or exact location on property page map.', 'wprentals-core' ),
-                'options'  => array( 
-                            'yes' => esc_html__( 'Yes','wprentals-core'), 
+                'options'  => array(
+                            'yes' => esc_html__( 'Yes','wprentals-core'),
                             'no' => esc_html__( 'No','wprentals-core')
                         ),
                 'default'  => 'no',
             ),
-            
+
             array(
                 'id'       => 'wp_estate_use_custom_icon_area',
                 'type'     => 'button_set',
                 'title'    => __( 'Use Custom Icon Area?', 'wprentals-core' ),
                 'subtitle' => __( 'Use Custom Icon Area?', 'wprentals-core' ),
                 'options'  =>  array(
-                            'no'  => 'no', 
+                            'no'  => 'no',
                             'yes' => 'yes'
                             ),
                 'default'  => 'no',
@@ -2070,7 +2162,7 @@
                 'type'     => 'text',
                 'title'    => __( 'Font Size for Icon Area', 'wprentals-core' ),
                 'subtitle' => __( 'Font Size for Icon Area', 'wprentals-core' ),
-                
+
                 'default'  => '12',
             ),
             array(
@@ -2084,7 +2176,7 @@
                 ),
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Listing Card Design', 'wprentals-core' ),
         'id'         => 'listing_card_design_tab',
@@ -2095,13 +2187,26 @@
                 'type'     => 'button_set',
                 'title'    => __( 'Listing Unit Type', 'wprentals-core' ),
                 'subtitle' => __( 'Select Listing Unit Type.</br>Unit type 3 works only with custom fields.', 'wprentals-core' ),
-                'options'  =>array( 
+                'options'  =>array(
                                 '1' => __( 'Type 1','wprentals-core'),
                                 '2' => __( 'Type 2','wprentals-core'),
                                 '3' => __( 'Type 3','wprentals-core')
                             ),
                 'default'  => '2',
             ),
+
+            array(
+                'id'       => 'wp_estate_prop_page_new_tab',
+                'type'     => 'button_set',
+                'title'    => __( 'Open property page in new tab', 'wprentals-core' ),
+                'subtitle' => __( 'Open property page in new tab', 'wprentals-core' ),
+                'options'  =>array(
+                            '_blank' =>'yes',
+                            '_self'  => 'no'
+                            ),
+                'default'  => '_self',
+            ),
+
             array(
                 'id'       => 'wp_estate_prop_list_slider',
                 'type'     => 'button_set',
@@ -2118,27 +2223,27 @@
                 'type'     => 'button_set',
                 'title'    => __( 'Listing Unit Style for Half Map', 'wprentals-core' ),
                 'subtitle' => __( 'Select Listing Unit Style for Half Map', 'wprentals-core' ),
-                'options'  =>array( 
+                'options'  =>array(
                                 '1' => esc_html__( 'List','wprentals-core'),
                                 '2' => esc_html__( 'Grid','wprentals-core')
                                 ),
                 'default'  => '1',
             ),
-           
-            
+
+
             array(
                 'id'       => 'wp_estate_custom_listing_fields',
                 'type'     => 'wpestate_custom_field_type3',
                 'full_width' => true,
                 'title'    => __( 'Custom Fields for Unit Type 3', 'wprentals-core' ),
                 'subtitle' => __( 'Add, edit or delete listing custom fields.', 'wprentals-core' ),
-                
+
             ),
-            
-            
+
+
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Map Marker Infobox Design', 'wprentals-core' ),
         'id'         => 'infobox_design_tab',
@@ -2150,7 +2255,7 @@
                 'title'    => __( 'Use custom icons on Infobox ?', 'wprentals-core' ),
                 'subtitle' => __( 'Use custom icons on Infobox ?', 'wprentals-core' ),
                 'options'  => array(
-                            'no'  => 'no', 
+                            'no'  => 'no',
                             'yes' => 'yes'
                             ),
                 'default'  => 'no',
@@ -2161,11 +2266,11 @@
                 'title'    => __( 'Custom Fields for Infobox', 'wprentals-core' ),
                 'subtitle' => __( 'Add, edit or delete listing custom fields.', 'wprentals-core' ),
                 'full_width' => true,
-                
+
             ),
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Custom Colors Settings', 'wprentals-core' ),
         'id'         => 'custom_colors_tab',
@@ -2190,7 +2295,7 @@
                 'callback' => 'wp_estate_redux_on_child_theme_customcss',
                 'class'    => 'wp_estate_redux_on_child_theme_customcss'
             ),
-            
+
             array(
                 'id'       => 'wp_estate_main_color',
                 'type'     => 'color',
@@ -2289,7 +2394,7 @@
                 'subtitle' => __( 'Sidebar Font color', 'wprentals-core' ),
                 'transparent'  => false,
             ),
-            
+
             array(
                 'id'       => 'wp_estate_box_content_back_color',
                 'type'     => 'color',
@@ -2313,7 +2418,7 @@
             ),
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Main Menu Design', 'wprentals-core' ),
         'id'         => 'mainmenu_design_elements_tab',
@@ -2408,13 +2513,13 @@
                 'type'     => 'text',
                 'title'    => __( 'Top Menu Font Size', 'wprentals-core' ),
                 'subtitle' => __( 'Top Menu Font Size', 'wprentals-core' ),
-            ), 
+            ),
             array(
                 'id'       => 'wp_estate_menu_item_font_size',
                 'type'     => 'text',
                 'title'    => __( 'Menu Item Font Size', 'wprentals-core' ),
                 'subtitle' => __( 'Menu Item Font Size', 'wprentals-core' ),
-            ), 
+            ),
             array(
                 'id'       => 'wp_estate_top_menu_hover_back_font_color',
                 'type'     => 'color',
@@ -2444,7 +2549,7 @@
             ),
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Custom CSS', 'wprentals-core' ),
         'id'         => 'custom_css_tab',
@@ -2457,10 +2562,10 @@
                 'subtitle' => __( 'Overwrite theme css using custom css.', 'wprentals-core' ),
                 'mode'     => 'css',
                 'theme'    => 'monokai',
-                ),    
+                ),
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Fonts', 'wprentals-core' ),
         'id'         => 'custom_fonts_tab',
@@ -2482,13 +2587,13 @@
             ),
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title' => __( 'Advanced', 'wprentals-core' ),
         'id'    => 'advanced_settings_sidebar',
         'icon'  => 'el el-cogs'
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Email Management', 'wprentals-core' ),
         'id'         => 'email_management_tab',
@@ -2501,7 +2606,7 @@
                 'title'    => __( 'Subject for New user notification', 'wprentals-core' ),
                 'subtitle' => __( 'Email subject for New user notification', 'wprentals-core' ),
                 'default'  => __( 'Your username and password on %website_url', 'wprentals-core' )
-            ),    
+            ),
             array(
                 'id'       => 'wp_estate_new_user',
                 'type'     => 'editor',
@@ -2513,7 +2618,7 @@
                                 Password: %user_pass_register
                                 If you have any problems, please contact me.
                                 Thank you!', 'wprentals-core'),
-                'desc'     => esc_html__('%user_login_register as new username, %user_pass_register as user password, %user_email_register as new user email,  use text mode and <br class=""> tag for new line, <p class=""> for a new paragraph, 
+                'desc'     => esc_html__('%user_login_register as new username, %user_pass_register as user password, %user_email_register as new user email,  use text mode and <br class=""> tag for new line, <p class=""> for a new paragraph,
 <span class=""> for styling.', 'wprentals-core'),
             ),
             array(
@@ -2529,7 +2634,7 @@
                 'title'    => __( 'Content for New user admin notification', 'wprentals-core' ),
                 'subtitle' => __( 'Email content for New user admin notification', 'wprentals-core' ),
                 'default'  => __('New user registration on %website_url.
-                                Username: %user_login_register, 
+                                Username: %user_login_register,
                                 E-mail: %user_email_register', 'wprentals-core'),
                 'desc'     =>esc_html__( '%user_login_register as new username and %user_email_register as new user email,  use text mode and <br class=""> tag for new line, <p class=""> for a new paragraph, <span class=""> for styling.', 'wprentals-core'),
             ),
@@ -2562,7 +2667,7 @@
                 'title'    => __( 'Content for Password Reset Request', 'wprentals-core' ),
                 'subtitle' => __( 'Email content for Password Reset Request', 'wprentals-core' ),
                 'default'  => __('Someone requested that the password be reset for the following account:
-                                %website_url 
+                                %website_url
                                 Username: %forgot_username .
                                 If this was a mistake, just ignore this email and nothing will happen. To reset your password, visit the following address:%reset_link,
                                 Thank You!', 'wprentals-core'),
@@ -2580,8 +2685,8 @@
                 'type'     => 'editor',
                 'title'    => __( 'Content for Password Reseted', 'wprentals-core' ),
                 'subtitle' => __( 'Email content for Password Reseted', 'wprentals-core' ),
-                'default'  => __('Your new password for the account at: %website_url: 
-                                Username:%user_login, 
+                'default'  => __('Your new password for the account at: %website_url:
+                                Username:%user_login,
                                 Password:%user_pass
                                 You can now login with your new password at: %website_url', 'wprentals-core'),
                 'desc'     => esc_html__('%reset_link as reset link, %forgot_username as username and %forgot_email as user email,  use text mode and <br class=""> tag for new line, <p class=""> for a new paragraph, <span class=""> for styling.','wprentals-core'),
@@ -2863,7 +2968,7 @@
                 'title'    => __( 'Content for Owner - New Booking Request', 'wprentals-core' ),
                 'subtitle' => __( 'Email content for User - New Booking Request', 'wprentals-core' ),
                 'default'  => __('Hi there,
-                                You have booked a period for your own listing on %website_url !  The reservation will appear in your account, under My Bookings. 
+                                You have booked a period for your own listing on %website_url !  The reservation will appear in your account, under My Bookings.
                                 The property is: %booking_property_link','wprentals-core'),
                 'desc'     => esc_html__('* you can use %booking_property_link as property url,  use text mode and <br class=""> tag for new line, <p class=""> for a new paragraph, <span class=""> for styling.','wprentals-core'),
             ),
@@ -2889,7 +2994,7 @@
                 'title'    => __( 'Subject for Booking request rejected','wprentals-core' ),
                 'subtitle' => __( 'Email subject for Booking request rejected', 'wprentals-core' ),
                 'default'  => 'Booking Request Rejected on %website_url'
-            ), 
+            ),
             array(
                 'id'       => 'wp_estate_deletebooking',
                 'type'     => 'editor',
@@ -2905,7 +3010,7 @@
                 'title'    => __( 'Subject for Booking Request Cancelled' , 'wprentals-core'),
                 'subtitle' => __( 'Email subject for Booking Request Cancelled', 'wprentals-core' ),
                 'default'  => __('Booking Request Cancelled on %website_url', 'wprentals-core'),
-            ), 
+            ),
             array(
                 'id'       => 'wp_estate_deletebookinguser',
                 'type'     => 'editor',
@@ -2945,7 +3050,7 @@
                 'subtitle' => __( 'Email content for New wire Transfer', 'wprentals-core' ),
                 'default'  => __('We received your Wire Transfer payment request on  %website_url !
                                 Please follow the instructions below in order to start submitting properties as soon as possible.
-                                The invoice number is: %invoice_no, Amount: %total_price. 
+                                The invoice number is: %invoice_no, Amount: %total_price.
                                 Instructions:  %payment_details.','wprentals-core'),
                 'desc'     => esc_html__('* you can use %invoice_no as invoice number, %total_price as $totalprice and %payment_details as $payment_details,  use text mode and <br class=""> tag for new line, <p class=""> for a new paragraph, <span class=""> for styling.','wprentals-core'),
             ),
@@ -3003,7 +3108,7 @@
             ),
         ),
     ) );
-    
+
      Redux::setSection( $opt_name, array(
         'title'      => __( 'Import & Export', 'wprentals-core' ),
         'id'         => 'import_export_ab',
@@ -3018,7 +3123,7 @@
               ),
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'reCaptcha settings', 'wprentals-core' ),
         'id'         => 'recaptcha_tab',
@@ -3030,7 +3135,7 @@
                 'title'    => __( 'Use reCaptcha on register ?', 'wprentals-core' ),
                 'subtitle' => __( 'This helps preventing registration spam.', 'wprentals-core' ),
                 'options'  => array(
-                            'no'  => 'no', 
+                            'no'  => 'no',
                             'yes' => 'yes'
                             ),
                 'default'  => 'no',
@@ -3051,7 +3156,7 @@
             ),
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Yelp settings', 'wprentals-core' ),
         'id'         => 'yelp_tab',
@@ -3094,15 +3199,15 @@
             ),
         ),
     ) );
-    
-    
+
+
     // -> START Payments & Submit Selection
     Redux::setSection( $opt_name, array(
         'title' => __( 'Payments & Submit', 'wprentals-core' ),
         'id'    => 'membership_settings',
         'icon'  => 'el el-group'
-    ) );  
-    
+    ) );
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Listing Submit Page', 'wprentals-core' ),
         'id'         => 'submit_page_settings_tab',
@@ -3122,7 +3227,7 @@
             array(
                 'id'       => 'wp_estate_show_guest_number',
                 'type'     => 'button_set',
-              
+
                 'title'    => __( 'Show the Guest dropdown?', 'wprentals-core' ),
                 'subtitle' => __( 'Show the Guest dropdown in submit listing page? '
                              . 'Only for Object Rental set this to No for guest dropdown to not show in submit form.', 'wprentals-core' ),
@@ -3141,17 +3246,17 @@
                 'options'  => array(
                             'yes' => 'yes',
                             'no'  => 'no',
-                         
+
                         ),
                 'default'  => 'no',
             ),
-            
-            
+
+
             array(
                 'id'       => 'wp_estate_submission_page_fields',
                 'type'     => 'wpestate_select',
                 'multi'     =>  true,
-               
+
                 'title'    =>   __( 'Select the Fields for listing submission.', 'wprentals-core' ),
                 'subtitle' =>   __( 'Use CTRL to select multiple fields for listing submission page.', 'wprentals-core' ),
                 'options'   =>   wpestate_return_all_fields(),
@@ -3166,16 +3271,16 @@
                 'subtitle' =>   __( 'Make sure the mandatory fields for listing submission page are part of submit form (managed from the above setting). Use CTRL for multiple fields select.', 'wprentals-core' ),
                 'options'   =>  array(),
             ),
-            
-         
+
+
             array(
                 'id'       => 'wp_estate_category_main',
                 'type'     => 'text',
                 'title'    => __( 'Main Category Label', 'wprentals-core' ),
                 'subtitle' => __( 'Main Category Label', 'wprentals-core' ),
             ),
-               
-            
+
+
             array(
                 'id'       => 'wp_estate_category_main',
                 'type'     => 'text',
@@ -3213,9 +3318,16 @@
                 'subtitle' => __( 'Maximum no of images per listing (only front-end upload)', 'wprentals-core' ),
                 'default'  => '12'
             ),
+            array(
+                  'id'       => 'wp_estate_submit_redirect',
+                  'type'     => 'text',
+                  'title'    => __( 'Url where the user will be redirected after property submit.', 'wprentals-core' ),
+                  'subtitle' => __( 'Leave blank if you want to remain on the same page.', 'wprentals-core' ),
+                  'default'  => ''
+              ),
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Submission Payment Settings', 'wprentals-core' ),
         'id'         => 'membership_settings_tab',
@@ -3227,16 +3339,16 @@
                 'title'    => __( 'Enable Paid Submission?', 'wprentals-core' ),
                 'subtitle' => __( 'No = submission is free. Paid listing = submission requires user to pay a fee for each listing. Membership = submission is based on user membership package.', 'wprentals-core' ),
                 'options'  => array(
-                            'no'         => 'no', 
+                            'no'         => 'no',
                             'per listing'=> 'per listing',
                             'membership' => 'membership'
                         ),
                 'default'  => 'no',
             ),
-            
-            
-            
-            
+
+
+
+
              array(
                 'id'       => 'wp_estate_free_mem_list',
                 'type'     => 'text',
@@ -3245,8 +3357,8 @@
                 'subtitle' => __( 'If you change this value, the new value applies for new registered users. Old value applies for older registered accounts.', 'wprentals-core' ),
                 'default'  => '0'
              ),
-           
-            
+
+
             array(
                 'id'       => 'wp_estate_free_mem_list_unl',
                 'required'  => array('wp_estate_paid_submission','=','membership'),
@@ -3270,10 +3382,10 @@
                 'subtitle' => __( 'Option applies for each free published listing.', 'wprentals-core' ),
                 'default'  => '0'
             ),
-            
-            
-            
-            
+
+
+
+
             array(
                 'id'       => 'wp_estate_price_submission',
                 'type'     => 'text',
@@ -3290,16 +3402,16 @@
                 'subtitle' => __( 'Use .00 format for decimals (ex: 1.50). Do not set price as 0!', 'wprentals-core' ),
                 'default'  => '0'
             ),
-            
-            
+
+
             array(
                 'id'       => 'wp_estate_paypal_api',
                 'type'     => 'button_set',
                 'title'    => __( 'Paypal & Stripe Api - SSL is mandatory for live payments', 'wprentals-core' ),
                 'subtitle' => __( 'Sandbox = test API. LIVE = real payments API. Update PayPal and Stripe settings according to API type selection.', 'wprentals-core' ),
                 'options'  => array(
-                         esc_html__( 'sandbox','wprentals-core') => esc_html__( 'sandbox','wprentals-core'), 
-                         esc_html__( 'live','wprentals-core')    => esc_html__( 'live','wprentals-core') 
+                         esc_html__( 'sandbox','wprentals-core') => esc_html__( 'sandbox','wprentals-core'),
+                         esc_html__( 'live','wprentals-core')    => esc_html__( 'live','wprentals-core')
                         ),
                 'default'  => 'sandbox',
             ),
@@ -3310,11 +3422,11 @@
                 'subtitle' => __( 'If yes, admin publishes each listing submitted in front end manually.', 'wprentals-core' ),
                 'options'  => array(
                             'yes'  => 'yes',
-                            'no'   => 'no' 
+                            'no'   => 'no'
                         ),
                 'default'  => 'yes',
             ),
-        
+
             array(
                 'id'       => 'wp_estate_submission_curency',
                 'type'     => 'button_set',
@@ -3325,6 +3437,7 @@
                                     'AUD' => 'AUD',
                                     'BRL' => 'BRL',
                                     'CAD' => 'CAD',
+                                    'COP' => 'COP',
                                     'CZK' => 'CZK',
                                     'DKK' => 'DKK',
                                     'HKD' => 'HKD',
@@ -3349,7 +3462,7 @@
                                     'ZAR' => 'ZAR',
                     ),
                 'default'  => 'USD',
-            ),   
+            ),
             array(
                 'id'       => 'wp_estate_enable_direct_pay',
                 'type'     => 'button_set',
@@ -3357,7 +3470,7 @@
                 'subtitle' => __( 'Enable or disable the wire payment option.', 'wprentals-core' ),
                 'options'  => array(
                             'yes'  => 'yes',
-                            'no'   => 'no' 
+                            'no'   => 'no'
                         ),
                 'default'  => 'no',
             ),
@@ -3383,11 +3496,11 @@
             'title'    => __( 'Custom Currency Symbol', 'wprentals-core' ),
             'subtitle' => __( 'Add and save your own currency for Wire payments.', 'wprentals-core' ),
         ),
-       
-            
+
+
     ),
     ) );
-    
+
       Redux::setSection( $opt_name, array(
         'title'      => __( 'WooCommerce Settings', 'wprentals-core' ),
         'id'         => 'woo_settings_tab',
@@ -3397,8 +3510,8 @@
                'id'       => 'wp_estate_enable_woo_mes',
                'type'     => 'info',
                 'desc'   =>  __( 'You need WooCommerce Plugin Installed and Active & and a WooCommerce Merchant Enabled. <a href="https://help.wprentals.org/article/install-woocommerce-and-activate-woocommerce-payments/" target="_blank">See help page.</a> </br>Payments are considerd complete once the Order for a particular items has the status "Processing or Complete " . </br> WooCommerce does not suport recurring payments, and so submission membership packages cannot be bought via WooCommerce.', 'wprentals-core' ),
-              
-  
+
+
            ),
              array(
                 'id'       => 'wp_estate_enable_woo',
@@ -3406,16 +3519,16 @@
                 'title'    => __( 'Enable WooCommerce payments?', 'wprentals-core' ),
                 'subtitle' => __( '', 'wprentals-core' ),
                 'options'  => array(
-                            'yes'       => 'yes', 
+                            'yes'       => 'yes',
                             'no'        => 'no',
-                          
+
                         ),
                 'default'  => 'no',
             ),
             )
-          
+
         ));
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Booking Payment Options', 'wprentals-core' ),
         'id'         => 'booking_payment_tab',
@@ -3430,7 +3543,7 @@
                 'options'  => array(
                         'yes' => 'yes',
                         'no'  => 'no',
-                       
+
                     ),
             ),
             array(
@@ -3461,7 +3574,7 @@
             ),
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'PayPal Settings', 'wprentals-core' ),
         'id'         => 'paypal_settings_tab',
@@ -3499,10 +3612,10 @@
                 'title'    => __( 'Paypal receiving email', 'wprentals-core' ),
                 'subtitle' => __( 'Info is taken from https://www.paypal.com/ or http://sandbox.paypal.com/ See help:', 'wprentals-core' ).'<a href="https://help.wprentals.org/article/paypal-set-up/" target="_blank">https://help.wprentals.org/article/paypal-set-up/</a>',
             ),
-           
+
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Stripe Settings', 'wprentals-core' ),
         'id'         => 'stripe_settings_tab',
@@ -3532,7 +3645,7 @@
                 'type'     => 'text',
                 'title'    => __( 'Stripe Publishable Key', 'wprentals-core' ),
                 'subtitle' => __( 'Info is taken from your account at https://dashboard.stripe.com/login See help: ', 'wprentals-core' ).'<a href="https://help.wprentals.org/article/stripe-set-up/" target="_blank">https://help.wprentals.org/article/stripe-set-up/</a>',
-            ),  
+            ),
             array(
                 'id'       => 'wp_estate_stripe_webhook',
                 'required' => array('wp_estate_enable_stripe','=','yes'),
@@ -3542,17 +3655,17 @@
             ),
         ),
     ) );
-    
+
     // -> START Search Selection
     Redux::setSection( $opt_name, array(
         'title' => __( 'Search', 'wprentals-core' ),
         'id'    => 'advanced_search_settings',
         'icon'  => 'el el-search'
-    ) ); 
-    
+    ) );
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Advanced Search Settings', 'wprentals-core' ),
-        'id'         => 'advanced_search_settings_tab',   
+        'id'         => 'advanced_search_settings_tab',
         'subsection' => true,
         'fields'     => array(
            array(
@@ -3588,7 +3701,7 @@
                             'yes' => 'yes',
                             'no'  => 'no'
                     ),
-                
+
             ),
             array(
                 'id'       => 'wp_estate_wpestate_autocomplete',
@@ -3627,7 +3740,7 @@
             ),
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Advanced Search Form', 'wprentals-core' ),
         'id'         => 'advanced_search_form_tab',
@@ -3640,7 +3753,7 @@
                 'subtitle' => __( 'Type 1 - vertical design - hardcoded search type
                                    </br>Type 2 - horizontal design - hardcoded search type
                                    </br>Type 3 and 4 - work only with search custom fields.', 'wprentals-core' ),
-                'options'  =>array( 
+                'options'  =>array(
                             'newtype'   => esc_html__( 'Type 1','wprentals-core'),
                             'oldtype'   => esc_html__( 'Type 2','wprentals-core'),
                             'type3'     => esc_html__( 'Type 3','wprentals-core'),
@@ -3668,7 +3781,7 @@
                 'type'     => 'button_set',
                 'title'    => __( 'Show Amenities and Features fields?', 'wprentals-core' ),
                 'subtitle' => __( 'Displayed Only on: header search type 3 and 4, half map filters.', 'wprentals-core' ),
-                'options'  =>array( 
+                'options'  =>array(
                             'yes'   => 'yes',
                             'no'   => 'no',
                             ),
@@ -3680,21 +3793,21 @@
                 'required' => array('wp_estate_show_adv_search_extended','=','yes'),
                 'multi'    => true,
                 'title'    => __( 'Amenities and Features for Advanced Search', 'wprentals-core' ),
-                'subtitle' => __( 'Select which features and amenities show in search.', 'wprentals-core' ),   
+                'subtitle' => __( 'Select which features and amenities show in search.', 'wprentals-core' ),
                 'options'  =>wprentals_redux_advanced_exteded(),
             ),
-            
-            
+
+
             array(
                 'id'       => 'wp_estate_show_dropdowns',
                 'type'     => 'button_set',
                 'title'    => __( 'Show Dropdowns for Guests, beds, bathrooms or rooms?', 'wprentals-core' ),
                 'subtitle' => __( 'Works ONLY for SEARCH TYPE 3 and 4. Guests, Rooms, Bedrooms or Bathrooms must be added to Search Custom Fields for the option to apply.', 'wprentals-core' ),
-                'options'  =>array( 
+                'options'  =>array(
                             'yes'   => 'yes',
                             'no'   => 'no',
                             ),
-                'default' => 'no'
+                'default' => 'yes'
             ),
             array(
                 'id'       => 'wp_estate_adv_search_label_for_form',
@@ -3702,8 +3815,8 @@
                 'title'    => __( 'Advanced Search Label for type 3', 'wprentals-core' ),
                 'subtitle' => __( 'Advanced Search Label for type 3', 'wprentals-core' ),
             ),
-            
-            
+
+
             array(
                 'id'       => 'wp_estate_adv_search_fields_no',
                 'type'     => 'text',
@@ -3726,13 +3839,51 @@
                             </br>*<strong>Greater, Smaller and Equal</strong> must be used only for numeric fields.
                             </br>*<strong>Like</strong> MUST be used for all text fields (including dropdowns)
                             </br>*<strong>Date Greater / Date Smaller</strong> can be used for all date format fields.
-                            </br>*Labels will not apply for taxonomy dropdowns fields. These sync with the names added in Listing Submit Settings</br>', 'wprentals-core' ),   
-                'full_width' => true,
+                            </br>*Labels will not apply for taxonomy dropdowns fields. These sync with the names added in Listing Submit Settings</br>', 'wprentals-core' ),
+               'full_width' => true,
             ),
-            
+
         ),
     ) );
-    
+
+
+     Redux::setSection( $opt_name, array(
+        'title'      => __( 'Half Map Search Form', 'wprentals-core' ),
+        'id'         => 'advanced_search_half_map_form_tab',
+        'subsection' => true,
+        'fields'     => array(
+
+             array(
+                'id'       => 'wp_estate_adv_search_fields_no_half_map',
+                'type'     => 'text',
+                'title'    => __( 'No of Search fields', 'wprentals-core' ),
+                'subtitle' => __( 'No of Search fields for type 3 and 4.', 'wprentals-core' ),
+                'default'  => '3'
+            ),
+            array(
+                'id'       => 'wp_estate_search_fields_no_per_row_half_map',
+                'type'     => 'text',
+                'title'    => __( 'No of Search fields per row', 'wprentals-core' ),
+                'subtitle' => __( 'No of Search fields per row (Possible values: 2,3,4). Only for type 3 and 4', 'wprentals-core' ),
+                'default'  => '3'
+            ),
+            array(
+               'id'       => 'wpestate_set_search_half_map',
+               'type'     => 'wpestate_set_search',
+               'title'    => __( 'Type 3, Type 4 and Type 5 custom search fields setup', 'wprentals-core' ),
+               'subtitle' => __( '*Do not duplicate fields and make sure search fields do not contradict themselves.
+                            </br>*<strong>Greater, Smaller and Equal</strong> must be used only for numeric fields.
+                            </br>*<strong>Like</strong> MUST be used for all text fields (including dropdowns)
+                            </br>*<strong>Date Greater / Date Smaller</strong> can be used for all date format fields.
+                            </br>*Labels will not apply for taxonomy dropdowns fields. These sync with the names added in Listing Submit Settings</br>', 'wprentals-core' ),
+               'full_width' => true,
+            ),
+
+
+
+        ),
+        ));
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Geo Location Search', 'wprentals-core' ),
         'id'         => 'geo_location_search_tab',
@@ -3744,7 +3895,7 @@
                 'title'    => __( 'Use Geo Location Search', 'wprentals-core'),
                 'subtitle' => __( 'If YES, the Geo Location search show in half map properties list and half map advanced search results, above the search fields.', 'wprentals-core' ),
                 'default'  => 'no',
-                'options'  =>array( 
+                'options'  =>array(
                             'no'   => 'no',
                             'yes'   => 'yes',
                             ),
@@ -3755,9 +3906,9 @@
                 'title'    => __( 'Show Geo Location Search in:', 'wprentals-core' ),
                 'subtitle' => __( 'Select between miles and kilometers.', 'wprentals-core' ),
                 'default'  => 'miles',
-                'options'  =>array ( 
+                'options'  =>array (
                            'miles' =>  esc_html__('miles','wprentals-core'),
-                           'km'    =>  esc_html__('km','wprentals-core') 
+                           'km'    =>  esc_html__('km','wprentals-core')
                             ),
             ),
             array(
@@ -3783,7 +3934,7 @@
             ),
         ),
     ) );
-    
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Advanced Search Form Position', 'wprentals-core' ),
         'id'         => 'advanced_search_form_position_tab',
@@ -3794,19 +3945,19 @@
                 'type'     => 'button_set',
                 'title'    => __( 'Use sticky search ?', 'wprentals-core' ),
                 'subtitle' => __( 'This will replace the sticky header. Doesn\'t apply to search type 1', 'wprentals-core' ),
-                'options'  =>array( 
+                'options'  =>array(
                             'no'   => 'no',
                             'yes'   => 'yes',
                             ),
                 'default' => 'no'
             ),
-            
+
             array(
                 'id'       => 'wp_estate_use_float_search_form',
                 'type'     => 'button_set',
                 'title'    => __( 'Use Float Search Form ?', 'wprentals-core' ),
                 'subtitle' => __( 'The search form is "floating" over the media header and you set the distance between search and browser\'s margin bottom below.', 'wprentals-core' ),
-                'options'  =>array( 
+                'options'  =>array(
                             'no'   => 'no',
                             'yes'   => 'yes',
                             ),
@@ -3820,7 +3971,7 @@
                 'subtitle' => __( 'Distance between search form and the browser margin bottom: Ex 200px or 20%.', 'wprentals-core' ),
                 'default'  => '20%'
             ),
-             
+
             array(
                 'id'       => 'wp_estate_float_form_top_tax',
                 'type'     => 'text',
@@ -3829,24 +3980,24 @@
                 'subtitle' => __( 'Distance between search form and the browser margin bottom in px Ex 200px or 20% - for taxonomy, category and archives pages.', 'wprentals-core' ),
                 'default'  => '15%'
             ),
-            
+
             array(
                 'id'       => 'wp_estate_search_on_start',
                 'required' =>  array('wp_estate_use_float_search_form','=','no'),
                 'type'     => 'button_set',
                 'title'    => __( 'Put Search form before the header media ?', 'wprentals-core' ),
                 'subtitle' => __( 'Works with "Use FLoat Form" options set to no. Doesn\'t apply to search type 1', 'wprentals-core' ),
-                'options'  =>array( 
+                'options'  =>array(
                             'no'   => 'no',
                             'yes'   => 'yes',
                             ),
                 'default'  => 'no'
             ),
-          
-         
+
+
         ),
     ) );
-    
+
      Redux::setSection( $opt_name, array(
         'title'      => __( 'Advanced Search Colors', 'wprentals-core' ),
         'id'         => 'advanced_search_colors_tab',
@@ -3881,70 +4032,15 @@
             ),
         ),
     ) );
-    
-       // -> START Rentals Club Selection
-    Redux::setSection( $opt_name, array(
-        'title' => __( 'Rentals Club', 'wprentals-core' ),
-        'id'    => 'rentals_club_sidebar',
-        'icon'  => 'el el-unlock'
-    ) );
-    
-    Redux::setSection( $opt_name, array(
-        'title'      => __( 'Rentals Club API Key', 'wprentals-core' ),
-        'id'         => 'rentals_api_tab',
-        'desc'       => __( 'RentalsClub API is a 3rd party system that offers exclusive extensions for WP Rentals theme. If you wish to use any of the extensions available, you will need to fill in the below info. For more information check here: ', 'wprentals-core' ) . '<a href=" http://www.rentalsclub.org/" target="_blank"> http://www.rentalsclub.org/</a>',
-        'subsection' => true,
-        'fields'     => array(
-            array(
-                'id'       => 'opt-custom-callback1',
-                'type'     => 'callback',
-                'title'    => __( 'Rentals Club Api Status', 'redux-framework-demo' ),
-                'callback' => 'redux_my_rentals_club_api'
-            ),
-            array(
-                'id'       => 'wp_estate_rcapi_api_key',
-                'type'     => 'text',
-                'title'    => __( 'Rentals Club API Key', 'wprentals-core' ),
-                'subtitle' => __( 'Rentals Club API Key', 'wprentals-core' ),
-            ),
-            array(
-                'id'       => 'wp_estate_rcapi_api_secret_key',
-                'type'     => 'text',
-                'title'    => __( 'Rentals Club API Secret Key', 'wprentals-core' ),
-                'subtitle' => __( 'Rentals Club API Secret Key', 'wprentals-core' ),
-            ),
-            array(
-                'id'       => 'wp_estate_rcapi_api_username',
-                'type'     => 'text',
-                'title'    => __( 'Rentals Club Username', 'wprentals-core' ),
-                'subtitle' => __( 'Rentals Club Username', 'wprentals-core' ),
-            ),
-             array(
-                'id'       => 'wp_estate_rcapi_api_password',
-                'type'     => 'text',
-                'title'    => __( 'Rentals Club Password', 'wprentals-core' ),
-                'subtitle' => __( 'Rentals Club password', 'wprentals-core' ),
-            ),
-        ),
-    ) );
-    
-    
-    
-    
-    
-    
-    Redux::setSection( $opt_name, array(
-        'title'      => __( 'SMS Management', 'wprentals-core' ),
-        'id'         => 'sms_notice_tab',
-        'desc'       => __( 'SMS Management is offered through Twilio API <a href="https://www.twilio.com">https://www.twilio.com</a>. You will need an active account with them to use their SMS service and you may need to buy extra SMS as well. Your account info will have to be added below. ', 'wprentals-core' ),
-        'subsection' => true,
-        'fields'     => array(
+
+
+    $sms_data_array=array(
             array(
                 'id'       => 'wp_estate_sms_verification',
                 'type'     => 'button_set',
                 'title'    => __( 'Enable SMS service', 'wprentals-core' ),
                 'subtitle' => __( 'Enable SMS service', 'wprentals-core' ),
-                'options'  =>array( 
+                'options'  =>array(
                             'no'   => 'no',
                             'yes'   => 'yes'
                             ),
@@ -3974,49 +4070,97 @@
                 'style' => 'info',
                 'title' => __( 'Leave "content" blank for the sms notifications you don\'t wish to send. Global variables: %website_url as website url,%website_name as website name, %user_email as user_email, %username as username', 'wprentals-core' ),
             ),
-            array(
-                'id'       => 'wp_estate_sms',
-                'type'     => 'callback',
-                'title'    => __( 'SMS Content', 'wprentals-core' ),
-                'subtitle' =>__('<strong>Please Edit SMS content via rentalsclub.org </strong>','wprentals-core'),
-                'callback' => 'wpestate_sms_notice_managment_redux',
-                'full_width' => true,
-        ),
-        ),
+
+        );
+
+
+
+
+
+
+
+        $sms_array=array(
+            'validation'                =>  __('Phone Number Validation','wprentals'),
+            'admin_new_user'            =>  __('New user admin notification','wprentals'),
+            'password_reset_request'    =>  __('Password Reset Request','wprentals'),
+            'password_reseted'          =>  __('Password Reseted','wprentals'),
+            'approved_listing'          =>  __('Approved Listings','wprentals'),
+            'admin_expired_listing'     =>  __('Admin - Expired Listing','wprentals'),
+            'paid_submissions'          =>  __('Paid Submission','wprentals'),
+            'featured_submission'       =>  __('Featured Submission','wprentals'),
+            'account_downgraded'        =>  __('Account Downgraded','wprentals'),
+            'membership_cancelled'      =>  __('Membership Cancelled','wprentals'),
+            'free_listing_expired'      =>  __('Free Listing Expired','wprentals'),
+            'new_listing_submission'    =>  __('New Listing Submission','wprentals'),
+            'recurring_payment'         =>  __('Recurring Payment','wprentals'),
+            'membership_activated'      =>  __('Membership Activated','wprentals'),
+            'agent_update_profile'      =>  __('Update Profile','wprentals'),
+            'bookingconfirmeduser'      =>  __('Booking Confirmed - User','wprentals'),
+            'bookingconfirmed'          =>  __('Booking Confirmed','wprentals'),
+            'bookingconfirmed_nodeposit'=>  __('Booking Confirmed - no deposit','wprentals'),
+            'inbox'                     =>  __('Inbox- New Message','wprentals'),
+            'newbook'                   =>  __('New Booking Request','wprentals'),
+            'mynewbook'                 =>  __('User - New Booking Request','wprentals'),
+            'newinvoice'                =>  __('Invoice generation','wprentals'),
+            'deletebooking'             =>  __('Booking request rejected','wprentals'),
+            'deletebookinguser'         =>  __('Booking Request Cancelled','wprentals'),
+            'deletebookingconfirmed'    =>  __('Booking Period Cancelled ','wprentals'),
+            'new_wire_transfer'         =>  __('New wire Transfer','wprentals'),
+            'admin_new_wire_transfer'   =>  __('Admin - New wire Transfer','wprentals'),
+            'full_invoice_reminder'     =>  __('Invoice Payment Reminder','wprentals'),
+        );
+
+
+     foreach ($sms_array as $key=>$label ){
+
+       // $value          = stripslashes( wprentals_get_option('wp_estate_'.$key,'') );
+
+        $temp_array = array(
+                'id'       => 'wp_estate_sms_'.$key,
+                'type'     => 'text',
+                'title'    => __( 'SMS for', 'wprentals-core' ).' '.$label,
+                'subtitle' => wpestate_emails_extra_details($key,1),
+            );
+
+        $sms_data_array[]=$temp_array;
+     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Redux::setSection( $opt_name, array(
+        'title'      => __( 'SMS Management', 'wprentals-core' ),
+        'id'         => 'sms_notice_tab',
+        'desc'       => __( 'SMS Management is offered through Twilio API <a href="https://www.twilio.com">https://www.twilio.com</a>. You will need an active account with them to use their SMS service and you may need to buy extra SMS as well. Your account info will have to be added below. ', 'wprentals-core' ),
+        'subsection' => false,
+        'fields'     => $sms_data_array,
     ) );
-    
-   
-    
-       
-       
-       
-     Redux::setSection( $opt_name, array(
-        'title'      => __( 'Payments Manageent', 'wprentals-core' ),
-        'id'         => 'payments_management_tab',
-        'desc'       => __( '<strong>The actual payments can be made only in RentalsClub.org interface </strong>','wprentals-core' ),
-        'subsection' => true,
-        'fields'     => array(
-            array(
-                'id'       => 'opt-custom-callback2',
-                'class'     =>'rcapi_payment_management_info',
-                'type'     => 'callback',
-                'title'    => __( 'Payments Management', 'redux-framework-demo' ),
-                'full_width' => true,
-                'callback' => 'rcapi_payment_management_info'
-            ),
-        )
-        )
-    );
-    
-    
+
+
+
+
+
+
+
+
     // -> START help Selection
     Redux::setSection( $opt_name, array(
         'title' => __( 'Help & Custom', 'wprentals-core' ),
         'id'    => 'help_custom_sidebar',
         'icon'  => 'el el-question',
-     
-    ) );  
-    
+
+    ) );
+
     Redux::setSection( $opt_name, array(
         'title'      => __( 'Help & Custom', 'wprentals-core' ),
         'id'         => 'help_custom_tab',
@@ -4037,16 +4181,16 @@
                 'title'    => __( 'WpEstate Fan', 'wprentals-core' ),
                 'subtitle' => __( 'The option "Yes" places a discrete link to wpestate.org in the footer.', 'wprentals-core' ),
                 'options'  => array(
-                            'no'  => 'no', 
+                            'no'  => 'no',
                             'yes' => 'yes'
                             ),
                 'default'  => 'no',
             ),
         ),
     ) );
-    
-    
-    
+
+
+
     /*
      * <--- END SECTIONS
      */

@@ -129,7 +129,7 @@ abstract class WPBakeryShortCode extends WPBakeryVisualComposerAbstract {
 		} elseif ( is_string( $param ) && ! empty( $param ) ) {
 			$name = 'admin_enqueue_js_' . md5( $param );
 			self::$js_scripts[] = $name;
-			wp_register_script( $name, $param, array( 'jquery' ), WPB_VC_VERSION, true );
+			wp_register_script( $name, $param, array( 'jquery-core' ), WPB_VC_VERSION, true );
 		}
 	}
 
@@ -262,6 +262,10 @@ abstract class WPBakeryShortCode extends WPBakeryVisualComposerAbstract {
 		}
 		$this->findShortcodeTemplate();
 		if ( $this->html_template && file_exists( $this->html_template ) ) {
+			if ( strpos( $this->html_template, WPB_PLUGIN_DIR ) === false ) {
+				// Modified or new
+				Vc_Modifications::$modified = true;
+			}
 			ob_start();
 			/** @var string $content - used inside template */
 			$output = require $this->html_template;

@@ -1,3 +1,52 @@
+3.19.8 - 12 Dec 2020
+- Improvement: Shortcode compatibility with PHP 8.0 – Deprecated: Function ultimate_wrap_shortcode_in_div().
+﻿- Fix: Deprecated jquery issue into Interactive Mouse Parallax row background after WordPress - 5.6
+﻿- Fix: Console warning jQuery.browser is deprecated after WordPress - 5.6
+﻿- Fix: Console warning indexOf is not a function after WordPress - 5.6
+﻿- Fix: Console warning jquery-fn-load is deprecated for below elements after WordPress - 5.6
+﻿	- Heading
+﻿	- Countdown
+﻿	- Creative-link
+﻿	- Dual-Button
+﻿	- Filp-Box
+﻿	- iHover
+﻿	- Info-banner
+﻿	- Info-Box
+﻿	- Info-circle
+﻿	- Modal popup
+﻿	- Team Module
+﻿	- Content Box
+﻿	- Image separator
+﻿	- Google Map
+﻿	- Advanced carousel
+﻿
+﻿- Fix: Console warning pseudo-event is deprecated for below modules after WordPress - 5.6
+﻿	- Advanced Button
+﻿	- Flip-Box
+﻿	- Interactive Banner
+
+3.19.7 - 09 Nov 2020
+- Improvement: Updated the jparallax.js library for the parallax effect.
+﻿- Improvement: Updated the strings into the backend.
+﻿- Fix - Console warning jquery-fn-load-is-deprecated.
+﻿- Fix - Interactive Mouse Parallax row background not working.
+﻿- Fix - Typography is not applied to prefix into the Fancy text element.
+
+3.19.6 - 12 Aug 2020
+- Improvement: Compatibility to WordPress 5.5.
+- Fix: Google Fonts are not loading into the Google Font Manager tab for WordPress 5.5.
+- Fix: Upload the custom icon support is not working for WordPress 5.5.
+- Fix: Save button functionality is not working for the elements with the WordPress 5.5.
+- Fix: Switch buttons of the Element Tab and Debug Tab are not working with the WordPress 5.5.
+
+3.19.5 - 16 June 2020
+- New: Users can now share non-personal usage data to help us test and develop better products. ( <a href="https://store.brainstormforce.com/usage-tracking/?utm_source=changelog&utm_medium=changelog&utm_campaign=usage_tracking" target="_blank" rel="noopener">Know More</a> )
+﻿- Fix: Fixed the flip-box background overlapping issue into firefox.
+﻿- Fix: Fixed the duplicate ID issue into the Counter element.
+﻿﻿﻿﻿- Fix: Fixed the PHP notice issue with the PHP 7.4﻿﻿﻿﻿
+﻿- Fix: Breaking the UI for the video element while using the Vimeo link.
+﻿- Fix: Fixed the PHP notice ﻿trying to access array offset on the value of type bool﻿﻿﻿﻿.﻿
+
 3.19.4 - 12 March 2020
 - Improvement: Updated Dual Color Heading element code for WPML compatibility.
 - Fix: PHP Notice of $icon_img variable is not defined.

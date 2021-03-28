@@ -64,82 +64,11 @@ class Wpestate_Advanced_Search_widget extends WP_Widget {
                 $price_slider_label = wpestate_show_price_label_slider($min_price_slider,$max_price_slider,$wpestate_currency,$wpestate_where_currency);
                   
              
-                print '<form id="widget_search" method="get"   action="'.$adv_submit.'" >';
-                          
-            
-                if (function_exists('icl_translate') ){
-                    print do_action( 'wpml_add_language_form_field' );
-                }
-      
-                $search_type    =   wprentals_get_option('wp_estate_adv_search_type','');
- 
-                if($search_type == 'oldtype' || $search_type=='newtype'){ 
-
-                    print '
-                    <div class="map_icon">';
-                        print  wpestate_search_location_field(esc_html__('Where do you want to go ?','wprentals-core'),'sidebar');
-                    print '</div>
-
-                    <div class="has_calendar calendar_icon ">
-                        <input type="text" id="check_in_widget" class="form-control " name="check_in" placeholder="'.esc_html__( 'Check-In','wprentals-core').'">       
-                    </div>
-
-                    <div class="has_calendar calendar_icon ">
-                        <input type="text" id="check_out_widget" disabled class="form-control " name="check_out" placeholder="'.esc_html__( 'Check-Out','wprentals-core').'">
-                    </div>
-
-                    <div class="dropdown form-control guest_form">
-                        <div data-toggle="dropdown" id="guest_no_widget" class="filter_menu_trigger" data-value="all"> '.esc_html__( 'Guests','wprentals-core').' <span class="caret caret_filter"></span> </div>           
-                        <input type="hidden" name="guest_no" id="guest_no_wid" value="">
-                        <ul class="dropdown-menu filter_menu" role="menu" aria-labelledby="guest_no_wid">'. wpestate_get_guest_dropdown().'
-                        </ul>
-                    </div>
-
-
-
-                    <div class="adv_search_widget">
-                        <p>
-                            <label>'.esc_html__( 'Price range:','wprentals-core').'</label>
-                            <span id="amount_wd"  style="border:0;">'.$price_slider_label.'</span>
-                        </p>
-                        <div id="slider_price_widget"></div>
-                        <input type="hidden" id="price_low_widget"  name="price_low"  value="'.$min_price_slider.'"/>
-                        <input type="hidden" id="price_max_widget"  name="price_max"  value="'.$max_price_slider.'"/>
-                    </div>';
-                    
-                }else{
-                    if($search_type=='type4'){
-                        wpestate_search_type_inject($categ_select_list,$action_select_list,'half');
-                    }
-            
-            
-                    $adv_search_what            =  wprentals_get_option('wp_estate_adv_search_what');
-        
-                    foreach($adv_search_what as $key=>$search_field){
-                        $search_col         =   3;
-                        $search_col_price   =   6;
-                        if($search_field=='property_price'){
-                            $search_col=$search_col_price;
-                        }
-                        if(strtolower($search_field)=='location' ){
-                            $search_col=$search_col_price;
-                        }
-                        print '<div class="col-md-12 '.str_replace(" ","_", stripslashes($search_field) ).' ">';
-                            print wpestate_show_search_field_new($_REQUEST,'sidebar',$search_field,$action_select_list,$categ_select_list,$select_city_list,$select_area_list,$key);
-
-                        print '</div>'; 
-
-                    }
-            
-                    get_template_part('libs/internal_autocomplete_wpestate');
-                }
-                
-                
-                
-                print'<button class="wpb_btn-info wpb_regularsize wpestate_vc_button  vc_button" id="advanced_submit_widget">'.esc_html__( 'Search','wprentals-core').'</button>
-                       <input type="hidden" name="is_half" value="1" />
-                </form>  
-                '; 
+                 
+   
+    $search_object3          =   new WpRentalsSearch();
+    
+     print $search_object3->wpstate_display_search_form('sidebar'); 
                 get_template_part('libs/internal_autocomplete_wpestate');
 		print $after_widget;
                 

@@ -27,7 +27,7 @@ class WPBakeryShortCode_VC_Column extends WPBakeryShortCode {
 	 *
 	 */
 	protected function shortcodeScripts() {
-		wp_register_script( 'vc_jquery_skrollr_js', vc_asset_url( 'lib/bower/skrollr/dist/skrollr.min.js' ), array( 'jquery' ), WPB_VC_VERSION, true );
+		wp_register_script( 'vc_jquery_skrollr_js', vc_asset_url( 'lib/bower/skrollr/dist/skrollr.min.js' ), array( 'jquery-core' ), WPB_VC_VERSION, true );
 		wp_register_script( 'vc_youtube_iframe_api_js', 'https://www.youtube.com/iframe_api', array(), WPB_VC_VERSION, true );
 	}
 
@@ -148,8 +148,11 @@ class WPBakeryShortCode_VC_Column extends WPBakeryShortCode {
 	 */
 	public function contentAdmin( $atts, $content = null ) {
 		$width = '';
+		$atts = vc_map_get_attributes( $this->getShortcode(), $atts );
 		// @codingStandardsIgnoreLine
-		extract( vc_map_get_attributes( $this->getShortcode(), $atts ) );
+		extract( $atts );
+		$this->atts = $atts;
+
 		$output = '';
 
 		$column_controls = $this->getColumnControls( $this->settings( 'controls' ) );

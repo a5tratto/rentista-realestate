@@ -4,6 +4,13 @@ add_action( 'after_setup_theme', 'wpestate_create_agent_type' ,20);
 
 if( !function_exists('wpestate_create_agent_type') ):
     function wpestate_create_agent_type() {
+      $rewrites   =   get_option('wp_estate_url_rewrites',true);
+        $rewrites   =   wpestate_safe_rewite();
+        if(isset($rewrites[7])){
+            $slug=$rewrites[7];
+        }else{
+            $slug='owners';
+        }
         register_post_type( 'estate_agent',
             array(
                 'labels' => array(
@@ -23,7 +30,7 @@ if( !function_exists('wpestate_create_agent_type') ):
             ),
             'public' => true,
             'has_archive' => true,
-            'rewrite' => array('slug' => 'owners'),
+            'rewrite' => array('slug' => $slug),
             'supports' => array('title', 'editor', 'thumbnail','comments'),
             'can_export' => true,
             'register_meta_box_cb' => 'wpestate_add_agents_metaboxes',

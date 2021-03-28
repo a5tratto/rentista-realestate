@@ -4,7 +4,7 @@
  * Plugin URI: https://brainstormforce.com/demos/ultimate/
  * Author: Brainstorm Force
  * Author URI: https://www.brainstormforce.com
- * Version: 3.19.4
+ * Version: 3.19.8
  * Description: Includes WPBakery Page Builder premium addon elements like Icon, Info Box, Interactive Banner, Flip Box, * Info List & Counter. Best of all - provides A Font Icon Manager allowing users to upload / delete custom icon fonts.
  * Text Domain: ultimate_vc
  * License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -29,7 +29,7 @@ if ( ! defined( '__ULTIMATE_ROOT__' ) ) {
 }
 
 if ( ! defined( 'ULTIMATE_VERSION' ) ) {
-	define( 'ULTIMATE_VERSION', '3.19.4' );
+	define( 'ULTIMATE_VERSION', '3.19.8' );
 }
 
 if ( ! defined( 'ULTIMATE_URL' ) ) {
@@ -218,6 +218,28 @@ if ( ! class_exists( 'Ultimate_VC_Addons' ) ) {
 			add_filter( 'bsf_skip_braisntorm_menu', array( $this, 'uavc_skip_brainstorm_menu' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'front_modal_menu' ) );
 
+			if ( is_admin() ) {
+				// Load Astra Notices library.
+				require_once UAVC_DIR . '/lib/notices/class-astra-notices.php';
+			}
+
+			// BSF Analytics library.
+			if ( ! class_exists( 'BSF_Analytics_Loader' ) ) {
+				require_once UAVC_DIR . 'admin/bsf-analytics/class-bsf-analytics-loader.php';
+			}
+
+			$bsf_analytics = BSF_Analytics_Loader::get_instance();
+
+			$bsf_analytics->set_entity(
+				array(
+					'bsf' => array(
+						'product_name'    => 'Ultimate Addons for WPBakery Page Builder',
+						'path'            => UAVC_DIR . 'admin/bsf-analytics',
+						'author'          => 'Brainstorm Force',
+						'time_to_display' => '+24 hours',
+					),
+				)
+			);
 		}
 
 		/**

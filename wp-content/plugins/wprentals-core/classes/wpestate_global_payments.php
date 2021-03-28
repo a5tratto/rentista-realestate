@@ -7,27 +7,27 @@
 
 
 class Wpestate_Global_Payments {
-   
+
     public $stripe_payments;
-    public $is_woo;  
+    public $is_woo;
     public $userID;
     public $user_email;
-    
+
     function __construct() {
-        
+
         $this->is_woo   =   wprentals_get_option('wp_estate_enable_woo','') ;
         $current_user   =   wp_get_current_user();
 
         $this->userID                  =    $current_user->ID;
         $this->user_email              =    $current_user->user_email;
-        
+
         if(  $this->is_woo =='yes' ) {
             add_filter( 'woocommerce_cart_item_permalink','__return_false');
             add_action( 'wp_ajax_wpestate_woo_pay',                 array( $this, 'wpestate_woo_pay') );
             add_action( 'wp_ajax_mopriv_wpestate_woo_pay',          array( $this, 'wpestate_woo_pay') );
             add_filter( 'woocommerce_thankyou_order_received_text', array($this, 'wpestate_woocommerce_thankyou_order_received_text'),10,2 );
             add_action( 'woocommerce_before_single_product',        array($this, 'wpestate_product_redirect') );
-            add_action( 'woocommerce_product_query',                array($this, 'wpestate_custom_pre_get_posts_query' ));  
+            add_action( 'woocommerce_product_query',                array($this, 'wpestate_custom_pre_get_posts_query' ));
             add_action( 'woocommerce_order_status_completed',       array($this, 'wpestate_payment_complete') );
             add_action( 'woocommerce_order_status_processing',      array($this, 'wpestate_payment_complete_for_processing') );
             add_action( 'woocommerce_thankyou',                     array($this,'order_attach') );
@@ -35,15 +35,15 @@ class Wpestate_Global_Payments {
             add_filter( 'woocommerce_create_account_default_checked', '__return_true');
             add_filter('woocommerce_checkout_get_value',array($this,'wpestate_checkout_get_value'),10,2);
         }
-        
-        
-        
+
+
+
         require_once WPESTATE_PLUGIN_PATH.'classes/wpestate_stripe_payments.php';
         $this->stripe_payments=new Wpestate_stripe_payments();
-        
+
     }
-    
-    
+
+
     function wpestate_checkout_get_value($input,$key){
         global $current_user;
         switch ($key) :
@@ -63,19 +63,19 @@ class Wpestate_Global_Payments {
                 return $current_user->phone;
             break;
         endswitch;
-        
+
     }
-   
+
     /**
     * woo checkout
-    * 
+    *
     *
     * @since    2.7
     * @access   private
     */
-   
+
     function custom_override_checkout_fields( $fields ) {
-        
+
         unset($fields['billing']['billing_company']);
         unset($fields['billing']['billing_address_1']);
         unset($fields['billing']['billing_address_2']);
@@ -90,12 +90,12 @@ class Wpestate_Global_Payments {
 
     /**
     * order received &user non registred
-    * 
+    *
     *
     * @since    2.7
     * @access   private
     */
-    
+
     function order_attach( $order_id ) {
         $current_user   =   wp_get_current_user();
         $user_id        =   $current_user->ID;
@@ -103,13 +103,13 @@ class Wpestate_Global_Payments {
         $order      =   new WC_Order($order_id);
         $products   =   $order->get_items();
 
-        foreach($products as $prod){ 
+        foreach($products as $prod){
             $product_id         =   $prod['product_id'];
 
             $wpestate_propid    =  intval(  get_post_meta( $product_id, '_prop_id', true) );
             $bookid             =  intval(  get_post_meta( $product_id, '_booking_id', true) );
             $invoice_no         =  intval( get_post_meta( $product_id, '_invoice_id', true) );
-            $depozit            =  floatval ( get_post_meta( $product_id, '_price', true) );  
+            $depozit            =  floatval ( get_post_meta( $product_id, '_price', true) );
 
 
             $arg = array(
@@ -138,51 +138,51 @@ class Wpestate_Global_Payments {
 
 
 
-       
+
     /**
     * order received txt
-    * 
+    *
     *
     * @since    2.7
     * @access   private
     */
-    
-    
+
+
     function wpestate_woocommerce_thankyou_order_received_text ( $thank_you_msg,$order_id ) {
-  
+
         $order = wc_get_order( $order_id );
         $products   =   $order->get_items();
 
-        foreach($products as $prod){ 
+        foreach($products as $prod){
             $product_id         =   $prod['product_id'];
-            $product_bought     =   wc_get_product( $product_id ); 
+            $product_bought     =   wc_get_product( $product_id );
             $is_submit          =   get_post_meta( $product_id, '_is_submit', true );
             $listing_id         =   get_post_meta( $product_id, '_prop_id', true );
-              
+
             if($is_submit==1){
                 $url= wpestate_get_template_link('user_dashboard.php') ;
                 $thank_you_msg.='</br><a href="'.$url.'" class="return_woo_button  " >'.esc_html__('Return to Dashboard','wprentals-core').'</a>';
-                
+
             }else{
                 $url = wpestate_get_template_link('user_dashboard_my_reservations.php');
                 $thank_you_msg.='</br><a href="'.$url.'" class="return_woo_button  " >'.esc_html__('Return to My Reservations','wprentals-core').'</a>';
             }
-            
+
         }
-        
-        
+
+
 
     return $thank_you_msg;
 }
-    
+
     /**
     * woo pre query
-    * 
+    *
     *
     * @since    2.7
     * @access   private
     */
-    
+
     function wpestate_custom_pre_get_posts_query($q){
         $meta_query = (array) $q->get( 'meta_query' );
         $meta_query[]=array(
@@ -191,35 +191,35 @@ class Wpestate_Global_Payments {
             'value' => ''
                );
         $q->set( 'meta_query', $meta_query );
-        
-      
+
+
     }
-    
-    
-    
+
+
+
      /**
     * woo rodduct except
-    * 
+    *
     *
     * @since    2.7
     * @access   private
     */
-     
+
     function wpestate_product_redirect(){
         $product_id =   get_the_ID();
         $propid     =   get_post_meta( $product_id, '_prop_id',true);
-        
+
         if(intval($propid)!==0){
             wp_redirect( home_url(), 301 );
           exit;
         }
 
     }
-    
-    
+
+
     /**
     * woo show_cart thank you page
-    * 
+    *
     *
     * @since    2.7
     * @access   private
@@ -228,12 +228,12 @@ class Wpestate_Global_Payments {
         $order = wc_get_order( $order_id );
         $products   =   $order->get_items();
 
-        foreach($products as $prod){ 
+        foreach($products as $prod){
             $product_id         =   $prod['product_id'];
-            $product_bought     =   wc_get_product( $product_id ); 
+            $product_bought     =   wc_get_product( $product_id );
             $is_submit          =   get_post_meta( $product_id, '_is_submit', true );
             $listing_id         =   get_post_meta( $product_id, '_prop_id', true );
-              
+
             if($is_submit==1){
                 $url=
                 wp_safe_redirect( wpestate_get_template_link('user_dashboard.php') );
@@ -242,15 +242,15 @@ class Wpestate_Global_Payments {
                 wp_safe_redirect(  wpestate_get_template_link('user_dashboard_my_reservations.php') );
                 exit;
             }
-            
+
         }
-    
+
     }
-    
-            
+
+
      /**
     * woo show cart icon
-    * 
+    *
     *
     * @since    2.7
     * @access   private
@@ -260,14 +260,14 @@ class Wpestate_Global_Payments {
             return;
         }
         print '<li id="shopping-cart-mobile" class="wpestate_header_shoping_cart_icon_mobile">
-        <a href="'.wc_get_cart_url().'">'.esc_html('Your Cart','wprentals-core').'<span class="wpestream_cart_counter_header_mobile">'.WC()->cart->get_cart_contents_count().'</span></a>';
+        <a href="'.wc_get_cart_url().'">'.esc_html__('Your Cart','wprentals-core').'<span class="wpestream_cart_counter_header_mobile">'.WC()->cart->get_cart_contents_count().'</span></a>';
         print '</li>';
     }
-    
-    
+
+
      /**
     * woo show cart icon
-    * 
+    *
     *
     * @since    2.7
     * @access   private
@@ -285,17 +285,17 @@ class Wpestate_Global_Payments {
         <path d="M17.8145 7.88421L13.8478 1.2423C13.79 1.15019 13.7514 1.04711 13.7344 0.939408C13.7175 0.831702 13.7225 0.721639 13.7493 0.615975C13.776 0.51031 13.8239 0.411275 13.89 0.32495C13.956 0.238624 14.0389 0.166831 14.1334 0.113976C14.3134 0.00507863 14.5289 -0.0274323 14.7326 0.0235629C14.9363 0.0745582 15.1117 0.204903 15.2203 0.386054L19.187 7.02796L17.8145 7.88421Z" fill="black"/>
         </svg>
         <span class="wpestream_cart_counter_header">'.WC()->cart->get_cart_contents_count().'</span></div>';
-          
+
     }
-    
+
      /**
     * woo show cart
-    * 
+    *
     *
     * @since    2.7
     * @access   private
     */
-    
+
     function show_cart(){
         $return_string='';
         print '<div class="wpestate_header_shoping_cart" id="wpestate_header_shoping_cart">';
@@ -308,7 +308,7 @@ class Wpestate_Global_Payments {
                 $product    =   wc_get_product( $product_id );
                 $link       =   get_permalink($product_id);
                 $title      =   get_the_title($product_id);
-                
+
                 $wpestate_propid  =    get_post_meta( $product_id, '_prop_id', 'true' );
                 $thumb            =   wp_get_attachment_image_src(get_post_thumbnail_id($wpestate_propid),'wpestate_user_thumb');
                 $return_string .=   '<div class="wpestate_in_cart_item">';
@@ -317,40 +317,40 @@ class Wpestate_Global_Payments {
                 $return_string .=   '<div class="wpestate_in_cart_price">'.esc_html__('Price','wprentals-core').': '.wc_price($price).'</div>';
                // $return_string .=   '<div class="wpestate_in_cart_remove" data-productid="'.$product_id.'"><i class="far fa-times-circle"></i></div>';
                 $return_string .=   '</div>';
-              
+
         }
-        
+
         $return_string .=  '<div class="wpestate_header_shoping_cart_total">'.esc_html__('Total:','wprentals-core').' '. WC()->cart->get_cart_total().'</div>';
-       
+
         $return_string .=   '<a class="wpestate_header_view_cart " href="'.wc_get_cart_url().'">'.esc_html__('View Cart','wprentals-core').'</a>';
         $return_string .=   '<a class="wpestate_header_view_checkout" href="'.wc_get_checkout_url().'">'.esc_html__('Checkout','wprentals-core').'</a>';
         print $return_string;
         print '</div>';
         print'</div>';
     }
-    
-    
-    
+
+
+
     /**
     * woo
-    * 
+    *
     *
     * @since    2.7
     * @access   private
     */
-    
-    function wpestate_payment_complete_for_processing($order_id){   
+
+    function wpestate_payment_complete_for_processing($order_id){
         $order      =   wc_get_order( $order_id );
         $user       =   $order->get_user();
         $user_id    =   $order->get_user_id();
         $products   =   $order->get_items();
-
-        foreach($products as $prod){ 
+        $user_data  =   get_userdata($user_id);
+        foreach($products as $prod){
             $product_id         =   $prod['product_id'];
-            $product_bought     =   wc_get_product( $product_id ); 
+            $product_bought     =   wc_get_product( $product_id );
             $is_submit          =   intval( get_post_meta( $product_id, '_is_submit', true ) );
             $listing_id         =   intval( get_post_meta( $product_id, '_prop_id', true ) );
-              
+
             if($is_submit==1){
                 $is_upgrade         =   intval(  get_post_meta( $product_id, '_is_featured', true) );
                 $listing_id         =   intval(  get_post_meta( $product_id, '_prop_id', true) );
@@ -360,27 +360,27 @@ class Wpestate_Global_Payments {
                 $bookid             =  intval(  get_post_meta( $product_id, '_booking_id', true) );
                 $invoice_no         =  intval( get_post_meta( $product_id, '_invoice_id', true) );
                 $depozit            =  floatval ( get_post_meta( $product_id, '_price', true) );
-                wpestate_booking_mark_confirmed($bookid,$invoice_no, $this->userID,$depozit,$this->user_email ,0);
-                   
+                wpestate_booking_mark_confirmed($bookid,$invoice_no, $this->userID,$depozit,$user_data->user_email ,0);
+
             }
-            
-          
+
+
         }
-    
+
     }
-    
-    function wpestate_payment_complete($order_id){   
+
+    function wpestate_payment_complete($order_id){
         $order      =   wc_get_order( $order_id );
         $user       =   $order->get_user();
         $user_id    =   $order->get_user_id();
         $products   =   $order->get_items();
-
-        foreach($products as $prod){ 
+        $user_data  =   get_userdata($user_id);
+        foreach($products as $prod){
             $product_id         =   $prod['product_id'];
-            $product_bought     =   wc_get_product( $product_id ); 
+            $product_bought     =   wc_get_product( $product_id );
             $is_submit          =   intval( get_post_meta( $product_id, '_is_submit', true ) );
             $listing_id         =   intval( get_post_meta( $product_id, '_prop_id', true ) );
-              
+
             if($is_submit==1){
                 $is_upgrade         =   intval(  get_post_meta( $product_id, '_is_featured', true) );
                 $listing_id         =   intval(  get_post_meta( $product_id, '_prop_id', true) );
@@ -390,28 +390,28 @@ class Wpestate_Global_Payments {
                 $bookid             =  intval(  get_post_meta( $product_id, '_booking_id', true) );
                 $invoice_no         =  intval( get_post_meta( $product_id, '_invoice_id', true) );
                 $depozit            =  floatval ( get_post_meta( $product_id, '_price', true) );
-                //wpestate_booking_mark_confirmed($bookid,$invoice_no, $this->userID,$depozit,$this->user_email ,0);
-                   
+                wpestate_booking_mark_confirmed($bookid,$invoice_no, $this->userID,$depozit,$user_data->user_email ,0);
+
             }
-            
-          
+
+
         }
-    
+
     }
-    
-    
-     
+
+
+
      /**
     * woo
-    * 
+    *
     *
     * @since    2.7
     * @access   private
     */
-    
+
     function wpestate_process_payment_submission($listing_id, $is_upgrade,$is_featured){
-    
-            $time = time(); 
+
+            $time = time();
             $date = date('Y-m-d H:i:s',$time);
 
             if($is_upgrade==1){
@@ -429,65 +429,65 @@ class Wpestate_Global_Payments {
                         'ID'            => $listing_id,
                         'post_status'   => 'publish'
                         );
-                    $post_id =  wp_update_post($post ); 
+                    $post_id =  wp_update_post($post );
                 }
 
-                
+
                 $invoice_id = wpestate_insert_invoice('Listing','One Time',$listing_id,$date,$this->userID,0,0,'' );
                 update_post_meta($invoice_id, 'invoice_status', 'confirmed');
-               
+
                 wpestate_email_to_admin(0);
             }
     }
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
      /**
     * woo show pay button
-    * 
+    *
     *
     * @since    2.7
     * @access   private
     */
-    
+
     function show_button_pay($property_id,$bookid,$invoice_id,$depozit,$type){
         if(floatval($type)==2){
             update_post_meta($property_id,'woo_pay_submit_depozit',$depozit);
-            print '<div class="woo_pay_submit"  data-is_featured="0" data-propid="'.esc_attr($property_id).'"  data-deposit="'.esc_attr($depozit).'">'.esc_html__('Pay Now','wprentals-core').'</div>';              
+            print '<div class="woo_pay_submit"  data-is_featured="0" data-propid="'.esc_attr($property_id).'"  data-deposit="'.esc_attr($depozit).'">'.esc_html__('Pay Now','wprentals-core').'</div>';
         } else if(floatval($type)==3){
             update_post_meta($property_id,'woo_pay_submit_depozit',$depozit);
-            print '<div class="woo_pay_submit" data-is_featured="1"  data-propid="'.esc_attr($property_id).'"  data-deposit="'.esc_attr($depozit).'">'.esc_html__('Upgrade to Featured','wprentals-core').'</div>';              
+            print '<div class="woo_pay_submit" data-is_featured="1"  data-propid="'.esc_attr($property_id).'"  data-deposit="'.esc_attr($depozit).'">'.esc_html__('Upgrade to Featured','wprentals-core').'</div>';
         }else{
             update_post_meta(intval($invoice_id),'woo_pay_depozit',$depozit);
-            print '<div class="woo_pay" data-deposit="'.esc_attr($depozit).'"  data-propid="'.esc_attr($property_id).'" data-bookid="'.esc_attr($bookid).'" data-invoiceid="'.esc_attr($invoice_id).'">'.esc_html__('Pay Now','wprentals-core').'</div>';              
+            print '<div class="woo_pay" data-deposit="'.esc_attr($depozit).'"  data-propid="'.esc_attr($property_id).'" data-bookid="'.esc_attr($bookid).'" data-invoiceid="'.esc_attr($invoice_id).'">'.esc_html__('Pay Now','wprentals-core').'</div>';
         }
     }
-    
-    
+
+
      /**
     * woo
-    * 
+    *
     *
     * @since    2.7
     * @access   private
     */
-   
+
     function wpestate_woo_pay(){
         $current_user       =   wp_get_current_user();
         $userID             =   $current_user->ID;
-        $user_email         =   $current_user->user_email ;        
+        $user_email         =   $current_user->user_email ;
         $wpestate_propid    =   floatval($_POST['propid']);
         $invoice_no         =   esc_html($_POST['invoiceid']);
         $bookid             =   floatval($_POST['book_id']);
-      
+
         $is_submit          =   floatval($_POST['is_submit']);
         $is_featured        =   floatval($_POST['is_featured']);
-        
-       
-        
+
+
+
         if(isset($_POST['invoiceid'])){
             $depozit            =   floatval( get_post_meta(floatval($invoice_no),'woo_pay_depozit',true) );
             $product_id         =   $this->wpestate_fa2_woo($invoice_no);
@@ -499,9 +499,9 @@ class Wpestate_Global_Payments {
                 $product_id         =   $this->wpestate_fa2_woo($wpestate_propid);
             }
         }
-        
-     
-        
+
+
+
         if( $product_id == 0 ){
            $product_id = $this->wpestate_fa_woo($wpestate_propid,$invoice_no,$bookid,$depozit,$is_submit,$is_featured);
         }
@@ -510,24 +510,24 @@ class Wpestate_Global_Payments {
     }
 
 
-     
+
      /**
     * woo add to cart ning log
-    * 
+    *
     *
     * @since    2.7
     * @access   private
     */
-   
+
     function wpestate_woo_pay_non_logged($wpestate_propid,$invoice_no,$bookid,$depozit){
-        
+
         $wpestate_propid    =   floatval($wpestate_propid);
         $invoice_no         =   esc_html($invoice_no);
         $bookid             =   floatval($bookid);
         $depozit            =   floatval($depozit);
-        
+
         $product_id         =   $this->wpestate_fa2_woo($invoice_no);
-        
+
         if( $product_id == 0 ){
            $product_id = $this->wpestate_fa_woo($wpestate_propid,$invoice_no,$bookid,$depozit,0,0);
         }
@@ -536,15 +536,15 @@ class Wpestate_Global_Payments {
     }
 
 
-    
+
      /**
     * woo shw pay button fa
-    * 
+    *
     *
     * @since    2.7
     * @access   private
     */
-    
+
     function wpestate_fa_woo($wpestate_propid,$invoice_no,$bookid,$depozit,$is_submit,$is_featured){
         if($is_submit==1){
             if($is_featured==1){
@@ -562,21 +562,22 @@ class Wpestate_Global_Payments {
                 'post_type'      => "product",
                 'comment_status' => 'closed'
             );
-            
-       
-            
+
+
+
         }else{
+            $title = sprintf( esc_html__("Payment for Invoice %s , Booking %s, Name: %s, Period: %s ", 'wprentals-core'), floatval($invoice_no) ,$bookid, get_the_title($wpestate_propid), esc_html__( 'from','wprentals-core').' '.esc_html(get_post_meta($bookid, 'booking_from_date', true)).' '.esc_html__( 'to','wprentals-core').' '. esc_html(get_post_meta($bookid, 'booking_to_date', true)));
             $post = array(
                 'post_content'   => '',
                 'post_status'    => "publish",
-                'post_title'     => sprintf( esc_html__("Payment for Invoice %s , Booking %s", 'wprentals-core'), floatval($invoice_no) ,$bookid),
+                'post_title'     => $title,
                 'post_parent'    => '',
                 'post_type'      => "product",
                 'comment_status' => 'closed'
             );
         }
         $product_id = wp_insert_post( $post );
-        
+
         update_post_meta( $product_id, '_stock_status', 'instock' );
         update_post_meta( $product_id, '_visibility', 'visible' );
         update_post_meta( $product_id, '_downloadable', 'no' );
@@ -591,9 +592,10 @@ class Wpestate_Global_Payments {
         update_post_meta( $product_id, '_prop_id', $wpestate_propid );
         update_post_meta( $product_id, '_is_submit', $is_submit );
         update_post_meta( $product_id, '_is_featured', $is_featured );
-        
-        
-        
+
+        $booking_guests     =   floatval(get_post_meta($bookid, 'booking_guests', true));
+        update_post_meta( $product_id, '_booking_guests', $booking_guests );
+
         update_post_meta( $product_id, '_wc_min_qty_product', 1 );
         update_post_meta( $product_id, '_wc_max_qty_product', 1 );
         $data_variation = [
@@ -608,12 +610,12 @@ class Wpestate_Global_Payments {
         ];
         update_post_meta( $product_id, '_product_attributes', $data_variation );
         update_post_meta( $product_id, '_product_version', '3.0.1' );
-        
+
         return $product_id;
-        
+
     }
-    
-    
+
+
      function wpestate_fa2_woo($invoice_no){
            $args = [
                 'post_type'      => 'product',
@@ -621,11 +623,11 @@ class Wpestate_Global_Payments {
                 'meta_value'     => $invoice_no,
                 'posts_per_page' => 1
             ];
-           
-     
+
+
             $query = new WP_Query( $args );
 
-         
+
             if ( $query->have_posts() ) {
                 while ( $query->have_posts() ) {
                     $query->the_post();
@@ -634,19 +636,19 @@ class Wpestate_Global_Payments {
             }
             return 0;
      }
-    
-     
-     
-     
+
+
+
+
     /**
     * Create a Post Call
-    * 
+    *
     *
     * @since    2.7
     * @access   private
     */
     public function wpestate_make_post_call($url, $postdata,$token) {
-      
+
         $args=array(
                 'method' => 'POST',
                 'timeout' => 45,
@@ -660,69 +662,71 @@ class Wpestate_Global_Payments {
                         'Accept'        =>'application/json',
                         'Content-Type'  =>'application/json'
                 ],
-               
+
         );
 
-        
-        
-        $response = wp_remote_post( $url, $args ); 
-      
-        
+
+
+        $response = wp_remote_post( $url, $args );
+
+
 	if ( is_wp_error( $response ) ) {
 	    $error_message = $response->get_error_message();
             return $error_message;
             die();
 	} else {
-	   
+
             $body = wp_remote_retrieve_body( $response );
             $jsonResponse = json_decode( $body, true );
-        
-        
+
+
 	}
 
 	return $jsonResponse;
     }
 
-    
-    
- 
-    
+
+
+
+
     public function show_checkout() {
-       
+
         print '<div class="wprentals_sidebar_cart">';
             foreach( WC()->cart->get_cart() as $cart_item ){
                 print '<div class="wprentals_sidebar_cart_unit">';
                 $product_id         =   $cart_item['product_id'];
-                $product            =   wc_get_product( $product_id ); 
+                $product            =   wc_get_product( $product_id );
                 $wpestate_propid    =   get_post_meta( $product_id, '_prop_id', true );
                 $bookid             =   get_post_meta( $product_id, '_booking_id', true );
                 $invoice_no         =   get_post_meta( $product_id, '_invoice_id', true );
                 $is_submit          =   get_post_meta( $product_id, '_is_submit', true );
+                $booking_guests     =   get_post_meta( $product_id, '_booking_guests',true );
                 $preview            =   wp_get_attachment_image_src(get_post_thumbnail_id($wpestate_propid), 'wpestate_property_listings');
-                
-                
+
+
                 print '<img src="'.$preview[0].'" >';
                 print '<h3>'.$product->get_title().'</h3>';
-                
+
                 print '<div class="wpestate_cart_item"><span>'.esc_html__('Price','wprentals-core').':</span> '.wc_price($product->get_price()).'</div>';
                 if($is_submit==1){
-                    
+
                 }else{
                     print '<div class="wpestate_cart_item"><span>'.esc_html__('Property Name','wprentals-core').':</span> '.get_the_title($wpestate_propid).'</div>';
                     print '<div class="wpestate_cart_item"><span>'.esc_html__('Period','wprentals-core').':</span> '. esc_html__( 'from','wprentals-core').' '.esc_html(get_post_meta($bookid, 'booking_from_date', true)).' '.esc_html__( 'to','wprentals-core').' '. esc_html(get_post_meta($bookid, 'booking_to_date', true)).'</div>';
                     print '<div class="wpestate_cart_item"><span>'.esc_html__('Invoice no','wprentals-core').':</span> '.floatval($invoice_no).'</div>';
                     print '<div class="wpestate_cart_item"><span>'.esc_html__('Booking no','wprentals-core').':</span> '.$bookid.'</div>';
+                    print '<div class="wpestate_cart_item"><span>'.esc_html__('Guests no','wprentals-core').':</span> '.$booking_guests.'</div>';
                 }
                 print '</div>';
             }
 
-        
+
             print '<h4>'.esc_html__('Total','wprentals-core').': '.wc_price(WC()->cart->cart_contents_total).'</h4>';
-           
+
         print '</div>';
     }
-    
-    
-   
-    
+
+
+
+
 }

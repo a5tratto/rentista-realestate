@@ -18,10 +18,10 @@ function wpestate_tiny_short_codes_register() {
     if (!current_user_can('edit_posts') && !current_user_can('edit_pages')) {
         return;
     }
-    
+
     if (get_user_option('rich_editing') == 'true') {
         add_filter('mce_external_plugins', 'wpestate_add_plugin');
-        add_filter('mce_buttons_3', 'wpestate_register_button');    
+        add_filter('mce_buttons_3', 'wpestate_register_button');
     }
 
 }
@@ -31,33 +31,33 @@ function wpestate_tiny_short_codes_register() {
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 function wpestate_register_button($buttons) {
-    array_push($buttons, "|", "slider_recent_items");  
-     
+    array_push($buttons, "|", "slider_recent_items");
+
     array_push($buttons, "|", "testimonials");
-    array_push($buttons, "|", "recent_items");  
-    array_push($buttons, "|", "featured_agent"); 
+    array_push($buttons, "|", "recent_items");
+    array_push($buttons, "|", "featured_agent");
     array_push($buttons, "|", "featured_article");
     array_push($buttons, "|", "featured_property");
-    array_push($buttons, "|", "list_items_by_id"); 
-    array_push($buttons, "|", "login_form"); 
+    array_push($buttons, "|", "list_items_by_id");
+    array_push($buttons, "|", "login_form");
     array_push($buttons, "|", "register_form");
     array_push($buttons, "|", "advanced_search");
     array_push($buttons, "|", "font_awesome");
-    array_push($buttons, "|", "spacer"); 
+    array_push($buttons, "|", "spacer");
     array_push($buttons, "|", "icon_container");
     array_push($buttons, "|", "places_list");
     array_push($buttons, "|", "featured_place");
-    array_push($buttons, "|", "places_slider");  
+    array_push($buttons, "|", "places_slider");
     return $buttons;
 }
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-/////// poins to the right js 
+/////// poins to the right js
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-function wpestate_add_plugin($plugin_array) {   
+function wpestate_add_plugin($plugin_array) {
     $plugin_array['slider_recent_items']        = get_template_directory_uri() . '/js/shortcodes.js';
     $plugin_array['testimonials']               = get_template_directory_uri() . '/js/shortcodes.js';
     $plugin_array['recent_items']               = get_template_directory_uri() . '/js/shortcodes.js';
@@ -83,7 +83,7 @@ function wpestate_add_plugin($plugin_array) {
 
 
 function wpestate_register_shortcodes() {
-    add_shortcode('slider_recent_items', 'wpestate_slider_recent_posts_pictures');       
+    add_shortcode('slider_recent_items', 'wpestate_slider_recent_posts_pictures');
     add_shortcode('spacer', 'wpestate_spacer_shortcode_function');
     add_shortcode('recent-posts', 'wpestate_recent_posts_function');
     add_shortcode('testimonial', 'wpestate_testimonial_function');
@@ -101,8 +101,8 @@ function wpestate_register_shortcodes() {
     add_shortcode('featured_place', 'wpestate_featured_place');
     add_shortcode('places_slider','wpestate_places_slider');
     add_shortcode('simple_term_list','wpestate_simple_term_list');
-    
-  
+    add_shortcode('booking_form','wpestate_booking_form');
+    add_shortcode('full_map','wpestate_full_map_shortcode');
 }
 
 
@@ -115,7 +115,7 @@ function wprentals_autocomplete_populate () {
     global $wprentals_property_action_category_values;
     global $wprentals_property_city_values;
     global $wprentals_property_area_values;
-    
+
     $city_array=array();
     $area_array=array();
     $all_places=array();
@@ -129,8 +129,8 @@ function wprentals_autocomplete_populate () {
 
     $wprentals_property_category_values = array();
     $wprentals_property_action_category_values = array();
-        
-        
+
+
     $terms_city = get_terms( array(
             'taxonomy' => 'property_city',
             'hide_empty' => false,
@@ -181,7 +181,7 @@ function wprentals_autocomplete_populate () {
         $category_array[]=$temp_array;
         $global_categories[]=$temp_array;
 
-        $all_tax[]                      =   $temp_array;			
+        $all_tax[]                      =   $temp_array;
         $wprentals_all_tax_labels[$term->term_id] =   $term->name;
         $wprentals_property_category_values[]     =   $temp_array;
     }
@@ -222,8 +222,8 @@ function wprentals_autocomplete_populate () {
 add_action( 'vc_before_init', 'wpestate_vc_shortcodes' );
 if( function_exists('vc_map') ):
      if( !function_exists('wpestate_vc_shortcodes')):
-        function wpestate_vc_shortcodes(){  
-         
+        function wpestate_vc_shortcodes(){
+
         global $all_tax;
         global $wprentals_property_category_values;
         global $wprentals_all_tax_labels;
@@ -233,14 +233,191 @@ if( function_exists('vc_map') ):
 
 
 
-        $featured_places_array =   array(   
-                1 =>__('type1','wprentals-core'), 
-                2 =>__('type2','wprentals-core'), 
+
+            $map_shortcode_for=array('listings','contact');
+            $map_shorcode_show_contact_form=array('yes','no');
+
+    vc_map(
+               array(
+                   "name" => esc_html__("WpRentals Map with Listings","wprentals-core"),//done
+                   "base" => "full_map",
+                   "class" => "",
+                   "category" => esc_html__('Content','wprentals-core'),
+                   'admin_enqueue_js' => array(WPESTATE_PLUGIN_DIR_URL.'/vc_extend/bartag.js'),
+                   'admin_enqueue_css' => array(WPESTATE_PLUGIN_DIR_URL.'/vc_extend/bartag.css'),
+                   'weight'=>100,
+                   'icon'   =>'wpestate_vc_logo',
+                   'description'=>esc_html__('Map with Listings','wprentals-core'),
+
+                   "params" => array(
+
+
+                       array(
+                           "type" => "textfield",
+                           "holder" => "div",
+                           "class" => "",
+                           "heading" => esc_html__("Map Height","wprentals-core"),
+                           "param_name" => "map_height",
+                           "value" => "",
+                           "description" => esc_html__("Map Height","wprentals-core")
+                       ),
+
+
+
+                       array(
+                           "type" => "autocomplete",
+                           "holder" => "div",
+                           "class" => "",
+                           "heading" => esc_html__("Category Id's","wprentals-core"),
+                           "param_name" => "category_ids",
+                           "value" => "",
+                           "dependency" => array(
+                               "element" => "map_shortcode_for",
+                               "value" => "listings"
+                           ),
+                           "description" => esc_html__("list of category id's sepearated by comma (*only for properties)","wprentals-core"),
+
+                           'settings' => array(
+                                       'multiple' => true,
+                                       'sortable' => true,
+                                       'min_length' => 1,
+                                       'no_hide' => true,
+                                       'groups' => false,
+                                       'unique_values' => true,
+                                       'display_inline' => true,
+                                       'values' => $wprentals_property_category_values,
+                           )
+                       ),
+                       array(
+                           "type" => "autocomplete",
+                           "holder" => "div",
+                           "class" => "",
+                           "heading" => esc_html__("Action Id's","wprentals-core"),
+                           "param_name" => "action_ids",
+                           "value" => "",
+                           "dependency" => array(
+                               "element" => "map_shortcode_for",
+                               "value" => "listings"
+                           ),
+                           "description" => esc_html__("list of action ids separated by comma (*only for properties)","wprentals-core"),
+
+                           'settings' => array(
+                               'multiple' => true,
+                               'sortable' => true,
+                               'min_length' => 1,
+                               'no_hide' => true,
+                               'groups' => false,
+                               'unique_values' => true,
+                               'display_inline' => true,
+                               'values' => $wprentals_property_action_category_values,
+                           )
+                       ),
+                       array(
+                           "type" => "autocomplete",
+                           "holder" => "div",
+                           "class" => "",
+                           "heading" => esc_html__("City Id's ","wprentals-core"),
+                           "param_name" => "city_ids",
+                           "value" => "",
+                           "dependency" => array(
+                               "element" => "map_shortcode_for",
+                               "value" => "listings"
+                           ),
+                           "description" => esc_html__("list of city ids separated by comma (*only for properties)","wprentals-core"),
+
+                           'settings' => array(
+                               'multiple' => true,
+                               'sortable' => true,
+                               'min_length' => 1,
+                               'no_hide' => true,
+                               'groups' => false,
+                               'unique_values' => true,
+                               'display_inline' => true,
+                               'values' => $wprentals_property_city_values,
+                               ),
+                           ),
+                           array(
+                               "type" => "autocomplete",
+                               "holder" => "div",
+                               "class" => "",
+                               "heading" => esc_html__("Area Id's","wprentals-core"),
+                               "param_name" => "area_ids",
+                               "value" => "",
+                               "dependency" => array(
+                                   "element" => "map_shortcode_for",
+                                   "value" => "listings"
+                               ),
+                              "description" => esc_html__("list of area ids separated by comma (*only for properties)","wprentals-core"),
+
+                               'settings' => array(
+                                   'multiple' => true,
+                                   'sortable' => true,
+                                   'min_length' => 1,
+                                   'no_hide' => true,
+                                   'groups' => false,
+                                   'unique_values' => true,
+                                   'display_inline' => true,
+                                   'values' => $wprentals_property_area_values,
+
+                               ),
+                           ),
+
+
+                           array(
+                              "type" => "textarea_raw_html",
+                              "holder" => "div",
+                              "class" => "",
+                              "heading" => esc_html__("Map Style","wprentals-core"),
+                              "param_name" => "map_snazy",
+                              "value" => "",
+                              "description" => esc_html__("Map Style from snazy maps","wprentals-core")
+                          ),
+
+                       )
+               )
+       );
+
+
+
+        vc_map(
+            array(
+            "name" => esc_html__( "Booking Form for a single Property","wprentals-core"),
+            "base" => "booking_form",
+            "class" => "",
+            "category" => esc_html__( 'Content','wprentals-core'),
+            'admin_enqueue_js' => array(get_template_directory_uri().'/vc_extend/bartag.js'),
+            'admin_enqueue_css' => array(get_template_directory_uri().'/vc_extend/bartag.css'),
+            'weight'=>100,
+            'icon'   =>'wpestate_vc_logo',
+            'description'=>esc_html__( 'Booking Form for a single property','wprentals-core'),
+            "params" => array(
+                 array(
+                    "type" => "textfield",
+                    "holder" => "div",
+                    "class" => "",
+                    "heading" => esc_html__( "Id of the property","wprentals"),
+                    "param_name" => "id",
+                    "value" => "",
+                    "description" => esc_html__( "The id of the property","wprentals")
+                 ),
+
+            )
+         )
+        );
+
+
+
+
+
+
+        $featured_places_array =   array(
+                1 =>__('type1','wprentals-core'),
+                2 =>__('type2','wprentals-core'),
                 3 =>__('type3', 'wprentals-core'),
         );
-            
-            
-            
+
+
+
 
     vc_map(
     array(
@@ -271,7 +448,7 @@ if( function_exists('vc_map') ):
                             'unique_values' => true, // In UI show results except selected. NB! You should manually check values in backend
                             'display_inline' => true, // In UI show results inline view
                             'values' => $all_tax,
-                      
+
                         )  ,
             ),
             array(
@@ -283,7 +460,7 @@ if( function_exists('vc_map') ):
                 "value" => $featured_places_array,
                 "description" => esc_html__( "Select type1,type2 or type3","wprentals")
             ),
-           
+
             array(
                 "type" => "textfield",
                 "holder" => "div",
@@ -292,12 +469,22 @@ if( function_exists('vc_map') ):
                 "param_name" => "places_label",
                 "value" => "",
                 "description" => __("Featured_label text (use only for design type 3)", "wprentals")
+            ),
+
+            array(
+                "type" => "textfield",
+                "holder" => "div",
+                "class" => "",
+                "heading" => __("Image Height in px", "wprentals"),
+                "param_name" => "places_height",
+                "value" => "",
+                "description" => __("Image Height in px", "wprentals")
             )
 
         )
     )
     );
-    
+
     $categories =   array(
         'property_action_category'=>'Property Category',
         'property_category'=>'Property type',
@@ -305,8 +492,8 @@ if( function_exists('vc_map') ):
         'property_area'=>'Property Area',
         'property_features'=>'Property Features',
         'property_status'=>'Property Status');
-    
-    
+
+
     $list_type  =   array('horizontal','vertical');
     $term_show_count=array('yes','no');
     vc_map( array(
@@ -318,16 +505,16 @@ if( function_exists('vc_map') ):
         'admin_enqueue_css' => array(get_template_directory_uri().'/vc_extend/bartag.css'),
         'weight'=>100,
         'icon'   =>'wpestate_vc_logo',
-        'description'=>esc_html__( 'Simple Term List','wprentals-core'),  
+        'description'=>esc_html__( 'Simple Term List','wprentals-core'),
         "params" => array(
-           
+
             array(
                 "type" => "dropdown",
                 "holder" => "div",
                 "class" => "",
                 "heading" => esc_html__( "Category","wprentals"),
                 "param_name" => "term_list_category",
-               
+
                 "value" => array_flip($categories),
                 "description" => esc_html__( "Terms from what category","wprentals")
             ),
@@ -349,13 +536,13 @@ if( function_exists('vc_map') ):
                 "value" => $term_show_count,
                 "description" => esc_html__( "Show Term Count","wprentals")
             ),
-           
-        )    
-    ) 
-    );    
 
-    
-    
+        )
+    )
+    );
+
+
+
     vc_map( array(
         "name" => esc_html__( "Categories List","wprentals"),//done
         "base" => "places_list",
@@ -365,7 +552,7 @@ if( function_exists('vc_map') ):
         'admin_enqueue_css' => array(get_template_directory_uri().'/vc_extend/bartag.css'),
         'weight'=>100,
         'icon'   =>'wpestate_vc_logo',
-        'description'=>esc_html__( 'Categories List','wprentals-core'),  
+        'description'=>esc_html__( 'Categories List','wprentals-core'),
         "params" => array(
             array(
                 "type" => "autocomplete",
@@ -374,7 +561,7 @@ if( function_exists('vc_map') ):
                 "heading" => esc_html__( "Type the category name you want to show","wprentals"),
                 "param_name" => "place_list",
                 "value" => "",
-                "description" => esc_html__( "Type the category name you want to show","wprentals"),     
+                "description" => esc_html__( "Type the category name you want to show","wprentals"),
                 'settings' => array(
                             'multiple' => true,
                             'sortable' => true,
@@ -413,12 +600,12 @@ if( function_exists('vc_map') ):
                 "value" => "",
                 "description" => esc_html__( "Extra Class Name","wprentals")
             )
-        )    
-    ) 
-    );    
+        )
+    )
+    );
 
-    
-    
+
+
     $featured_listings=array('no','yes');
     vc_map(
     array(
@@ -441,7 +628,7 @@ if( function_exists('vc_map') ):
              "value" => "",
              "description" => esc_html__( "Section Title","wprentals")
           ),
-          
+
            array(
              "type" => "autocomplete",
              "holder" => "div",
@@ -458,13 +645,13 @@ if( function_exists('vc_map') ):
                                 'multiple' => true,
                                 'sortable' => true,
                                 'min_length' => 1,
-                                'no_hide' => true, 
-                                'groups' => false, 
-                                'unique_values' => true, 
-                                'display_inline' => true, 
-                                'values' => $wprentals_property_category_values,  
+                                'no_hide' => true,
+                                'groups' => false,
+                                'unique_values' => true,
+                                'display_inline' => true,
+                                'values' => $wprentals_property_category_values,
                         ),
-               
+
           ),
              array(
              "type" => "autocomplete",
@@ -488,7 +675,7 @@ if( function_exists('vc_map') ):
                                 'display_inline' => true,
                                 'values' => $wprentals_property_action_category_values,
                             ),
-            ),      
+            ),
            array(
              "type" => "autocomplete",
              "holder" => "div",
@@ -505,12 +692,12 @@ if( function_exists('vc_map') ):
                                 'multiple' => true,
                                 'sortable' => true,
                                 'min_length' => 1,
-                                'no_hide' => true, 
-                                'groups' => false, 
-                                'unique_values' => true, 
-                                'display_inline' => true, 
+                                'no_hide' => true,
+                                'groups' => false,
+                                'unique_values' => true,
+                                'display_inline' => true,
                                 'values' => $wprentals_property_city_values,
-                            ),              
+                            ),
             ),
             array(
              "type" => "autocomplete",
@@ -567,7 +754,7 @@ if( function_exists('vc_map') ):
              "param_name" => "autoscroll",
              "value" => "0",
              "description" => esc_html__( "Auto scroll period in seconds - 0 for manual scroll, 1000 for 1 second, 2000 for 2 seconds and so on.","wprentals")
-          ) 
+          )
         )
     )
     );
@@ -588,7 +775,7 @@ if( function_exists('vc_map') ):
        'admin_enqueue_css' => array(get_template_directory_uri().'/vc_extend/bartag.css'),
        'weight'=>100,
         'icon'   =>'wpestate_vc_logo',
-        'description'=>esc_html__( 'Icon Content Box Shortcode','wprentals-core'),  
+        'description'=>esc_html__( 'Icon Content Box Shortcode','wprentals-core'),
        "params" => array(
           array(
              "type" => "textfield",
@@ -618,7 +805,7 @@ if( function_exists('vc_map') ):
              "description" => esc_html__( "Content of the box goes here","wprentals")
           )
           ,
-          
+
            array(
              "type" => "textfield",
              "holder" => "div",
@@ -646,9 +833,9 @@ if( function_exists('vc_map') ):
                 "value" => "24",
                 "description" => esc_html__( "Title Font Size","wprentals")
             )
-          
+
        )
-    ) );    
+    ) );
 
 
 
@@ -682,9 +869,9 @@ if( function_exists('vc_map') ):
                  "param_name" => "height",
                  "value" => "40",
                  "description" => esc_html__( "Space height in px","wprentals")
-              )   
+              )
            )
-        )   
+        )
     );
 
 
@@ -736,7 +923,7 @@ if( function_exists('vc_map') ):
              "value" => "3",
              "description" => esc_html__( "How many items do you want to show ?","wprentals")
           ) ,
-            
+
            array(
              "type" => "textfield",
              "holder" => "div",
@@ -745,8 +932,8 @@ if( function_exists('vc_map') ):
              "param_name" => "rownumber",
              "value" => 4,
              "description" => esc_html__( "The number of items per row","wprentals")
-          ) , 
-         
+          ) ,
+
            array(
              "type" => "textfield",
              "holder" => "div",
@@ -765,10 +952,10 @@ if( function_exists('vc_map') ):
                 "description" => esc_html__( "Extra Class Name","wprentals")
             )
        )
-    ) );    
+    ) );
 
-   
 
+  $testimonials_type=array(1,2);
     vc_map(
            array(
            "name" => esc_html__( "Testimonial",'wprentals-core'),
@@ -817,7 +1004,27 @@ if( function_exists('vc_map') ):
                  "value" => "",
                  "description" => esc_html__( "Testimonial Text Here. ","wprentals")
               ),
+
                 array(
+                    "type" => "dropdown",
+                    "holder" => "div",
+                    "class" => "",
+                    "heading" => esc_html__("Testimonial Type","wprentals-core"),
+                    "param_name" => "testimonial_type",
+                    "value" => $testimonials_type,
+                    "description" => esc_html__("Select 1,2,3 or 4","wprentals-core")
+                ),
+
+               array(
+                    "type" => "textfield",
+                    "holder" => "div",
+                    "class" => "",
+                    "heading" => esc_html__("Stars for Type 2","wprentals-core"),
+                    "param_name" => "stars_client",
+                    "value" => "5",
+                    "description" => esc_html__("Only for type 2: no of stars for reviews (from 1 to 5, increment by 0.5) ","wprentals-core")
+                ),
+               array(
                 "type" => "textfield",
                 "holder" => "div",
                 "class" => "",
@@ -825,15 +1032,16 @@ if( function_exists('vc_map') ):
                 "param_name" => "extra_class_name",
                 "value" => "",
                 "description" => esc_html__( "Extra Class Name","wprentals")
-                )
+                ),
+
            )
-        )   
+        )
     );
-    
+
     $recent_items_space            = array('yes','no');
     $recent_show_feat_only         = array('no','yes');
     $random_pick                   = array('no','yes');
-    
+
     vc_map(
     array(
        "name" => esc_html__( "Recent Items","wprentals"),//done
@@ -918,7 +1126,7 @@ if( function_exists('vc_map') ):
                                     'display_inline' => true,
                                     'values' => $wprentals_property_action_category_values,
                                 ),
-            ), 
+            ),
             array(
               "type" => "autocomplete",
               "holder" => "div",
@@ -973,7 +1181,7 @@ if( function_exists('vc_map') ):
               "param_name" => "number",
               "value" => 4,
               "description" => esc_html__( "how many items","wprentals")
-            ) , 
+            ) ,
             array(
               "type" => "textfield",
               "holder" => "div",
@@ -982,7 +1190,7 @@ if( function_exists('vc_map') ):
               "param_name" => "rownumber",
               "value" => 4,
               "description" => esc_html__( "The number of items per row","wprentals")
-            ) , 
+            ) ,
 
             array(
               "type" => "textfield",
@@ -1017,13 +1225,13 @@ if( function_exists('vc_map') ):
              "param_name" => "random_pick",
              "value" => $random_pick,
              "description" => esc_html__( "Choose if properties should display randomly on page refresh. (*only for properties). The yes option may cause the site to load slowly so use it cautiously!","wprentals")
-          ) 
+          )
         )
     )
     );
 
-  
-    
+
+      $design_types=array(1=>1,2=>2);
     vc_map(
     array(
        "name" => esc_html__( "Featured Owner","wprentals"),
@@ -1036,28 +1244,37 @@ if( function_exists('vc_map') ):
        'icon'   =>'wpestate_vc_logo',
        'description'=>esc_html__( 'Featured Owner Shortcode','wprentals-core'),
        "params" => array(
-          array(
-             "type" => "textfield",
-             "holder" => "div",
-             "class" => "",
-             "heading" => esc_html__( "Owner Id","wprentals"),
-             "param_name" => "id",
-             "value" => "0",
-             "description" => esc_html__( "Owner Id","wprentals")
-          ),
-           array(
-             "type" => "textarea",
-             "holder" => "div",
-             "class" => "",
-             "heading" => esc_html__( "Notes","wprentals"),
-             "param_name" => "notes",
-             "value" => "",
-             "description" => esc_html__( "Notes for featured owner","wprentals")
-          )
+            array(
+                "type" => "textfield",
+                "holder" => "div",
+                "class" => "",
+                "heading" => esc_html__( "Owner Id","wprentals"),
+                "param_name" => "id",
+                "value" => "0",
+                "description" => esc_html__( "Owner Id","wprentals")
+            ),
+            array(
+                "type" => "textarea",
+                "holder" => "div",
+                "class" => "",
+                "heading" => esc_html__( "Notes","wprentals"),
+                "param_name" => "notes",
+                "value" => "",
+                "description" => esc_html__( "Notes for featured owner","wprentals")
+            ),
+            array(
+                "type" => "dropdown",
+                "holder" => "div",
+                "class" => "",
+                "heading" => esc_html__( "Type","wprentals"),
+                "param_name" => "design_type",
+                "value" => $design_types,
+                "description" => esc_html__( "Design Type 1 or 2","wprentals")
+            )
        )
     )
     );
-    
+
     $featured_article_type=array(
             1=>__("type1","wprentals"),
             2=>__("type2","wprentals"),
@@ -1096,7 +1313,7 @@ if( function_exists('vc_map') ):
         )
     )
     );
-    
+
     $featured_prop_type=array(
             1=>__("type1","wprentals"),
             2=>__("type2","wprentals"),
@@ -1136,7 +1353,7 @@ if( function_exists('vc_map') ):
     )
     );
 
-    
+
     vc_map(array(
        "name" => esc_html__( "Login Form","wprentals"),
        "base" => "login_form",
@@ -1146,7 +1363,7 @@ if( function_exists('vc_map') ):
        'admin_enqueue_css' => array(get_template_directory_uri().'/vc_extend/bartag.css'),
        'weight'=>100,
        'icon'   =>'wpestate_vc_logo',
-       'description'=>esc_html__( 'Login Form Shortcode','wprentals-core'),  
+       'description'=>esc_html__( 'Login Form Shortcode','wprentals-core'),
        "params" => array( array(
              "type" => "textfield",
              "holder" => "div",
@@ -1155,7 +1372,7 @@ if( function_exists('vc_map') ):
              "param_name" => "register_label",
              "value" => "",
              "description" => esc_html__( "Register link text","wprentals")
-            )     , 
+            )     ,
             array(
              "type" => "textfield",
              "holder" => "div",
@@ -1167,8 +1384,8 @@ if( function_exists('vc_map') ):
           )      )
     )
     );
-    
-    
+
+
     vc_map(
      array(
        "name" => esc_html__( "Register Form","wprentals"),
@@ -1179,15 +1396,15 @@ if( function_exists('vc_map') ):
        'admin_enqueue_css' => array(get_template_directory_uri().'/vc_extend/bartag.css'),
        'weight'=>100,
        'icon'   =>'wpestate_vc_logo',
-       'description'=>esc_html__( 'Register Form Shortcode','wprentals-core'),    
+       'description'=>esc_html__( 'Register Form Shortcode','wprentals-core'),
        "params" => array()
     )
-            
+
     );
-    
-    
-    
-    
+
+
+
+
     vc_map(
         array(
        "name" => esc_html__( "Advanced Search","wprentals"),
@@ -1198,7 +1415,7 @@ if( function_exists('vc_map') ):
        'admin_enqueue_css' => array(get_template_directory_uri().'/vc_extend/bartag.css'),
        'weight'=>100,
        'icon'   =>'wpestate_vc_logo',
-       'description'=>esc_html__( 'Advanced Search Shortcode','wprentals-core'),     
+       'description'=>esc_html__( 'Advanced Search Shortcode','wprentals-core'),
        "params" => array(
            array(
              "type" => "textfield",
@@ -1210,12 +1427,12 @@ if( function_exists('vc_map') ):
              "description" => esc_html__( "Section Title","wprentals")
           ))
     )
-           
-            
+
+
     );
-    
-    
-    
+
+
+
      vc_map(array(
         "name" => esc_html__("Categories Slider", "wprentals"), //done
         "base" => "places_slider",
@@ -1267,70 +1484,70 @@ if( function_exists('vc_map') ):
         )
         )
     );
-     
-    }   
+
+    }
 
 
 
 endif;
 function custom_css_wpestate($class_string, $tag) {
     if ($tag =='vc_row' ) {
-        $class_string .= ' wpestate_row'; 
+        $class_string .= ' wpestate_row';
     }
-    
+
     if ($tag =='vc_row_inner' ) {
-        $class_string .= ' wpestate_row_inner'; 
+        $class_string .= ' wpestate_row_inner';
     }
-    
-    
+
+
     if ($tag =='vc_tabs' ) {
-      $class_string .= ' wpestate_tabs'; 
+      $class_string .= ' wpestate_tabs';
     }
 
     if ($tag =='vc_tour' ) {
-      $class_string .= ' wpestate_tour'; 
+      $class_string .= ' wpestate_tour';
     }
 
     if ($tag =='vc_accordion' ) {
-      $class_string .= ' wpestate_accordion'; 
+      $class_string .= ' wpestate_accordion';
     }
 
     if ($tag =='vc_accordion_tab' ) {
-      $class_string .= ' wpestate_accordion_tab'; 
+      $class_string .= ' wpestate_accordion_tab';
     }
 
     if ($tag =='vc_carousel' ) {
-      $class_string .= ' wpestate_carousel'; 
+      $class_string .= ' wpestate_carousel';
     }
 
     if ($tag =='vc_progress_bar' ) {
-      $class_string .= ' wpestate_progress_bar'; 
+      $class_string .= ' wpestate_progress_bar';
     }
 
     if ($tag =='vc_toggle' ) {
-      $class_string .= ' wpestate_toggle'; 
+      $class_string .= ' wpestate_toggle';
     }
 
     if ($tag =='vc_message' ) {
-      $class_string .= ' wpestate_message'; 
+      $class_string .= ' wpestate_message';
     }
 
     if ($tag =='vc_posts_grid' ) {
-      $class_string .= ' wpestate_posts_grid'; 
+      $class_string .= ' wpestate_posts_grid';
     }
 
     if ($tag =='vc_cta_button' ) {
-      $class_string .= ' wpestate_cta_button '; 
+      $class_string .= ' wpestate_cta_button ';
     }
 
     if ($tag =='vc_cta_button2' ) {
-      $class_string .= ' wpestate_cta_button2 '; 
+      $class_string .= ' wpestate_cta_button2 ';
     }
 
     if ($tag =='vc_button' ) {
-      $class_string .= ' wpestate_vc_button '; 
+      $class_string .= ' wpestate_vc_button ';
     }
-  
+
   return $class_string.' '.$tag;
 }
 endif;

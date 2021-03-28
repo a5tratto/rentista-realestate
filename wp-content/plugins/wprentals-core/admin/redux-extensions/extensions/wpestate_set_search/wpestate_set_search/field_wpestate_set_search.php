@@ -77,6 +77,10 @@ if( !class_exists( 'ReduxFramework_wpestate_set_search' ) ) {
            
             $i=0;
             $adv_search_fields_no               =   floatval( wprentals_get_option('wp_estate_adv_search_fields_no') );
+            if( $this->field['name'] =='wprentals_admin[wpestate_set_search_half_map]' ){
+                $adv_search_fields_no               =   floatval( wprentals_get_option('wp_estate_adv_search_fields_no_half_map') );
+            }
+            
             $adv_search_what                    =   wprentals_get_option('wp_estate_adv_search_what','');
             $adv_search_how                     =   wprentals_get_option('wp_estate_adv_search_how','');
             $adv_search_label                   =   wprentals_get_option('wp_estate_adv_search_label','');
@@ -86,7 +90,7 @@ if( !class_exists( 'ReduxFramework_wpestate_set_search' ) ) {
             $name= $this->field['name'] . $this->field['name_suffix'] . '[unit_field_value][]';
        
       
-            print '<div class="custom_fields_wrapper">';
+            print  '<div class="custom_fields_wrapper">';
             print '<div class="field_row">
             <div class="field_item"><strong>'.__('Place in advanced search form','wprentals-core').'</strong></div>
             <div class="field_item"><strong>'.__('Search field','wprentals-core').'</strong></div>

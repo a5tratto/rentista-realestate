@@ -86,7 +86,7 @@ if(!defined('ABSPATH')) exit();
 										</rs-layer><!--
 
 										--><a
-											href="//revolution.themepunch.com/direct-customer-benefits/"
+											href="https://www.sliderrevolution.com/premium-slider-revolution/"
 											target="_blank"
 											class="tp-shape tp-shapewrapper rs-layer"
 											data-type="shape"
@@ -104,7 +104,6 @@ if(!defined('ABSPATH')) exit();
 										> 
 										</a><!--
 									--></rs-slide>
-								</rs-slides>
-								<rs-progress class="rs-bottom" style="visibility: hidden !important;"></rs-progress>
+								</rs-slides>								
 							</rs-module>
 						</rs-module-wrap>

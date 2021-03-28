@@ -21,7 +21,6 @@ function form($instance){
                     'property_action_category'  =>  esc_html__('Property Action','wprentals-core'),
                     'property_city'             =>  esc_html__('Property City','wprentals-core'),
                     'property_area'             =>  esc_html__('Property Area','wprentals-core'),
-                    'property_county_state'     =>  esc_html__('Property County/State','wprentals-core'),
                     'property_features'         =>  esc_html__('Property Features','wprentals-core'),
                     'property_status'           =>  esc_html__('Property Status','wprentals-core')
                 );

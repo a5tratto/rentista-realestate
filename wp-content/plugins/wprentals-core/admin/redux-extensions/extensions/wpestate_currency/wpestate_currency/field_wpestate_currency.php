@@ -88,11 +88,11 @@ if( !class_exists( 'ReduxFramework_wpestate_currency' ) ) {
                     if(isset($this->value['add_curr_label'][$i])){
                         $add_curr_label=$this->value['add_curr_label'][$i];
                     }
-                    
+                    $add_curr_value='';
                     if(isset($this->value['add_curr_value'][$i])){
                         $add_curr_value=$this->value['add_curr_value'][$i];
                     }
-                    
+                    $add_curr_order='';
                     if(isset($this->value['add_curr_order'][$i])){
                         $add_curr_order=$this->value['add_curr_order'][$i];
                     }

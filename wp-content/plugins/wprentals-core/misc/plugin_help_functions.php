@@ -1,18 +1,41 @@
 <?php
 
+
+if( !function_exists('wpestate_safe_rewite') ):
+function wpestate_safe_rewite(){
+    $rewrites   =   get_option('wp_estate_url_rewrites',true);
+    $return     =   array();
+
+    if(is_array($rewrites)){
+        foreach($rewrites as $key=>$value){
+            $return[$key] = str_replace('/', '', $value);
+        }
+    }
+
+    return $return;
+
+}
+endif;
+
+
+
+if( !function_exists('wpestate_recaptcha_path') ):
 function wpestate_recaptcha_path($secret,$captcha){
     return "https://www.google.com/recaptcha/api/siteverify?secret=".$secret."&response=".$captcha."&remoteip=".esc_html($_SERVER['REMOTE_ADDR']);
 }
+endif;
+
+
 
 if( !function_exists('wpestate_disable_filtering') ):
 function wpestate_disable_filtering($filter, $function){
-    remove_filter($filter, $function); 
+    remove_filter($filter, $function);
 }
 endif;
 
 if( !function_exists('wpestate_disable_filtering2') ):
 function wpestate_disable_filtering2($filter, $function,$order='',$params=''){
-    remove_filter($filter, $function,$order,$params); 
+    remove_filter($filter, $function,$order,$params);
 }
 endif;
 
@@ -44,7 +67,7 @@ function wpestate_secondary_lic_plugin(){
 
     $theme_activated    =   get_option('is_theme_activated','');
     if($theme_activated==='is_active'){
-        return true;          
+        return true;
     }else{
         return false;
     }
@@ -53,14 +76,14 @@ endif;
 
 if( !function_exists('wpestate_general_country_list') ):
     function wpestate_general_country_list($selected){
-        
-        
+
+
         $countries = wprentals_return_country_array();
-        
+
         $country_select='<select id="general_country" style="width: 200px;" name="general_country">';
 
         foreach($countries as $key=>$country){
-            $country_select.='<option value="'.$key.'"';  
+            $country_select.='<option value="'.$key.'"';
             if($selected==$key){
                 $country_select.='selected="selected"';
             }
@@ -70,7 +93,7 @@ if( !function_exists('wpestate_general_country_list') ):
         $country_select.='</select>';
         return $country_select;
     }
-endif; // end   wpestate_general_country_list  
+endif; // end   wpestate_general_country_list
 
 
 
@@ -78,25 +101,15 @@ endif; // end   wpestate_general_country_list
 if( !function_exists('wprentals_return_sidebar_array') ):
     function wprentals_return_sidebar_array(){
         $return_array=array();
-        
- 
-        foreach ( $GLOBALS['wp_registered_sidebars'] as $sidebar ) { 
+
+
+        foreach ( $GLOBALS['wp_registered_sidebars'] as $sidebar ) {
             $return_array[$sidebar['id']]=ucwords($sidebar['name']);
-        } 
+        }
         return $return_array;
     }
 endif;
 
-function redux_my_rentals_club_api(){
-     if( rcapi_check_api_status()=='true' ){
-        print '<div class="apinotice">'.esc_html__('You are now connected to RentalsClub API!','wprentals-core').'</div>';
-     
-    }else{
-        print '<div class="apinotice apierror">'.esc_html__('Failed connection to RentalsClub.org Api! Please check your user credentials and api keys!','wprentals-core').'</div>';
-
-         
-    }
-}
 
 
 
@@ -104,7 +117,7 @@ if ( ! function_exists( 'wprentals_update_option' ) ):
     function wprentals_update_option( $theme_option,  $value ,$option = false) {
         global $wprentals_admin;
         if($option){
-            $option_array   =   array($option=>$value); 
+            $option_array   =   array($option=>$value);
             Redux::setOption('wprentals_admin',$theme_option, $option_array);
         }else{
             Redux::setOption('wprentals_admin',$theme_option, $value);
@@ -119,7 +132,7 @@ if ( ! function_exists( 'wprentals_get_option' ) ):
 
         global $wprentals_admin;
 
-        
+
         if($theme_option=='wpestate_currency'){
             $return = wpestate_reverse_convert_redux_wp_estate_multi_curr();
             return $return;
@@ -139,7 +152,7 @@ if ( ! function_exists( 'wprentals_get_option' ) ):
             $return = wpestate_reverse_convert_redux_wpestate_convert_redux_wp_estate_custom_infobox_fields();
             return $return;
         }
-        
+
 
         if( isset( $wprentals_admin[$theme_option]) && $wprentals_admin[$theme_option]!='' ){
             $return=$wprentals_admin[$theme_option];
@@ -160,82 +173,82 @@ endif;
 //////////////////////////////////////////////////////////////////////////////
 /// Ajax adv search contact function
 ////////////////////////////////////////////////////////////////////////////////
-add_action( 'wp_ajax_nopriv_wpestate_ajax_agent_contact_page', 'wpestate_ajax_agent_contact_page' );  
-add_action( 'wp_ajax_wpestate_ajax_agent_contact_page', 'wpestate_ajax_agent_contact_page' );  
+add_action( 'wp_ajax_nopriv_wpestate_ajax_agent_contact_page', 'wpestate_ajax_agent_contact_page' );
+add_action( 'wp_ajax_wpestate_ajax_agent_contact_page', 'wpestate_ajax_agent_contact_page' );
 
 if( !function_exists('wpestate_ajax_agent_contact_page') ):
 
     function wpestate_ajax_agent_contact_page(){
-    
+
         // check for POST vars
-        $hasError = false; 
+        $hasError = false;
         $allowed_html   =   array();
         $to_print='';
         if ( !wp_verify_nonce( $_POST['nonce'], 'ajax-property-contact')) {
             exit("No naughty business please");
-        }   
-       
-        
+        }
+
+
         if ( isset($_POST['name']) ) {
            if( trim($_POST['name']) =='' || trim($_POST['name']) ==esc_html__( 'Your Name','wprentals-core') ){
-               echo json_encode(array('sent'=>false, 'response'=>esc_html__( 'The name field is empty !','wprentals-core') ));         
-               exit(); 
+               echo json_encode(array('sent'=>false, 'response'=>esc_html__( 'The name field is empty !','wprentals-core') ));
+               exit();
            }else {
                $name = wp_kses( trim($_POST['name']),$allowed_html );
-           }          
-        } 
+           }
+        }
 
         //Check email
         if ( isset($_POST['email']) || trim($_POST['email']) ==esc_html__( 'Your Email','wprentals-core') ) {
               if( trim($_POST['email']) ==''){
-                    echo json_encode(array('sent'=>false, 'response'=>esc_html__( 'The email field is empty','wprentals-core' ) ) );      
-                    exit(); 
+                    echo json_encode(array('sent'=>false, 'response'=>esc_html__( 'The email field is empty','wprentals-core' ) ) );
+                    exit();
               } else if( filter_var($_POST['email'],FILTER_VALIDATE_EMAIL) === false) {
-                    echo json_encode(array('sent'=>false, 'response'=>esc_html__( 'The email doesn\'t look right !','wprentals-core') ) ); 
+                    echo json_encode(array('sent'=>false, 'response'=>esc_html__( 'The email doesn\'t look right !','wprentals-core') ) );
                     exit();
               } else {
                     $email = wp_kses( trim($_POST['email']),$allowed_html );
               }
         }
 
-        
-        
+
+
         $website = wp_kses( trim($_POST['website']),$allowed_html );
         $subject =esc_html__( 'Contact form from ','wprentals-core') . esc_url( home_url('/') ) ;
 
-        //Check comments 
+        //Check comments
         if ( isset($_POST['comment']) ) {
               if( trim($_POST['comment']) =='' || trim($_POST['comment']) ==esc_html__( 'Your Message','wprentals-core')){
-                echo json_encode(array('sent'=>false, 'response'=>esc_html__( 'Your message is empty !','wprentals-core') ) ); 
+                echo json_encode(array('sent'=>false, 'response'=>esc_html__( 'Your message is empty !','wprentals-core') ) );
                 exit();
               }else {
                 $comment = wp_kses($_POST['comment'] ,$allowed_html );
               }
-        } 
+        }
 
         $message='';
-        
+
         $receiver_email = esc_html( wprentals_get_option('wp_estate_email_adr', '') );;
-       
-        
-       
+
+
+
         $message .= esc_html__( 'Client Name','wprentals-core').": " . $name . "\n\n ".esc_html__( 'Email','wprentals-core').": " . $email . " \n\n ".esc_html__( 'Website','wprentals-core').": " . $website . " \n\n ".esc_html__( 'Subject','wprentals-core').": " . $subject . " \n\n".esc_html__( 'Message','wprentals-core').": \n " . $comment;
         $message .="\n\n".esc_html__( 'Message sent from contact page','wprentals-core');
         $headers = 'From: No Reply <noreply@'.$_SERVER['HTTP_HOST'].'>' . "\r\n";
         $mail = wp_mail($receiver_email, $subject, $message, $headers);
-        
+
         $duplicate_email_adr        =   esc_html ( wprentals_get_option('wp_estate_duplicate_email_adr','') );
         if( $duplicate_email_adr!='' ){
             $message = $message.' '.__('Message was also sent to ','wprentals-core').$receiver_email;
             wp_mail($duplicate_email_adr, $subject, $message, $headers);
         }
-       
-        
-        echo json_encode(array('sent'=>true, 'response'=>esc_html__( 'The message was sent !','wprentals-core') ) ); 
-    die();         
+
+
+        echo json_encode(array('sent'=>true, 'response'=>esc_html__( 'The message was sent !','wprentals-core') ) );
+    die();
 }
 
-endif; // end   wpestate_ajax_agent_contact_form 
+endif; // end   wpestate_ajax_agent_contact_form
 
 
 
@@ -245,33 +258,33 @@ endif; // end   wpestate_ajax_agent_contact_form
 
 
 
-add_action( 'wp_ajax_ajax_create_print', 'ajax_create_print' );  
-  
+add_action( 'wp_ajax_ajax_create_print', 'ajax_create_print' );
+
   if( !function_exists('ajax_create_print') ):
-  function ajax_create_print(){ 
+  function ajax_create_print(){
     check_ajax_referer( 'wprentals_print_invoice_nonce', 'security' );
     if(!isset($_POST['invoice_id'])|| !is_numeric($_POST['invoice_id'])){
         exit('out pls1');
-    }  
-      
+    }
+
     $invoice_id          = intval($_POST['invoice_id']);
-    $the_post= get_post( $invoice_id); 
+    $the_post= get_post( $invoice_id);
     if($the_post->post_type!='wpestate_invoice' || $the_post->post_status!='publish'){
         exit('out pls2');
     }
     $title= esc_html__('Invoice','wprentals-core');
-   
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     // end get agent details
     /////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
     print  '<html><head><title>'.$title.'</title><link href="'.get_stylesheet_uri().'" rel="stylesheet" type="text/css" />';
-    
-     
+
+
     if(is_child_theme()){
-        print '<link href="'.get_template_directory_uri().'/style.css" rel="stylesheet" type="text/css" />';   
+        print '<link href="'.get_template_directory_uri().'/style.css" rel="stylesheet" type="text/css" />';
     }
-    
+
     if(is_rtl()){
         print '<link href="'.get_template_directory_uri().'/rtl.css" rel="stylesheet" type="text/css" />';
     }
@@ -281,10 +294,10 @@ add_action( 'wp_ajax_ajax_create_print', 'ajax_create_print' );
     print  '<body class="print_body" >';
 
      wpestate_super_invoice_details($invoice_id);
- 
+
     print '</body></html>';
     die();
-  } 
+  }
 
 endif;
 
@@ -294,7 +307,7 @@ if ( ! function_exists( 'wpestate_admin_bar_menu' ) ) {
             $theme_data = wp_get_theme();
 
 
-            if ( ! current_user_can( 'manage_options' ) || ! is_admin_bar_showing() ) { 
+            if ( ! current_user_can( 'manage_options' ) || ! is_admin_bar_showing() ) {
                 return;
             }
 
@@ -305,7 +318,7 @@ if ( ! function_exists( 'wpestate_admin_bar_menu' ) ) {
                     'title' => __( 'Clear WpRentals Cache', 'wprentals-core' ),
                     'href' => wp_nonce_url( esc_url( admin_url( 'admin-post.php?action=wpestate_purge_cache') ) , 'theme_purge_cache' ),
             ));
-				
+
 	}
 }
 add_action( 'admin_bar_menu', 'wpestate_admin_bar_menu', 100 );
@@ -344,7 +357,7 @@ if (!function_exists('wpestate_modify_contact_methods')):
         $profile_fields['user_agent_id']                = esc_html__('User Owner Id','wprentals-core');
         $profile_fields['stripe']                       = esc_html__( 'Stripe Consumer Profile','wprentals-core');
         $profile_fields['stripe_subscription_id']       = esc_html__( 'Stripe Subscription Id','wprentals-core');
-        $profile_fields['has_stripe_recurring']         = esc_html__( 'Has Recurring Stripe ','wprentals-core');      
+        $profile_fields['has_stripe_recurring']         = esc_html__( 'Has Recurring Stripe ','wprentals-core');
         $profile_fields['i_speak']                      = esc_html__('I Speak','wprentals-core');
         $profile_fields['live_in']                      = esc_html__('Live In','wprentals-core');
         $profile_fields['payment_info']                 = esc_html__('Payment Info','wprentals-core');
@@ -352,7 +365,7 @@ if (!function_exists('wpestate_modify_contact_methods')):
         return $profile_fields;
     }
 
-endif; // end   wpestate_modify_contact_methods 
+endif; // end   wpestate_modify_contact_methods
 
 
 function wpestate_core_add_to_footer(){
@@ -372,7 +385,7 @@ function wpestate_core_add_to_footer(){
     </script>
 
 
-    <?php } 
+    <?php }
 }
 
 if( !function_exists('wprentals_return_country_array') ):
@@ -485,6 +498,7 @@ function wprentals_return_country_array(){
                             'Ireland'               => esc_html__('Ireland','wprentals'),
                             'Israel'                => esc_html__('Israel','wprentals'),
                             'Italy'                 => esc_html__('Italy','wprentals'),
+                            'Island of Saba'        => esc_html__('Island of Saba','wprentals'),
                             'Jamaica'               => esc_html__('Jamaica','wprentals'),
                             'Japan'                 => esc_html__('Japan','wprentals'),
                             'Jordan'                => esc_html__('Jordan','wprentals'),
@@ -561,6 +575,9 @@ function wprentals_return_country_array(){
                             'Saint Kitts and Nevis' => esc_html__('Saint Kitts and Nevis','wprentals'),
                             'Saint Lucia'           => esc_html__('Saint Lucia','wprentals'),
                             'Saint Vincent and the Grenadines' => esc_html__('Saint Vincent and the Grenadines','wprentals'),
+                            'Saint Barthélemy'      => esc_html__('Saint Barthélemy','wprentals'),
+                            'Saint Martin'          => esc_html__('Saint Martin','wprentals'),
+                            'Sint Maarten'          => esc_html__('Sint Maarten','wprentals'),
                             'Samoa'                 => esc_html__('Samoa','wprentals'),
                             'San Marino'            => esc_html__('San Marino','wprentals'),
                             'Sao Tome and Principe' => esc_html__('Sao Tome and Principe','wprentals'),
@@ -635,7 +652,7 @@ endif;
 
 if(!function_exists('wprentals_return_google_fonts')):
 function wprentals_return_google_fonts(){
-    $google_fonts_array = array(                          
+    $google_fonts_array = array(
             "Abel" => "Abel",
             "Abril Fatface" => "Abril Fatface",
             "Aclonica" => "Aclonica",

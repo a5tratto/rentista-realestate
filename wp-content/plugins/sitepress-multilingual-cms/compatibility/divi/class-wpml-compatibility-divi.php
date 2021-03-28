@@ -21,9 +21,12 @@ class WPML_Compatibility_Divi implements \IWPML_DIC_Action, \IWPML_Backend_Actio
 			add_filter( 'et_builder_load_actions', [ $this, 'load_builder_for_ajax_actions' ] );
 
 			add_action( 'admin_init', [ $this, 'display_warning_notice' ], 10, 0 );
-			add_filter( 'wpml_pb_should_handle_content', [ $this, 'should_handle_shortcode_content' ], 10, 2 );
 
+			add_filter( 'wpml_pb_should_handle_content', [ $this, 'should_handle_shortcode_content' ], 10, 2 );
 			add_filter( 'wpml_pb_shortcode_content_for_translation', [ $this, 'cleanup_global_layout_content' ], 10, 2 );
+
+			add_filter( 'icl_job_elements', [ $this, 'remove_old_content_from_translation' ], 10, 2 );
+			add_filter( 'wpml_words_count_custom_fields_to_count', [ $this, 'remove_old_content_from_words_count' ], 10, 2 );
 		}
 	}
 
@@ -105,8 +108,14 @@ class WPML_Compatibility_Divi implements \IWPML_DIC_Action, \IWPML_Backend_Actio
 	}
 
 	private function register_layouts() {
+		/**
+		 * @phpstan-ignore-next-line
+		 */
 		if ( function_exists( 'et_builder_should_load_framework' ) && ! et_builder_should_load_framework() ) {
 			if ( function_exists( 'et_builder_register_layouts' ) ) {
+				/**
+				 * @phpstan-ignore-next-line
+				 */
 				et_builder_register_layouts();
 			} else {
 				$lib_file = ET_BUILDER_DIR . 'feature/Library.php';
@@ -226,4 +235,47 @@ class WPML_Compatibility_Divi implements \IWPML_DIC_Action, \IWPML_Backend_Actio
 		return $attributes;
 	}
 
+	/**
+	 * Remove the `_et_pb_old_content` meta field from translation jobs, except for products.
+	 *
+	 * @param array  $fields  Array of fields to translate.
+	 * @param object $post_id The ID of the post being translated.
+	 *
+	 * @return array
+	 */
+	public function remove_old_content_from_translation( $fields, $post_id ) {
+		// Bail out early if its a product.
+		if ( 'product' === get_post_type( $post_id ) ) {
+			return $fields;
+		}
+
+		// Search for the _et_pb_old_content element and empty it.
+		$field_types = wp_list_pluck( $fields, 'field_type' );
+		$index       = array_search( 'field-_et_pb_old_content-0', $field_types, true );
+		if ( false !== $index ) {
+			$fields[ $index ]->field_data            = '';
+			$fields[ $index ]->field_data_translated = '';
+		}
+
+		return $fields;
+	}
+
+	/**
+	 * Remove the `_et_pb_old_content` meta field from words count, except for products.
+	 *
+	 * @param array  $fields_to_count Array of custom fields to count.
+	 * @param object $post_id         The ID of the post for which we are counting the words.
+	 *
+	 * @return array
+	 */
+	public function remove_old_content_from_words_count( $fields_to_count, $post_id ) {
+		if ( 'product' !== get_post_type( $post_id ) ) {
+			$index = array_search( '_et_pb_old_content', $fields_to_count, true );
+			if ( false !== $index ) {
+				unset( $fields_to_count[ $index ] );
+			}
+		}
+
+		return $fields_to_count;
+	}
 }

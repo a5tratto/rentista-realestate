@@ -16,7 +16,7 @@ if(!defined('ABSPATH')) exit();
 	<div class="rb-modal-inner">
 		<div class="rb-modal-content">
 			<div id="rbm_colorskins" class="rb_modal form_inner">
-				<div class="rbm_header"><i class="rbm_symbol material-icons">format_paint</i><span class="rbm_title"><?php _e('Color Skins', 'revslider');?></span><i class="rbm_close material-icons">close</i></div>	
+				<div class="rbm_header"><i class="rbm_symbol material-icons">format_paint</i><span class="rbm_title"><?php _e('Global Color Skin', 'revslider');?></span><i class="rbm_close material-icons">close</i></div>	
 				<div class="rbm_content">
 					<div class="modal_fields_title" style="width:170px;margin-right:10px;"><?php _e('SKIN TITLE', 'revslider');?></div><div class="modal_fields_title"><?php _e('SKIN COLOR', 'revslider');?></div>
 					<div id="module_color_skins"></div>
@@ -70,19 +70,19 @@ if(!defined('ABSPATH')) exit();
 						</div>			
 						<div class="mcg_option_third_wraps">
 							<div class="st_slider mcg_guide_optionwrap mcg_option_third">
-								<input data-unavailable=".standardunavailable" data-available=".standardavailable" data-disable=".standarddisable" data-enable=".standardenable" data-select=".st_slider" data-unselect=".st_scene, .st_carousel" data-r="type" data-evt="updatesliderlayout"  data-evtparam="slidertype" type="radio" value="standard" name="slidertype_guide" class="sliderinput" data-show="" data-hide="">
+								<input data-unavailable=".standardunavailable" data-available=".standardavailable" data-disable=".standarddisable" data-enable=".standardenable" data-select=".st_slider" data-unselect=".st_scene, .st_carousel" data-r="type" data-evt="updatesliderlayout"  data-evtparam="slidertype" type="radio" value="standard" id="slidertype_guide_standard" name="slidertype_guide" class="sliderinput easyinit" data-show="" data-hide="">
 								<mcg_guide_image class="guide_slider"></mcg_guide_image>
 								<div class="mcg_o_title"><?php _e('Slider');?></div>
 								<div class="mcg_o_descp"><?php _e('A Slider consists of multiple Slides.<br>Each Slide has its own content and can be<br>navigated to with various optional<br>navigation elements.');?></div>
 							</div>
 							<div class="st_scene mcg_guide_optionwrap mcg_option_third">
-								<input data-unavailable=".sceneunavailable" data-available=".sceneavailable" data-disable=".herodisable" data-enable=".heroenable" data-select=".st_scene" data-unselect=".st_slider, .st_carousel" data-r="type" data-evt="updatesliderlayout" data-evtparam="slidertype" type="radio" value="hero" name="slidertype_guide" class="sliderinput" data-show="" data-hide="">
+								<input data-unavailable=".sceneunavailable" data-available=".sceneavailable" data-disable=".herodisable" data-enable=".heroenable" data-select=".st_scene" data-unselect=".st_slider, .st_carousel" data-r="type" data-evt="updatesliderlayout" data-evtparam="slidertype" type="radio" value="hero" id="slidertype_guide_hero"  name="slidertype_guide" class="sliderinput easyinit" data-show="" data-hide="">
 								<mcg_guide_image class="guide_scene"></mcg_guide_image>
 								<div class="mcg_o_title"><?php _e('Scene');?></div>
 								<div class="mcg_o_descp"><?php _e('A Scene is essentially a Slider with a single<br>Slide and no navigation elements.<br>Best used for content modules that require<br>no additional depth.');?></div>
 							</div>
 							<div class="st_carousel mcg_guide_optionwrap mcg_option_third last">
-								<input data-unavailable=".carouselunavailable" data-available=".carouselavailable" data-disable=".carouseldisable" data-enable=".carouselenable" data-select=".st_carousel" data-unselect=".st_slider, .st_scene" data-r="type" data-evt="updatesliderlayout"  data-evtparam="slidertype" type="radio" value="carousel" name="slidertype_guide" class="sliderinput" data-show="" data-hide="">
+								<input data-unavailable=".carouselunavailable" data-available=".carouselavailable" data-disable=".carouseldisable" data-enable=".carouselenable" data-select=".st_carousel" data-unselect=".st_slider, .st_scene" data-r="type" data-evt="updatesliderlayout"  data-evtparam="slidertype" type="radio" value="carousel" id="slidertype_guide_carousel"  name="slidertype_guide" class="sliderinput easyinit" data-show="" data-hide="">
 								<mcg_guide_image class="guide_carousel"></mcg_guide_image>
 								<div class="mcg_o_title"><?php _e('Carousel');?></div>
 								<div class="mcg_o_descp"><?php _e('A Carousel is a Slider with multiple Slides<br>visible at the same time.<br>There are lots of options to customize the Carousel.');?></div>
@@ -105,19 +105,19 @@ if(!defined('ABSPATH')) exit();
 						</div>
 						<div class="mcg_option_third_wraps">				
 							<div class="sl_auto mcg_guide_optionwrap mcg_option_third">
-								<input data-select=".sl_auto" data-unselect=".sl_fullwidth, .sl_fullscreen" data-r="layouttype" data-evt="updatesliderlayout" type="radio" value="auto" name="sliderlayouttype_guide" class="sliderinput" data-show="#sr_size_minheight" data-hide=".sliderminheights,.decreaseheights">
+								<input data-select=".sl_auto" data-unselect=".sl_fullwidth, .sl_fullscreen" data-r="layouttype" data-evt="updatesliderlayout" type="radio" value="auto" id="sliderlayouttype_guide_auto" name="sliderlayouttype_guide" class="sliderinput easyinit" data-show="#sr_size_minheight" data-hide=".sliderminheights,.decreaseheights">
 								<mcg_guide_image class="guide_auto"></mcg_guide_image>
 								<div class="mcg_o_title"><?php _e('Auto');?></div>
 								<div class="mcg_o_descp"><?php _e('The module dimensions will automatically<br>adjust to the surrounding container width,<br>keeping its aspect ratio.');?></div>
 							</div>
 							<div class="sl_fullwidth mcg_guide_optionwrap mcg_option_third">
-								<input data-select=".sl_fullwidth" data-unselect=".sl_auto, .sl_fullscreen" data-r="layouttype" data-evt="updatesliderlayout" type="radio" value="fullwidth" name="sliderlayouttype_guide" class="sliderinput" data-show="#sr_size_minheight" data-hide=".sliderminheights,.decreaseheights">
+								<input data-select=".sl_fullwidth" data-unselect=".sl_auto, .sl_fullscreen" data-r="layouttype" data-evt="updatesliderlayout" type="radio" value="fullwidth" id="sliderlayouttype_guide_fullwidth" name="sliderlayouttype_guide" class="sliderinput easyinit" data-show="#sr_size_minheight" data-hide=".sliderminheights,.decreaseheights">
 								<mcg_guide_image class="guide_fullwidth"></mcg_guide_image>
 								<div class="mcg_o_title"><?php _e('Full-Width');?></div>
 								<div class="mcg_o_descp"><?php _e('The module will always span across the<br>full-width of the web-page. The height can<br>be flexible depending on other settings.');?></div>
 							</div>
 							<div class="sl_fullscreen mcg_guide_optionwrap mcg_option_third last">
-								<input data-select=".sl_fullscreen" data-unselect=".sl_auto, .sl_fullwidth" data-r="layouttype" data-evt="updatesliderlayout" type="radio" value="fullscreen" name="sliderlayouttype_guide" class="sliderinput" data-show="#sr_size_minheight_fs, .decreaseheights" data-hide=".sliderminheights">
+								<input data-select=".sl_fullscreen" data-unselect=".sl_auto, .sl_fullwidth" data-r="layouttype" data-evt="updatesliderlayout" type="radio" value="fullscreen" id="sliderlayouttype_guide_fullscreen" name="sliderlayouttype_guide" class="sliderinput easyinit" data-show="#sr_size_minheight_fs, .decreaseheights" data-hide=".sliderminheights">
 								<mcg_guide_image class="guide_fullscreen"></mcg_guide_image>
 								<div class="mcg_o_title"><?php _e('Full-Screen');?></div>
 								<div class="mcg_o_descp"><?php _e('The module will always fit the full area<br>within the web-page.');?></div>
@@ -614,7 +614,7 @@ if(!defined('ABSPATH')) exit();
 								<div class="mdl_group_header"><i class="material-icons">shopping_cart</i><?php _e('WooCommerce Stock', 'revslider');?><i class="material-icons accordiondrop">arrow_drop_down</i></div>
 								<div data-val="{{wc_sku}}" class="mdl_group_member"><div class="mdl_left_content"><i class="material-icons">dashboard</i><?php _e("SKU", 'revslider');?></div><div class="mdl_right_content">{{wc_sku}}</div><div class="mdl_placeholder_content"><?php _e('457819', 'revslider');?></div></div>
 								<div data-val="{{wc_stock}}" class="mdl_group_member"><div class="mdl_left_content"><i class="material-icons">dashboard</i><?php _e("In Stock", 'revslider');?></div><div class="mdl_right_content">{{wc_stock}}</div><div class="mdl_placeholder_content"><?php _e('5', 'revslider');?></div></div>
-								<div data-val="{{wc_stock_quantity}}" class="mdl_group_member"><div class="mdl_left_content"><i class="material-icons">dashboard</i><?php _e("Stock Quantity", 'revslider');?></div><div class="mdl_right_content">{{wc_stock_quantity}}</div><div class="mdl_placeholder_content"><?php _e('Package', 'revslider');?></div></div>
+								<div data-val="{{wc_stock_quantity}}" class="mdl_group_member"><div class="mdl_left_content"><i class="material-icons">dashboard</i><?php _e("Stock Quantity", 'revslider');?></div><div class="mdl_right_content">{{wc_stock_quantity}}</div><div class="mdl_placeholder_content"><?php _e('5', 'revslider');?></div></div>
 							</div>
 							<div class="mdl_group">
 								<div class="mdl_group_header"><i class="material-icons">shopping_cart</i><?php _e('WooCommerce Ratings', 'revslider');?><i class="material-icons accordiondrop">arrow_drop_down</i></div>
@@ -669,12 +669,14 @@ if(!defined('ABSPATH')) exit();
 							</div>
 
 							<!-- INSTAGRAM -->
+							<!--
 							<div class="mdl_group">
 								<div class="mdl_group_header"><i class="fa__icons fa-instagram"></i><?php _e('Instagram Extras', 'revslider');?><i class="material-icons accordiondrop">arrow_drop_down</i></div>
 								<div data-val="{{date}}" class="mdl_group_member"><div class="mdl_left_content"><i class="fa__icons fa-instagram"></i><?php _e("Date created", 'revslider');?></div><div class="mdl_right_content">{{date}}</div><div class="mdl_placeholder_content"><?php _e('08.03.2018', 'revslider');?></div></div>
-								<!--div data-val="{{likes}}" class="mdl_group_member"><div class="mdl_left_content"><i class="fa__icons fa-instagram"></i><?php _e("Number of Likes", 'revslider');?></div><div class="mdl_right_content">{{likes}}</div><div class="mdl_placeholder_content"><?php _e('12', 'revslider');?></div></div-->
+								<div data-val="{{likes}}" class="mdl_group_member"><div class="mdl_left_content"><i class="fa__icons fa-instagram"></i><?php _e("Number of Likes", 'revslider');?></div><div class="mdl_right_content">{{likes}}</div><div class="mdl_placeholder_content"><?php _e('12', 'revslider');?></div></div>
 								<div data-val="{{num_comments}}" class="mdl_group_member"><div class="mdl_left_content"><i class="fa__icons fa-instagram"></i><?php _e("Number of Comments", 'revslider');?></div><div class="mdl_right_content">{{num_comments}}</div><div class="mdl_placeholder_content"><?php _e('19', 'revslider');?></div></div>
 							</div>
+							-->
 
 							<!-- TWITTER -->
 							<div class="mdl_group">
@@ -764,13 +766,25 @@ if(!defined('ABSPATH')) exit();
 							<label_a><?php _e('Action Type', 'revslider');?></label_a><div class="input_presets_wrap" id="layer_action_type"><div id="layer_action_fake"></div><input type="text" readonly  class="easyinit actioninput" data-r="actions.action.#actionindex#.action" value=""><i class="material-icons input_presets_dropdown">more_vert</i></div>
 							
 							<div class="div20"></div>
+
 							<!-- SIMPLE LINK SETTINGS -->
-							<div id="la_settings_link" class="la_settings">
+							<div id="la_settings_link_menu" class="la_settings" style="margin-bottom:20px !important">
+								<label_a><?php _e('Link to URL', 'revslider');?></label_a><input type="text" class="easyinit actioninput" id="la_menu_link" data-r="actions.action.#actionindex#.menu_link" placeholder="<?php _e('Enter Link', 'revslider');?>" ><span class="linebreak"></span>
+								<label_a><?php _e('Anchor #id at URL', 'revslider');?></label_a><input type="text" class="easyinit actioninput" id="la_menu_link" data-r="actions.action.#actionindex#.menu_anchor" placeholder="<?php _e('Enter Anchor ID', 'revslider');?>" ><span class="linebreak"></span>
+							</div>
+							
+							<!-- SIMPLE LINK SETTINGS -->
+							<div id="la_settings_link_url" class="la_settings">
 								<label_a><?php _e('Link URL', 'revslider');?></label_a><input type="text" class="easyinit actioninput" id="la_image_link" data-r="actions.action.#actionindex#.image_link" placeholder="<?php _e('Enter Link', 'revslider');?>" ><span class="linebreak"></span>
-								<label_a><?php _e('Link Help', 'revslider');?></label_a><select id="la_link_help_in" data-r="actions.action.#actionindex#.link_help_in" class="easyinit actioninput nosearchbox tos2"><option value="http"><?php _e('http://', 'revslider');?></option><option value="https"><?php _e('https://', 'revslider');?></option><option value="auto"><?php _e('Auto http / https', 'revslider');?></option><option value="keep"><?php _e('Keep as it is', 'revslider');?></option></select>
-								<label_a><?php _e('Link Target', 'revslider');?></label_a><select id="la_link_open_in" data-r="actions.action.#actionindex#.link_open_in" class="easyinit actioninput nosearchbox tos2"><option value="_self"><?php _e('Same Window', 'revslider');?></option><option value="_blank"><?php _e('New Window', 'revslider');?></option></select>
-								<label_a><?php _e('Link Type', 'revslider');?></label_a><select id="la_link_type" data-r="actions.action.#actionindex#.link_type" class="easyinit actioninput nosearchbox tos2"></select>
+							</div>
+							<div id="la_settings_link" class="la_settings">
+								<label_a><?php _e('Protocol', 'revslider');?></label_a><select id="la_link_help_in" data-r="actions.action.#actionindex#.link_help_in" class="easyinit actioninput nosearchbox tos2"><option value="http"><?php _e('http://', 'revslider');?></option><option value="https"><?php _e('https://', 'revslider');?></option><option value="auto"><?php _e('Auto http / https', 'revslider');?></option><option value="keep"><?php _e('Keep as it is', 'revslider');?></option></select>
+								<label_a><?php _e('Target', 'revslider');?></label_a><select id="la_link_open_in" data-r="actions.action.#actionindex#.link_open_in" class="easyinit actioninput nosearchbox tos2"><option value="_self"><?php _e('Same Window', 'revslider');?></option><option value="_blank"><?php _e('New Window', 'revslider');?></option></select>
 								<label_a><?php _e('Follow', 'revslider');?></label_a><select id="la_link_follow" data-r="actions.action.#actionindex#.link_follow" class="easyinit actioninput nosearchbox tos2"><option value="follow"><?php _e('Follow Link', 'revslider');?></option><option value="nofollow"><?php _e('No Follow', 'revslider');?></option></select>
+								<span class="linebreak"></span>
+							</div>
+							<div id="la_settings_link_type" class="la_settings">
+								<label_a><?php _e('Type', 'revslider');?></label_a><select id="la_link_type" data-r="actions.action.#actionindex#.link_type" class="easyinit actioninput nosearchbox tos2"></select>								
 								<span class="linebreak"></span>
 							</div>
 

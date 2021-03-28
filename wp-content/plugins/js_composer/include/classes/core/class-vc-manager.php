@@ -161,6 +161,7 @@ class Vc_Manager {
 		require_once $this->path( 'PARAMS_DIR', 'params.php' );
 		require_once $this->path( 'AUTOLOAD_DIR', 'vc-shortcode-autoloader.php' );
 		require_once $this->path( 'SHORTCODES_DIR', 'core/class-vc-shortcodes-manager.php' );
+		require_once $this->path( 'CORE_DIR', 'class-vc-modifications.php' );
 		// Add hooks
 		add_action( 'plugins_loaded', array(
 			$this,
@@ -191,18 +192,6 @@ class Vc_Manager {
 	}
 
 	/**
-	 * prevent the instance from being cloned (which would create a second instance of it)
-	 */
-	private function __clone() {
-	}
-
-	/**
-	 * prevent from being unserialized (which would create a second instance of it)
-	 */
-	private function __wakeup() {
-	}
-
-	/**
 	 * Callback function WP plugin_loaded action hook. Loads locale
 	 *
 	 * @since  4.2
@@ -223,6 +212,9 @@ class Vc_Manager {
 	 * @access public
 	 */
 	public function init() {
+		if ( method_exists( 'LiteSpeed_Cache_API', 'esi_enabled' ) && LiteSpeed_Cache_API::esi_enabled() ) {
+			LiteSpeed_Cache_API::hook_tpl_esi( 'js_composer', 'vc_hook_esi' );
+		}
 		ob_start();
 		do_action( 'vc_before_init' );
 		ob_end_clean(); // FIX for whitespace issues (#76147)
@@ -252,6 +244,7 @@ class Vc_Manager {
 		do_action( 'vc_after_mapping' ); // VC ACTION
 		// Load && Map shortcodes from Automapper.
 		vc_automapper()->map();
+		new Vc_Modifications();
 		if ( vc_user_access()->wpAny( 'manage_options' )->part( 'settings' )->can( 'vc-updater-tab' )->get() ) {
 			vc_license()->setupReminder();
 		}
@@ -490,12 +483,12 @@ class Vc_Manager {
 	 * Get post types where VC editors are enabled.
 	 *
 	 * @return array
+	 * @throws \Exception
 	 * @since  4.2
 	 * @access public
-	 *
 	 */
 	public function editorPostTypes() {
-		if ( is_null( $this->editor_post_types ) ) {
+		if ( null === $this->editor_post_types ) {
 			$post_types = array_keys( vc_user_access()->part( 'post_types' )->getAllCaps() );
 			$this->editor_post_types = $post_types ? $post_types : $this->editorDefaultPostTypes();
 		}
@@ -819,7 +812,6 @@ class Vc_Manager {
 	 *
 	 */
 	public function updater() {
-
 		if ( ! isset( $this->factory['updater'] ) ) {
 			do_action( 'vc_before_init_updater' );
 			require_once $this->path( 'UPDATERS_DIR', 'class-vc-updater.php' );
