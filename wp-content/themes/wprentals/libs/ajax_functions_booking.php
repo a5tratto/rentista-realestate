@@ -2339,6 +2339,16 @@ if( !function_exists('wpestate_ajax_show_booking_costs') ):
         $rental_type                        =   wprentals_get_option('wp_estate_item_rental_type');
         $booking_type                       =   wprentals_return_booking_type($property_id);
 
+
+        // Giorgio
+        $service_commissioni = wpestate_show_price_booking_for_invoice($booking_array ['service_fee'],$wpestate_currency,$wpestate_where_currency,0,1);
+        // Giorgio
+
+
+        if(trim($deposit_show)==''){
+            $service_commissioni = $deposit_show ;
+        }
+
         print '
         <div class="show_cost_form" id="show_cost_form" >
             <div class="cost_row">
