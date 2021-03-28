@@ -1,0 +1,191 @@
+.loading{
+   background-image: url( "../img/ajax-loader.gif");
+   background-position: 50% 80%;
+   background-repeat: no-repeat;
+   width:10px;
+}
+.inside label {
+   line-height: 1.3;
+   font-weight: 600;
+   color: #23282d;
+   font-size: 14px;
+   margin-right: 20px;
+}
+.full-width {
+   float: left;
+   width: 100%;
+   margin-top: 15px;
+}
+.settings-title {
+   font-size: 15px;
+   font-weight: 700;
+   color: #4AA94F !important;
+}
+#googlesheet h2.title {
+   float: left;
+   max-width: none;
+   font-weight: 700;
+   color: #4AA94F;
+   font-size: 15px;
+}
+.gs-card {
+   background: #fff none repeat scroll 0 0;
+   border: 1px solid #e5e5e5;
+   border-left: 4px solid #e5e5e5;
+   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+   margin-top: 20px;
+   padding: 0.7em 2em 1em;
+   position: relative;
+   width: 97%;
+}
+.gs-form div.card {
+   max-width: 560px;
+}
+.gs-margin-top{
+   margin-top: 20px;
+}
+#gs-code {
+   width: 18em;
+}
+.gs-alert {
+   color: red;
+   font-weight: 500;
+}
+.gs-integration-box{
+   padding: 5px 0 5px 0;
+}
+.gs-valid-message {
+   font-weight: bold;
+   color: green;
+}
+.debug-view {
+   text-decoration: none;
+   font-size: 14px;
+   font-weight: bold;
+}
+.gs-name span {
+   display:none;
+   position: absolute;
+   border-radius: 5px 5px; 
+   left: 350px;
+   -moz-border-radius: 5px; 
+   -webkit-border-radius: 5px;
+   font-family: Calibri, Tahoma, Geneva, sans-serif;
+   margin-left: 0;
+   z-index: 999;
+
+}
+.gs-name:hover {
+   color: #00a0d2;
+}
+.gs-name:hover span {
+   display:inline-block;
+   width: 300px;
+   margin-top: 20px;
+   z-index: 1001;
+}
+.hover-data { 
+   padding: 5px;
+   background:  #333;
+   background: rgba(0,0,0,.8);
+   color: #fff;
+}
+.gs-fields {
+   position: relative;
+   min-width: 255px;
+   border: 1px solid #e5e5e5;
+   -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+   box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+   background: #fff;
+   padding: 20px 10px;
+}
+.gs-card div label {
+   font-size: 14px;
+   font-weight: 600;
+}
+.gs-card div {
+   margin-bottom: 10px;
+}
+.gs-fields label {
+   margin: 0 25px 0 25px;
+   float: left;
+   width: 22%;
+   font-size: 14px;
+   font-weight: 600;
+}
+.gs-fields select {
+   width: 250px;
+}
+.gs-fields span {
+   margin: 20px 0 20px 10px;
+   font-weight: 700;
+   color: #4AA94F;
+   font-size: 15px;
+}
+.gs-field-list td:nth-child(1) {
+   font-weight: 600;
+}
+.gs-third-block .gs-field-list td:nth-child(2), .gs-third-block .gs-field-list td:nth-child(5), .gs-second-block .gs-field-list td:nth-child(2) {
+   font-weight: 600;
+}
+.gs-second-block h2 span.gs-info, .gs-third-block h2 span.gs-info, span.gs-info {
+   font-weight: 400;
+   color: #333 !important;
+}
+.gs-fields p.gs-sync-row {
+   margin-left: 25px;
+   font-style: italic;
+   margin-right: 25px;
+   background: #F3F3F3;
+   padding: 10px;
+}
+.gs-form p.gs-sync-row {
+   font-style: italic;
+   margin-right: 25px;
+   background: #F3F3F3;
+   padding: 10px;
+}
+#gs-sync {
+   cursor: pointer;
+   color: #4AA94F;
+   font-weight: bold;
+}
+.gs-second-block, .gs-third-block {
+   margin-top: 10px;
+   padding-bottom: 10px;
+}
+.gs-second-block h2 span.gs-info, 
+.gs-third-block h2 span.gs-info,
+span.gs-info {
+   font-size: 14px;
+   font-style: italic;
+}
+table.gs-field-list {
+   margin-left: 30px;
+}
+td.gs-r-pad {
+   padding-right: 10px;
+}
+hr.gs-hr {
+   margin: 20px 5px 10px 5px;
+}
+li#google_sheets-tab a {
+   border-top: 2px solid #4AA94F;
+}
+
+/* --- check-all checkbox ----*/
+input#ckbCheckAll, input#fckbCheckAll {
+   margin: 0 4px 5px 10px;
+}
+span.select-all {
+   margin: 4px;
+   color: #333;
+   font-weight: 600;
+   font-size: 13px;
+}
+span.select-all-field {
+   margin: 8px;
+   color: #333;
+   font-weight: 600;
+   font-size: 13px;
+}

@@ -1,0 +1,7353 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-04-14 10:13+0300\n"
+"PO-Revision-Date: 2020-04-14 10:13+0300\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Domain: wprentals-core\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en\n"
+
+#: classes/wpestate_global_payments.php:164
+msgid "Return to Dashboard"
+msgstr ""
+
+#: classes/wpestate_global_payments.php:168
+msgid "Return to My Reservations"
+msgstr ""
+
+#: classes/wpestate_global_payments.php:317
+#: classes/wpestate_global_payments.php:707 post-types/invoices.php:407
+#: post-types/invoices.php:556
+msgid "Price"
+msgstr ""
+
+#: classes/wpestate_global_payments.php:323
+msgid "Total:"
+msgstr ""
+
+#: classes/wpestate_global_payments.php:325
+msgid "View Cart"
+msgstr ""
+
+#: classes/wpestate_global_payments.php:326
+msgid "Checkout"
+msgstr ""
+
+#: classes/wpestate_global_payments.php:459
+#: classes/wpestate_global_payments.php:465
+msgid "Pay Now"
+msgstr ""
+
+#: classes/wpestate_global_payments.php:462 post-types/invoices.php:61
+#: post-types/invoices.php:72
+msgid "Upgrade to Featured"
+msgstr ""
+
+#: classes/wpestate_global_payments.php:551
+msgid "Upgrade to \"Featured\" for Listing \"%s\" with id %s"
+msgstr ""
+
+#: classes/wpestate_global_payments.php:554
+msgid "Payment for Listing \"%s\" with id %s"
+msgstr ""
+
+#: classes/wpestate_global_payments.php:572
+msgid "Payment for Invoice %s , Booking %s"
+msgstr ""
+
+#: classes/wpestate_global_payments.php:711
+msgid "Property Name"
+msgstr ""
+
+#: classes/wpestate_global_payments.php:712 post-types/booking.php:337
+#: post-types/booking.php:498 post-types/invoices.php:338
+msgid "Period"
+msgstr ""
+
+#: classes/wpestate_global_payments.php:712 post-types/booking.php:374
+msgid "from"
+msgstr ""
+
+#: classes/wpestate_global_payments.php:712 post-types/booking.php:374
+#: post-types/invoices.php:338 shortcodes/shortcodes.php:840
+#: shortcodes/shortcodes.php:842 shortcodes/shortcodes.php:999
+#: shortcodes/shortcodes.php:1001
+msgid "to"
+msgstr ""
+
+#: classes/wpestate_global_payments.php:713
+msgid "Invoice no"
+msgstr ""
+
+#: classes/wpestate_global_payments.php:714
+msgid "Booking no"
+msgstr ""
+
+#: classes/wpestate_global_payments.php:720
+msgid "Total"
+msgstr ""
+
+#: classes/tweet_login.php:100
+msgid "Login with Facebook"
+msgstr ""
+
+#: classes/tweet_login.php:104
+msgid "Login with Google"
+msgstr ""
+
+#: classes/tweet_login.php:108
+msgid "Login with Twitter"
+msgstr ""
+
+#: classes/wpestate_stripe_payments.php:99
+#: classes/wpestate_stripe_payments.php:104
+msgid "Pay with Stripe"
+msgstr ""
+
+#: classes/wpestate_stripe_payments.php:102
+msgid "Set as Featured"
+msgstr ""
+
+#: classes/wpestate_stripe_payments.php:108
+msgid "Subscribe with Stripe"
+msgstr ""
+
+#: classes/wpestate_stripe_payments.php:123
+#: classes/wpestate_stripe_payments.php:125
+msgid "logo"
+msgstr ""
+
+#: classes/wpestate_stripe_payments.php:133 post-types/property.php:2018
+msgid "Name"
+msgstr ""
+
+#: classes/wpestate_stripe_payments.php:134
+msgid "Jane Doe"
+msgstr ""
+
+#: classes/wpestate_stripe_payments.php:138 admin/options-init.php:1397
+#: widgets/login_widget.php:67 shortcodes/shortcodes.php:1359
+#: shortcodes/shortcodes.php:1374 misc/plugin_help_functions.php:222
+msgid "Email"
+msgstr ""
+
+#: classes/wpestate_stripe_payments.php:139
+msgid "janedoe@gmail.com"
+msgstr ""
+
+#: classes/wpestate_stripe_payments.php:143 misc/plugin_help_functions.php:330
+msgid "Phone"
+msgstr ""
+
+#: classes/wpestate_stripe_payments.php:144
+msgid "999 999-999"
+msgstr ""
+
+#: classes/wpestate_stripe_payments.php:161
+msgid "Payment for package Basic"
+msgstr ""
+
+#: classes/wpestate_stripe_payments.php:166
+msgid "Pay"
+msgstr ""
+
+#: classes/wpestate_stripe_payments.php:170
+msgid "Please wait while we confirm your payment!"
+msgstr ""
+
+#: admin/options-init.php:81 admin/options-init.php:82
+msgid "WpRentals Options"
+msgstr ""
+
+#: admin/options-init.php:216
+msgid "Theme Information 1"
+msgstr ""
+
+#: admin/options-init.php:217 admin/options-init.php:222
+msgid "<p>This is the tab content, HTML is allowed.</p>"
+msgstr ""
+
+#: admin/options-init.php:221
+msgid "Theme Information 2"
+msgstr ""
+
+#: admin/options-init.php:228
+msgid "<p>This is the sidebar content, HTML is allowed.</p>"
+msgstr ""
+
+#: admin/options-init.php:252 admin/options-init.php:279
+msgid "General"
+msgstr ""
+
+#: admin/options-init.php:259 admin/options-init.php:286
+msgid "General Settings"
+msgstr ""
+
+#: admin/options-init.php:293
+msgid "Country"
+msgstr ""
+
+#: admin/options-init.php:294
+msgid "Select default country"
+msgstr ""
+
+#: admin/options-init.php:302
+msgid "Measurement Unit"
+msgstr ""
+
+#: admin/options-init.php:303
+msgid "Select the measurement unit you will use on the website"
+msgstr ""
+
+#: admin/options-init.php:305
+msgid "ft"
+msgstr ""
+
+#: admin/options-init.php:305
+msgid "square feet -ft"
+msgstr ""
+
+#: admin/options-init.php:306
+msgid "m"
+msgstr ""
+
+#: admin/options-init.php:306
+msgid "square meters -m"
+msgstr ""
+
+#: admin/options-init.php:313
+msgid "Users can type the password on registration form"
+msgstr ""
+
+#: admin/options-init.php:314
+msgid "If no, users will get the auto generated password via email"
+msgstr ""
+
+#: admin/options-init.php:324
+msgid "Redirect users to same page after login?"
+msgstr ""
+
+#: admin/options-init.php:325
+msgid ""
+"Login on property page will be redirect on the same page. It is NOT working "
+"for social login feature."
+msgstr ""
+
+#: admin/options-init.php:336
+msgid "Link where users will be redirected after login"
+msgstr ""
+
+#: admin/options-init.php:337
+msgid ""
+"If blank users will be redirected to profile page.Login on property page "
+"will be redirect on the same page. It is NOT working for social login "
+"feature."
+msgstr ""
+
+#: admin/options-init.php:342
+msgid "Separate users on registration"
+msgstr ""
+
+#: admin/options-init.php:343
+msgid "There will be 2 user types: who can only book and who can rent & book."
+msgstr ""
+
+#: admin/options-init.php:354
+msgid "Only these users can publish (separate SUBCRIBERS usernames with ,)."
+msgstr ""
+
+#: admin/options-init.php:355
+msgid ""
+"Don't use spaces between comma and username. Correct Ex: paula,victoria "
+msgstr ""
+
+#: admin/options-init.php:360
+msgid "Auto delete orphan listings"
+msgstr ""
+
+#: admin/options-init.php:361
+msgid ""
+"Listings that users started to submit but did not complete - cron will run 1 "
+"time per day"
+msgstr ""
+
+#: admin/options-init.php:371
+msgid "Language for datepicker"
+msgstr ""
+
+#: admin/options-init.php:372
+msgid ""
+"Select the language for booking form datepicker and search by date datepicker"
+msgstr ""
+
+#: admin/options-init.php:455
+msgid ""
+"Disable Theme Cache (Keep theme cache on when your site is in production)"
+msgstr ""
+
+#: admin/options-init.php:456
+msgid ""
+"Theme Cache will cache only the heavy database queries. Use this feature "
+"along classic cache plugins like WpRocket!"
+msgstr ""
+
+#: admin/options-init.php:466
+msgid "Google Analytics Tracking id (ex UA-41924406-1"
+msgstr ""
+
+#: admin/options-init.php:467
+msgid "Google Analytics Tracking id (ex UA-41924406-1)"
+msgstr ""
+
+#: admin/options-init.php:474
+msgid "Appearance"
+msgstr ""
+
+#: admin/options-init.php:481
+msgid "Wide or Boxed?"
+msgstr ""
+
+#: admin/options-init.php:482
+msgid "Choose the theme layout: wide or boxed."
+msgstr ""
+
+#: admin/options-init.php:484
+msgid "wide"
+msgstr ""
+
+#: admin/options-init.php:485
+msgid "boxed"
+msgstr ""
+
+#: admin/options-init.php:492
+msgid "Properties List - Properties number per page"
+msgstr ""
+
+#: admin/options-init.php:493
+msgid "Set how many properties to show per page in lists."
+msgstr ""
+
+#: admin/options-init.php:499
+msgid "Listing Page/Blog Category/Archive Sidebar Position"
+msgstr ""
+
+#: admin/options-init.php:500
+msgid "Where to show the sidebar for blog category/archive list."
+msgstr ""
+
+#: admin/options-init.php:507
+msgid "Blog Category/Archive Sidebar"
+msgstr ""
+
+#: admin/options-init.php:508
+msgid "What sidebar to show for blog category/archive list."
+msgstr ""
+
+#: admin/options-init.php:517
+msgid "Listing List Type for Taxonomy pages"
+msgstr ""
+
+#: admin/options-init.php:518
+msgid "Select standard or half map style for property taxonomies pages."
+msgstr ""
+
+#: admin/options-init.php:520 admin/options-init.php:531
+msgid "standard"
+msgstr ""
+
+#: admin/options-init.php:521 admin/options-init.php:532
+msgid "half map"
+msgstr ""
+
+#: admin/options-init.php:528
+msgid "Listing List Type for Advanced Search"
+msgstr ""
+
+#: admin/options-init.php:529
+msgid "Select standard or half map style for advanced search results page."
+msgstr ""
+
+#: admin/options-init.php:539
+msgid "Map position in Half Map template"
+msgstr ""
+
+#: admin/options-init.php:540
+msgid "Select map position in Half Map template"
+msgstr ""
+
+#: admin/options-init.php:542
+msgid "Map on the Left"
+msgstr ""
+
+#: admin/options-init.php:543
+msgid "Map on the Right"
+msgstr ""
+
+#: admin/options-init.php:551
+msgid "Logos & Favicon"
+msgstr ""
+
+#: admin/options-init.php:559
+msgid "Your Favicon"
+msgstr ""
+
+#: admin/options-init.php:560
+msgid "Upload site favicon in .ico, .png, .jpg or .gif format"
+msgstr ""
+
+#: admin/options-init.php:567
+msgid "Your Logo"
+msgstr ""
+
+#: admin/options-init.php:568 admin/options-init.php:575
+msgid ""
+"Use the \"Upload\" button and \"Insert into Post\" button from the pop up "
+"window."
+msgstr ""
+
+#: admin/options-init.php:574
+msgid "Your Transparent Header Logo"
+msgstr ""
+
+#: admin/options-init.php:581
+msgid "Mobile/Tablets Logo"
+msgstr ""
+
+#: admin/options-init.php:582
+msgid "Upload mobile logo in jpg or png format."
+msgstr ""
+
+#: admin/options-init.php:588
+msgid "Your Retina Logo"
+msgstr ""
+
+#: admin/options-init.php:589 admin/options-init.php:596
+#: admin/options-init.php:603
+msgid ""
+"To create retina logo, add _2x at the end of name of the original file (for "
+"ex logo_2x.jpg)"
+msgstr ""
+
+#: admin/options-init.php:595
+msgid "Your Transparent Retina Logo"
+msgstr ""
+
+#: admin/options-init.php:602
+msgid "Your Mobile Retina Logo"
+msgstr ""
+
+#: admin/options-init.php:609
+msgid "Header"
+msgstr ""
+
+#: admin/options-init.php:616
+msgid "Show top bar widget menu ?"
+msgstr ""
+
+#: admin/options-init.php:617
+msgid ""
+"Enable or disable top bar widget area. If enabled, see this help article to "
+"add widgets: "
+msgstr ""
+
+#: admin/options-init.php:628
+msgid "Show top bar on mobile devices?"
+msgstr ""
+
+#: admin/options-init.php:629
+msgid "Enable or disable top bar on mobile devices"
+msgstr ""
+
+#: admin/options-init.php:639
+msgid "Show submit listing button in header?"
+msgstr ""
+
+#: admin/options-init.php:640
+msgid "Submit listing will only work with theme register/login."
+msgstr ""
+
+#: admin/options-init.php:650
+msgid "Show user login menu in header?"
+msgstr ""
+
+#: admin/options-init.php:651
+msgid "Enable or disable the user login / register in header."
+msgstr ""
+
+#: admin/options-init.php:662 admin/options-init.php:663
+msgid "Show the header menu in user dashboard pages?"
+msgstr ""
+
+#: admin/options-init.php:673
+msgid "Header Type?"
+msgstr ""
+
+#: admin/options-init.php:674
+msgid "Select header type."
+msgstr ""
+
+#: admin/options-init.php:676 shortcodes/shortcodes_install.php:237
+msgid "type1"
+msgstr ""
+
+#: admin/options-init.php:677 shortcodes/shortcodes_install.php:238
+msgid "type2"
+msgstr ""
+
+#: admin/options-init.php:684
+msgid "Header Align(Logo Position)?"
+msgstr ""
+
+#: admin/options-init.php:685
+msgid "Select header alignment."
+msgstr ""
+
+#: admin/options-init.php:687
+msgid "left"
+msgstr ""
+
+#: admin/options-init.php:688
+msgid "center"
+msgstr ""
+
+#: admin/options-init.php:689
+msgid "right"
+msgstr ""
+
+#: admin/options-init.php:696
+msgid "Media Header Type?"
+msgstr ""
+
+#: admin/options-init.php:697
+msgid "Select what media header to use globally."
+msgstr ""
+
+#: admin/options-init.php:712 admin/options-init.php:746
+msgid "Global Revolution Slider"
+msgstr ""
+
+#: admin/options-init.php:713 admin/options-init.php:747
+#: admin/options-init.php:781
+msgid ""
+"If media header is set to Revolution Slider, type the slider name and save."
+msgstr ""
+
+#: admin/options-init.php:720 admin/options-init.php:754
+msgid "Global Header Static Image"
+msgstr ""
+
+#: admin/options-init.php:721 admin/options-init.php:755
+msgid "If media header is set to image, add the image below."
+msgstr ""
+
+#: admin/options-init.php:730
+msgid "Media Header Type for Owners page?"
+msgstr ""
+
+#: admin/options-init.php:731
+msgid "Overwrites the global header type option"
+msgstr ""
+
+#: admin/options-init.php:764
+msgid "Media Header Type for Taxonomy?"
+msgstr ""
+
+#: admin/options-init.php:765
+msgid "Select what media header to use globally for taxonomies/categories."
+msgstr ""
+
+#: admin/options-init.php:780
+msgid "Taxonomy Header -  Revolution Slider"
+msgstr ""
+
+#: admin/options-init.php:789
+msgid "Taxonomy Header Static Image"
+msgstr ""
+
+#: admin/options-init.php:790
+msgid ""
+"If media header is set to image, and no image is added we will use the "
+"taxonomy featured image"
+msgstr ""
+
+#: admin/options-init.php:800
+msgid "Parallax efect for image/video header media ?"
+msgstr ""
+
+#: admin/options-init.php:801
+msgid "Enable parallax efect for image/video media header."
+msgstr ""
+
+#: admin/options-init.php:811
+msgid "Use uploaded Image for City and Area taxonomy page Header?"
+msgstr ""
+
+#: admin/options-init.php:812
+msgid "Works with Taxonomy set to Standard type"
+msgstr ""
+
+#: admin/options-init.php:822
+msgid "Wide Header ?"
+msgstr ""
+
+#: admin/options-init.php:823
+msgid "make the header 100%."
+msgstr ""
+
+#: admin/options-init.php:833
+msgid "Transparent Menu over Header?"
+msgstr ""
+
+#: admin/options-init.php:834
+msgid "Don't use this option with header media none or google maps"
+msgstr ""
+
+#: admin/options-init.php:844
+msgid "For Properties page: Use Transparent Menu over Header?"
+msgstr ""
+
+#: admin/options-init.php:845
+msgid "Overwrites the option for Transparent Menu over Header"
+msgstr ""
+
+#: admin/options-init.php:857
+msgid "Footer"
+msgstr ""
+
+#: admin/options-init.php:865
+msgid "Background for Footer"
+msgstr ""
+
+#: admin/options-init.php:866
+msgid "Insert background footer image below."
+msgstr ""
+
+#: admin/options-init.php:871
+msgid "Repeat Footer background ?"
+msgstr ""
+
+#: admin/options-init.php:872
+msgid "Set repeat options for background footer image."
+msgstr ""
+
+#: admin/options-init.php:884
+msgid "Wide Footer ?"
+msgstr ""
+
+#: admin/options-init.php:885
+msgid "make the footer 100%."
+msgstr ""
+
+#: admin/options-init.php:895
+msgid "Copyright Message"
+msgstr ""
+
+#: admin/options-init.php:896
+msgid ""
+"Type here the copyright message that will appear in footer. Add only text."
+msgstr ""
+
+#: admin/options-init.php:903
+msgid "Price & Currency"
+msgstr ""
+
+#: admin/options-init.php:910
+msgid "Price - thousands separator"
+msgstr ""
+
+#: admin/options-init.php:911
+msgid "Set the thousand separator for price numbers."
+msgstr ""
+
+#: admin/options-init.php:917
+msgid "Currency Symbol"
+msgstr ""
+
+#: admin/options-init.php:918
+msgid ""
+"This is used for default listing price currency symbol and default currency "
+"symbol in multi currency dropdown"
+msgstr ""
+
+#: admin/options-init.php:924 admin/options-init.php:925
+msgid "Where to show the currency symbol?"
+msgstr ""
+
+#: admin/options-init.php:935
+msgid "Currency code"
+msgstr ""
+
+#: admin/options-init.php:936
+msgid ""
+"Currency code is used for syncing the multi-currency options with Google "
+"Exchange, if enabled."
+msgstr ""
+
+#: admin/options-init.php:942
+msgid ""
+"Enable auto loading of exchange rates from free.currencyconverterapi.com (1 "
+"time per day)?"
+msgstr ""
+
+#: admin/options-init.php:943
+msgid ""
+"Currency code must be set according to international standards. Complete "
+"list is here"
+msgstr ""
+
+#: admin/options-init.php:953
+msgid "Currencyconverterapi.com Api Key"
+msgstr ""
+
+#: admin/options-init.php:954
+msgid ""
+"Get the free api key from here https://free.currencyconverterapi.com/free-"
+"api-key"
+msgstr ""
+
+#: admin/options-init.php:961
+msgid "Add Currencies for Multi Currency Widget."
+msgstr ""
+
+#: admin/options-init.php:971
+msgid "Booking Settings"
+msgstr ""
+
+#: admin/options-init.php:978
+msgid "Select Booking Type"
+msgstr ""
+
+#: admin/options-init.php:979
+msgid "Select Global Booking Type"
+msgstr ""
+
+#: admin/options-init.php:981
+msgid "Per Day for all Listings"
+msgstr ""
+
+#: admin/options-init.php:982
+msgid "Per Hour for all Listings"
+msgstr ""
+
+#: admin/options-init.php:983
+msgid "Mixt - Owner chooses price by hour or by day"
+msgstr ""
+
+#: admin/options-init.php:990
+msgid "Select Weekend days"
+msgstr ""
+
+#: admin/options-init.php:991
+msgid "Users can set a different price per day for weekend days"
+msgstr ""
+
+#: admin/options-init.php:993
+msgid "Sunday and Saturday"
+msgstr ""
+
+#: admin/options-init.php:994
+msgid "Friday and Saturday"
+msgstr ""
+
+#: admin/options-init.php:995
+msgid "Friday, Saturday and Sunday"
+msgstr ""
+
+#: admin/options-init.php:1002
+msgid "Select Date Format for datepickers"
+msgstr ""
+
+#: admin/options-init.php:1003
+msgid "You can set a dateformat that will be applied for all your datepickers"
+msgstr ""
+
+#: admin/options-init.php:1017
+msgid "Maximum Guest number"
+msgstr ""
+
+#: admin/options-init.php:1018
+msgid "Set maximum number of guests in guest dropdowns."
+msgstr ""
+
+#: admin/options-init.php:1024
+msgid "Maximum Month number(per day booking)"
+msgstr ""
+
+#: admin/options-init.php:1025
+msgid ""
+"Set maximum number of months to be shown on listing page. 12 is the "
+"recommended number. A higher number may result in page slowness."
+msgstr ""
+
+#: admin/options-init.php:1045
+msgid "Custom Fields"
+msgstr ""
+
+#: admin/options-init.php:1053
+msgid "Add, edit or delete property custom fields."
+msgstr ""
+
+#: admin/options-init.php:1063 post-types/property.php:124
+msgid "Features & Amenities"
+msgstr ""
+
+#: admin/options-init.php:1070
+msgid ""
+"Starting with v2.6 all features & amenities are converted to taxonomy "
+"(category) terms. Manage Features & Amenities from the left sidebar, "
+"Listings -> Features & Amenities menu or from Edit Property in wp-admin."
+msgstr ""
+
+#: admin/options-init.php:1077
+msgid "Show the Features and Amenities that are not available"
+msgstr ""
+
+#: admin/options-init.php:1078
+msgid "Show on property page the features and amenities that are not selected?"
+msgstr ""
+
+#: admin/options-init.php:1090
+msgid "Listings Labels"
+msgstr ""
+
+#: admin/options-init.php:1097
+msgid "Property Address Label"
+msgstr ""
+
+#: admin/options-init.php:1098
+msgid "Custom title instead of Property Address Label."
+msgstr ""
+
+#: admin/options-init.php:1104
+msgid "Property Features Label"
+msgstr ""
+
+#: admin/options-init.php:1105
+msgid "Custom title instead of Property Features Label."
+msgstr ""
+
+#: admin/options-init.php:1111
+msgid "Property Description Label"
+msgstr ""
+
+#: admin/options-init.php:1112
+msgid "Custom title instead of Property Description Label."
+msgstr ""
+
+#: admin/options-init.php:1118
+msgid "Property Details Label"
+msgstr ""
+
+#: admin/options-init.php:1119
+msgid "Custom title instead of Property Details Label."
+msgstr ""
+
+#: admin/options-init.php:1125
+msgid "Property Price Label"
+msgstr ""
+
+#: admin/options-init.php:1126
+msgid "Custom title instead of Property Price label."
+msgstr ""
+
+#: admin/options-init.php:1132
+msgid "Sleeping Situation Label"
+msgstr ""
+
+#: admin/options-init.php:1133
+msgid "Custom title instead of Sleeping Situation label."
+msgstr ""
+
+#: admin/options-init.php:1139
+msgid "Terms and Conditions Label"
+msgstr ""
+
+#: admin/options-init.php:1140
+msgid "Custom title instead of STerms and Conditions label."
+msgstr ""
+
+#: admin/options-init.php:1146
+msgid "Types of Beds"
+msgstr ""
+
+#: admin/options-init.php:1147
+msgid "List of bed types separated by comma"
+msgstr ""
+
+#: admin/options-init.php:1155
+msgid "Theme Slider"
+msgstr ""
+
+#: admin/options-init.php:1165
+msgid "Select Properties "
+msgstr ""
+
+#: admin/options-init.php:1166
+msgid ""
+"Select properties for header theme listing slider. For speed reason we show "
+"only the first 50 listings. If you want to add other listings, use the field "
+"below to select properties by ID. "
+msgstr ""
+
+#: admin/options-init.php:1181
+msgid ""
+"Add Properties in theme slider by ID. Place here the Listings Id separated "
+"by comma."
+msgstr ""
+
+#: admin/options-init.php:1182
+msgid ""
+"Place here the Listings Id separated by comma. Will Overwrite the above "
+"selection!"
+msgstr ""
+
+#: admin/options-init.php:1187
+msgid "Number of milisecons before auto cycling an item"
+msgstr ""
+
+#: admin/options-init.php:1188 admin/options-init.php:1242
+msgid ""
+"Number of milisecons before auto cycling an item (5000=5sec).Put 0 if you "
+"don't want to autoslide."
+msgstr ""
+
+#: admin/options-init.php:1194
+msgid "Design Type?"
+msgstr ""
+
+#: admin/options-init.php:1195
+msgid "Select the design type."
+msgstr ""
+
+#: admin/options-init.php:1206
+msgid "Splash Page"
+msgstr ""
+
+#: admin/options-init.php:1213
+msgid "Select the splash page type."
+msgstr ""
+
+#: admin/options-init.php:1214
+msgid ""
+"Important: Create also a page with template \"Splash Page\" to see how your "
+"splash settings apply"
+msgstr ""
+
+#: admin/options-init.php:1230
+msgid "Slider Images"
+msgstr ""
+
+#: admin/options-init.php:1231
+msgid "Slider Images, .png, .jpg or .gif format"
+msgstr ""
+
+#: admin/options-init.php:1241
+msgid "Slider Transition"
+msgstr ""
+
+#: admin/options-init.php:1254
+msgid "Splash Image"
+msgstr ""
+
+#: admin/options-init.php:1255
+msgid "Splash Image, .png, .jpg or .gif format"
+msgstr ""
+
+#: admin/options-init.php:1269 admin/options-init.php:1270
+msgid "Splash Video in mp4 format"
+msgstr ""
+
+#: admin/options-init.php:1285 admin/options-init.php:1286
+msgid "Splash Video in webm format"
+msgstr ""
+
+#: admin/options-init.php:1296 admin/options-init.php:1297
+msgid "Splash Video in ogv format"
+msgstr ""
+
+#: admin/options-init.php:1304
+msgid "Cover Image for video"
+msgstr ""
+
+#: admin/options-init.php:1305
+msgid "Cover Image for videot"
+msgstr ""
+
+#: admin/options-init.php:1313
+msgid "Overlay Image"
+msgstr ""
+
+#: admin/options-init.php:1314
+msgid "Overlay Image, .png, .jpg or .gif format"
+msgstr ""
+
+#: admin/options-init.php:1320 admin/options-init.php:1321
+#: misc/metaboxes.php:702 misc/metaboxes.php:796
+msgid "Overlay Color"
+msgstr ""
+
+#: admin/options-init.php:1328
+msgid "Overlay Opacity"
+msgstr ""
+
+#: admin/options-init.php:1329
+msgid "Overlay Opacity- values from 0 to 1 , Ex: 0.4"
+msgstr ""
+
+#: admin/options-init.php:1335 admin/options-init.php:1336
+msgid "Splash Page Title"
+msgstr ""
+
+#: admin/options-init.php:1342 admin/options-init.php:1343
+msgid "Splash Page Subtitle"
+msgstr ""
+
+#: admin/options-init.php:1350
+msgid "Logo Link"
+msgstr ""
+
+#: admin/options-init.php:1351
+msgid "In case you want to send users to another page"
+msgstr ""
+
+#: admin/options-init.php:1361
+msgid "Social & Contact"
+msgstr ""
+
+#: admin/options-init.php:1367
+msgid "Contact Page Details"
+msgstr ""
+
+#: admin/options-init.php:1374 admin/options-init.php:1375
+msgid "Use GDPR Checkbox ?"
+msgstr ""
+
+#: admin/options-init.php:1385
+msgid "Company Name"
+msgstr ""
+
+#: admin/options-init.php:1386
+msgid "Company name for contact page"
+msgstr ""
+
+#: admin/options-init.php:1391
+msgid "Company Address"
+msgstr ""
+
+#: admin/options-init.php:1392
+msgid "Type company address"
+msgstr ""
+
+#: admin/options-init.php:1398
+msgid "Company email"
+msgstr ""
+
+#: admin/options-init.php:1403
+msgid "Duplicate Email"
+msgstr ""
+
+#: admin/options-init.php:1404
+msgid "Send all contact emails to"
+msgstr ""
+
+#: admin/options-init.php:1409
+msgid "Telephone"
+msgstr ""
+
+#: admin/options-init.php:1410
+msgid "Company phone number."
+msgstr ""
+
+#: admin/options-init.php:1415 misc/plugin_help_functions.php:331
+msgid "Mobile"
+msgstr ""
+
+#: admin/options-init.php:1416
+msgid "Company mobile"
+msgstr ""
+
+#: admin/options-init.php:1421
+msgid "Fax"
+msgstr ""
+
+#: admin/options-init.php:1422
+msgid "Company fax"
+msgstr ""
+
+#: admin/options-init.php:1427 misc/plugin_help_functions.php:333
+msgid "Skype"
+msgstr ""
+
+#: admin/options-init.php:1428
+msgid "Company Skype"
+msgstr ""
+
+#: admin/options-init.php:1434
+msgid "Contact Page - Company HQ Latitude"
+msgstr ""
+
+#: admin/options-init.php:1435
+msgid ""
+"Set company pin location for contact page template. Latitude must be a "
+"number (ex: 40.577906)."
+msgstr ""
+
+#: admin/options-init.php:1441
+msgid "Contact Page - Company HQ Longitude"
+msgstr ""
+
+#: admin/options-init.php:1442
+msgid ""
+"Set company pin location for contact page template. Longitude must be a "
+"number (ex: -74.155058)."
+msgstr ""
+
+#: admin/options-init.php:1450
+msgid "Social Accounts"
+msgstr ""
+
+#: admin/options-init.php:1457
+msgid "Facebook Link"
+msgstr ""
+
+#: admin/options-init.php:1458
+msgid "Facebook page url, with https://"
+msgstr ""
+
+#: admin/options-init.php:1463
+msgid "Twitter page link"
+msgstr ""
+
+#: admin/options-init.php:1464
+msgid "Twitter page link, with https://"
+msgstr ""
+
+#: admin/options-init.php:1469
+msgid "Google+ Link"
+msgstr ""
+
+#: admin/options-init.php:1470
+msgid "Google+ page link, with https://"
+msgstr ""
+
+#: admin/options-init.php:1475
+msgid "Linkedin Link"
+msgstr ""
+
+#: admin/options-init.php:1476
+msgid "Linkedin page link, with https://"
+msgstr ""
+
+#: admin/options-init.php:1481
+msgid "Pinterest Link"
+msgstr ""
+
+#: admin/options-init.php:1482
+msgid "Pinterest page link, with https://"
+msgstr ""
+
+#: admin/options-init.php:1487
+msgid "Instagram Link"
+msgstr ""
+
+#: admin/options-init.php:1488
+msgid "Company Instagram"
+msgstr ""
+
+#: admin/options-init.php:1493
+msgid "Youtube Link"
+msgstr ""
+
+#: admin/options-init.php:1494
+msgid "Company Youtube"
+msgstr ""
+
+#: admin/options-init.php:1500
+msgid "Social Login"
+msgstr ""
+
+#: admin/options-init.php:1507
+msgid "Display social login also on register modal window ?"
+msgstr ""
+
+#: admin/options-init.php:1508
+msgid "Enable or disable social login also on register modal window"
+msgstr ""
+
+#: admin/options-init.php:1519 admin/options-init.php:1520
+msgid "Allow login via Facebook ?"
+msgstr ""
+
+#: admin/options-init.php:1531
+msgid "Facebook Api key"
+msgstr ""
+
+#: admin/options-init.php:1532
+msgid ""
+"Facebook Api key is required for Facebook login. See this help article "
+"before: "
+msgstr ""
+
+#: admin/options-init.php:1538
+msgid "Facebook Secret"
+msgstr ""
+
+#: admin/options-init.php:1539
+msgid "Facebook Secret is required for Facebook login."
+msgstr ""
+
+#: admin/options-init.php:1544
+msgid "Allow login via Google ?"
+msgstr ""
+
+#: admin/options-init.php:1545
+msgid "Enable or disable Google login."
+msgstr ""
+
+#: admin/options-init.php:1556
+msgid "Google Oauth Api"
+msgstr ""
+
+#: admin/options-init.php:1557
+msgid ""
+"Google Oauth Api is required for Google Login. See this help article before: "
+msgstr ""
+
+#: admin/options-init.php:1563
+msgid "Google Oauth Client Secret"
+msgstr ""
+
+#: admin/options-init.php:1564
+msgid "Google Oauth Client Secret is required for Google Login."
+msgstr ""
+
+#: admin/options-init.php:1570
+msgid "Google api key"
+msgstr ""
+
+#: admin/options-init.php:1571
+msgid "Google api key is required for Google Login."
+msgstr ""
+
+#: admin/options-init.php:1578
+msgid "Twitter Login & Widget "
+msgstr ""
+
+#: admin/options-init.php:1586
+msgid "Allow login via Twitter ?"
+msgstr ""
+
+#: admin/options-init.php:1587
+msgid "Allow login via Twitter ?(works only over https)"
+msgstr ""
+
+#: admin/options-init.php:1597
+msgid "Twitter consumer_key."
+msgstr ""
+
+#: admin/options-init.php:1598
+msgid ""
+"Twitter consumer_key is required for theme Twitter widget or Twitter login. "
+"See this help article before: "
+msgstr ""
+
+#: admin/options-init.php:1603
+msgid "Twitter Consumer Secret"
+msgstr ""
+
+#: admin/options-init.php:1604
+msgid ""
+"Twitter Consumer Secret is required for theme Twitter widget or Twitter "
+"login."
+msgstr ""
+
+#: admin/options-init.php:1609
+msgid "Twitter Access Token"
+msgstr ""
+
+#: admin/options-init.php:1610
+msgid ""
+"Twitter Access Token is required for theme Twitter widget or Twitter login."
+msgstr ""
+
+#: admin/options-init.php:1615
+msgid "Twitter Access Token Secret"
+msgstr ""
+
+#: admin/options-init.php:1616
+msgid ""
+"Twitter Access Token Secret is required for theme Twitter widget or Twitter "
+"login."
+msgstr ""
+
+#: admin/options-init.php:1621 admin/options-init.php:1622
+msgid "Twitter Cache Time"
+msgstr ""
+
+#: admin/options-init.php:1630 post-types/property.php:181
+msgid "Map"
+msgstr ""
+
+#: admin/options-init.php:1636
+msgid "Map Settings"
+msgstr ""
+
+#: admin/options-init.php:1643
+msgid ""
+"VERY IMPORTANT: For already published properties, switching from Google "
+"Places to Algolia Places/OpenStreet Places (or from Algolia/Openstreet to "
+"Google Places) may require adding properties City & address again. The 2 "
+"systems can have different names for city, area and country and search by "
+"location may not work."
+msgstr ""
+
+#: admin/options-init.php:1651
+msgid "What Map System you want to use?"
+msgstr ""
+
+#: admin/options-init.php:1652
+msgid "What map system you want to use"
+msgstr ""
+
+#: admin/options-init.php:1665
+msgid "What Places Api you want to use?"
+msgstr ""
+
+#: admin/options-init.php:1666
+msgid "Google Places work only with Google Maps activated."
+msgstr ""
+
+#: admin/options-init.php:1770
+msgid "Use file reading for pins?"
+msgstr ""
+
+#: admin/options-init.php:1771
+msgid ""
+"Use file reading for pins? (*recommended for over 200 listings. File reading "
+"is faster than mysql reading and improves page speed)"
+msgstr ""
+
+#: admin/options-init.php:1781
+msgid "Maximum number of pins to show on the map."
+msgstr ""
+
+#: admin/options-init.php:1782
+msgid ""
+"A high number will increase the response time and server load. Use a number "
+"that works for your current hosting situation. Put -1 for all pins."
+msgstr ""
+
+#: admin/options-init.php:1788
+msgid "Google Maps API KEY"
+msgstr ""
+
+#: admin/options-init.php:1789
+msgid ""
+"The Google Maps JavaScript API v3 REQUIRES an API key to function correctly. "
+"Get an APIs Console key and post the code below. You can get it from here: "
+"https://developers.google.com/maps/documentation/javascript/tutorial#api_key"
+msgstr ""
+
+#: admin/options-init.php:1794
+msgid "MapBox API KEY -  used for tile server"
+msgstr ""
+
+#: admin/options-init.php:1795
+msgid ""
+"You can get it from here: https://www.mapbox.com/. If you leave it blank we "
+"will use the default openstreet server which can be slow"
+msgstr ""
+
+#: admin/options-init.php:1800
+msgid "Algolia App Id"
+msgstr ""
+
+#: admin/options-init.php:1801 admin/options-init.php:1807
+msgid "You can get it from here:  https://community.algolia.com/places/"
+msgstr ""
+
+#: admin/options-init.php:1806
+msgid "Algolia API Key"
+msgstr ""
+
+#: admin/options-init.php:1814
+msgid "Starting Point Latitude"
+msgstr ""
+
+#: admin/options-init.php:1815
+msgid ""
+"Applies for global header media with map. Add only numbers (ex: 40.577906)."
+msgstr ""
+
+#: admin/options-init.php:1821
+msgid "Starting Point Longitude"
+msgstr ""
+
+#: admin/options-init.php:1822
+msgid ""
+"Applies for global header media with map. Add only numbers (ex: -74.155058)."
+msgstr ""
+
+#: admin/options-init.php:1828
+msgid "Default Map zoom (1 to 20)"
+msgstr ""
+
+#: admin/options-init.php:1829
+msgid ""
+"Applies for global header media with map , except advanced search results, "
+"properties list and taxonomies pages."
+msgstr ""
+
+#: admin/options-init.php:1835
+msgid "Use Pin Cluster on map"
+msgstr ""
+
+#: admin/options-init.php:1836
+msgid "If yes, it groups nearby pins in cluster."
+msgstr ""
+
+#: admin/options-init.php:1847
+msgid "Maximum zoom level for Cloud Cluster to appear - Only for Google Maps"
+msgstr ""
+
+#: admin/options-init.php:1848
+msgid ""
+"Pin cluster disappears when map zoom is less than the value set in here."
+msgstr ""
+
+#: admin/options-init.php:1854
+msgid "Geolocation Circle over map (in meters)"
+msgstr ""
+
+#: admin/options-init.php:1855
+msgid ""
+"Controls circle radius value for user geolocation pin. Type only numbers "
+"(ex: 400)."
+msgstr ""
+
+#: admin/options-init.php:1861
+msgid "Height of the Google Map when closed"
+msgstr ""
+
+#: admin/options-init.php:1862 admin/options-init.php:1869
+msgid "Applies for header google maps when set as global header media type."
+msgstr ""
+
+#: admin/options-init.php:1868
+msgid "Height of Google Map when open"
+msgstr ""
+
+#: admin/options-init.php:1875
+msgid "Force Google Map at the \"closed\" size ?"
+msgstr ""
+
+#: admin/options-init.php:1876
+msgid ""
+"Applies for header google maps when set as global header media type, except "
+"listing page."
+msgstr ""
+
+#: admin/options-init.php:1886
+msgid ""
+"Style for Google Map. Use <strong> https://snazzymaps.com/ </strong> to "
+"create styles"
+msgstr ""
+
+#: admin/options-init.php:1887
+msgid "Copy/paste below the custom map style code."
+msgstr ""
+
+#: admin/options-init.php:1901
+msgid "Use price Pins ?"
+msgstr ""
+
+#: admin/options-init.php:1902
+msgid ""
+"Use price Pins ?(The css class for price pins is \"wpestate_marker\" . Each "
+"pin has also receive a class with the name of the category or action: For "
+"example \"wpestate_marker apartments sales\")"
+msgstr ""
+
+#: admin/options-init.php:1913
+msgid "Use Full Price Pins ?"
+msgstr ""
+
+#: admin/options-init.php:1914
+msgid ""
+"If not we will show prices without before and after label and in this "
+"format : 5,23m or 6.83k"
+msgstr ""
+
+#: admin/options-init.php:1926
+msgid "Use single Image Pin ?"
+msgstr ""
+
+#: admin/options-init.php:1927
+msgid ""
+"We will use 1 single pins for all markers. This option will decrease the "
+"loading time on you maps."
+msgstr ""
+
+#: admin/options-init.php:1938
+msgid "Single Pin Marker / Contact page marker"
+msgstr ""
+
+#: admin/options-init.php:1939
+msgid "Image size must be 44px x 50px."
+msgstr ""
+
+#: admin/options-init.php:1945
+msgid "Cloud Marker Image"
+msgstr ""
+
+#: admin/options-init.php:1946
+msgid "Image must be 70px x 70px"
+msgstr ""
+
+#: admin/options-init.php:1955
+msgid "Pin Management"
+msgstr ""
+
+#: admin/options-init.php:1958
+msgid ""
+"Add new Google Maps pins for single actions / single categories. For speed "
+"reason, you MUST add pins if you change categories and actions names.</"
+"br>Use the \"Upload\" button and \"Insert into Post\" button from the pop up "
+"window.</br> Pins retina version must be uploaded at the same time (same "
+"folder) as the original pin and the name of the retina file should be "
+"with_2x at the end. Help here"
+msgstr ""
+
+#: admin/options-init.php:1973
+msgid "Generate Data & Pins"
+msgstr ""
+
+#: admin/options-init.php:1981
+msgid "Generate Pins and Autocomplete data"
+msgstr ""
+
+#: admin/options-init.php:1982
+msgid ""
+"Generate Pins for Google Map and Autocomplete data for Advanced Search with "
+"theme auto-complete enabled"
+msgstr ""
+
+#: admin/options-init.php:1989
+msgid "Design"
+msgstr ""
+
+#: admin/options-init.php:1994
+msgid "General Design Settings"
+msgstr ""
+
+#: admin/options-init.php:2001
+msgid "Header Height"
+msgstr ""
+
+#: admin/options-init.php:2002
+msgid "Header Height in px"
+msgstr ""
+
+#: admin/options-init.php:2007
+msgid "Sticky Header Height"
+msgstr ""
+
+#: admin/options-init.php:2008
+msgid "Sticky Header Height in px"
+msgstr ""
+
+#: admin/options-init.php:2013
+msgid "Border Bottom Header Height"
+msgstr ""
+
+#: admin/options-init.php:2014
+msgid "Header Border Bottom Height"
+msgstr ""
+
+#: admin/options-init.php:2019 admin/options-init.php:2020
+msgid "Header Border Bottom Color"
+msgstr ""
+
+#: admin/options-init.php:2028
+msgid "Listing Page Settings"
+msgstr ""
+
+#: admin/options-init.php:2035
+msgid "Listing Page Design Type"
+msgstr ""
+
+#: admin/options-init.php:2036
+msgid "Select design type for Listing Page ."
+msgstr ""
+
+#: admin/options-init.php:2038 admin/options-init.php:2099
+#: admin/options-init.php:3644
+msgid "Type 1"
+msgstr ""
+
+#: admin/options-init.php:2039 admin/options-init.php:2100
+#: admin/options-init.php:3645
+msgid "Type 2"
+msgstr ""
+
+#: admin/options-init.php:2040 admin/options-init.php:2101
+#: admin/options-init.php:3646
+msgid "Type 3"
+msgstr ""
+
+#: admin/options-init.php:2041 admin/options-init.php:3647
+msgid "Type 4"
+msgstr ""
+
+#: admin/options-init.php:2048
+msgid "Hide map location and address for unbooked properties?"
+msgstr ""
+
+#: admin/options-init.php:2049
+msgid ""
+"If \"yes\" we will not show the address or exact location on property page "
+"map."
+msgstr ""
+
+#: admin/options-init.php:2051
+msgid "Yes"
+msgstr ""
+
+#: admin/options-init.php:2052
+msgid "No"
+msgstr ""
+
+#: admin/options-init.php:2060 admin/options-init.php:2061
+msgid "Use Custom Icon Area?"
+msgstr ""
+
+#: admin/options-init.php:2071 admin/options-init.php:2072
+msgid "Font Size for Icon Area"
+msgstr ""
+
+#: admin/options-init.php:2081
+msgid "Listing Icon Area Design"
+msgstr ""
+
+#: admin/options-init.php:2082 admin/options-init.php:2134
+#: admin/options-init.php:2162
+msgid "Add, edit or delete listing custom fields."
+msgstr ""
+
+#: admin/options-init.php:2089
+msgid "Listing Card Design"
+msgstr ""
+
+#: admin/options-init.php:2096
+msgid "Listing Unit Type"
+msgstr ""
+
+#: admin/options-init.php:2097
+msgid ""
+"Select Listing Unit Type.</br>Unit type 3 works only with custom fields."
+msgstr ""
+
+#: admin/options-init.php:2108
+msgid ""
+"Use Slider in Listing Unit? (*doesn't apply for featured listing unit and "
+"listing shortcode list with no space between units)"
+msgstr ""
+
+#: admin/options-init.php:2109
+msgid "Enable / Disable the image slider in listing unit (used in lists)"
+msgstr ""
+
+#: admin/options-init.php:2119
+msgid "Listing Unit Style for Half Map"
+msgstr ""
+
+#: admin/options-init.php:2120
+msgid "Select Listing Unit Style for Half Map"
+msgstr ""
+
+#: admin/options-init.php:2122
+msgid "List"
+msgstr ""
+
+#: admin/options-init.php:2123
+msgid "Grid"
+msgstr ""
+
+#: admin/options-init.php:2133
+msgid "Custom Fields for Unit Type 3"
+msgstr ""
+
+#: admin/options-init.php:2143
+msgid "Map Marker Infobox Design"
+msgstr ""
+
+#: admin/options-init.php:2150 admin/options-init.php:2151
+msgid "Use custom icons on Infobox ?"
+msgstr ""
+
+#: admin/options-init.php:2161
+msgid "Custom Fields for Infobox"
+msgstr ""
+
+#: admin/options-init.php:2170
+msgid "Custom Colors Settings"
+msgstr ""
+
+#: admin/options-init.php:2172
+msgid ""
+"***Please understand that we cannot add here color controls for all theme "
+"elements & details. Doing that will result in a overcrowded and useless "
+"interface. These small details need to be addressed via custom css code"
+msgstr ""
+
+#: admin/options-init.php:2179
+msgid "On save, give me the css code to save in child theme style.css ?"
+msgstr ""
+
+#: admin/options-init.php:2180
+msgid "*Recommended option"
+msgstr ""
+
+#: admin/options-init.php:2181
+msgid ""
+"If you use this option, you will need to copy / paste the code below and use "
+"it in child theme style.css. The colors will NOT change otherwise!"
+msgstr ""
+
+#: admin/options-init.php:2189
+msgid "Copy the above code and add it into your child theme style.css"
+msgstr ""
+
+#: admin/options-init.php:2197 admin/options-init.php:2198
+msgid "Main Color"
+msgstr ""
+
+#: admin/options-init.php:2204 admin/options-init.php:2205
+msgid "Background Color"
+msgstr ""
+
+#: admin/options-init.php:2211 admin/options-init.php:2212
+msgid "Breadcrumbs, Meta and Listing Info Font Color"
+msgstr ""
+
+#: admin/options-init.php:2218 admin/options-init.php:2219
+msgid "Font Color"
+msgstr ""
+
+#: admin/options-init.php:2225 admin/options-init.php:2226
+msgid "Link Color"
+msgstr ""
+
+#: admin/options-init.php:2232 admin/options-init.php:2233
+msgid "Headings Color"
+msgstr ""
+
+#: admin/options-init.php:2239 admin/options-init.php:2240
+msgid "Footer Background Color"
+msgstr ""
+
+#: admin/options-init.php:2246 admin/options-init.php:2247
+msgid "Footer Font Color"
+msgstr ""
+
+#: admin/options-init.php:2253 admin/options-init.php:2254
+msgid "Footer Widget Title Font Color"
+msgstr ""
+
+#: admin/options-init.php:2260 admin/options-init.php:2261
+msgid "Footer Copyright Font Color"
+msgstr ""
+
+#: admin/options-init.php:2267 admin/options-init.php:2268
+msgid "Footer Copyright Background Color"
+msgstr ""
+
+#: admin/options-init.php:2274 admin/options-init.php:2275
+msgid "Sidebar Widget Background Color( for \"boxed\" widgets)"
+msgstr ""
+
+#: admin/options-init.php:2281 admin/options-init.php:2282
+msgid "Sidebar Heading Color"
+msgstr ""
+
+#: admin/options-init.php:2288 admin/options-init.php:2289
+msgid "Sidebar Font color"
+msgstr ""
+
+#: admin/options-init.php:2296 admin/options-init.php:2297
+msgid "Boxed Content Background Color"
+msgstr ""
+
+#: admin/options-init.php:2303 admin/options-init.php:2304
+msgid "Border Color"
+msgstr ""
+
+#: admin/options-init.php:2310 admin/options-init.php:2311
+msgid "Hover Button Color"
+msgstr ""
+
+#: admin/options-init.php:2318
+msgid "Main Menu Design"
+msgstr ""
+
+#: admin/options-init.php:2325 admin/options-init.php:2326
+msgid "Header Background Color"
+msgstr ""
+
+#: admin/options-init.php:2332 admin/options-init.php:2333
+msgid "Top Bar Background Color (Header Widget Menu)"
+msgstr ""
+
+#: admin/options-init.php:2339 admin/options-init.php:2340
+msgid "Top Bar Font Color (Header Widget Menu)"
+msgstr ""
+
+#: admin/options-init.php:2346 admin/options-init.php:2347
+msgid "Top Menu Font Color"
+msgstr ""
+
+#: admin/options-init.php:2353 admin/options-init.php:2354
+msgid "Top Menu Hover Font Color"
+msgstr ""
+
+#: admin/options-init.php:2360 admin/options-init.php:2361
+msgid "Active Menu Font Color"
+msgstr ""
+
+#: admin/options-init.php:2367 admin/options-init.php:2368
+msgid "Transparent Header - Top Menu Font Color"
+msgstr ""
+
+#: admin/options-init.php:2374 admin/options-init.php:2375
+msgid "Transparent Header - Top Menu Hover Font Color"
+msgstr ""
+
+#: admin/options-init.php:2381 admin/options-init.php:2382
+msgid "Sticky Menu Font Color"
+msgstr ""
+
+#: admin/options-init.php:2388 admin/options-init.php:2389
+msgid "Menu Item Color"
+msgstr ""
+
+#: admin/options-init.php:2395 admin/options-init.php:2396
+msgid "Menu Item Back Color"
+msgstr ""
+
+#: admin/options-init.php:2402 admin/options-init.php:2403
+msgid "Menu Item hover font color"
+msgstr ""
+
+#: admin/options-init.php:2409 admin/options-init.php:2410
+msgid "Top Menu Font Size"
+msgstr ""
+
+#: admin/options-init.php:2415 admin/options-init.php:2416
+msgid "Menu Item Font Size"
+msgstr ""
+
+#: admin/options-init.php:2422
+msgid "Top Menu Hover Background Color"
+msgstr ""
+
+#: admin/options-init.php:2423
+msgid "Top Menu Hover Background Color (*applies on some hover types)"
+msgstr ""
+
+#: admin/options-init.php:2429
+msgid " <img  style=\"border:1px solid #FFE7E7;margin-bottom:10px;\" src=\""
+msgstr ""
+
+#: admin/options-init.php:2434 admin/options-init.php:2435
+msgid "Top Menu Hover Type"
+msgstr ""
+
+#: admin/options-init.php:2449
+msgid "Custom CSS"
+msgstr ""
+
+#: admin/options-init.php:2456
+msgid "Custom Css"
+msgstr ""
+
+#: admin/options-init.php:2457
+msgid "Overwrite theme css using custom css."
+msgstr ""
+
+#: admin/options-init.php:2465
+msgid "Fonts"
+msgstr ""
+
+#: admin/options-init.php:2472
+msgid "Main Font"
+msgstr ""
+
+#: admin/options-init.php:2473
+msgid "Select Main Font"
+msgstr ""
+
+#: admin/options-init.php:2480
+msgid "Main Font subset"
+msgstr ""
+
+#: admin/options-init.php:2481
+msgid "Select Main Font subset( like greek,cyrillic, etc..)"
+msgstr ""
+
+#: admin/options-init.php:2487
+msgid "Advanced"
+msgstr ""
+
+#: admin/options-init.php:2493
+msgid "Email Management"
+msgstr ""
+
+#: admin/options-init.php:2495
+msgid ""
+"Leave \"Subject\" blank for the email notifications you don't wish to send. "
+"Global variables: %website_url as website url,%website_name as website name, "
+"%user_email as user_email, %username as username"
+msgstr ""
+
+#: admin/options-init.php:2501
+msgid "Subject for New user notification"
+msgstr ""
+
+#: admin/options-init.php:2502
+msgid "Email subject for New user notification"
+msgstr ""
+
+#: admin/options-init.php:2503
+msgid "Your username and password on %website_url"
+msgstr ""
+
+#: admin/options-init.php:2508
+msgid "Content for New user notification"
+msgstr ""
+
+#: admin/options-init.php:2509
+msgid "Email content for New user notification"
+msgstr ""
+
+#: admin/options-init.php:2510
+msgid ""
+"Hi there,\n"
+"                                Welcome to %website_url ! You can login now "
+"using the below credentials:\n"
+"                                Username:%user_login_register\n"
+"                                Password: %user_pass_register\n"
+"                                If you have any problems, please contact "
+"me.\n"
+"                                Thank you!"
+msgstr ""
+
+#: admin/options-init.php:2516
+msgid ""
+"%user_login_register as new username, %user_pass_register as user password, "
+"%user_email_register as new user email,  use text mode and <br class=\"\"> "
+"tag for new line, <p class=\"\"> for a new paragraph, \n"
+"<span class=\"\"> for styling."
+msgstr ""
+
+#: admin/options-init.php:2522
+msgid "Subject for New user admin notification"
+msgstr ""
+
+#: admin/options-init.php:2523
+msgid "Email subject for New user admin notification"
+msgstr ""
+
+#: admin/options-init.php:2524
+msgid "New User Registration"
+msgstr ""
+
+#: admin/options-init.php:2529
+msgid "Content for New user admin notification"
+msgstr ""
+
+#: admin/options-init.php:2530
+msgid "Email content for New user admin notification"
+msgstr ""
+
+#: admin/options-init.php:2531
+msgid ""
+"New user registration on %website_url.\n"
+"                                Username: %user_login_register, \n"
+"                                E-mail: %user_email_register"
+msgstr ""
+
+#: admin/options-init.php:2534
+msgid ""
+"%user_login_register as new username and %user_email_register as new user "
+"email,  use text mode and <br class=\"\"> tag for new line, <p class=\"\"> "
+"for a new paragraph, <span class=\"\"> for styling."
+msgstr ""
+
+#: admin/options-init.php:2539
+msgid "Subject for Purchase Activated"
+msgstr ""
+
+#: admin/options-init.php:2540
+msgid "Email subject for Purchase Activated"
+msgstr ""
+
+#: admin/options-init.php:2541
+msgid "Your purchase was activated"
+msgstr ""
+
+#: admin/options-init.php:2546
+msgid "Content for Purchase Activated"
+msgstr ""
+
+#: admin/options-init.php:2547
+msgid "Email content for Purchase Activated"
+msgstr ""
+
+#: admin/options-init.php:2548
+msgid ""
+"Hi there,\n"
+"                               Your purchase on  %website_url is activated! "
+"You should go check it out."
+msgstr ""
+
+#: admin/options-init.php:2550
+msgid ""
+"  use text mode and <br class=\"\"> tag for new line, <p class=\"\"> for a "
+"new paragraph, <span class=\"\"> for styling."
+msgstr ""
+
+#: admin/options-init.php:2555
+msgid "Subject for Password Reset Request"
+msgstr ""
+
+#: admin/options-init.php:2556
+msgid "Email subject for Password Reset Request"
+msgstr ""
+
+#: admin/options-init.php:2557 misc/sms_functions.php:202
+#: misc/emailfunctions.php:108
+msgid "Password Reset Request"
+msgstr ""
+
+#: admin/options-init.php:2562
+msgid "Content for Password Reset Request"
+msgstr ""
+
+#: admin/options-init.php:2563
+msgid "Email content for Password Reset Request"
+msgstr ""
+
+#: admin/options-init.php:2564
+msgid ""
+"Someone requested that the password be reset for the following account:\n"
+"                                %website_url \n"
+"                                Username: %forgot_username .\n"
+"                                If this was a mistake, just ignore this "
+"email and nothing will happen. To reset your password, visit the following "
+"address:%reset_link,\n"
+"                                Thank You!"
+msgstr ""
+
+#: admin/options-init.php:2569
+msgid ""
+"%reset_link as reset link, %forgot_username as user name and %forgot_email "
+"as user email, use text mode and <br class=\"\"> tag for new line, <p class="
+"\"\"> for a new paragraph, <span class=\"\"> for styling."
+msgstr ""
+
+#: admin/options-init.php:2574
+msgid "Subject for Password Reseted"
+msgstr ""
+
+#: admin/options-init.php:2575
+msgid "Email subject for Password Reseted"
+msgstr ""
+
+#: admin/options-init.php:2576 admin/options-init.php:2594
+msgid "Your Password was Reset"
+msgstr ""
+
+#: admin/options-init.php:2581
+msgid "Content for Password Reseted"
+msgstr ""
+
+#: admin/options-init.php:2582
+msgid "Email content for Password Reseted"
+msgstr ""
+
+#: admin/options-init.php:2583
+msgid ""
+"Your new password for the account at: %website_url: \n"
+"                                Username:%user_login, \n"
+"                                Password:%user_pass\n"
+"                                You can now login with your new password at: "
+"%website_url"
+msgstr ""
+
+#: admin/options-init.php:2587
+msgid ""
+"%reset_link as reset link, %forgot_username as username and %forgot_email as "
+"user email,  use text mode and <br class=\"\"> tag for new line, <p class="
+"\"\"> for a new paragraph, <span class=\"\"> for styling."
+msgstr ""
+
+#: admin/options-init.php:2592
+msgid "Subject for Approved Listings"
+msgstr ""
+
+#: admin/options-init.php:2593
+msgid "Email subject for Approved Listings"
+msgstr ""
+
+#: admin/options-init.php:2599
+msgid "Content for Approved Listings"
+msgstr ""
+
+#: admin/options-init.php:2600
+msgid "Email content for Approved Listings"
+msgstr ""
+
+#: admin/options-init.php:2601
+msgid ""
+"Hi there,\n"
+"                                Your listing, %property_title was approved "
+"on  %website_url ! The listing is: %property_url.\n"
+"                                You should go check it out."
+msgstr ""
+
+#: admin/options-init.php:2604
+msgid ""
+"* you can use %listing_author% as owner name, %post_id as listing id, "
+"%property_url as property url and %property_title as property name,  use "
+"text mode and <br class=\"\"> tag for new line, <p class=\"\"> for a new "
+"paragraph, <span class=\"\"> for styling."
+msgstr ""
+
+#: admin/options-init.php:2609
+msgid "Subject for Admin - Expired Listing"
+msgstr ""
+
+#: admin/options-init.php:2610
+msgid "Email subject for Admin - Expired Listing"
+msgstr ""
+
+#: admin/options-init.php:2611
+msgid "Expired Listing sent for approval on %website_url"
+msgstr ""
+
+#: admin/options-init.php:2616
+msgid "Content for Admin - Expired Listing"
+msgstr ""
+
+#: admin/options-init.php:2617
+msgid "Email Email content for Admin - Expired Listing"
+msgstr ""
+
+#: admin/options-init.php:2618
+msgid ""
+"Hi there,\n"
+"                                A user has re-submited a new property on "
+"%website_url ! You should go check it out.\n"
+"                                This is the property title: "
+"%submission_title."
+msgstr ""
+
+#: admin/options-init.php:2621
+msgid ""
+"* you can use %submission_title as property title number, %submission_url as "
+"property submission url,  use text mode and <br class=\"\"> tag for new "
+"line, <p class=\"\"> for a new paragraph, <span class=\"\"> for styling."
+msgstr ""
+
+#: admin/options-init.php:2627 admin/options-init.php:2634
+msgid "Email subject for Paid Submission"
+msgstr ""
+
+#: admin/options-init.php:2628
+msgid "New Paid Submission on %website_url"
+msgstr ""
+
+#: admin/options-init.php:2633
+msgid "Content for Paid Submission"
+msgstr ""
+
+#: admin/options-init.php:2635
+msgid ""
+"Hi there,\n"
+"                                You have a new paid submission on  "
+"%website_url ! You should go check it out."
+msgstr ""
+
+#: admin/options-init.php:2637 admin/options-init.php:2653
+#: admin/options-init.php:2670 admin/options-init.php:2687
+#: admin/options-init.php:2752 admin/options-init.php:2784
+#: admin/options-init.php:2800 admin/options-init.php:2816
+#: admin/options-init.php:2884 admin/options-init.php:2900
+#: admin/options-init.php:2916 admin/options-init.php:2932
+msgid ""
+",  use text mode and <br class=\"\"> tag for new line, <p class=\"\"> for a "
+"new paragraph, <span class=\"\"> for styling."
+msgstr ""
+
+#: admin/options-init.php:2642
+msgid "Subject for Featured Submission"
+msgstr ""
+
+#: admin/options-init.php:2643
+msgid "Email subject for Featured Submission"
+msgstr ""
+
+#: admin/options-init.php:2644
+msgid "New Feature Upgrade on  %website_url"
+msgstr ""
+
+#: admin/options-init.php:2649
+msgid "Content for Featured Submission"
+msgstr ""
+
+#: admin/options-init.php:2650
+msgid "Email content for Featured Submission"
+msgstr ""
+
+#: admin/options-init.php:2651
+msgid ""
+"Hi there,\n"
+"                                You have a new featured submission on  "
+"%website_url ! You should go check it out."
+msgstr ""
+
+#: admin/options-init.php:2658
+msgid "Subject for Account Downgraded"
+msgstr ""
+
+#: admin/options-init.php:2659
+msgid "Email subject for Account Downgraded"
+msgstr ""
+
+#: admin/options-init.php:2660
+msgid "Account Downgraded on %website_url"
+msgstr ""
+
+#: admin/options-init.php:2665
+msgid "Content for Account Downgraded"
+msgstr ""
+
+#: admin/options-init.php:2666
+msgid "Email content for Account Downgraded"
+msgstr ""
+
+#: admin/options-init.php:2667
+msgid ""
+"Hi there,\n"
+"                                You downgraded your subscription on "
+"%website_url. Because your listings number was greater than what the actual "
+"package offers, we set the status of all your listings to expired. You will "
+"need to choose which listings you want live and send them again for "
+"approval.\n"
+"                                Thank you!"
+msgstr ""
+
+#: admin/options-init.php:2675
+msgid "Subject for Membership Cancelled"
+msgstr ""
+
+#: admin/options-init.php:2676
+msgid "Email subject for Membership Cancelled"
+msgstr ""
+
+#: admin/options-init.php:2677
+msgid "Membership Cancelled on %website_url"
+msgstr ""
+
+#: admin/options-init.php:2682
+msgid "Content for Membership Cancelled"
+msgstr ""
+
+#: admin/options-init.php:2683
+msgid "Email content for Membership Cancelled"
+msgstr ""
+
+#: admin/options-init.php:2684
+msgid ""
+"Hi there,\n"
+"                                Your subscription on %website_url was "
+"cancelled because it expired or the recurring payment from the merchant was "
+"not processed. All your listings are no longer visible for our visitors but "
+"remain in your account.\n"
+"                                Thank you."
+msgstr ""
+
+#: admin/options-init.php:2692
+msgid "Subject for Free Listing Expired"
+msgstr ""
+
+#: admin/options-init.php:2693
+msgid "Email subject for Free Listing Expired"
+msgstr ""
+
+#: admin/options-init.php:2694
+msgid "Free Listing expired on %website_url"
+msgstr ""
+
+#: admin/options-init.php:2699
+msgid "Content for Free Listing Expired"
+msgstr ""
+
+#: admin/options-init.php:2700
+msgid "Email content for Free Listing Expired"
+msgstr ""
+
+#: admin/options-init.php:2701
+msgid ""
+"Hi there,\n"
+"                                One of your free listings on  %website_url "
+"has expired. The listing is %expired_listing_url.\n"
+"                                Thank you!"
+msgstr ""
+
+#: admin/options-init.php:2704
+msgid ""
+"* you can use %expired_listing_url as expired listing url and "
+"%expired_listing_name as expired listing name,  use text mode and <br class="
+"\"\"> tag for new line, <p class=\"\"> for a new paragraph, <span class="
+"\"\"> for styling."
+msgstr ""
+
+#: admin/options-init.php:2709
+msgid "Subject for New Listing Submission"
+msgstr ""
+
+#: admin/options-init.php:2710
+msgid "Email subject for New Listing Submission"
+msgstr ""
+
+#: admin/options-init.php:2711
+msgid "New Listing Submission on %website_url"
+msgstr ""
+
+#: admin/options-init.php:2716
+msgid "Content for New Listing Submission"
+msgstr ""
+
+#: admin/options-init.php:2717
+msgid "Email content for New Listing Submission"
+msgstr ""
+
+#: admin/options-init.php:2718
+msgid ""
+"Hi there,\n"
+"                               A user has submited a new property on "
+"%website_url ! You should go check it out.This is the property title "
+"%new_listing_title!"
+msgstr ""
+
+#: admin/options-init.php:2720
+msgid ""
+"* you can use %new_listing_title as new listing title and %new_listing_url "
+"as new listing url,  use text mode and <br class=\"\"> tag for new line, <p "
+"class=\"\"> for a new paragraph, <span class=\"\"> for styling."
+msgstr ""
+
+#: admin/options-init.php:2725
+msgid "Subject for Recurring Payment"
+msgstr ""
+
+#: admin/options-init.php:2726
+msgid "Email subject for Recurring Payment"
+msgstr ""
+
+#: admin/options-init.php:2727
+msgid "Recurring Payment on %website_url"
+msgstr ""
+
+#: admin/options-init.php:2732
+msgid "Content for Recurring Payment"
+msgstr ""
+
+#: admin/options-init.php:2733
+msgid "Email content for Recurring Payment"
+msgstr ""
+
+#: admin/options-init.php:2734
+msgid ""
+"Hi there,\n"
+"                               We charged your account on %merchant for a "
+"subscription on %website_url ! You should go check it out."
+msgstr ""
+
+#: admin/options-init.php:2736
+msgid ""
+"* you can use %recurring_pack_name as recurring packacge name and %merchant "
+"as merchant name,  use text mode and <br class=\"\"> tag for new line, <p "
+"class=\"\"> for a new paragraph, <span class=\"\"> for styling."
+msgstr ""
+
+#: admin/options-init.php:2741
+msgid "Subject for Membership Activated"
+msgstr ""
+
+#: admin/options-init.php:2742
+msgid "Email subject for Membership Activated"
+msgstr ""
+
+#: admin/options-init.php:2743
+msgid "Membership Activated on %website_url"
+msgstr ""
+
+#: admin/options-init.php:2748
+msgid "Content for Membership Activated"
+msgstr ""
+
+#: admin/options-init.php:2749
+msgid "Email content for Membership Activated"
+msgstr ""
+
+#: admin/options-init.php:2750
+msgid ""
+"Hi there,\n"
+"                               Your new membership on %website_url is "
+"activated! You should go check it out."
+msgstr ""
+
+#: admin/options-init.php:2757
+msgid "Subject for Update Profile"
+msgstr ""
+
+#: admin/options-init.php:2758
+msgid "Email subject for Update Profile"
+msgstr ""
+
+#: admin/options-init.php:2759
+msgid "Profile Update"
+msgstr ""
+
+#: admin/options-init.php:2764
+msgid "Content for Update Profile"
+msgstr ""
+
+#: admin/options-init.php:2765
+msgid "Email content for Update Profile"
+msgstr ""
+
+#: admin/options-init.php:2766
+msgid ""
+"A user updated his profile on %website_url.\n"
+"                                Username: %user_login"
+msgstr ""
+
+#: admin/options-init.php:2768
+msgid ""
+"%user_login as username, %user_email_profile as user email, %user_id as "
+"user_id,  use text mode and <br class=\"\"> tag for new line, <p class=\"\"> "
+"for a new paragraph, <span class=\"\"> for styling."
+msgstr ""
+
+#: admin/options-init.php:2773
+msgid "Subject for Booking Confirmed - User"
+msgstr ""
+
+#: admin/options-init.php:2774
+msgid "Email subject for Booking Confirmed - User"
+msgstr ""
+
+#: admin/options-init.php:2775 admin/options-init.php:2807
+msgid "Booking Confirmed on %website_url"
+msgstr ""
+
+#: admin/options-init.php:2780
+msgid "Content for Booking Confirmed - User"
+msgstr ""
+
+#: admin/options-init.php:2781
+msgid "Email content for Booking Confirmed - User"
+msgstr ""
+
+#: admin/options-init.php:2782
+msgid ""
+"Hi there,\n"
+"                                Your booking made on %website_url was "
+"confirmed! You can see all your reservations by logging in your account and "
+"visiting My Reservations page."
+msgstr ""
+
+#: admin/options-init.php:2789
+msgid "Subject for Booking Confirmed"
+msgstr ""
+
+#: admin/options-init.php:2790
+msgid "Email subject for Booking Confirmed"
+msgstr ""
+
+#: admin/options-init.php:2796
+msgid "Content for Booking Confirmed"
+msgstr ""
+
+#: admin/options-init.php:2797
+msgid "Email content for Booking Confirmed"
+msgstr ""
+
+#: admin/options-init.php:2798
+msgid ""
+"Hi there,\n"
+"                                Somebody confirmed a booking on "
+"%website_url! You should go and check it out!Please remember that the "
+"confirmation is made based on the payment confirmation of a non-refundable "
+"fee of the total invoice cost, processed through %website_url and sent to "
+"website administrator. "
+msgstr ""
+
+#: admin/options-init.php:2805
+msgid "Subject for Booking Confirmed - no deposit"
+msgstr ""
+
+#: admin/options-init.php:2806
+msgid "Email subject for Booking Confirmed - no deposit"
+msgstr ""
+
+#: admin/options-init.php:2812
+msgid "Content for Booking Confirmed - no deposit"
+msgstr ""
+
+#: admin/options-init.php:2813
+msgid "Email content for Booking Confirmed - no deposit"
+msgstr ""
+
+#: admin/options-init.php:2814
+msgid ""
+"Hi there,\n"
+"                                You confirmed a booking on %website_url! The "
+"booking was confirmed with no deposit!"
+msgstr ""
+
+#: admin/options-init.php:2821
+msgid "Subject for Inbox- New Message"
+msgstr ""
+
+#: admin/options-init.php:2822
+msgid "Email subject for Inbox- New Message"
+msgstr ""
+
+#: admin/options-init.php:2823
+msgid "New Message on %website_url."
+msgstr ""
+
+#: admin/options-init.php:2828
+msgid "Content for Inbox- New Message"
+msgstr ""
+
+#: admin/options-init.php:2829
+msgid "Email content for Inbox- New Message"
+msgstr ""
+
+#: admin/options-init.php:2830
+msgid ""
+"Hi there,\n"
+"                                You have a new message on %website_url! You "
+"should go and check it out!\n"
+"                                The message is:\n"
+"                                %content"
+msgstr ""
+
+#: admin/options-init.php:2834
+msgid ""
+"* you can use %content as message content,  use text mode and <br class="
+"\"\"> tag for new line, <p class=\"\"> for a new paragraph, <span class="
+"\"\"> for styling."
+msgstr ""
+
+#: admin/options-init.php:2839
+msgid "Subject for New Booking Request"
+msgstr ""
+
+#: admin/options-init.php:2840
+msgid "Email subject for New Booking Request"
+msgstr ""
+
+#: admin/options-init.php:2841
+msgid "New Booking Request on %website_url."
+msgstr ""
+
+#: admin/options-init.php:2846
+msgid "Content for New Booking Request"
+msgstr ""
+
+#: admin/options-init.php:2847
+msgid "Email content for New Booking Request"
+msgstr ""
+
+#: admin/options-init.php:2848
+msgid ""
+"Hi there,\n"
+"                                You have received a new booking request on "
+"%website_url !  Go to your account in Bookings page to see the request, "
+"issue the invoice or reject it!\n"
+"                                The property is: %booking_property_link"
+msgstr ""
+
+#: admin/options-init.php:2851 admin/options-init.php:2868
+msgid ""
+"* you can use %booking_property_link as property url,  use text mode and <br "
+"class=\"\"> tag for new line, <p class=\"\"> for a new paragraph, <span "
+"class=\"\"> for styling."
+msgstr ""
+
+#: admin/options-init.php:2856
+msgid "Subject for Owner - New Booking Request"
+msgstr ""
+
+#: admin/options-init.php:2857
+msgid "Email subject for Owner - New Booking Request"
+msgstr ""
+
+#: admin/options-init.php:2858
+msgid "You booked a period on %website_url."
+msgstr ""
+
+#: admin/options-init.php:2863
+msgid "Content for Owner - New Booking Request"
+msgstr ""
+
+#: admin/options-init.php:2864
+msgid "Email content for User - New Booking Request"
+msgstr ""
+
+#: admin/options-init.php:2865
+msgid ""
+"Hi there,\n"
+"                                You have booked a period for your own "
+"listing on %website_url !  The reservation will appear in your account, "
+"under My Bookings. \n"
+"                                The property is: %booking_property_link"
+msgstr ""
+
+#: admin/options-init.php:2873
+msgid "Subject for Invoice generation"
+msgstr ""
+
+#: admin/options-init.php:2874
+msgid "Email subject for Invoice generation"
+msgstr ""
+
+#: admin/options-init.php:2875
+msgid "New Invoice on %website_url."
+msgstr ""
+
+#: admin/options-init.php:2880
+msgid "Content for Invoice generation"
+msgstr ""
+
+#: admin/options-init.php:2881
+msgid "Email content for Invoice generation"
+msgstr ""
+
+#: admin/options-init.php:2882
+msgid ""
+"Hi there,\n"
+"                                An invoice was generated for your booking "
+"request on %website_url !  A deposit will be required for booking to be "
+"confirmed. For more details check out your account, My Reservations page."
+msgstr ""
+
+#: admin/options-init.php:2889
+msgid "Subject for Booking request rejected"
+msgstr ""
+
+#: admin/options-init.php:2890
+msgid "Email subject for Booking request rejected"
+msgstr ""
+
+#: admin/options-init.php:2896
+msgid "Content for Booking request rejected"
+msgstr ""
+
+#: admin/options-init.php:2897
+msgid "Email content for Booking request rejected"
+msgstr ""
+
+#: admin/options-init.php:2898
+msgid ""
+"Hi there,\n"
+"                                One of your booking requests sent on "
+"%website_url was rejected by the owner. The rejected reservation is "
+"automatically removed from your account. "
+msgstr ""
+
+#: admin/options-init.php:2905
+msgid "Subject for Booking Request Cancelled"
+msgstr ""
+
+#: admin/options-init.php:2906
+msgid "Email subject for Booking Request Cancelled"
+msgstr ""
+
+#: admin/options-init.php:2907 admin/options-init.php:2923
+msgid "Booking Request Cancelled on %website_url"
+msgstr ""
+
+#: admin/options-init.php:2912
+msgid "Content for Booking Request Cancelled"
+msgstr ""
+
+#: admin/options-init.php:2913
+msgid "Email content for Booking Request Cancelled"
+msgstr ""
+
+#: admin/options-init.php:2914
+msgid ""
+"Hi there,\n"
+"                                One of the unconfirmed booking requests you "
+"received on %website_url  was cancelled! The request is automatically "
+"deleted from your account!"
+msgstr ""
+
+#: admin/options-init.php:2921
+msgid "Subject for Booking Period Cancelled"
+msgstr ""
+
+#: admin/options-init.php:2922
+msgid "Email subject for Booking Period Cancelled"
+msgstr ""
+
+#: admin/options-init.php:2928
+msgid "Content for Booking Period Cancelled"
+msgstr ""
+
+#: admin/options-init.php:2929
+msgid "Email content for Booking Period Cancelled"
+msgstr ""
+
+#: admin/options-init.php:2930
+msgid ""
+"Hi there,\n"
+"                                One of your confirmed bookings on "
+"%website_url  was cancelled by property owner. "
+msgstr ""
+
+#: admin/options-init.php:2937
+msgid "Subject for New wire Transfer"
+msgstr ""
+
+#: admin/options-init.php:2938
+msgid "Email subject for New wire Transfer"
+msgstr ""
+
+#: admin/options-init.php:2939
+msgid "You ordered a new Wire Transfer"
+msgstr ""
+
+#: admin/options-init.php:2944
+msgid "Content for New wire Transfer"
+msgstr ""
+
+#: admin/options-init.php:2945
+msgid "Email content for New wire Transfer"
+msgstr ""
+
+#: admin/options-init.php:2946
+msgid ""
+"We received your Wire Transfer payment request on  %website_url !\n"
+"                                Please follow the instructions below in "
+"order to start submitting properties as soon as possible.\n"
+"                                The invoice number is: %invoice_no, Amount: "
+"%total_price. \n"
+"                                Instructions:  %payment_details."
+msgstr ""
+
+#: admin/options-init.php:2950 admin/options-init.php:2968
+msgid ""
+"* you can use %invoice_no as invoice number, %total_price as $totalprice and "
+"%payment_details as $payment_details,  use text mode and <br class=\"\"> tag "
+"for new line, <p class=\"\"> for a new paragraph, <span class=\"\"> for "
+"styling."
+msgstr ""
+
+#: admin/options-init.php:2955
+msgid "Subject for Admin - New wire Transfer"
+msgstr ""
+
+#: admin/options-init.php:2956
+msgid "Email subject for Admin - New wire Transfer"
+msgstr ""
+
+#: admin/options-init.php:2957
+msgid "Somebody ordered a new Wire Transfer"
+msgstr ""
+
+#: admin/options-init.php:2962
+msgid "Content for Admin - New wire Transfer"
+msgstr ""
+
+#: admin/options-init.php:2963
+msgid "Email content for Admin - New wire Transfer"
+msgstr ""
+
+#: admin/options-init.php:2964
+msgid ""
+"Hi there,\n"
+"                                You received a new Wire Transfer payment "
+"request on %website_url.\n"
+"                                The invoice number is:  %invoice_no,  "
+"Amount: %total_price.\n"
+"                                Please wait until the payment is made to "
+"activate the user purchase."
+msgstr ""
+
+#: admin/options-init.php:2973
+msgid "Subject for Invoice Payment Reminder"
+msgstr ""
+
+#: admin/options-init.php:2974
+msgid "Email subject for Invoice Payment Reminder"
+msgstr ""
+
+#: admin/options-init.php:2975
+msgid "Invoice payment reminder"
+msgstr ""
+
+#: admin/options-init.php:2980
+msgid "Content for Invoice Payment Reminder"
+msgstr ""
+
+#: admin/options-init.php:2981
+msgid "Email content for Invoice Payment Reminder"
+msgstr ""
+
+#: admin/options-init.php:2982
+msgid ""
+"Hi there,\n"
+"                                We remind you that you need to fully pay the "
+"invoice no %invoice_id until  %until_date. This invoice is for booking no "
+"%booking_id on property %property_title with the url %property_url.\n"
+"                                Thank you."
+msgstr ""
+
+#: admin/options-init.php:2985
+msgid ""
+"* you can use %invoice_id as invoice id, %property_url as property url and "
+"%property_title as property name, %booking_id as booking id, %until_date as "
+"the last day,  use text mode and <br class=\"\"> tag for new line, <p class="
+"\"\"> for a new paragraph, <span class=\"\"> for styling."
+msgstr ""
+
+#: admin/options-init.php:2990
+msgid "Subject for New User ID verification"
+msgstr ""
+
+#: admin/options-init.php:2991
+msgid "Email subject for New User ID verification"
+msgstr ""
+
+#: admin/options-init.php:2992 misc/emailfunctions.php:136
+msgid "New User ID verification"
+msgstr ""
+
+#: admin/options-init.php:2997
+msgid "Content for New User ID verification"
+msgstr ""
+
+#: admin/options-init.php:2998
+msgid "Email content for New User ID verification"
+msgstr ""
+
+#: admin/options-init.php:2999
+msgid ""
+"A user added his User ID verification image on %website_url.\n"
+"                                Username: %user_login.\n"
+"                                "
+msgstr ""
+
+#: admin/options-init.php:3002
+msgid ""
+"you can use %user_login as username,  use text mode and <br class=\"\"> tag "
+"for new line, <p class=\"\"> for a new paragraph, <span class=\"\"> for "
+"styling."
+msgstr ""
+
+#: admin/options-init.php:3008
+msgid "Import & Export"
+msgstr ""
+
+#: admin/options-init.php:3023
+msgid "reCaptcha settings"
+msgstr ""
+
+#: admin/options-init.php:3030
+msgid "Use reCaptcha on register ?"
+msgstr ""
+
+#: admin/options-init.php:3031
+msgid "This helps preventing registration spam."
+msgstr ""
+
+#: admin/options-init.php:3042
+msgid "reCaptha site key"
+msgstr ""
+
+#: admin/options-init.php:3043 admin/options-init.php:3050
+#: admin/options-init.php:3065 admin/options-init.php:3071
+msgid "Get this detail after you signup here: "
+msgstr ""
+
+#: admin/options-init.php:3049
+msgid "reCaptha secret key"
+msgstr ""
+
+#: admin/options-init.php:3056
+msgid "Yelp settings"
+msgstr ""
+
+#: admin/options-init.php:3058
+msgid ""
+"Please note that Yelp is not working for all countries. See here https://www."
+"yelp.com/factsheet the list of countries where Yelp is available."
+msgstr ""
+
+#: admin/options-init.php:3064
+msgid "Yelp Api Client ID"
+msgstr ""
+
+#: admin/options-init.php:3070
+msgid "Yelp Api Key"
+msgstr ""
+
+#: admin/options-init.php:3077
+msgid "Yelp Categories"
+msgstr ""
+
+#: admin/options-init.php:3078
+msgid "Yelp Categories to show on front page"
+msgstr ""
+
+#: admin/options-init.php:3084 admin/options-init.php:3085
+msgid "Yelp - no of results"
+msgstr ""
+
+#: admin/options-init.php:3090 admin/options-init.php:3091
+msgid "Yelp Distance Measurement Unit"
+msgstr ""
+
+#: admin/options-init.php:3101
+msgid "Payments & Submit"
+msgstr ""
+
+#: admin/options-init.php:3107
+msgid "Listing Submit Page"
+msgstr ""
+
+#: admin/options-init.php:3114
+msgid "What do you Rent?"
+msgstr ""
+
+#: admin/options-init.php:3115
+msgid ""
+"Object Rentals doesn't show the guest field on property booking form and "
+"changes the label \"night\" into \"day\"."
+msgstr ""
+
+#: admin/options-init.php:3117
+msgid "Vacation Rental"
+msgstr ""
+
+#: admin/options-init.php:3118
+msgid "Object Rental"
+msgstr ""
+
+#: admin/options-init.php:3126
+msgid "Show the Guest dropdown?"
+msgstr ""
+
+#: admin/options-init.php:3127
+msgid ""
+"Show the Guest dropdown in submit listing page? Only for Object Rental set "
+"this to No for guest dropdown to not show in submit form."
+msgstr ""
+
+#: admin/options-init.php:3138
+msgid "Show cities and areas as dropdowns?"
+msgstr ""
+
+#: admin/options-init.php:3139
+msgid ""
+"Show cities and areas as dropdowns - populated with existing items in "
+"database. Cities and Areas are independent dropdowns.This option doesn't "
+"apply when \"Use Google Places autocomplete for Search?\" from Advanced "
+"Search Settings is enabled."
+msgstr ""
+
+#: admin/options-init.php:3155
+msgid "Select the Fields for listing submission."
+msgstr ""
+
+#: admin/options-init.php:3156
+msgid "Use CTRL to select multiple fields for listing submission page."
+msgstr ""
+
+#: admin/options-init.php:3165
+msgid "Select the Mandatory Fields for listing submission."
+msgstr ""
+
+#: admin/options-init.php:3166
+msgid ""
+"Make sure the mandatory fields for listing submission page are part of "
+"submit form (managed from the above setting). Use CTRL for multiple fields "
+"select."
+msgstr ""
+
+#: admin/options-init.php:3174 admin/options-init.php:3175
+#: admin/options-init.php:3182 admin/options-init.php:3183
+msgid "Main Category Label"
+msgstr ""
+
+#: admin/options-init.php:3188 admin/options-init.php:3189
+msgid "Main Category Label for dropdowns"
+msgstr ""
+
+#: admin/options-init.php:3194 admin/options-init.php:3195
+msgid "Secondary Category Label"
+msgstr ""
+
+#: admin/options-init.php:3200 admin/options-init.php:3201
+msgid "Secondary Category Label for dropdowns"
+msgstr ""
+
+#: admin/options-init.php:3206 admin/options-init.php:3207
+msgid "Item Description Label"
+msgstr ""
+
+#: admin/options-init.php:3212 admin/options-init.php:3213
+msgid "Maximum no of images per listing (only front-end upload)"
+msgstr ""
+
+#: admin/options-init.php:3220
+msgid "Submission Payment Settings"
+msgstr ""
+
+#: admin/options-init.php:3227
+msgid "Enable Paid Submission?"
+msgstr ""
+
+#: admin/options-init.php:3228
+msgid ""
+"No = submission is free. Paid listing = submission requires user to pay a "
+"fee for each listing. Membership = submission is based on user membership "
+"package."
+msgstr ""
+
+#: admin/options-init.php:3244
+msgid " Free Membership - no of free listings for new users"
+msgstr ""
+
+#: admin/options-init.php:3245 admin/options-init.php:3262
+msgid ""
+"If you change this value, the new value applies for new registered users. "
+"Old value applies for older registered accounts."
+msgstr ""
+
+#: admin/options-init.php:3254
+msgid "Free Membership - Offer unlimited listings for new users"
+msgstr ""
+
+#: admin/options-init.php:3261
+msgid "Free Membership - no of featured listings (for \"membership\" mode)"
+msgstr ""
+
+#: admin/options-init.php:3269
+msgid ""
+"Free Days for Each Free Listing - no of days until a free listing will "
+"expire. *Starts from the moment the listing is published on the website. "
+"(for \"membership\" mode only)"
+msgstr ""
+
+#: admin/options-init.php:3270
+msgid "Option applies for each free published listing."
+msgstr ""
+
+#: admin/options-init.php:3281
+msgid "Price Per Submission (for \"per listing\" mode)"
+msgstr ""
+
+#: admin/options-init.php:3282
+msgid "Use .00 format for decimals (ex: 5.50). Do not set price as 0!"
+msgstr ""
+
+#: admin/options-init.php:3289
+msgid "Price to make the listing featured (for \"per listing\" mode)"
+msgstr ""
+
+#: admin/options-init.php:3290
+msgid "Use .00 format for decimals (ex: 1.50). Do not set price as 0!"
+msgstr ""
+
+#: admin/options-init.php:3298
+msgid "Paypal & Stripe Api - SSL is mandatory for live payments"
+msgstr ""
+
+#: admin/options-init.php:3299
+msgid ""
+"Sandbox = test API. LIVE = real payments API. Update PayPal and Stripe "
+"settings according to API type selection."
+msgstr ""
+
+#: admin/options-init.php:3301
+msgid "sandbox"
+msgstr ""
+
+#: admin/options-init.php:3302
+msgid "live"
+msgstr ""
+
+#: admin/options-init.php:3309
+msgid "Submited Listings should be approved by admin?"
+msgstr ""
+
+#: admin/options-init.php:3310
+msgid "If yes, admin publishes each listing submitted in front end manually."
+msgstr ""
+
+#: admin/options-init.php:3321
+msgid "Currency For Paid Submission"
+msgstr ""
+
+#: admin/options-init.php:3322
+msgid "The currency in which payments are processed."
+msgstr ""
+
+#: admin/options-init.php:3356
+msgid "Enable Direct Payment / Wire Payment?"
+msgstr ""
+
+#: admin/options-init.php:3357
+msgid "Enable or disable the wire payment option."
+msgstr ""
+
+#: admin/options-init.php:3368
+msgid "Wire instructions for direct payment"
+msgstr ""
+
+#: admin/options-init.php:3369
+msgid "If wire payment is enabled, type the instructions below."
+msgstr ""
+
+#: admin/options-init.php:3383
+msgid "Custom Currency Symbol"
+msgstr ""
+
+#: admin/options-init.php:3384
+msgid "Add and save your own currency for Wire payments."
+msgstr ""
+
+#: admin/options-init.php:3392
+msgid "WooCommerce Settings"
+msgstr ""
+
+#: admin/options-init.php:3399
+msgid ""
+"You need WooCommerce Plugin Installed and Active & and a WooCommerce "
+"Merchant Enabled. <a href=\"https://help.wprentals.org/article/install-"
+"woocommerce-and-activate-woocommerce-payments/\" target=\"_blank\">See help "
+"page.</a> </br>Payments are considerd complete once the Order for a "
+"particular items has the status \"Processing or Complete \" . </br> "
+"WooCommerce does not suport recurring payments, and so submission membership "
+"packages cannot be bought via WooCommerce."
+msgstr ""
+
+#: admin/options-init.php:3406
+msgid "Enable WooCommerce payments?"
+msgstr ""
+
+#: admin/options-init.php:3420
+msgid "Booking Payment Options"
+msgstr ""
+
+#: admin/options-init.php:3427
+msgid "Include expenses when calculating deposit?"
+msgstr ""
+
+#: admin/options-init.php:3428
+msgid ""
+"Include expenses when calculating deposit. The expenses are city fee and "
+"cleaning fee."
+msgstr ""
+
+#: admin/options-init.php:3439
+msgid "Deposit Fee - % booking fee"
+msgstr ""
+
+#: admin/options-init.php:3440
+msgid ""
+"Expenses are included or not in the deposit amount according to the above "
+"option. If the value is set to 100 (100%) the \"Include expenses when "
+"calculating deposit?\" option will be auto set to \"yes\"!"
+msgstr ""
+
+#: admin/options-init.php:3446
+msgid "Deposit Fee - fixed value booking fee"
+msgstr ""
+
+#: admin/options-init.php:3447
+msgid ""
+"Add the fixed fee as a number. If you use this option, leave blank Deposit "
+"Fee - % booking fee"
+msgstr ""
+
+#: admin/options-init.php:3452
+msgid "Service Fee - % booking fee"
+msgstr ""
+
+#: admin/options-init.php:3453
+msgid ""
+"Service Fee. Is the commision that goes to the admin and is deducted from "
+"the total booking value."
+msgstr ""
+
+#: admin/options-init.php:3459
+msgid "Service Fee - fixed value service fee"
+msgstr ""
+
+#: admin/options-init.php:3460
+msgid ""
+"Service Fee - fixed value service fee. If you use this option, leave blank "
+"Service Fee - % booking fee"
+msgstr ""
+
+#: admin/options-init.php:3466
+msgid "PayPal Settings"
+msgstr ""
+
+#: admin/options-init.php:3473
+msgid "Enable Paypal"
+msgstr ""
+
+#: admin/options-init.php:3474
+msgid "You can enable or disable PayPal buttons."
+msgstr ""
+
+#: admin/options-init.php:3485
+msgid "Paypal Client id"
+msgstr ""
+
+#: admin/options-init.php:3486
+msgid ""
+"PayPal business account is required. Info is taken from https://developer."
+"paypal.com/. See help:"
+msgstr ""
+
+#: admin/options-init.php:3492
+msgid "Paypal Client Secret Key"
+msgstr ""
+
+#: admin/options-init.php:3493
+msgid "Info is taken from https://developer.paypal.com/ See help:"
+msgstr ""
+
+#: admin/options-init.php:3499
+msgid "Paypal receiving email"
+msgstr ""
+
+#: admin/options-init.php:3500
+msgid ""
+"Info is taken from https://www.paypal.com/ or http://sandbox.paypal.com/ See "
+"help:"
+msgstr ""
+
+#: admin/options-init.php:3507
+msgid "Stripe Settings"
+msgstr ""
+
+#: admin/options-init.php:3514
+msgid "Enable Stripe"
+msgstr ""
+
+#: admin/options-init.php:3515
+msgid "You can enable or disable Stripe buttons."
+msgstr ""
+
+#: admin/options-init.php:3526
+msgid "Stripe Secret Key"
+msgstr ""
+
+#: admin/options-init.php:3527 admin/options-init.php:3534
+#: admin/options-init.php:3541
+msgid ""
+"Info is taken from your account at https://dashboard.stripe.com/login See "
+"help: "
+msgstr ""
+
+#: admin/options-init.php:3533
+msgid "Stripe Publishable Key"
+msgstr ""
+
+#: admin/options-init.php:3540
+msgid "Stripe Webhook Secret Key"
+msgstr ""
+
+#: admin/options-init.php:3548 widgets/advanced_search.php:139
+#: shortcodes/shortcodes.php:905 shortcodes/shortcodes.php:1031
+msgid "Search"
+msgstr ""
+
+#: admin/options-init.php:3554
+msgid "Advanced Search Settings"
+msgstr ""
+
+#: admin/options-init.php:3561
+msgid "Show Advanced Search?"
+msgstr ""
+
+#: admin/options-init.php:3562
+msgid ""
+"Disables or enables the display of advanced search over header media (Google "
+"Maps, Revolution Slider, theme slider or image)."
+msgstr ""
+
+#: admin/options-init.php:3573
+msgid "Show Advanced Search over sliders or images?"
+msgstr ""
+
+#: admin/options-init.php:3574
+msgid ""
+"Disables or enables the display of advanced search over header type: "
+"revolution slider, image and theme slider."
+msgstr ""
+
+#: admin/options-init.php:3584
+msgid ""
+"Use on demand pins when moving the map, in Properties list half map and "
+"Advanced search results half map pages"
+msgstr ""
+
+#: admin/options-init.php:3585
+msgid "See this help article before: "
+msgstr ""
+
+#: admin/options-init.php:3596
+msgid "Use Google Places or Algolia  autocomplete for Search?"
+msgstr ""
+
+#: admin/options-init.php:3597
+msgid ""
+"If you select NO, the autocomplete will be done with data from properties "
+"already saved."
+msgstr ""
+
+#: admin/options-init.php:3598
+msgid ""
+"Due to speed reasons the data for NON-Google autocomplete is generated 1 "
+"time per day. If you want to manually generate the data, go to map section - "
+"Generate Data&Pins"
+msgstr ""
+
+#: admin/options-init.php:3609
+msgid ""
+"Use Dropdown List instead of autocomplete for Non Google Location fields?"
+msgstr ""
+
+#: admin/options-init.php:3610
+msgid ""
+"Works only with the option \"Use Google Places autocomplete for Search?\" - "
+"NO. If you select YES, you will have a dropdown instead of autocomplete."
+msgstr ""
+
+#: admin/options-init.php:3620
+msgid "Show Cities and Areas with 0 listings in dropdowns?"
+msgstr ""
+
+#: admin/options-init.php:3621
+msgid "Enable or disable empty city or area categories in dropdowns"
+msgstr ""
+
+#: admin/options-init.php:3632
+msgid "Advanced Search Form"
+msgstr ""
+
+#: admin/options-init.php:3639
+msgid "Select search type."
+msgstr ""
+
+#: admin/options-init.php:3640
+msgid ""
+"Type 1 - vertical design - hardcoded search type\n"
+"                                   </br>Type 2 - horizontal design - "
+"hardcoded search type\n"
+"                                   </br>Type 3 and 4 - work only with search "
+"custom fields."
+msgstr ""
+
+#: admin/options-init.php:3648
+msgid "Type 5"
+msgstr ""
+
+#: admin/options-init.php:3655
+msgid "Minimum value for Price Slider"
+msgstr ""
+
+#: admin/options-init.php:3656 admin/options-init.php:3663
+msgid "Type only numbers!"
+msgstr ""
+
+#: admin/options-init.php:3662
+msgid "Maximum value for Price Slider"
+msgstr ""
+
+#: admin/options-init.php:3669
+msgid "Show Amenities and Features fields?"
+msgstr ""
+
+#: admin/options-init.php:3670
+msgid "Displayed Only on: header search type 3 and 4, half map filters."
+msgstr ""
+
+#: admin/options-init.php:3682
+msgid "Amenities and Features for Advanced Search"
+msgstr ""
+
+#: admin/options-init.php:3683
+msgid "Select which features and amenities show in search."
+msgstr ""
+
+#: admin/options-init.php:3691
+msgid "Show Dropdowns for Guests, beds, bathrooms or rooms?"
+msgstr ""
+
+#: admin/options-init.php:3692
+msgid ""
+"Works ONLY for SEARCH TYPE 3 and 4. Guests, Rooms, Bedrooms or Bathrooms "
+"must be added to Search Custom Fields for the option to apply."
+msgstr ""
+
+#: admin/options-init.php:3702 admin/options-init.php:3703
+msgid "Advanced Search Label for type 3"
+msgstr ""
+
+#: admin/options-init.php:3710
+msgid "No of Search fields"
+msgstr ""
+
+#: admin/options-init.php:3711
+msgid "No of Search fields for type 3 and 4."
+msgstr ""
+
+#: admin/options-init.php:3717
+msgid "No of Search fields per row"
+msgstr ""
+
+#: admin/options-init.php:3718
+msgid ""
+"No of Search fields per row (Possible values: 2,3,4). Only for type 3 and 4"
+msgstr ""
+
+#: admin/options-init.php:3724
+msgid "Type 3, Type 4 and Type 5 custom search fields setup"
+msgstr ""
+
+#: admin/options-init.php:3725
+msgid ""
+"*Do not duplicate fields and make sure search fields do not contradict "
+"themselves.\n"
+"                            </br>*<strong>Greater, Smaller and Equal</"
+"strong> must be used only for numeric fields.\n"
+"                            </br>*<strong>Like</strong> MUST be used for all "
+"text fields (including dropdowns)\n"
+"                            </br>*<strong>Date Greater / Date Smaller</"
+"strong> can be used for all date format fields.\n"
+"                            </br>*Labels will not apply for taxonomy "
+"dropdowns fields. These sync with the names added in Listing Submit "
+"Settings</br>"
+msgstr ""
+
+#: admin/options-init.php:3737
+msgid "Geo Location Search"
+msgstr ""
+
+#: admin/options-init.php:3744
+msgid "Use Geo Location Search"
+msgstr ""
+
+#: admin/options-init.php:3745
+msgid ""
+"If YES, the Geo Location search show in half map properties list and half "
+"map advanced search results, above the search fields."
+msgstr ""
+
+#: admin/options-init.php:3755
+msgid "Show Geo Location Search in:"
+msgstr ""
+
+#: admin/options-init.php:3756
+msgid "Select between miles and kilometers."
+msgstr ""
+
+#: admin/options-init.php:3759
+msgid "miles"
+msgstr ""
+
+#: admin/options-init.php:3760
+msgid "km"
+msgstr ""
+
+#: admin/options-init.php:3766
+msgid "Initial area radius"
+msgstr ""
+
+#: admin/options-init.php:3767
+msgid "Initial area radius. Use only numbers."
+msgstr ""
+
+#: admin/options-init.php:3773
+msgid "Minimum radius value"
+msgstr ""
+
+#: admin/options-init.php:3774
+msgid "Minimum radius value. Use only numbers."
+msgstr ""
+
+#: admin/options-init.php:3780
+msgid "Maximum radius value"
+msgstr ""
+
+#: admin/options-init.php:3781
+msgid "Maximum radius value. Use only numbers."
+msgstr ""
+
+#: admin/options-init.php:3788
+msgid "Advanced Search Form Position"
+msgstr ""
+
+#: admin/options-init.php:3795
+msgid "Use sticky search ?"
+msgstr ""
+
+#: admin/options-init.php:3796
+msgid "This will replace the sticky header. Doesn't apply to search type 1"
+msgstr ""
+
+#: admin/options-init.php:3807
+msgid "Use Float Search Form ?"
+msgstr ""
+
+#: admin/options-init.php:3808
+msgid ""
+"The search form is \"floating\" over the media header and you set the "
+"distance between search and browser's margin bottom below."
+msgstr ""
+
+#: admin/options-init.php:3819 admin/options-init.php:3820
+msgid ""
+"Distance between search form and the browser margin bottom: Ex 200px or 20%."
+msgstr ""
+
+#: admin/options-init.php:3828 admin/options-init.php:3829
+msgid ""
+"Distance between search form and the browser margin bottom in px Ex 200px or "
+"20% - for taxonomy, category and archives pages."
+msgstr ""
+
+#: admin/options-init.php:3837
+msgid "Put Search form before the header media ?"
+msgstr ""
+
+#: admin/options-init.php:3838
+msgid ""
+"Works with \"Use FLoat Form\" options set to no. Doesn't apply to search "
+"type 1"
+msgstr ""
+
+#: admin/options-init.php:3851
+msgid "Advanced Search Colors"
+msgstr ""
+
+#: admin/options-init.php:3858 admin/options-init.php:3859
+msgid "Advanced Search Background Color"
+msgstr ""
+
+#: admin/options-init.php:3865
+msgid "Advanced Search Background color Opacity"
+msgstr ""
+
+#: admin/options-init.php:3866
+msgid ""
+"Values between 0 -invisible and 1 - fully visible. Applies only when search "
+"form position \"Use Float Search Form?\" - is YES."
+msgstr ""
+
+#: admin/options-init.php:3871 admin/options-init.php:3872
+msgid "Advanced Search Button Background Color"
+msgstr ""
+
+#: admin/options-init.php:3878 admin/options-init.php:3879
+msgid "Advanced Search Button Hover Background Color"
+msgstr ""
+
+#: admin/options-init.php:3887
+msgid "Rentals Club"
+msgstr ""
+
+#: admin/options-init.php:3893 admin/options-init.php:3907
+#: admin/options-init.php:3908 resources/rcapi_functions.php:107
+#: resources/rcapi_functions.php:108
+msgid "Rentals Club API Key"
+msgstr ""
+
+#: admin/options-init.php:3895
+msgid ""
+"RentalsClub API is a 3rd party system that offers exclusive extensions for "
+"WP Rentals theme. If you wish to use any of the extensions available, you "
+"will need to fill in the below info. For more information check here: "
+msgstr ""
+
+#: admin/options-init.php:3913 admin/options-init.php:3914
+#: resources/rcapi_functions.php:113
+msgid "Rentals Club API Secret Key"
+msgstr ""
+
+#: admin/options-init.php:3919 admin/options-init.php:3920
+#: resources/rcapi_functions.php:121 resources/rcapi_functions.php:122
+msgid "Rentals Club Username"
+msgstr ""
+
+#: admin/options-init.php:3925 resources/rcapi_functions.php:127
+msgid "Rentals Club Password"
+msgstr ""
+
+#: admin/options-init.php:3926 resources/rcapi_functions.php:128
+msgid "Rentals Club password"
+msgstr ""
+
+#: admin/options-init.php:3937
+msgid "SMS Management"
+msgstr ""
+
+#: admin/options-init.php:3939
+msgid ""
+"SMS Management is offered through Twilio API <a href=\"https://www.twilio.com"
+"\">https://www.twilio.com</a>. You will need an active account with them to "
+"use their SMS service and you may need to buy extra SMS as well. Your "
+"account info will have to be added below. "
+msgstr ""
+
+#: admin/options-init.php:3945 admin/options-init.php:3946
+#: misc/sms_functions.php:241
+msgid "Enable SMS service"
+msgstr ""
+
+#: admin/options-init.php:3956
+msgid "Twilio phone number"
+msgstr ""
+
+#: admin/options-init.php:3957
+msgid "Twilio phone number(ex +1256973878)"
+msgstr ""
+
+#: admin/options-init.php:3962 admin/options-init.php:3963
+#: misc/sms_functions.php:262 misc/sms_functions.php:263
+msgid "Twilio Account Sid"
+msgstr ""
+
+#: admin/options-init.php:3968 admin/options-init.php:3969
+#: misc/sms_functions.php:273 misc/sms_functions.php:274
+msgid "Twilio Auth Token"
+msgstr ""
+
+#: admin/options-init.php:3975
+msgid ""
+"Leave \"content\" blank for the sms notifications you don't wish to send. "
+"Global variables: %website_url as website url,%website_name as website name, "
+"%user_email as user_email, %username as username"
+msgstr ""
+
+#: admin/options-init.php:3980
+msgid "SMS Content"
+msgstr ""
+
+#: admin/options-init.php:3981
+msgid "<strong>Please Edit SMS content via rentalsclub.org </strong>"
+msgstr ""
+
+#: admin/options-init.php:3994
+msgid "Payments Manageent"
+msgstr ""
+
+#: admin/options-init.php:3996
+msgid ""
+"<strong>The actual payments can be made only in RentalsClub.org interface </"
+"strong>"
+msgstr ""
+
+#: admin/options-init.php:4014 admin/options-init.php:4021
+msgid "Help & Custom"
+msgstr ""
+
+#: admin/options-init.php:4029
+msgid "For support please go to "
+msgstr ""
+
+#: admin/options-init.php:4029
+msgid ""
+"create an account and post a ticket. The registration is simple and as soon "
+"as you post we are notified. We usually answer in the next 24h (except "
+"weekends). Please use this system and not the email. It will help us answer "
+"much faster. Thank you! "
+msgstr ""
+
+#: admin/options-init.php:4030
+msgid "For custom work on this theme please go to "
+msgstr ""
+
+#: admin/options-init.php:4030
+msgid ", create a ticket with your request and we will offer a free quote. "
+msgstr ""
+
+#: admin/options-init.php:4031
+msgid "For help files please go to "
+msgstr ""
+
+#: admin/options-init.php:4032
+msgid ""
+"Subscribe to our mailing list in order to receive news about new features "
+"and theme upgrades "
+msgstr ""
+
+#: admin/options-init.php:4037
+msgid "WpEstate Fan"
+msgstr ""
+
+#: admin/options-init.php:4038
+msgid ""
+"The option \"Yes\" places a discrete link to wpestate.org in the footer."
+msgstr ""
+
+#: admin/options-init.php:4152
+msgid "Section via hook"
+msgstr ""
+
+#: admin/options-init.php:4153
+msgid ""
+"<p class=\"description\">This is a section created by adding a filter to the "
+"sections array. Can be used by child themes to add/remove sections from the "
+"options.</p>"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_custom_field_type3/wpestate_custom_field_type3/field_wpestate_custom_field_type3.php:105
+#: admin/redux-extensions/extensions/wpestate_property_page_header/wpestate_property_page_header/field_wpestate_property_page_header.php:107
+msgid "Label(*if filled will not use icon)"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_custom_field_type3/wpestate_custom_field_type3/field_wpestate_custom_field_type3.php:111
+#: admin/redux-extensions/extensions/wpestate_custom_fields_infobox/wpestate_custom_fields_infobox/field_wpestate_custom_fields_infobox.php:100
+#: admin/redux-extensions/extensions/wpestate_property_page_header/wpestate_property_page_header/field_wpestate_property_page_header.php:115
+msgid "Icon"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_custom_field_type3/wpestate_custom_field_type3/field_wpestate_custom_field_type3.php:127
+#: admin/redux-extensions/extensions/wpestate_custom_fields_infobox/wpestate_custom_fields_infobox/field_wpestate_custom_fields_infobox.php:116
+#: admin/redux-extensions/extensions/wpestate_property_page_header/wpestate_property_page_header/field_wpestate_property_page_header.php:130
+msgid "Field"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_status/wpestate_status/field_wpestate_status.php:79
+msgid "type here the new status..."
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_status/wpestate_status/field_wpestate_status.php:80
+msgid "click to add new status"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_currency/wpestate_currency/field_wpestate_currency.php:102
+#: admin/redux-extensions/extensions/wpestate_currency/wpestate_currency/field_wpestate_currency.php:124
+msgid "Currency Code"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_currency/wpestate_currency/field_wpestate_currency.php:103
+msgid "Currency Label"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_currency/wpestate_currency/field_wpestate_currency.php:104
+msgid "Currency Value"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_currency/wpestate_currency/field_wpestate_currency.php:105
+msgid "Currency Position"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_currency/wpestate_currency/field_wpestate_currency.php:107
+#: admin/redux-extensions/extensions/wpestate_custom_fields_list/wpestate_custom_fields_list/field_wpestate_custom_fields_list.php:111
+msgid "delete"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_currency/wpestate_currency/field_wpestate_currency.php:127
+msgid "Currency label - appears in front end in multi currency dropdown"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_currency/wpestate_currency/field_wpestate_currency.php:130
+msgid "Currency Value compared with the base currency"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_currency/wpestate_currency/field_wpestate_currency.php:133
+msgid "Show currency before or after price - in front pages"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_currency/wpestate_currency/field_wpestate_currency.php:140
+msgid " click to add currency"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_features/wpestate_features/field_wpestate_features.php:78
+msgid "type here feature name.. "
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_features/wpestate_features/field_wpestate_features.php:79
+msgid "click to add feature"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_property_page_header/wpestate_property_page_header/field_wpestate_property_page_header.php:111
+#: post-types/property.php:1677
+msgid "Image"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_generate_pins/wpestate_generate_pins/field_wpestate_generate_pins.php:81
+msgid "Autcomplete file was generated. "
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_generate_pins/wpestate_generate_pins/field_wpestate_generate_pins.php:91
+msgid "File was generated"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_generate_pins/wpestate_generate_pins/field_wpestate_generate_pins.php:93
+msgid "the file Google map does NOT exist or is NOT writable"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_generate_pins/wpestate_generate_pins/field_wpestate_generate_pins.php:97
+msgid ""
+"Pin Generation works only if the file reading option in Google Map setting "
+"is set to yes"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_set_search/wpestate_set_search/field_wpestate_set_search.php:91
+msgid "Place in advanced search form"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_set_search/wpestate_set_search/field_wpestate_set_search.php:92
+msgid "Search field"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_set_search/wpestate_set_search/field_wpestate_set_search.php:93
+msgid "How it will compare"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_set_search/wpestate_set_search/field_wpestate_set_search.php:94
+msgid "Label on Front end"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_set_search/wpestate_set_search/field_wpestate_set_search.php:95
+msgid "Icon "
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_set_search/wpestate_set_search/field_wpestate_set_search.php:102
+msgid "Spot no "
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_custom_fields_list/wpestate_custom_fields_list/field_wpestate_custom_fields_list.php:90
+msgid "Field Name"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_custom_fields_list/wpestate_custom_fields_list/field_wpestate_custom_fields_list.php:92
+#: admin/redux-extensions/extensions/wpestate_custom_fields_list/wpestate_custom_fields_list/field_wpestate_custom_fields_list.php:136
+msgid "Field Label"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_custom_fields_list/wpestate_custom_fields_list/field_wpestate_custom_fields_list.php:95
+msgid "Field Order"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_custom_fields_list/wpestate_custom_fields_list/field_wpestate_custom_fields_list.php:98
+#: admin/redux-extensions/extensions/wpestate_custom_fields_list/wpestate_custom_fields_list/field_wpestate_custom_fields_list.php:139
+msgid "Field Type"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_custom_fields_list/wpestate_custom_fields_list/field_wpestate_custom_fields_list.php:101
+msgid "Dropdown values"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_custom_fields_list/wpestate_custom_fields_list/field_wpestate_custom_fields_list.php:133
+msgid "Field name"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_custom_fields_list/wpestate_custom_fields_list/field_wpestate_custom_fields_list.php:149
+msgid "Dropdown values separated by \",\" (only for dropdown field type)"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_custom_fields_list/wpestate_custom_fields_list/field_wpestate_custom_fields_list.php:153
+msgid " Order in listing page"
+msgstr ""
+
+#: admin/redux-extensions/extensions/wpestate_custom_fields_list/wpestate_custom_fields_list/field_wpestate_custom_fields_list.php:157
+msgid " click to add field"
+msgstr ""
+
+#: post-types/agents.php:10
+msgid "Owners"
+msgstr ""
+
+#: post-types/agents.php:11 post-types/booking.php:339
+#: post-types/property.php:182 post-types/property.php:214
+#: post-types/property.php:241
+msgid "Owner"
+msgstr ""
+
+#: post-types/agents.php:12
+msgid "Add New Owner"
+msgstr ""
+
+#: post-types/agents.php:13
+msgid "Add Owner"
+msgstr ""
+
+#: post-types/agents.php:14 post-types/booking.php:15
+#: post-types/messages.php:15 post-types/property.php:13
+msgid "Edit"
+msgstr ""
+
+#: post-types/agents.php:15
+msgid "Edit Owner"
+msgstr ""
+
+#: post-types/agents.php:16
+msgid "New Owner"
+msgstr ""
+
+#: post-types/agents.php:17 post-types/booking.php:18
+#: post-types/messages.php:18 post-types/property.php:16
+msgid "View"
+msgstr ""
+
+#: post-types/agents.php:18
+msgid "View Owner"
+msgstr ""
+
+#: post-types/agents.php:19
+msgid "Search Owner"
+msgstr ""
+
+#: post-types/agents.php:20 post-types/agents.php:21
+msgid "No Owners found"
+msgstr ""
+
+#: post-types/agents.php:22
+msgid "Parent Owner"
+msgstr ""
+
+#: post-types/agents.php:42
+msgid "Owner Details"
+msgstr ""
+
+#: post-types/agents.php:58
+msgid "Email:"
+msgstr ""
+
+#: post-types/agents.php:63
+msgid "Phone: "
+msgstr ""
+
+#: post-types/agents.php:68
+msgid "Mobile:"
+msgstr ""
+
+#: post-types/agents.php:73
+msgid "Skype: "
+msgstr ""
+
+#: post-types/agents.php:79
+msgid "Facebook: "
+msgstr ""
+
+#: post-types/agents.php:84
+msgid "Twitter: "
+msgstr ""
+
+#: post-types/agents.php:89
+msgid "Linkedin: "
+msgstr ""
+
+#: post-types/agents.php:94
+msgid "Pinterest: "
+msgstr ""
+
+#: post-types/agents.php:99
+msgid "I Live In: "
+msgstr ""
+
+#: post-types/agents.php:104
+msgid "I Speak: "
+msgstr ""
+
+#: post-types/agents.php:110
+msgid "Payment Info/Hidden Field: "
+msgstr ""
+
+#: post-types/agents.php:115
+msgid "user_agent_id: "
+msgstr ""
+
+#: post-types/booking.php:11 widgets/login_widget.php:171
+msgid "Bookings"
+msgstr ""
+
+#: post-types/booking.php:12
+msgid "Booking"
+msgstr ""
+
+#: post-types/booking.php:13
+msgid "Add New Booking"
+msgstr ""
+
+#: post-types/booking.php:14
+msgid "Add booking"
+msgstr ""
+
+#: post-types/booking.php:16
+msgid "Edit booking"
+msgstr ""
+
+#: post-types/booking.php:17
+msgid "New booking"
+msgstr ""
+
+#: post-types/booking.php:19
+msgid "View booking"
+msgstr ""
+
+#: post-types/booking.php:20
+msgid "Search booking"
+msgstr ""
+
+#: post-types/booking.php:21 post-types/booking.php:22
+msgid "No bookings found"
+msgstr ""
+
+#: post-types/booking.php:23
+msgid "Parent booking"
+msgstr ""
+
+#: post-types/booking.php:44
+msgid "Booking Details"
+msgstr ""
+
+#: post-types/booking.php:78 post-types/booking.php:114
+msgid "Booking Status:"
+msgstr ""
+
+#: post-types/booking.php:83
+msgid "Booking Invoice:"
+msgstr ""
+
+#: post-types/booking.php:88
+msgid "Check-In:"
+msgstr ""
+
+#: post-types/booking.php:93
+msgid "Check-Out:"
+msgstr ""
+
+#: post-types/booking.php:98
+msgid "Property ID:"
+msgstr ""
+
+#: post-types/booking.php:103
+msgid "Guests No:"
+msgstr ""
+
+#: post-types/booking.php:108
+msgid "Property Name:"
+msgstr ""
+
+#: post-types/booking.php:336 post-types/booking.php:490
+#: post-types/property.php:1681 post-types/invoices.php:559
+msgid "Status"
+msgstr ""
+
+#: post-types/booking.php:338 post-types/property.php:10
+#: post-types/invoices.php:60 post-types/invoices.php:70
+msgid "Listing"
+msgstr ""
+
+#: post-types/booking.php:340
+msgid "Renter"
+msgstr ""
+
+#: post-types/booking.php:341 post-types/property.php:338
+msgid "Value"
+msgstr ""
+
+#: post-types/booking.php:342
+msgid "Initial Deposit"
+msgstr ""
+
+#: post-types/booking.php:358
+msgid "canceled"
+msgstr ""
+
+#: post-types/booking.php:360
+msgid "confirmed"
+msgstr ""
+
+#: post-types/booking.php:360
+msgid "fully paid"
+msgstr ""
+
+#: post-types/booking.php:362
+msgid "deposit paid"
+msgstr ""
+
+#: post-types/booking.php:362
+msgid "waiting for full payment"
+msgstr ""
+
+#: post-types/booking.php:364
+msgid "refunded"
+msgstr ""
+
+#: post-types/booking.php:366
+msgid "pending"
+msgstr ""
+
+#: post-types/booking.php:368
+msgid "waiting"
+msgstr ""
+
+#: post-types/booking.php:487
+msgid "Booking No"
+msgstr ""
+
+#: post-types/booking.php:494 post-types/invoices.php:92
+msgid "Property"
+msgstr ""
+
+#: post-types/booking.php:502 post-types/invoices.php:340
+#: widgets/advanced_search.php:92 shortcodes/shortcodes.php:823
+#: shortcodes/shortcodes.php:982
+msgid "Guests"
+msgstr ""
+
+#: post-types/booking.php:506
+msgid "Invoice No"
+msgstr ""
+
+#: post-types/booking.php:510
+msgid "Total Price"
+msgstr ""
+
+#: post-types/booking.php:514
+msgid "To Be Paid"
+msgstr ""
+
+#: post-types/booking.php:518 post-types/property.php:1217
+#: post-types/invoices.php:420
+msgid "Security Deposit"
+msgstr ""
+
+#: post-types/booking.php:522
+msgid "Balance Invoice ID"
+msgstr ""
+
+#: post-types/messages.php:11
+msgid "Messages"
+msgstr ""
+
+#: post-types/messages.php:12 misc/plugin_help_functions.php:222
+msgid "Message"
+msgstr ""
+
+#: post-types/messages.php:13
+msgid "Add New Message"
+msgstr ""
+
+#: post-types/messages.php:14
+msgid "Add Message"
+msgstr ""
+
+#: post-types/messages.php:16
+msgid "Edit Message"
+msgstr ""
+
+#: post-types/messages.php:17
+msgid "New Message"
+msgstr ""
+
+#: post-types/messages.php:19
+msgid "View Message"
+msgstr ""
+
+#: post-types/messages.php:20
+msgid "Search Message"
+msgstr ""
+
+#: post-types/messages.php:21 post-types/messages.php:22
+msgid "No Message found"
+msgstr ""
+
+#: post-types/messages.php:23
+msgid "Parent Message"
+msgstr ""
+
+#: post-types/messages.php:52
+msgid "Message Details"
+msgstr ""
+
+#: post-types/messages.php:78
+msgid "From User:"
+msgstr ""
+
+#: post-types/messages.php:85 post-types/messages.php:196
+msgid "Unregistered User"
+msgstr ""
+
+#: post-types/messages.php:91
+msgid "To User:"
+msgstr ""
+
+#: post-types/messages.php:96
+msgid "unread"
+msgstr ""
+
+#: post-types/messages.php:175
+msgid "From"
+msgstr ""
+
+#: post-types/messages.php:176
+msgid "To"
+msgstr ""
+
+#: post-types/property.php:9 shortcodes/shortcodes.php:136
+#: shortcodes/shortcodes.php:143
+msgid "Listings"
+msgstr ""
+
+#: post-types/property.php:11 widgets/login_widget.php:160
+msgid "Add New Listing"
+msgstr ""
+
+#: post-types/property.php:12
+msgid "Add Listing"
+msgstr ""
+
+#: post-types/property.php:14
+msgid "Edit Listings"
+msgstr ""
+
+#: post-types/property.php:15
+msgid "New Listing"
+msgstr ""
+
+#: post-types/property.php:17
+msgid "View Listings"
+msgstr ""
+
+#: post-types/property.php:18
+msgid "Search Listings"
+msgstr ""
+
+#: post-types/property.php:19
+msgid "No Listings found"
+msgstr ""
+
+#: post-types/property.php:20
+msgid "No Listings found in Trash"
+msgstr ""
+
+#: post-types/property.php:21
+msgid "Parent Listings"
+msgstr ""
+
+#: post-types/property.php:41
+msgid "Categories"
+msgstr ""
+
+#: post-types/property.php:42
+msgid "Add New Listing Category"
+msgstr ""
+
+#: post-types/property.php:43
+msgid "New Listing Category"
+msgstr ""
+
+#: post-types/property.php:47 post-types/property.php:69
+msgid "Add New"
+msgstr ""
+
+#: post-types/property.php:48 post-types/property.php:70
+msgid "New"
+msgstr ""
+
+#: post-types/property.php:63
+msgid "What do you rent ?"
+msgstr ""
+
+#: post-types/property.php:64
+msgid "Add new option for \"What do you rent\" "
+msgstr ""
+
+#: post-types/property.php:65
+msgid "Add new option for \"What do you rent\""
+msgstr ""
+
+#: post-types/property.php:93 post-types/property.php:2020
+msgid "City"
+msgstr ""
+
+#: post-types/property.php:94
+msgid "Add New City"
+msgstr ""
+
+#: post-types/property.php:95
+msgid "New City"
+msgstr ""
+
+#: post-types/property.php:109
+msgid "Neighborhood / Area"
+msgstr ""
+
+#: post-types/property.php:110
+msgid "Add New Neighborhood / Area"
+msgstr ""
+
+#: post-types/property.php:111
+msgid "New Neighborhood / Area"
+msgstr ""
+
+#: post-types/property.php:125
+msgid "Add New Feature"
+msgstr ""
+
+#: post-types/property.php:126
+msgid "New Feature"
+msgstr ""
+
+#: post-types/property.php:138 widgets/property_categories.php:26
+msgid "Property Status"
+msgstr ""
+
+#: post-types/property.php:139
+msgid "Add New Status"
+msgstr ""
+
+#: post-types/property.php:140
+msgid "New Status"
+msgstr ""
+
+#: post-types/property.php:164
+msgid "Property Details"
+msgstr ""
+
+#: post-types/property.php:176
+msgid "Property General Details"
+msgstr ""
+
+#: post-types/property.php:177 post-types/property.php:195
+#: post-types/property.php:1151
+msgid "Property Price"
+msgstr ""
+
+#: post-types/property.php:178 post-types/property.php:199
+msgid "Property Media"
+msgstr ""
+
+#: post-types/property.php:179
+msgid "Property Specific Details"
+msgstr ""
+
+#: post-types/property.php:183 post-types/property.php:218
+#: post-types/property.php:242 misc/sms_functions.php:206
+#: misc/emailfunctions.php:113
+msgid "Paid Submission"
+msgstr ""
+
+#: post-types/property.php:190
+msgid "General Details"
+msgstr ""
+
+#: post-types/property.php:204
+msgid "Specific Details"
+msgstr ""
+
+#: post-types/property.php:210 post-types/property.php:237
+msgid "Place It On The Map"
+msgstr ""
+
+#: post-types/property.php:236
+msgid "Listing Settings"
+msgstr ""
+
+#: post-types/property.php:238
+msgid "Listing Details"
+msgstr ""
+
+#: post-types/property.php:239
+msgid "Listing Custom"
+msgstr ""
+
+#: post-types/property.php:262
+msgid "Custom Details"
+msgstr ""
+
+#: post-types/property.php:304 post-types/property.php:2799
+msgid "Not Available"
+msgstr ""
+
+#: post-types/property.php:328
+msgid "Extra Details"
+msgstr ""
+
+#: post-types/property.php:333
+msgid "Label"
+msgstr ""
+
+#: post-types/property.php:384
+msgid "Users: "
+msgstr ""
+
+#: post-types/property.php:407
+msgid "Paid Submission is disabled"
+msgstr ""
+
+#: post-types/property.php:411
+msgid "Part of membership package"
+msgstr ""
+
+#: post-types/property.php:415
+msgid "Pay Status: "
+msgstr ""
+
+#: post-types/property.php:418
+msgid "PAID"
+msgstr ""
+
+#: post-types/property.php:421
+msgid "Not Paid"
+msgstr ""
+
+#: post-types/property.php:440
+msgid "All"
+msgstr ""
+
+#: post-types/property.php:441
+msgid "Monday"
+msgstr ""
+
+#: post-types/property.php:442
+msgid "Tuesday"
+msgstr ""
+
+#: post-types/property.php:443
+msgid "Wednesday"
+msgstr ""
+
+#: post-types/property.php:444
+msgid "Thursday"
+msgstr ""
+
+#: post-types/property.php:445
+msgid "Friday"
+msgstr ""
+
+#: post-types/property.php:446
+msgid "Saturday"
+msgstr ""
+
+#: post-types/property.php:447
+msgid "Sunday"
+msgstr ""
+
+#: post-types/property.php:453
+msgid "Single Fee"
+msgstr ""
+
+#: post-types/property.php:454
+msgid "Per Night"
+msgstr ""
+
+#: post-types/property.php:455
+msgid "Per Guest"
+msgstr ""
+
+#: post-types/property.php:456
+msgid "Per Night per Guest"
+msgstr ""
+
+#: post-types/property.php:472
+msgid "Price: "
+msgstr ""
+
+#: post-types/property.php:480
+msgid "Before Price Label: "
+msgstr ""
+
+#: post-types/property.php:488
+msgid "After Price Label: "
+msgstr ""
+
+#: post-types/property.php:499
+msgid "Taxes in % (taxes are considered included in the daily price): "
+msgstr ""
+
+#: post-types/property.php:507
+msgid "Security Deposit "
+msgstr ""
+
+#: post-types/property.php:518
+msgid "Early Bird Discount value- in % from the price per night"
+msgstr ""
+
+#: post-types/property.php:526
+msgid "Early Bird Discount no of days "
+msgstr ""
+
+#: post-types/property.php:539
+msgid "Cleaning Fee:"
+msgstr ""
+
+#: post-types/property.php:546
+msgid "Cleaning Fee for:"
+msgstr ""
+
+#: post-types/property.php:566
+msgid "City Fee:"
+msgstr ""
+
+#: post-types/property.php:573
+msgid "City Fee for:"
+msgstr ""
+
+#: post-types/property.php:595
+msgid "City Fee is a % of the daily fee"
+msgstr ""
+
+#: post-types/property.php:604
+msgid "Price per weekend (Saturday and Sundays)"
+msgstr ""
+
+#: post-types/property.php:611
+msgid "Minimum days of booking (only numbers) "
+msgstr ""
+
+#: post-types/property.php:622
+msgid "Price per night (7d+): "
+msgstr ""
+
+#: post-types/property.php:629
+msgid "Price per night (30d+): "
+msgstr ""
+
+#: post-types/property.php:638
+msgid "Extra Price per guest per night"
+msgstr ""
+
+#: post-types/property.php:651 post-types/property.php:1241
+msgid "Allow guests above capacity?"
+msgstr ""
+
+#: post-types/property.php:658
+msgid ""
+"These options do not work together - choose only one and leave the other one "
+"on \"All\""
+msgstr ""
+
+#: post-types/property.php:666
+msgid "Allow only bookings starting with the check-in on:"
+msgstr ""
+
+#: post-types/property.php:683
+msgid "Allow only bookings with the check-in/check-out on: "
+msgstr ""
+
+#: post-types/property.php:704
+msgid "Size: "
+msgstr ""
+
+#: post-types/property.php:713
+msgid "Rooms: "
+msgstr ""
+
+#: post-types/property.php:722
+msgid "Bedrooms: "
+msgstr ""
+
+#: post-types/property.php:729
+msgid "Bathrooms: "
+msgstr ""
+
+#: post-types/property.php:738
+msgid "Guests: "
+msgstr ""
+
+#: post-types/property.php:761
+msgid ""
+"Affiliate Link. User will be redirected to this link when he wants to make a "
+"booking. "
+msgstr ""
+
+#: post-types/property.php:770
+msgid "Video from "
+msgstr ""
+
+#: post-types/property.php:781
+msgid "Video id: "
+msgstr ""
+
+#: post-types/property.php:791
+msgid "Virtual Tour. Copy/paste the iframe code."
+msgstr ""
+
+#: post-types/property.php:801
+msgid "Private Notes."
+msgstr ""
+
+#: post-types/property.php:850
+msgid "Place Pin with Listing Address"
+msgstr ""
+
+#: post-types/property.php:854
+msgid "Latitude:"
+msgstr ""
+
+#: post-types/property.php:855
+msgid "Longitude:"
+msgstr ""
+
+#: post-types/property.php:858
+msgid "Google View Camera Angle"
+msgstr ""
+
+#: post-types/property.php:870 misc/metaboxes.php:602 misc/metaboxes.php:863
+msgid "Zoom Level for map (1-20)"
+msgstr ""
+
+#: post-types/property.php:929
+msgid "Listing Owner: "
+msgstr ""
+
+#: post-types/property.php:1029
+msgid "Guest Number"
+msgstr ""
+
+#: post-types/property.php:1034
+msgid "Property Address"
+msgstr ""
+
+#: post-types/property.php:1039
+msgid "Property County"
+msgstr ""
+
+#: post-types/property.php:1044
+msgid "Property State"
+msgstr ""
+
+#: post-types/property.php:1049
+msgid "Property Zip"
+msgstr ""
+
+#: post-types/property.php:1054
+msgid "Property Country"
+msgstr ""
+
+#: post-types/property.php:1061
+msgid "Make it Featured"
+msgstr ""
+
+#: post-types/property.php:1067
+msgid "Affiliate Link"
+msgstr ""
+
+#: post-types/property.php:1074
+msgid "Private Notes"
+msgstr ""
+
+#: post-types/property.php:1082
+msgid "Allow instant booking?"
+msgstr ""
+
+#: post-types/property.php:1145
+msgid "Booking Type"
+msgstr ""
+
+#: post-types/property.php:1156
+msgid "Before Label"
+msgstr ""
+
+#: post-types/property.php:1161
+msgid "After Label"
+msgstr ""
+
+#: post-types/property.php:1166
+msgid "Property Taxes in %"
+msgstr ""
+
+#: post-types/property.php:1171
+msgid "Price per night (7d+)"
+msgstr ""
+
+#: post-types/property.php:1176
+msgid "Price per night (30d+)"
+msgstr ""
+
+#: post-types/property.php:1181
+msgid "Price per weekened"
+msgstr ""
+
+#: post-types/property.php:1186
+msgid "Cleaning Fee"
+msgstr ""
+
+#: post-types/property.php:1192
+msgid "Cleaning Fee calculation"
+msgstr ""
+
+#: post-types/property.php:1199
+msgid "City Fee"
+msgstr ""
+
+#: post-types/property.php:1204
+msgid "City Fee calculation"
+msgstr ""
+
+#: post-types/property.php:1211
+msgid "Minimum Days of booking"
+msgstr ""
+
+#: post-types/property.php:1223
+msgid "Early bird discount"
+msgstr ""
+
+#: post-types/property.php:1229
+msgid "Early bird days before"
+msgstr ""
+
+#: post-types/property.php:1235
+msgid "Extra Price per Guest"
+msgstr ""
+
+#: post-types/property.php:1248
+msgid ""
+"Pay by the no of guests (room prices will NOT be used anymore and billing "
+"will be done by guest no only)"
+msgstr ""
+
+#: post-types/property.php:1255
+msgid "Allow only bookings starting with the check-in on"
+msgstr ""
+
+#: post-types/property.php:1262
+msgid "Allow only bookings with the check-in/check-out on"
+msgstr ""
+
+#: post-types/property.php:1295
+msgid "Property Size in"
+msgstr ""
+
+#: post-types/property.php:1300
+msgid "Property Rooms"
+msgstr ""
+
+#: post-types/property.php:1306
+msgid "Property Bedrooms"
+msgstr ""
+
+#: post-types/property.php:1311
+msgid "Property Bathrooms"
+msgstr ""
+
+#: post-types/property.php:1316
+msgid "Cancellation Policy"
+msgstr ""
+
+#: post-types/property.php:1322
+msgid "Other Rules"
+msgstr ""
+
+#: post-types/property.php:1329
+msgid "Smoking Allowed"
+msgstr ""
+
+#: post-types/property.php:1338
+msgid "Party Allowed"
+msgstr ""
+
+#: post-types/property.php:1345
+msgid "Pets Allowed"
+msgstr ""
+
+#: post-types/property.php:1352
+msgid "Children Allowed"
+msgstr ""
+
+#: post-types/property.php:1373 post-types/property.php:2505
+msgid "Afghanistan"
+msgstr ""
+
+#: post-types/property.php:1374 post-types/property.php:2506
+msgid "Albania"
+msgstr ""
+
+#: post-types/property.php:1375 post-types/property.php:2507
+msgid "Algeria"
+msgstr ""
+
+#: post-types/property.php:1376 post-types/property.php:2508
+msgid "American Samoa"
+msgstr ""
+
+#: post-types/property.php:1377 post-types/property.php:2509
+msgid "Andorra"
+msgstr ""
+
+#: post-types/property.php:1378 post-types/property.php:2510
+msgid "Angola"
+msgstr ""
+
+#: post-types/property.php:1379 post-types/property.php:2511
+msgid "Anguilla"
+msgstr ""
+
+#: post-types/property.php:1380 post-types/property.php:2512
+msgid "Antarctica"
+msgstr ""
+
+#: post-types/property.php:1381 post-types/property.php:2513
+msgid "Antigua and Barbuda"
+msgstr ""
+
+#: post-types/property.php:1382 post-types/property.php:2514
+msgid "Argentina"
+msgstr ""
+
+#: post-types/property.php:1383 post-types/property.php:2515
+msgid "Armenia"
+msgstr ""
+
+#: post-types/property.php:1384 post-types/property.php:2516
+msgid "Aruba"
+msgstr ""
+
+#: post-types/property.php:1385 post-types/property.php:2517
+msgid "Australia"
+msgstr ""
+
+#: post-types/property.php:1386 post-types/property.php:2518
+msgid "Austria"
+msgstr ""
+
+#: post-types/property.php:1387 post-types/property.php:2519
+msgid "Azerbaijan"
+msgstr ""
+
+#: post-types/property.php:1388 post-types/property.php:2520
+msgid "Bahamas"
+msgstr ""
+
+#: post-types/property.php:1389 post-types/property.php:2521
+msgid "Bahrain"
+msgstr ""
+
+#: post-types/property.php:1390 post-types/property.php:2522
+msgid "Bangladesh"
+msgstr ""
+
+#: post-types/property.php:1391 post-types/property.php:2523
+msgid "Barbados"
+msgstr ""
+
+#: post-types/property.php:1392 post-types/property.php:2524
+msgid "Belarus"
+msgstr ""
+
+#: post-types/property.php:1393 post-types/property.php:2525
+msgid "Belgium"
+msgstr ""
+
+#: post-types/property.php:1394 post-types/property.php:2526
+msgid "Belize"
+msgstr ""
+
+#: post-types/property.php:1395 post-types/property.php:2527
+msgid "Benin"
+msgstr ""
+
+#: post-types/property.php:1396 post-types/property.php:2528
+msgid "Bermuda"
+msgstr ""
+
+#: post-types/property.php:1397 post-types/property.php:2529
+msgid "Bhutan"
+msgstr ""
+
+#: post-types/property.php:1398 post-types/property.php:2530
+msgid "Bolivia"
+msgstr ""
+
+#: post-types/property.php:1399 post-types/property.php:2531
+msgid "Bosnia and Herzegowina"
+msgstr ""
+
+#: post-types/property.php:1400 post-types/property.php:2532
+msgid "Botswana"
+msgstr ""
+
+#: post-types/property.php:1401 post-types/property.php:2533
+msgid "Bouvet Island"
+msgstr ""
+
+#: post-types/property.php:1402 post-types/property.php:2534
+msgid "Brazil"
+msgstr ""
+
+#: post-types/property.php:1403 post-types/property.php:2535
+msgid "British Indian Ocean Territory"
+msgstr ""
+
+#: post-types/property.php:1404 post-types/property.php:2536
+msgid "Brunei Darussalam"
+msgstr ""
+
+#: post-types/property.php:1405 post-types/property.php:2537
+msgid "Bulgaria"
+msgstr ""
+
+#: post-types/property.php:1406 post-types/property.php:2538
+msgid "Burkina Faso"
+msgstr ""
+
+#: post-types/property.php:1407 post-types/property.php:2539
+msgid "Burundi"
+msgstr ""
+
+#: post-types/property.php:1408 post-types/property.php:2540
+msgid "Cambodia"
+msgstr ""
+
+#: post-types/property.php:1409 post-types/property.php:2541
+msgid "Cameroon"
+msgstr ""
+
+#: post-types/property.php:1410 post-types/property.php:2542
+msgid "Canada"
+msgstr ""
+
+#: post-types/property.php:1411 post-types/property.php:2543
+msgid "Cape Verde"
+msgstr ""
+
+#: post-types/property.php:1412 post-types/property.php:2544
+msgid "Cayman Islands"
+msgstr ""
+
+#: post-types/property.php:1413 post-types/property.php:2545
+msgid "Central African Republic"
+msgstr ""
+
+#: post-types/property.php:1414 post-types/property.php:2546
+msgid "Chad"
+msgstr ""
+
+#: post-types/property.php:1415 post-types/property.php:2547
+msgid "Chile"
+msgstr ""
+
+#: post-types/property.php:1416 post-types/property.php:2548
+msgid "China"
+msgstr ""
+
+#: post-types/property.php:1417 post-types/property.php:2549
+msgid "Christmas Island"
+msgstr ""
+
+#: post-types/property.php:1418 post-types/property.php:2550
+msgid "Cocos (Keeling) Islands"
+msgstr ""
+
+#: post-types/property.php:1419 post-types/property.php:2551
+msgid "Colombia"
+msgstr ""
+
+#: post-types/property.php:1420 post-types/property.php:2552
+msgid "Comoros"
+msgstr ""
+
+#: post-types/property.php:1421 post-types/property.php:2553
+msgid "Congo"
+msgstr ""
+
+#: post-types/property.php:1422 post-types/property.php:2554
+msgid "Congo, the Democratic Republic of the"
+msgstr ""
+
+#: post-types/property.php:1423 post-types/property.php:2555
+msgid "Cook Islands"
+msgstr ""
+
+#: post-types/property.php:1424 post-types/property.php:2556
+msgid "Costa Rica"
+msgstr ""
+
+#: post-types/property.php:1425 post-types/property.php:2557
+msgid "Cote dIvoire"
+msgstr ""
+
+#: post-types/property.php:1426
+msgid "Croatia"
+msgstr ""
+
+#: post-types/property.php:1427 post-types/property.php:2559
+msgid "Cuba"
+msgstr ""
+
+#: post-types/property.php:1428 post-types/property.php:2560
+msgid "Curacao"
+msgstr ""
+
+#: post-types/property.php:1429 post-types/property.php:2561
+msgid "Cyprus"
+msgstr ""
+
+#: post-types/property.php:1430 post-types/property.php:2562
+msgid "Czech Republic"
+msgstr ""
+
+#: post-types/property.php:1431 post-types/property.php:2563
+msgid "Denmark"
+msgstr ""
+
+#: post-types/property.php:1432 post-types/property.php:2564
+msgid "Djibouti"
+msgstr ""
+
+#: post-types/property.php:1433 post-types/property.php:2565
+msgid "Dominica"
+msgstr ""
+
+#: post-types/property.php:1434 post-types/property.php:2566
+msgid "Dominican Republic"
+msgstr ""
+
+#: post-types/property.php:1435 post-types/property.php:2567
+msgid "East Timor"
+msgstr ""
+
+#: post-types/property.php:1436 post-types/property.php:2568
+msgid "Ecuador"
+msgstr ""
+
+#: post-types/property.php:1437 post-types/property.php:2569
+msgid "Egypt"
+msgstr ""
+
+#: post-types/property.php:1438 post-types/property.php:2570
+msgid "El Salvador"
+msgstr ""
+
+#: post-types/property.php:1439 post-types/property.php:2571
+msgid "Equatorial Guinea"
+msgstr ""
+
+#: post-types/property.php:1440 post-types/property.php:2572
+msgid "Eritrea"
+msgstr ""
+
+#: post-types/property.php:1441 post-types/property.php:2573
+msgid "Estonia"
+msgstr ""
+
+#: post-types/property.php:1442 post-types/property.php:2574
+msgid "Ethiopia"
+msgstr ""
+
+#: post-types/property.php:1443 post-types/property.php:2575
+msgid "Falkland Islands (Malvinas)"
+msgstr ""
+
+#: post-types/property.php:1444 post-types/property.php:2576
+msgid "Faroe Islands"
+msgstr ""
+
+#: post-types/property.php:1445 post-types/property.php:2577
+msgid "Fiji"
+msgstr ""
+
+#: post-types/property.php:1446 post-types/property.php:2578
+msgid "Finland"
+msgstr ""
+
+#: post-types/property.php:1447 post-types/property.php:2579
+msgid "France"
+msgstr ""
+
+#: post-types/property.php:1448 post-types/property.php:2580
+msgid "France Metropolitan"
+msgstr ""
+
+#: post-types/property.php:1449 post-types/property.php:2581
+msgid "French Guiana"
+msgstr ""
+
+#: post-types/property.php:1450 post-types/property.php:2582
+msgid "French Polynesia"
+msgstr ""
+
+#: post-types/property.php:1451 post-types/property.php:2583
+msgid "French Southern Territories"
+msgstr ""
+
+#: post-types/property.php:1452 post-types/property.php:2584
+msgid "Gabon"
+msgstr ""
+
+#: post-types/property.php:1453 post-types/property.php:2585
+msgid "Gambia"
+msgstr ""
+
+#: post-types/property.php:1454 post-types/property.php:2586
+msgid "Georgia"
+msgstr ""
+
+#: post-types/property.php:1455 post-types/property.php:2587
+msgid "Germany"
+msgstr ""
+
+#: post-types/property.php:1456 post-types/property.php:2588
+msgid "Ghana"
+msgstr ""
+
+#: post-types/property.php:1457 post-types/property.php:2589
+msgid "Gibraltar"
+msgstr ""
+
+#: post-types/property.php:1458 post-types/property.php:2590
+msgid "Greece"
+msgstr ""
+
+#: post-types/property.php:1459 post-types/property.php:2591
+msgid "Greenland"
+msgstr ""
+
+#: post-types/property.php:1460 post-types/property.php:2592
+msgid "Grenada"
+msgstr ""
+
+#: post-types/property.php:1461 post-types/property.php:2593
+msgid "Guadeloupe"
+msgstr ""
+
+#: post-types/property.php:1462 post-types/property.php:2594
+msgid "Guam"
+msgstr ""
+
+#: post-types/property.php:1463 post-types/property.php:2595
+msgid "Guatemala"
+msgstr ""
+
+#: post-types/property.php:1464 post-types/property.php:2596
+msgid "Guinea"
+msgstr ""
+
+#: post-types/property.php:1465 post-types/property.php:2597
+msgid "Guinea-Bissau"
+msgstr ""
+
+#: post-types/property.php:1466 post-types/property.php:2598
+msgid "Guyana"
+msgstr ""
+
+#: post-types/property.php:1467 post-types/property.php:2599
+msgid "Haiti"
+msgstr ""
+
+#: post-types/property.php:1468 post-types/property.php:2600
+msgid "Heard and Mc Donald Islands"
+msgstr ""
+
+#: post-types/property.php:1469 post-types/property.php:2601
+msgid "Holy See (Vatican City State)"
+msgstr ""
+
+#: post-types/property.php:1470 post-types/property.php:2602
+msgid "Honduras"
+msgstr ""
+
+#: post-types/property.php:1471 post-types/property.php:2603
+msgid "Hong Kong"
+msgstr ""
+
+#: post-types/property.php:1472 post-types/property.php:2604
+msgid "Hungary"
+msgstr ""
+
+#: post-types/property.php:1473 post-types/property.php:2605
+msgid "Iceland"
+msgstr ""
+
+#: post-types/property.php:1474 post-types/property.php:2606
+msgid "India"
+msgstr ""
+
+#: post-types/property.php:1475 post-types/property.php:2607
+msgid "Indonesia"
+msgstr ""
+
+#: post-types/property.php:1476 post-types/property.php:2608
+msgid "Iran (Islamic Republic of)"
+msgstr ""
+
+#: post-types/property.php:1477 post-types/property.php:2609
+msgid "Iraq"
+msgstr ""
+
+#: post-types/property.php:1478 post-types/property.php:2610
+msgid "Ireland"
+msgstr ""
+
+#: post-types/property.php:1479 post-types/property.php:2611
+msgid "Israel"
+msgstr ""
+
+#: post-types/property.php:1480 post-types/property.php:2612
+msgid "Italy"
+msgstr ""
+
+#: post-types/property.php:1481 post-types/property.php:2613
+msgid "Jamaica"
+msgstr ""
+
+#: post-types/property.php:1482 post-types/property.php:2614
+msgid "Japan"
+msgstr ""
+
+#: post-types/property.php:1483 post-types/property.php:2615
+msgid "Jordan"
+msgstr ""
+
+#: post-types/property.php:1484 post-types/property.php:2616
+msgid "Kazakhstan"
+msgstr ""
+
+#: post-types/property.php:1485 post-types/property.php:2617
+msgid "Kenya"
+msgstr ""
+
+#: post-types/property.php:1486 post-types/property.php:2618
+msgid "Kiribati"
+msgstr ""
+
+#: post-types/property.php:1487 post-types/property.php:2619
+msgid "Korea, Democratic People Republic of"
+msgstr ""
+
+#: post-types/property.php:1488 post-types/property.php:2620
+msgid "Korea, Republic of"
+msgstr ""
+
+#: post-types/property.php:1489 post-types/property.php:2621
+msgid "Kuwait"
+msgstr ""
+
+#: post-types/property.php:1490 post-types/property.php:2622
+msgid "Kyrgyzstan"
+msgstr ""
+
+#: post-types/property.php:1491 post-types/property.php:2623
+msgid "Lao, People Democratic Republic"
+msgstr ""
+
+#: post-types/property.php:1492 post-types/property.php:2624
+msgid "Latvia"
+msgstr ""
+
+#: post-types/property.php:1493 post-types/property.php:2625
+msgid "Lebanon"
+msgstr ""
+
+#: post-types/property.php:1494 post-types/property.php:2626
+msgid "Lesotho"
+msgstr ""
+
+#: post-types/property.php:1495 post-types/property.php:2627
+msgid "Liberia"
+msgstr ""
+
+#: post-types/property.php:1496 post-types/property.php:2628
+msgid "Libyan Arab Jamahiriya"
+msgstr ""
+
+#: post-types/property.php:1497 post-types/property.php:2629
+msgid "Liechtenstein"
+msgstr ""
+
+#: post-types/property.php:1498 post-types/property.php:2630
+msgid "Lithuania"
+msgstr ""
+
+#: post-types/property.php:1499 post-types/property.php:2631
+msgid "Luxembourg"
+msgstr ""
+
+#: post-types/property.php:1500 post-types/property.php:2632
+msgid "Macau"
+msgstr ""
+
+#: post-types/property.php:1501 post-types/property.php:2633
+msgid "Macedonia, The Former Yugoslav Republic of"
+msgstr ""
+
+#: post-types/property.php:1502 post-types/property.php:2634
+msgid "Madagascar"
+msgstr ""
+
+#: post-types/property.php:1503 post-types/property.php:2635
+msgid "Malawi"
+msgstr ""
+
+#: post-types/property.php:1504 post-types/property.php:2636
+msgid "Malaysia"
+msgstr ""
+
+#: post-types/property.php:1505 post-types/property.php:2637
+msgid "Maldives"
+msgstr ""
+
+#: post-types/property.php:1506 post-types/property.php:2638
+msgid "Mali"
+msgstr ""
+
+#: post-types/property.php:1507 post-types/property.php:2639
+msgid "Malta"
+msgstr ""
+
+#: post-types/property.php:1508 post-types/property.php:2640
+msgid "Marshall Islands"
+msgstr ""
+
+#: post-types/property.php:1509 post-types/property.php:2641
+msgid "Martinique"
+msgstr ""
+
+#: post-types/property.php:1510 post-types/property.php:2642
+msgid "Mauritania"
+msgstr ""
+
+#: post-types/property.php:1511 post-types/property.php:2643
+msgid "Mauritius"
+msgstr ""
+
+#: post-types/property.php:1512 post-types/property.php:2644
+msgid "Mayotte"
+msgstr ""
+
+#: post-types/property.php:1513 post-types/property.php:2645
+msgid "Mexico"
+msgstr ""
+
+#: post-types/property.php:1514 post-types/property.php:2646
+msgid "Micronesia, Federated States of"
+msgstr ""
+
+#: post-types/property.php:1515 post-types/property.php:2647
+msgid "Moldova, Republic of"
+msgstr ""
+
+#: post-types/property.php:1516 post-types/property.php:2648
+msgid "Monaco"
+msgstr ""
+
+#: post-types/property.php:1517 post-types/property.php:2649
+msgid "Mongolia"
+msgstr ""
+
+#: post-types/property.php:1518 post-types/property.php:2650
+msgid "Montserrat"
+msgstr ""
+
+#: post-types/property.php:1519 post-types/property.php:2651
+msgid "Morocco"
+msgstr ""
+
+#: post-types/property.php:1520 post-types/property.php:2652
+msgid "Mozambique"
+msgstr ""
+
+#: post-types/property.php:1521 post-types/property.php:2653
+msgid "Montenegro"
+msgstr ""
+
+#: post-types/property.php:1522 post-types/property.php:2654
+msgid "Myanmar"
+msgstr ""
+
+#: post-types/property.php:1523 post-types/property.php:2655
+msgid "Namibia"
+msgstr ""
+
+#: post-types/property.php:1524 post-types/property.php:2656
+msgid "Nauru"
+msgstr ""
+
+#: post-types/property.php:1525 post-types/property.php:2657
+msgid "Nepal"
+msgstr ""
+
+#: post-types/property.php:1526 post-types/property.php:2658
+msgid "Netherlands"
+msgstr ""
+
+#: post-types/property.php:1527 post-types/property.php:2659
+msgid "Netherlands Antilles"
+msgstr ""
+
+#: post-types/property.php:1528 post-types/property.php:2660
+msgid "New Caledonia"
+msgstr ""
+
+#: post-types/property.php:1529 post-types/property.php:2661
+msgid "New Zealand"
+msgstr ""
+
+#: post-types/property.php:1530 post-types/property.php:2662
+msgid "Nicaragua"
+msgstr ""
+
+#: post-types/property.php:1531 post-types/property.php:2663
+msgid "Niger"
+msgstr ""
+
+#: post-types/property.php:1532 post-types/property.php:2664
+msgid "Nigeria"
+msgstr ""
+
+#: post-types/property.php:1533 post-types/property.php:2665
+msgid "Niue"
+msgstr ""
+
+#: post-types/property.php:1534 post-types/property.php:2666
+msgid "Norfolk Island"
+msgstr ""
+
+#: post-types/property.php:1535 post-types/property.php:2667
+msgid "Northern Mariana Islands"
+msgstr ""
+
+#: post-types/property.php:1536 post-types/property.php:2668
+msgid "Norway"
+msgstr ""
+
+#: post-types/property.php:1537 post-types/property.php:2669
+msgid "Oman"
+msgstr ""
+
+#: post-types/property.php:1538 post-types/property.php:2670
+msgid "Pakistan"
+msgstr ""
+
+#: post-types/property.php:1539 post-types/property.php:2671
+msgid "Palau"
+msgstr ""
+
+#: post-types/property.php:1540 post-types/property.php:2672
+msgid "Panama"
+msgstr ""
+
+#: post-types/property.php:1541 post-types/property.php:2673
+msgid "Papua New Guinea"
+msgstr ""
+
+#: post-types/property.php:1542 post-types/property.php:2674
+msgid "Paraguay"
+msgstr ""
+
+#: post-types/property.php:1543 post-types/property.php:2675
+msgid "Peru"
+msgstr ""
+
+#: post-types/property.php:1544 post-types/property.php:2676
+msgid "Philippines"
+msgstr ""
+
+#: post-types/property.php:1545 post-types/property.php:2677
+msgid "Pitcairn"
+msgstr ""
+
+#: post-types/property.php:1546 post-types/property.php:2678
+msgid "Poland"
+msgstr ""
+
+#: post-types/property.php:1547 post-types/property.php:2679
+msgid "Portugal"
+msgstr ""
+
+#: post-types/property.php:1548 post-types/property.php:2680
+msgid "Puerto Rico"
+msgstr ""
+
+#: post-types/property.php:1549 post-types/property.php:2681
+msgid "Qatar"
+msgstr ""
+
+#: post-types/property.php:1550 post-types/property.php:2682
+msgid "Reunion"
+msgstr ""
+
+#: post-types/property.php:1551 post-types/property.php:2683
+msgid "Romania"
+msgstr ""
+
+#: post-types/property.php:1552 post-types/property.php:2684
+msgid "Russian Federation"
+msgstr ""
+
+#: post-types/property.php:1553 post-types/property.php:2685
+msgid "Rwanda"
+msgstr ""
+
+#: post-types/property.php:1554 post-types/property.php:2686
+msgid "Saint Kitts and Nevis"
+msgstr ""
+
+#: post-types/property.php:1555 post-types/property.php:2687
+msgid "Saint Lucia"
+msgstr ""
+
+#: post-types/property.php:1556 post-types/property.php:2688
+msgid "Saint Vincent and the Grenadines"
+msgstr ""
+
+#: post-types/property.php:1557 post-types/property.php:2689
+msgid "Samoa"
+msgstr ""
+
+#: post-types/property.php:1558 post-types/property.php:2690
+msgid "San Marino"
+msgstr ""
+
+#: post-types/property.php:1559 post-types/property.php:2691
+msgid "Sao Tome and Principe"
+msgstr ""
+
+#: post-types/property.php:1560 post-types/property.php:2692
+msgid "Saudi Arabia"
+msgstr ""
+
+#: post-types/property.php:1561 post-types/property.php:2693
+msgid "Serbia"
+msgstr ""
+
+#: post-types/property.php:1562 post-types/property.php:2694
+msgid "Senegal"
+msgstr ""
+
+#: post-types/property.php:1563 post-types/property.php:2695
+msgid "Seychelles"
+msgstr ""
+
+#: post-types/property.php:1564 post-types/property.php:2696
+msgid "Sierra Leone"
+msgstr ""
+
+#: post-types/property.php:1565 post-types/property.php:2697
+msgid "Singapore"
+msgstr ""
+
+#: post-types/property.php:1566 post-types/property.php:2698
+msgid "Slovakia (Slovak Republic)"
+msgstr ""
+
+#: post-types/property.php:1567 post-types/property.php:2699
+msgid "Slovenia"
+msgstr ""
+
+#: post-types/property.php:1568 post-types/property.php:2700
+msgid "Solomon Islands"
+msgstr ""
+
+#: post-types/property.php:1569 post-types/property.php:2701
+msgid "Somalia"
+msgstr ""
+
+#: post-types/property.php:1570 post-types/property.php:2702
+msgid "South Africa"
+msgstr ""
+
+#: post-types/property.php:1571 post-types/property.php:2703
+msgid "South Georgia and the South Sandwich Islands"
+msgstr ""
+
+#: post-types/property.php:1572 post-types/property.php:2704
+msgid "Spain"
+msgstr ""
+
+#: post-types/property.php:1573 post-types/property.php:2705
+msgid "Sri Lanka"
+msgstr ""
+
+#: post-types/property.php:1574 post-types/property.php:2706
+msgid "St. Helena"
+msgstr ""
+
+#: post-types/property.php:1575 post-types/property.php:2707
+msgid "St. Pierre and Miquelon"
+msgstr ""
+
+#: post-types/property.php:1576 post-types/property.php:2708
+msgid "Sudan"
+msgstr ""
+
+#: post-types/property.php:1577 post-types/property.php:2709
+msgid "Suriname"
+msgstr ""
+
+#: post-types/property.php:1578 post-types/property.php:2710
+msgid "Svalbard and Jan Mayen Islands"
+msgstr ""
+
+#: post-types/property.php:1579 post-types/property.php:2711
+msgid "Swaziland"
+msgstr ""
+
+#: post-types/property.php:1580 post-types/property.php:2712
+msgid "Sweden"
+msgstr ""
+
+#: post-types/property.php:1581 post-types/property.php:2713
+msgid "Switzerland"
+msgstr ""
+
+#: post-types/property.php:1582 post-types/property.php:2714
+msgid "Syrian Arab Republic"
+msgstr ""
+
+#: post-types/property.php:1583 post-types/property.php:2715
+msgid "Taiwan, Province of China"
+msgstr ""
+
+#: post-types/property.php:1584 post-types/property.php:2716
+msgid "Tajikistan"
+msgstr ""
+
+#: post-types/property.php:1585 post-types/property.php:2717
+msgid "Tanzania, United Republic of"
+msgstr ""
+
+#: post-types/property.php:1586 post-types/property.php:2718
+msgid "Thailand"
+msgstr ""
+
+#: post-types/property.php:1587 post-types/property.php:2719
+msgid "Togo"
+msgstr ""
+
+#: post-types/property.php:1588 post-types/property.php:2720
+msgid "Tokelau"
+msgstr ""
+
+#: post-types/property.php:1589 post-types/property.php:2721
+msgid "Tonga"
+msgstr ""
+
+#: post-types/property.php:1590 post-types/property.php:2722
+msgid "Trinidad and Tobago"
+msgstr ""
+
+#: post-types/property.php:1591 post-types/property.php:2723
+msgid "Tunisia"
+msgstr ""
+
+#: post-types/property.php:1592 post-types/property.php:2724
+msgid "Turkey"
+msgstr ""
+
+#: post-types/property.php:1593 post-types/property.php:2725
+msgid "Turkmenistan"
+msgstr ""
+
+#: post-types/property.php:1594 post-types/property.php:2726
+msgid "Turks and Caicos Islands"
+msgstr ""
+
+#: post-types/property.php:1595 post-types/property.php:2727
+msgid "Tuvalu"
+msgstr ""
+
+#: post-types/property.php:1596 post-types/property.php:2728
+msgid "Uganda"
+msgstr ""
+
+#: post-types/property.php:1597 post-types/property.php:2729
+msgid "Ukraine"
+msgstr ""
+
+#: post-types/property.php:1598 post-types/property.php:2730
+msgid "United Arab Emirates"
+msgstr ""
+
+#: post-types/property.php:1599 post-types/property.php:2731
+msgid "United Kingdom"
+msgstr ""
+
+#: post-types/property.php:1600 post-types/property.php:2732
+msgid "United States"
+msgstr ""
+
+#: post-types/property.php:1601 post-types/property.php:2733
+msgid "United States Minor Outlying Islands"
+msgstr ""
+
+#: post-types/property.php:1602 post-types/property.php:2734
+msgid "Uruguay"
+msgstr ""
+
+#: post-types/property.php:1603 post-types/property.php:2735
+msgid "Uzbekistan"
+msgstr ""
+
+#: post-types/property.php:1604 post-types/property.php:2736
+msgid "Vanuatu"
+msgstr ""
+
+#: post-types/property.php:1605 post-types/property.php:2737
+msgid "Venezuela"
+msgstr ""
+
+#: post-types/property.php:1606 post-types/property.php:2738
+msgid "Vietnam"
+msgstr ""
+
+#: post-types/property.php:1607 post-types/property.php:2739
+msgid "Virgin Islands (British)"
+msgstr ""
+
+#: post-types/property.php:1608 post-types/property.php:2740
+msgid "Virgin Islands (U.S.)"
+msgstr ""
+
+#: post-types/property.php:1609 post-types/property.php:2741
+msgid "Wallis and Futuna Islands"
+msgstr ""
+
+#: post-types/property.php:1610 post-types/property.php:2742
+msgid "Western Sahara"
+msgstr ""
+
+#: post-types/property.php:1611 post-types/property.php:2743
+msgid "Yemen"
+msgstr ""
+
+#: post-types/property.php:1612 post-types/property.php:2744
+msgid "Yugoslavia"
+msgstr ""
+
+#: post-types/property.php:1613 post-types/property.php:2745
+msgid "Zambia"
+msgstr ""
+
+#: post-types/property.php:1614 post-types/property.php:2746
+msgid "Zimbabwe"
+msgstr ""
+
+#: post-types/property.php:1676
+msgid "Id"
+msgstr ""
+
+#: post-types/property.php:1678
+msgid "Action"
+msgstr ""
+
+#: post-types/property.php:1679
+msgid "Category"
+msgstr ""
+
+#: post-types/property.php:1680 post-types/invoices.php:219
+msgid "User"
+msgstr ""
+
+#: post-types/property.php:1682
+msgid "Price night/day/hour"
+msgstr ""
+
+#: post-types/property.php:1683
+msgid "Featured"
+msgstr ""
+
+#: post-types/property.php:1715
+msgid "published"
+msgstr ""
+
+#: post-types/property.php:1828 post-types/property.php:1861
+msgid "SVG ICON - SVG ONLY!"
+msgstr ""
+
+#: post-types/property.php:1828 post-types/property.php:1861
+msgid "Video Tutorial"
+msgstr ""
+
+#: post-types/property.php:1830 post-types/property.php:1865
+msgid "Upload SVG"
+msgstr ""
+
+#: post-types/property.php:1908 post-types/property.php:1911
+#: post-types/property.php:1962 post-types/property.php:2076
+#: post-types/property.php:2140 post-types/property.php:2143
+#: post-types/property.php:2282 post-types/property.php:2285
+#: post-types/property.php:2335 post-types/property.php:2405
+#: post-types/property.php:2408 post-types/property.php:2458
+msgid "Page id for this term"
+msgstr ""
+
+#: post-types/property.php:1915 post-types/property.php:1967
+#: post-types/property.php:2081 post-types/property.php:2148
+#: post-types/property.php:2289 post-types/property.php:2340
+#: post-types/property.php:2412 post-types/property.php:2463
+msgid "Featured Image"
+msgstr ""
+
+#: post-types/property.php:1918 post-types/property.php:1969
+#: post-types/property.php:2083 post-types/property.php:2151
+#: post-types/property.php:2292 post-types/property.php:2342
+#: post-types/property.php:2415 post-types/property.php:2465
+#: misc/metaboxes.php:669 misc/metaboxes.php:768 misc/metaboxes.php:859
+msgid "Upload Image"
+msgstr ""
+
+#: post-types/property.php:1924 post-types/property.php:1975
+#: post-types/property.php:2090 post-types/property.php:2157
+#: post-types/property.php:2298 post-types/property.php:2348
+#: post-types/property.php:2421 post-types/property.php:2471
+msgid "Category Tagline"
+msgstr ""
+
+#: post-types/property.php:2022
+msgid "Slug"
+msgstr ""
+
+#: post-types/property.php:2023
+msgid "Posts"
+msgstr ""
+
+#: post-types/property.php:2024
+msgid "ID"
+msgstr ""
+
+#: post-types/property.php:2067 post-types/property.php:2130
+msgid "Which city has this area"
+msgstr ""
+
+#: post-types/property.php:2135
+msgid "City that has this area"
+msgstr ""
+
+#: post-types/property.php:2223
+msgid "expired"
+msgstr ""
+
+#: post-types/property.php:2228
+msgid "Membership Expired <span class=\"count\">(%s)</span>"
+msgid_plural "Membership Expired <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: post-types/property.php:2232
+msgid "disabled"
+msgstr ""
+
+#: post-types/property.php:2237
+msgid "Disabled by user <span class=\"count\">(%s)</span>"
+msgid_plural "Disabled by user <span class=\"count\">(%s)</span>"
+msgstr[0] ""
+msgstr[1] ""
+
+#: post-types/property.php:2558
+msgid "Croatia (Hrvatska)"
+msgstr ""
+
+#: post-types/property.php:2782 post-types/property.php:2785
+msgid "(*text)"
+msgstr ""
+
+#: post-types/property.php:2788
+msgid "(*numeric)"
+msgstr ""
+
+#: post-types/property.php:2791
+msgid "(*date)"
+msgstr ""
+
+#: post-types/property.php:2869
+msgid "Upload new Image"
+msgstr ""
+
+#: post-types/property.php:2891
+msgid "Video From: "
+msgstr ""
+
+#: post-types/property.php:2899
+msgid "Embed Video id: "
+msgstr ""
+
+#: post-types/property.php:2908
+msgid "Virtual Tour "
+msgstr ""
+
+#: post-types/invoices.php:10 post-types/invoices.php:11
+#: widgets/login_widget.php:179
+msgid "Invoices"
+msgstr ""
+
+#: post-types/invoices.php:12
+msgid "Add New Invoice"
+msgstr ""
+
+#: post-types/invoices.php:13
+msgid "Add Invoice"
+msgstr ""
+
+#: post-types/invoices.php:14 post-types/invoices.php:15
+msgid "Edit Invoice"
+msgstr ""
+
+#: post-types/invoices.php:16
+msgid "New Invoice"
+msgstr ""
+
+#: post-types/invoices.php:17 post-types/invoices.php:18
+msgid "View Invoices"
+msgstr ""
+
+#: post-types/invoices.php:19
+msgid "Search Invoices"
+msgstr ""
+
+#: post-types/invoices.php:20 post-types/invoices.php:21
+msgid "No Invoices found"
+msgstr ""
+
+#: post-types/invoices.php:22
+msgid "Parent Invoice"
+msgstr ""
+
+#: post-types/invoices.php:46
+msgid "Invoice Details"
+msgstr ""
+
+#: post-types/invoices.php:62 post-types/invoices.php:74
+msgid "Publish Listing with Featured"
+msgstr ""
+
+#: post-types/invoices.php:63 post-types/invoices.php:124
+msgid "Package"
+msgstr ""
+
+#: post-types/invoices.php:64 post-types/invoices.php:126
+#: post-types/invoices.php:151 post-types/invoices.php:336
+#: post-types/invoices.php:478
+msgid "Reservation fee"
+msgstr ""
+
+#: post-types/invoices.php:79 post-types/invoices.php:634
+msgid "One Time"
+msgstr ""
+
+#: post-types/invoices.php:79 post-types/invoices.php:632
+msgid "Recurring"
+msgstr ""
+
+#: post-types/invoices.php:95 post-types/invoices.php:97
+msgid "Owner "
+msgstr ""
+
+#: post-types/invoices.php:109
+msgid "Invoice Id:"
+msgstr ""
+
+#: post-types/invoices.php:125 post-types/invoices.php:127
+#: post-types/invoices.php:129
+msgid "Wire Payment Received - Activate the purchase"
+msgstr ""
+
+#: post-types/invoices.php:139
+msgid "Invoice NOT paid"
+msgstr ""
+
+#: post-types/invoices.php:152
+msgid ""
+"Wire Payment Received - Activate the purchase(invoice will be 100% paid)"
+msgstr ""
+
+#: post-types/invoices.php:162
+msgid "Invoice NOT paid in full"
+msgstr ""
+
+#: post-types/invoices.php:174
+msgid "Invoice PAID"
+msgstr ""
+
+#: post-types/invoices.php:182
+msgid "Billing For :"
+msgstr ""
+
+#: post-types/invoices.php:187
+msgid "Billing Type :"
+msgstr ""
+
+#: post-types/invoices.php:192
+msgid "Item Id (Listing or Package id)"
+msgstr ""
+
+#: post-types/invoices.php:197
+msgid "Item Price"
+msgstr ""
+
+#: post-types/invoices.php:202
+msgid "Purchase Date"
+msgstr ""
+
+#: post-types/invoices.php:222
+msgid "Username: "
+msgstr ""
+
+#: post-types/invoices.php:222
+msgid "/ user id"
+msgstr ""
+
+#: post-types/invoices.php:227
+msgid "Paypal - Reccuring Payment ID: "
+msgstr ""
+
+#: post-types/invoices.php:308
+msgid "User Pays"
+msgstr ""
+
+#: post-types/invoices.php:311
+msgid "You Pay"
+msgstr ""
+
+#: post-types/invoices.php:321
+msgid "Invoice INV"
+msgstr ""
+
+#: post-types/invoices.php:343
+msgid "Price per Guest"
+msgstr ""
+
+#: post-types/invoices.php:345 post-types/invoices.php:438
+msgid "custom price"
+msgstr ""
+
+#: post-types/invoices.php:355
+msgid "has custom price"
+msgstr ""
+
+#: post-types/invoices.php:358 post-types/invoices.php:435
+msgid "has weekend price of"
+msgstr ""
+
+#: post-types/invoices.php:366
+msgid "Price details:"
+msgstr ""
+
+#: post-types/invoices.php:369
+msgid "on"
+msgstr ""
+
+#: post-types/invoices.php:369
+msgid "price is"
+msgstr ""
+
+#: post-types/invoices.php:406
+msgid "Cost"
+msgstr ""
+
+#: post-types/invoices.php:408
+msgid "Detail"
+msgstr ""
+
+#: post-types/invoices.php:420
+msgid "Security Depozit"
+msgstr ""
+
+#: post-types/invoices.php:421
+msgid "*refundable"
+msgstr ""
+
+#: post-types/invoices.php:424
+msgid "Subtotal"
+msgstr ""
+
+#: post-types/invoices.php:427 post-types/invoices.php:429
+msgid "guests"
+msgstr ""
+
+#: post-types/invoices.php:453
+msgid "Extra Guests"
+msgstr ""
+
+#: post-types/invoices.php:454
+msgid "extra guests"
+msgstr ""
+
+#: post-types/invoices.php:480
+msgid "Reservation Fee Required"
+msgstr ""
+
+#: post-types/invoices.php:481
+msgid "Balance"
+msgstr ""
+
+#: post-types/invoices.php:522
+msgid "You Earn"
+msgstr ""
+
+#: post-types/invoices.php:526
+msgid ""
+"we deduct security deposit, city fees, cleaning fees and website service fee"
+msgstr ""
+
+#: post-types/invoices.php:529
+msgid "Service Fee"
+msgstr ""
+
+#: post-types/invoices.php:534
+msgid "Taxes"
+msgstr ""
+
+#: post-types/invoices.php:538
+msgid ""
+"*taxes are included in your earnings and you are responsible for paying "
+"these taxes"
+msgstr ""
+
+#: post-types/invoices.php:557
+msgid "Billing For"
+msgstr ""
+
+#: post-types/invoices.php:558
+msgid "Invoice Type"
+msgstr ""
+
+#: post-types/invoices.php:560
+msgid "Purchased by User"
+msgstr ""
+
+#: post-types/invoices.php:585
+msgid "paid"
+msgstr ""
+
+#: post-types/invoices.php:624 misc/plugin_help_functions.php:262
+msgid "Invoice"
+msgstr ""
+
+#: post-types/membership.php:10 post-types/membership.php:11
+msgid "Membership Packages"
+msgstr ""
+
+#: post-types/membership.php:12
+msgid "Add New Membership Package"
+msgstr ""
+
+#: post-types/membership.php:13
+msgid "Add Membership Packages"
+msgstr ""
+
+#: post-types/membership.php:14
+msgid "Edit Membership Packages"
+msgstr ""
+
+#: post-types/membership.php:15
+msgid "Edit Membership Package"
+msgstr ""
+
+#: post-types/membership.php:16
+msgid "New Membership Packages"
+msgstr ""
+
+#: post-types/membership.php:17 post-types/membership.php:18
+msgid "View Membership Packages"
+msgstr ""
+
+#: post-types/membership.php:19
+msgid "Search Membership Packages"
+msgstr ""
+
+#: post-types/membership.php:20 post-types/membership.php:21
+msgid "No Membership Packages found"
+msgstr ""
+
+#: post-types/membership.php:22
+msgid "Parent Membership Package"
+msgstr ""
+
+#: post-types/membership.php:48
+msgid "Package Details"
+msgstr ""
+
+#: post-types/membership.php:97
+msgid "Billing Time Unit :"
+msgstr ""
+
+#: post-types/membership.php:102
+msgid "Bill every x units"
+msgstr ""
+
+#: post-types/membership.php:107
+msgid "How many listings are included?"
+msgstr ""
+
+#: post-types/membership.php:112
+msgid "Unlimited listings ?"
+msgstr ""
+
+#: post-types/membership.php:116
+msgid "How many Featured listings are included?"
+msgstr ""
+
+#: post-types/membership.php:122
+msgid "Package Price in "
+msgstr ""
+
+#: post-types/membership.php:127
+msgid "Is visible? "
+msgstr ""
+
+#: post-types/membership.php:177
+msgid "unlimited"
+msgstr ""
+
+#: post-types/membership.php:218 post-types/membership.php:251
+msgid "Current Subscription"
+msgstr ""
+
+#: post-types/membership.php:228 post-types/membership.php:231
+#: post-types/membership.php:260
+msgid "Listings Included"
+msgstr ""
+
+#: post-types/membership.php:229 post-types/membership.php:232
+msgid "Remaining Listings"
+msgstr ""
+
+#: post-types/membership.php:236
+msgid "Featured included"
+msgstr ""
+
+#: post-types/membership.php:237
+msgid "Featured remaining"
+msgstr ""
+
+#: post-types/membership.php:238 post-types/membership.php:264
+msgid "Expiration date"
+msgstr ""
+
+#: post-types/membership.php:251 post-types/membership.php:328
+msgid "Free Membership"
+msgstr ""
+
+#: post-types/membership.php:256
+msgid "-"
+msgstr ""
+
+#: post-types/membership.php:261
+msgid "Remaining listings"
+msgstr ""
+
+#: post-types/membership.php:262
+msgid "Featured listings included"
+msgstr ""
+
+#: post-types/membership.php:263
+msgid "Featured Listings remaining"
+msgstr ""
+
+#: post-types/membership.php:280
+msgid "days"
+msgstr ""
+
+#: post-types/membership.php:283
+msgid "weeks"
+msgstr ""
+
+#: post-types/membership.php:286
+msgid "months"
+msgstr ""
+
+#: post-types/membership.php:289
+msgid "year"
+msgstr ""
+
+#: post-types/membership.php:310 post-types/membership.php:328
+msgid "Your Current Package: "
+msgstr ""
+
+#: post-types/membership.php:313
+msgid "  Unlimited listings"
+msgstr ""
+
+#: post-types/membership.php:315 post-types/membership.php:333
+msgid " Listings"
+msgstr ""
+
+#: post-types/membership.php:316
+msgid " remaining "
+msgstr ""
+
+#: post-types/membership.php:319 post-types/membership.php:338
+msgid " Featured listings"
+msgstr ""
+
+#: post-types/membership.php:320 post-types/membership.php:334
+msgid " remaining"
+msgstr ""
+
+#: post-types/membership.php:331
+msgid "Unlimited listings"
+msgstr ""
+
+#: post-types/membership.php:339
+msgid "  remaining"
+msgstr ""
+
+#: post-types/membership.php:562
+msgid "Select package"
+msgstr ""
+
+#: post-types/membership.php:726 post-types/membership.php:798
+msgid "Hi there,"
+msgstr ""
+
+#: post-types/membership.php:727 post-types/membership.php:799
+msgid "Your new membership on  %s is activated! You should go check it out."
+msgstr ""
+
+#: post-types/membership.php:1182
+msgid "Validate user ID"
+msgstr ""
+
+#: post-types/membership.php:1182
+msgid "Remove user ID validation"
+msgstr ""
+
+#: post-types/membership.php:1187
+msgid "Edit/view user profile"
+msgstr ""
+
+#: post-types/membership.php:1208
+msgid "User ID"
+msgstr ""
+
+#: post-types/membership.php:1234
+msgid "Verified"
+msgstr ""
+
+#: post-types/searches.php:10 post-types/searches.php:11
+msgid "Searches"
+msgstr ""
+
+#: post-types/searches.php:12
+msgid "Add New Searches"
+msgstr ""
+
+#: post-types/searches.php:13
+msgid "Add Searches"
+msgstr ""
+
+#: post-types/searches.php:14 post-types/searches.php:15
+msgid "Edit Searches"
+msgstr ""
+
+#: post-types/searches.php:16
+msgid "New Searches"
+msgstr ""
+
+#: post-types/searches.php:17 post-types/searches.php:18
+msgid "View Searches"
+msgstr ""
+
+#: post-types/searches.php:19
+msgid "Search Searches"
+msgstr ""
+
+#: post-types/searches.php:20 post-types/searches.php:21
+msgid "No Searches found"
+msgstr ""
+
+#: post-types/searches.php:22
+msgid "Parent Searches"
+msgstr ""
+
+#: post-types/searches.php:41
+msgid "Search Details"
+msgstr ""
+
+#: widgets/login_widget.php:38 widgets/login_widget.php:48
+#: shortcodes/shortcodes.php:1295
+msgid "Login"
+msgstr ""
+
+#: widgets/login_widget.php:42 widgets/login_widget.php:66
+#: shortcodes/shortcodes.php:1284 shortcodes/shortcodes.php:1352
+msgid "Username"
+msgstr ""
+
+#: widgets/login_widget.php:43 widgets/login_widget.php:71
+#: shortcodes/shortcodes.php:1288 shortcodes/shortcodes.php:1363
+msgid "Password"
+msgstr ""
+
+#: widgets/login_widget.php:51
+msgid "Don't have an account?"
+msgstr ""
+
+#: widgets/login_widget.php:52 shortcodes/shortcodes.php:1302
+msgid "Forgot Password?"
+msgstr ""
+
+#: widgets/login_widget.php:63 widgets/login_widget.php:98
+msgid "Register"
+msgstr ""
+
+#: widgets/login_widget.php:72 shortcodes/shortcodes.php:1368
+msgid "Retype Password"
+msgstr ""
+
+#: widgets/login_widget.php:81 shortcodes/shortcodes.php:1386
+msgid "I only want to book"
+msgstr ""
+
+#: widgets/login_widget.php:83 shortcodes/shortcodes.php:1388
+msgid "I want to rent my property"
+msgstr ""
+
+#: widgets/login_widget.php:86 shortcodes/shortcodes.php:1393
+msgid "I agree with "
+msgstr ""
+
+#: widgets/login_widget.php:86 shortcodes/shortcodes.php:1393
+msgid "terms & conditions"
+msgstr ""
+
+#: widgets/login_widget.php:88
+msgid "A password will be e-mailed to you"
+msgstr ""
+
+#: widgets/login_widget.php:103
+msgid "Back to Login"
+msgstr ""
+
+#: widgets/login_widget.php:115 widgets/login_widget.php:123
+#: shortcodes/shortcodes.php:1317
+msgid "Reset Password"
+msgstr ""
+
+#: widgets/login_widget.php:119 shortcodes/shortcodes.php:1313
+msgid "Enter Your Email Address"
+msgstr ""
+
+#: widgets/login_widget.php:125 shortcodes/shortcodes.php:1319
+msgid "Return to Login"
+msgstr ""
+
+#: widgets/login_widget.php:150
+msgid "Hello "
+msgstr ""
+
+#: widgets/login_widget.php:154
+msgid "My Profile"
+msgstr ""
+
+#: widgets/login_widget.php:157
+msgid "My Listings"
+msgstr ""
+
+#: widgets/login_widget.php:163
+msgid "Favorites"
+msgstr ""
+
+#: widgets/login_widget.php:167
+msgid "Reservations"
+msgstr ""
+
+#: widgets/login_widget.php:175
+msgid "Inbox"
+msgstr ""
+
+#: widgets/login_widget.php:185
+msgid "Log Out"
+msgstr ""
+
+#: widgets/footer_latest_widget.php:39 widgets/footer_latest_widget.php:43
+#: widgets/footer_latest_widget.php:70 widgets/footer_latest_widget.php:98
+#: widgets/footer_latest_widget.php:124 misc/metaboxes.php:144
+#: misc/metaboxes.php:171 misc/metaboxes.php:199 misc/metaboxes.php:225
+msgid "all"
+msgstr ""
+
+#: widgets/footer_latest_widget.php:328 widgets/advanced_search.php:180
+#: misc/metaboxes.php:502
+msgid "All Cities"
+msgstr ""
+
+#: widgets/footer_latest_widget.php:348 widgets/advanced_search.php:191
+#: misc/metaboxes.php:510
+msgid "All Areas"
+msgstr ""
+
+#: widgets/advanced_search.php:80 shortcodes/shortcodes.php:809
+msgid "Where do you want to go ?"
+msgstr ""
+
+#: widgets/advanced_search.php:84 shortcodes/shortcodes.php:814
+#: shortcodes/shortcodes.php:973
+msgid "Check-In"
+msgstr ""
+
+#: widgets/advanced_search.php:88 shortcodes/shortcodes.php:818
+#: shortcodes/shortcodes.php:977
+msgid "Check-Out"
+msgstr ""
+
+#: widgets/advanced_search.php:102 widgets/advanced_search.php:214
+#: shortcodes/shortcodes.php:847 shortcodes/shortcodes.php:1006
+msgid "Price range:"
+msgstr ""
+
+#: widgets/advanced_search.php:199
+msgid "Type Bedrooms No."
+msgstr ""
+
+#: widgets/advanced_search.php:200
+msgid "Type Bathrooms No."
+msgstr ""
+
+#: widgets/property_categories.php:20
+msgid "Property Category"
+msgstr ""
+
+#: widgets/property_categories.php:21
+msgid "Property Action"
+msgstr ""
+
+#: widgets/property_categories.php:22
+msgid "Property City"
+msgstr ""
+
+#: widgets/property_categories.php:23
+msgid "Property Area"
+msgstr ""
+
+#: widgets/property_categories.php:24
+msgid "Property County/State"
+msgstr ""
+
+#: widgets/property_categories.php:25
+msgid "Property Features"
+msgstr ""
+
+#: widgets/twiter.php:16
+msgid "Title"
+msgstr ""
+
+#: widgets/twiter.php:18
+msgid "Your Twitter Username"
+msgstr ""
+
+#: widgets/twiter.php:20
+msgid "How many Tweets"
+msgstr ""
+
+#: widgets/twiter.php:144
+msgid "Please add your Twitter ID!"
+msgstr ""
+
+#: widgets/twiter.php:148
+msgid "Please add Twitter Api access info in Theme Options "
+msgstr ""
+
+#: widgets/multiple_currency.php:13
+msgid "Change Your Currency"
+msgstr ""
+
+#: resources/rcapi_functions.php:98 misc/plugin_help_functions.php:92
+msgid "You are now connected to RentalsClub API!"
+msgstr ""
+
+#: resources/rcapi_functions.php:101 resources/rcapi_functions.php:665
+#: misc/plugin_help_functions.php:95
+msgid ""
+"Failed connection to RentalsClub.org Api! Please check your user credentials "
+"and api keys!"
+msgstr ""
+
+#: resources/rcapi_functions.php:114
+msgid "Rentals Club  API Secret Key"
+msgstr ""
+
+#: resources/rcapi_functions.php:135 misc/sms_functions.php:321
+#: misc/emailfunctions.php:169
+msgid "Save Changes"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:239
+msgid "type3"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:250 shortcodes/shortcodes_install.php:316
+#: shortcodes/shortcodes_install.php:363 shortcodes/shortcodes_install.php:428
+#: shortcodes/shortcodes_install.php:586 shortcodes/shortcodes_install.php:661
+#: shortcodes/shortcodes_install.php:696 shortcodes/shortcodes_install.php:777
+#: shortcodes/shortcodes_install.php:842 shortcodes/shortcodes_install.php:1032
+#: shortcodes/shortcodes_install.php:1071
+#: shortcodes/shortcodes_install.php:1110
+#: shortcodes/shortcodes_install.php:1144
+#: shortcodes/shortcodes_install.php:1177
+#: shortcodes/shortcodes_install.php:1196
+#: shortcodes/shortcodes_install.php:1223
+msgid "Content"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:255
+msgid "Featured Category Shortcode"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:321
+msgid "Simple Term List"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:368
+msgid "Categories List"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:433
+msgid "Recent Items Slider Shortcode"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:591
+msgid "Icon Content Box Shortcode"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:666
+msgid "Spacer Shortcode"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:701
+msgid "List Items by ID Shortcode"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:774
+msgid "Testimonial"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:782
+msgid "Testiomonial Shortcode"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:847
+msgid "Recent Items Shortcode"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:1037
+msgid "Featured Owner Shortcode"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:1076
+msgid "Featured Article Shortcode"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:1115
+msgid "Featured Listing Shortcode"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:1149
+msgid "Login Form Shortcode"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:1182
+msgid "Register Form Shortcode"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:1201
+msgid "Advanced Search Shortcode"
+msgstr ""
+
+#: shortcodes/shortcodes_install.php:1228
+msgid "Categories Slider Shortcode"
+msgstr ""
+
+#: shortcodes/shortcodes.php:144
+msgid "Discover"
+msgstr ""
+
+#: shortcodes/shortcodes.php:499 shortcodes/shortcodes.php:1919
+msgid "More Listings"
+msgstr ""
+
+#: shortcodes/shortcodes.php:503 shortcodes/shortcodes.php:1923
+msgid "More Articles"
+msgstr ""
+
+#: shortcodes/shortcodes.php:964
+msgid "Type location"
+msgstr ""
+
+#: shortcodes/shortcodes.php:1151
+msgid " More Listings"
+msgstr ""
+
+#: shortcodes/shortcodes.php:1155
+msgid " More Articles"
+msgstr ""
+
+#: shortcodes/shortcodes.php:1257
+msgid "Your new password for the account at:"
+msgstr ""
+
+#: shortcodes/shortcodes.php:1259
+msgid "Username: %s"
+msgstr ""
+
+#: shortcodes/shortcodes.php:1260
+msgid "Password: %s"
+msgstr ""
+
+#: shortcodes/shortcodes.php:1261
+msgid "You can now login with your new password at: "
+msgstr ""
+
+#: shortcodes/shortcodes.php:1268
+msgid "A new password was sent via email!"
+msgstr ""
+
+#: shortcodes/shortcodes.php:1403
+msgid "Create an account"
+msgstr ""
+
+#: shortcodes/shortcodes.php:1407
+msgid "*A password will be e-mailed to you"
+msgstr ""
+
+#: shortcodes/shortcodes.php:1488
+msgid "Featured Article"
+msgstr ""
+
+#: shortcodes/shortcodes.php:1490
+msgid "read more"
+msgstr ""
+
+#: shortcodes/shortcodes.php:1584
+msgid "per guest"
+msgstr ""
+
+#: shortcodes/shortcodes.php:1603
+msgid "discover more"
+msgstr ""
+
+#: misc/plugin_help_functions.php:180
+msgid "Your Name"
+msgstr ""
+
+#: misc/plugin_help_functions.php:181
+msgid "The name field is empty !"
+msgstr ""
+
+#: misc/plugin_help_functions.php:189
+msgid "Your Email"
+msgstr ""
+
+#: misc/plugin_help_functions.php:191
+msgid "The email field is empty"
+msgstr ""
+
+#: misc/plugin_help_functions.php:194
+msgid "The email doesn't look right !"
+msgstr ""
+
+#: misc/plugin_help_functions.php:204
+msgid "Contact form from "
+msgstr ""
+
+#: misc/plugin_help_functions.php:208
+msgid "Your Message"
+msgstr ""
+
+#: misc/plugin_help_functions.php:209
+msgid "Your message is empty !"
+msgstr ""
+
+#: misc/plugin_help_functions.php:222
+msgid "Client Name"
+msgstr ""
+
+#: misc/plugin_help_functions.php:222 misc/plugin_help_functions.php:334
+msgid "Website"
+msgstr ""
+
+#: misc/plugin_help_functions.php:222
+msgid "Subject"
+msgstr ""
+
+#: misc/plugin_help_functions.php:223
+msgid "Message sent from contact page"
+msgstr ""
+
+#: misc/plugin_help_functions.php:229 misc/emailfunctions.php:91
+msgid "Message was also sent to "
+msgstr ""
+
+#: misc/plugin_help_functions.php:234
+msgid "The message was sent !"
+msgstr ""
+
+#: misc/plugin_help_functions.php:305
+msgid "Clear WpRentals Cache"
+msgstr ""
+
+#: misc/plugin_help_functions.php:324
+msgid "Facebook"
+msgstr ""
+
+#: misc/plugin_help_functions.php:325
+msgid "Twitter"
+msgstr ""
+
+#: misc/plugin_help_functions.php:326
+msgid "Linkedin"
+msgstr ""
+
+#: misc/plugin_help_functions.php:327
+msgid "Pinterest"
+msgstr ""
+
+#: misc/plugin_help_functions.php:328
+msgid "Instagram"
+msgstr ""
+
+#: misc/plugin_help_functions.php:329
+msgid "Youtube"
+msgstr ""
+
+#: misc/plugin_help_functions.php:332
+msgid "Mobile Verified"
+msgstr ""
+
+#: misc/plugin_help_functions.php:335
+msgid "Title/Position"
+msgstr ""
+
+#: misc/plugin_help_functions.php:336
+msgid "Picture Url"
+msgstr ""
+
+#: misc/plugin_help_functions.php:337
+msgid "Small Picture Url"
+msgstr ""
+
+#: misc/plugin_help_functions.php:338
+msgid "Package Id"
+msgstr ""
+
+#: misc/plugin_help_functions.php:339
+msgid "Package Activation"
+msgstr ""
+
+#: misc/plugin_help_functions.php:340
+msgid "Listings available"
+msgstr ""
+
+#: misc/plugin_help_functions.php:341
+msgid "Featured Listings available"
+msgstr ""
+
+#: misc/plugin_help_functions.php:342
+msgid "Paypal Recurring Profile - rest api"
+msgstr ""
+
+#: misc/plugin_help_functions.php:343
+msgid "Paypal Recurring Profile"
+msgstr ""
+
+#: misc/plugin_help_functions.php:344
+msgid "User Owner Id"
+msgstr ""
+
+#: misc/plugin_help_functions.php:345
+msgid "Stripe Consumer Profile"
+msgstr ""
+
+#: misc/plugin_help_functions.php:346
+msgid "Stripe Subscription Id"
+msgstr ""
+
+#: misc/plugin_help_functions.php:347
+msgid "Has Recurring Stripe "
+msgstr ""
+
+#: misc/plugin_help_functions.php:348
+msgid "I Speak"
+msgstr ""
+
+#: misc/plugin_help_functions.php:349
+msgid "Live In"
+msgstr ""
+
+#: misc/plugin_help_functions.php:350
+msgid "Payment Info"
+msgstr ""
+
+#: misc/plugin_help_functions.php:351
+msgid "User Type(0-can rent and book / 1 can only book)"
+msgstr ""
+
+#: misc/sms_functions.php:199
+msgid "Phone Number Validation"
+msgstr ""
+
+#: misc/sms_functions.php:201 misc/emailfunctions.php:106
+msgid "New user admin notification"
+msgstr ""
+
+#: misc/sms_functions.php:203 misc/emailfunctions.php:109
+msgid "Password Reseted"
+msgstr ""
+
+#: misc/sms_functions.php:204 misc/emailfunctions.php:111
+msgid "Approved Listings"
+msgstr ""
+
+#: misc/sms_functions.php:205 misc/emailfunctions.php:112
+msgid "Admin - Expired Listing"
+msgstr ""
+
+#: misc/sms_functions.php:207 misc/emailfunctions.php:114
+msgid "Featured Submission"
+msgstr ""
+
+#: misc/sms_functions.php:208 misc/emailfunctions.php:115
+msgid "Account Downgraded"
+msgstr ""
+
+#: misc/sms_functions.php:209 misc/emailfunctions.php:116
+msgid "Membership Cancelled"
+msgstr ""
+
+#: misc/sms_functions.php:210 misc/emailfunctions.php:117
+msgid "Free Listing Expired"
+msgstr ""
+
+#: misc/sms_functions.php:211 misc/emailfunctions.php:118
+msgid "New Listing Submission"
+msgstr ""
+
+#: misc/sms_functions.php:212 misc/emailfunctions.php:120
+msgid "Recurring Payment"
+msgstr ""
+
+#: misc/sms_functions.php:213 misc/emailfunctions.php:121
+msgid "Membership Activated"
+msgstr ""
+
+#: misc/sms_functions.php:214 misc/emailfunctions.php:122
+msgid "Update Profile"
+msgstr ""
+
+#: misc/sms_functions.php:215 misc/emailfunctions.php:123
+msgid "Booking Confirmed - User"
+msgstr ""
+
+#: misc/sms_functions.php:216 misc/emailfunctions.php:124
+msgid "Booking Confirmed"
+msgstr ""
+
+#: misc/sms_functions.php:217 misc/emailfunctions.php:125
+msgid "Booking Confirmed - no deposit"
+msgstr ""
+
+#: misc/sms_functions.php:218 misc/emailfunctions.php:126
+msgid "Inbox- New Message"
+msgstr ""
+
+#: misc/sms_functions.php:219 misc/emailfunctions.php:127
+msgid "New Booking Request"
+msgstr ""
+
+#: misc/sms_functions.php:220 misc/emailfunctions.php:128
+msgid "User - New Booking Request"
+msgstr ""
+
+#: misc/sms_functions.php:221 misc/emailfunctions.php:129
+msgid "Invoice generation"
+msgstr ""
+
+#: misc/sms_functions.php:222 misc/emailfunctions.php:130
+msgid "Booking request rejected"
+msgstr ""
+
+#: misc/sms_functions.php:223 misc/emailfunctions.php:131
+msgid "Booking Request Cancelled"
+msgstr ""
+
+#: misc/sms_functions.php:224 misc/emailfunctions.php:132
+msgid "Booking Period Cancelled "
+msgstr ""
+
+#: misc/sms_functions.php:225 misc/emailfunctions.php:133
+msgid "New wire Transfer"
+msgstr ""
+
+#: misc/sms_functions.php:226 misc/emailfunctions.php:134
+msgid "Admin - New wire Transfer"
+msgstr ""
+
+#: misc/sms_functions.php:227 misc/emailfunctions.php:135
+msgid "Invoice Payment Reminder"
+msgstr ""
+
+#: misc/sms_functions.php:235
+msgid "SMS Management is offered through Twilio API"
+msgstr ""
+
+#: misc/sms_functions.php:235
+msgid ""
+"You will need an active account with them to use their SMS service and you "
+"may need to buy extra SMS as well. Your account info will have to be added "
+"below."
+msgstr ""
+
+#: misc/sms_functions.php:242
+msgid "Enable SMS service."
+msgstr ""
+
+#: misc/sms_functions.php:251
+msgid " Twilio phone number"
+msgstr ""
+
+#: misc/sms_functions.php:252
+msgid " Twilio phone number(ex +1256973878)"
+msgstr ""
+
+#: misc/sms_functions.php:284 misc/emailfunctions.php:142
+msgid ""
+"Global variables: %website_url as website url,%website_name as website name, "
+"%user_email as user_email, %username as username"
+msgstr ""
+
+#: misc/sms_functions.php:304
+msgid "Send this SMS"
+msgstr ""
+
+#: misc/sms_functions.php:306
+msgid "SMS for"
+msgstr ""
+
+#: misc/sms_functions.php:307
+msgid "SMS text for"
+msgstr ""
+
+#: misc/emailfunctions.php:42
+msgid "Edit user ID verification"
+msgstr ""
+
+#: misc/emailfunctions.php:105
+msgid "New user  notification"
+msgstr ""
+
+#: misc/emailfunctions.php:107
+msgid "Purchase Activated"
+msgstr ""
+
+#: misc/emailfunctions.php:153
+msgid "Subject for"
+msgstr ""
+
+#: misc/emailfunctions.php:154
+msgid "Email subject for"
+msgstr ""
+
+#: misc/emailfunctions.php:157
+msgid "Content for"
+msgstr ""
+
+#: misc/emailfunctions.php:158
+msgid "Email content for"
+msgstr ""
+
+#: misc/emailfunctions.php:181
+msgid ""
+"%user_login as  username, %user_email_profile as user email, %user_id as "
+"user_id"
+msgstr ""
+
+#: misc/emailfunctions.php:184
+msgid "%apincode as new pin"
+msgstr ""
+
+#: misc/emailfunctions.php:187
+msgid ""
+"%user_login_register as new username, %user_pass_register as user password, "
+"%user_email_register as new user email"
+msgstr ""
+
+#: misc/emailfunctions.php:191
+msgid ""
+"%user_login_register as new username and %user_email_register as new user "
+"email"
+msgstr ""
+
+#: misc/emailfunctions.php:195
+msgid ""
+"%reset_link as reset link, %forgot_username as username and  %forgot_email "
+"as user email"
+msgstr ""
+
+#: misc/emailfunctions.php:199
+msgid "%user_pass as user password,%user_login as user login"
+msgstr ""
+
+#: misc/emailfunctions.php:207
+msgid ""
+"* you can use %post_id as listing id, %property_url as property url and "
+"%property_title as property name"
+msgstr ""
+
+#: misc/emailfunctions.php:211 misc/emailfunctions.php:215
+#: misc/emailfunctions.php:285 misc/emailfunctions.php:289
+msgid ""
+"* you can use %invoice_no as invoice number, %total_price as $totalprice and "
+"%payment_details as  $payment_details"
+msgstr ""
+
+#: misc/emailfunctions.php:219
+msgid ""
+"* you can use %submission_title as property title number, %submission_url as "
+"property submission url"
+msgstr ""
+
+#: misc/emailfunctions.php:223
+msgid "* you can use %matching_submissions as matching submissions list"
+msgstr ""
+
+#: misc/emailfunctions.php:239
+msgid ""
+"* you can use %expired_listing_url as expired listing url and "
+"%expired_listing_name as expired listing name"
+msgstr ""
+
+#: misc/emailfunctions.php:243
+msgid ""
+"* you can use %new_listing_title as new listing title and %new_listing_url "
+"as new listing url"
+msgstr ""
+
+#: misc/emailfunctions.php:251
+msgid ""
+"* you can use %recurring_pack_name as recurring packacge name and %merchant "
+"as merchant name"
+msgstr ""
+
+#: misc/emailfunctions.php:264
+msgid "* you can use %content as message content"
+msgstr ""
+
+#: misc/emailfunctions.php:267 misc/emailfunctions.php:270
+msgid "* you can use %booking_property_link as property url"
+msgstr ""
+
+#: misc/emailfunctions.php:294
+msgid ""
+"* you can use %invoice_id as invoice id, %property_url as property url and "
+"%property_title as property name, %booking_id as booking id, %until_date as "
+"the last day"
+msgstr ""
+
+#: misc/metaboxes.php:26 misc/metaboxes.php:27 misc/metaboxes.php:28
+#: misc/metaboxes.php:29
+msgid "Sidebar Settings"
+msgstr ""
+
+#: misc/metaboxes.php:30
+msgid "Post Settings"
+msgstr ""
+
+#: misc/metaboxes.php:31
+msgid "Page Settings"
+msgstr ""
+
+#: misc/metaboxes.php:34
+msgid "Property List Advanced Options"
+msgstr ""
+
+#: misc/metaboxes.php:37 misc/metaboxes.php:38 misc/metaboxes.php:39
+msgid "Appearance Options"
+msgstr ""
+
+#: misc/metaboxes.php:41 misc/metaboxes.php:1435
+msgid "Stars"
+msgstr ""
+
+#: misc/metaboxes.php:92
+msgid "Use transparent header"
+msgstr ""
+
+#: misc/metaboxes.php:98
+msgid "Select header type"
+msgstr ""
+
+#: misc/metaboxes.php:120
+msgid "Only for \"Properties List\" page template ! "
+msgstr ""
+
+#: misc/metaboxes.php:483
+msgid "Action category"
+msgstr ""
+
+#: misc/metaboxes.php:492
+msgid "Pick Category"
+msgstr ""
+
+#: misc/metaboxes.php:500
+msgid "Pick City"
+msgstr ""
+
+#: misc/metaboxes.php:508
+msgid "Pick Area"
+msgstr ""
+
+#: misc/metaboxes.php:518
+msgid "These Options are available for \"Property list\" page template only!"
+msgstr ""
+
+#: misc/metaboxes.php:539
+msgid ""
+"Options for Revolution Slider (if Header Type \"revolution slider\" is "
+"selected)"
+msgstr ""
+
+#: misc/metaboxes.php:542
+msgid "Revolution Slider Name"
+msgstr ""
+
+#: misc/metaboxes.php:580
+msgid "Options for Google Maps (if Header Type \"google map\" is selected)"
+msgstr ""
+
+#: misc/metaboxes.php:587
+msgid "  Leave these blank in order to get the general map settings."
+msgstr ""
+
+#: misc/metaboxes.php:590
+msgid "Map - Center point  Latitudine: "
+msgstr ""
+
+#: misc/metaboxes.php:595
+msgid "Map - Center point  Longitudine: "
+msgstr ""
+
+#: misc/metaboxes.php:619
+msgid "Height of the map when closed"
+msgstr ""
+
+#: misc/metaboxes.php:624
+msgid "Height of map when open"
+msgstr ""
+
+#: misc/metaboxes.php:629
+msgid "Force map at the \"closed\" size ? "
+msgstr ""
+
+#: misc/metaboxes.php:638
+msgid ""
+"ByPass fit bounds (auto zoom and pan of the map around visible markers) "
+msgstr ""
+
+#: misc/metaboxes.php:663
+msgid "Options for Static Image  (if Header Type \"image\" is selected)"
+msgstr ""
+
+#: misc/metaboxes.php:667
+msgid "Header Image"
+msgstr ""
+
+#: misc/metaboxes.php:673 misc/metaboxes.php:772
+msgid "Full Screen?"
+msgstr ""
+
+#: misc/metaboxes.php:680
+msgid "Full Screen Background Type?"
+msgstr ""
+
+#: misc/metaboxes.php:687 misc/metaboxes.php:781
+msgid "Title Over Image"
+msgstr ""
+
+#: misc/metaboxes.php:692 misc/metaboxes.php:786
+msgid "SubTitle Over Image"
+msgstr ""
+
+#: misc/metaboxes.php:697
+msgid "Image Height(Ex:700, Default:580px)"
+msgstr ""
+
+#: misc/metaboxes.php:707 misc/metaboxes.php:802
+msgid "Overlay Opacity(betwen 0 and 1 , Ex:0.5, default 0.6)"
+msgstr ""
+
+#: misc/metaboxes.php:742
+msgid "Options for Video Header"
+msgstr ""
+
+#: misc/metaboxes.php:748
+msgid "Video MP4 version"
+msgstr ""
+
+#: misc/metaboxes.php:750 misc/metaboxes.php:756 misc/metaboxes.php:762
+msgid "Upload Video"
+msgstr ""
+
+#: misc/metaboxes.php:754
+msgid "Video WEBM version"
+msgstr ""
+
+#: misc/metaboxes.php:760
+msgid "Video OGV version"
+msgstr ""
+
+#: misc/metaboxes.php:766
+msgid "Cover Image"
+msgstr ""
+
+#: misc/metaboxes.php:791
+msgid "Video Height(Ex:700, Default:580px)"
+msgstr ""
+
+#: misc/metaboxes.php:822
+msgid "Options for Theme Slider"
+msgstr ""
+
+#: misc/metaboxes.php:857
+msgid "Replace Map with this image"
+msgstr ""
+
+#: misc/metaboxes.php:906
+msgid "Show Title: "
+msgstr ""
+
+#: misc/metaboxes.php:936
+msgid "Show Title:"
+msgstr ""
+
+#: misc/metaboxes.php:954
+msgid "Group pictures in slider?(*only for blog posts)"
+msgstr ""
+
+#: misc/metaboxes.php:994
+msgid "Where to show the sidebar: "
+msgstr ""
+
+#: misc/metaboxes.php:1001
+msgid "Select the sidebar: "
+msgstr ""

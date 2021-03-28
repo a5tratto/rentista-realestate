@@ -1,0 +1,225 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: CF7 Google Sheet Connector Pro\n"
+"POT-Creation-Date: 2018-12-31 16:56+0530\n"
+"PO-Revision-Date: 2018-12-31 16:56+0530\n"
+"Last-Translator: \n"
+"Language-Team: helpdesk@gsheetconnector.com\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: google-sheet-connector-pro.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: google-sheet-connector-pro.php:180
+msgid "Google Sheet"
+msgstr ""
+
+#: google-sheet-connector-pro.php:337
+#: includes/pages/google-sheet-settings.php:28
+msgid "Settings"
+msgstr ""
+
+#: google-sheet-connector-pro.php:346
+msgid "Google Sheet Connector"
+msgstr ""
+
+#: includes/class-gs-license-settings.php:54
+msgid ""
+"License cannot be deactivated. Either the license key is invalid or the "
+"licensing server cannot be reached."
+msgstr ""
+
+#: includes/class-gs-license-settings.php:71
+msgid ""
+"License cannot be activated. Either the license key is invalid or your "
+"activation limit is reached."
+msgstr ""
+
+#: includes/class-gs-license-settings.php:99
+msgid "license key"
+msgstr ""
+
+#: includes/class-gs-license-settings.php:104
+msgid "Deactivate License"
+msgstr ""
+
+#: includes/class-gs-license-settings.php:110 includes/class-gs-settings.php:94
+#: includes/pages/gs-integration.php:20
+msgid "Save"
+msgstr ""
+
+#: includes/class-gs-plugin-updater.php:201
+#, php-format
+msgid ""
+"There is a new version of %1$s available. %2$sView version %3$s details%4$s."
+msgstr ""
+
+#: includes/class-gs-plugin-updater.php:209
+#, php-format
+msgid ""
+"There is a new version of %1$s available. %2$sView version %3$s details%4$s "
+"or %5$supdate now%6$s."
+msgstr ""
+
+#: includes/class-gs-plugin-updater.php:369
+msgid "You do not have permission to install plugin updates"
+msgstr ""
+
+#: includes/class-gs-plugin-updater.php:369
+msgid "Error"
+msgstr ""
+
+#: includes/class-gs-service.php:154 includes/class-gs-service.php:427
+msgid "Select"
+msgstr ""
+
+#: includes/class-gs-service.php:194
+msgid "Google Sheet Pro"
+msgstr ""
+
+#: includes/class-gs-service.php:423
+msgid "Google Sheet Settings"
+msgstr ""
+
+#: includes/class-gs-service.php:425
+msgid "Google Sheet Name"
+msgstr ""
+
+#: includes/class-gs-service.php:446
+msgid "Google Sheet Tab Name"
+msgstr ""
+
+#: includes/class-gs-service.php:473
+msgid "Google Sheet URL"
+msgstr ""
+
+#: includes/class-gs-service.php:473
+msgid "Sheet URL"
+msgstr ""
+
+#: includes/class-gs-service.php:479
+msgid ""
+"Not showing Sheet Name, Tab Name and Sheet URL Link ? <a id=\"gs-sync\" data-"
+"init=\"no\">Click here </a> to fetch it."
+msgstr ""
+
+#: includes/class-gs-service.php:551
+msgid "No mail tags available."
+msgstr ""
+
+#: includes/class-gs-service.php:643
+msgid "No custom mail tags available."
+msgstr ""
+
+#: includes/class-gs-settings.php:82
+msgid "Roles that can access Google Sheet Page"
+msgstr ""
+
+#: includes/class-gs-settings.php:88
+msgid "Roles that can access Google Sheet Tab at Contact Form"
+msgstr ""
+
+#: includes/class-gs-utility.php:75
+msgid "There's something wrong with your code..."
+msgstr ""
+
+#: includes/class-gs-utility.php:143
+msgid "Administrator"
+msgstr ""
+
+#: includes/pages/google-sheet-settings.php:26
+msgid "License"
+msgstr ""
+
+#: includes/pages/google-sheet-settings.php:27
+msgid "Integration"
+msgstr ""
+
+#: includes/pages/gs-custom-mail-tags.php:4
+msgid "Custom Mail Tags "
+msgstr ""
+
+#: includes/pages/gs-dashboard-widget.php:20
+msgid "Contact forms connected with Google Sheet"
+msgstr ""
+
+#: includes/pages/gs-dashboard-widget.php:34
+#: includes/pages/gs-dashboard-widget.php:39
+msgid "No contact forms are connected with google sheet."
+msgstr ""
+
+#: includes/pages/gs-field-list.php:4
+msgid "Field List "
+msgstr ""
+
+#: includes/pages/gs-field-list.php:4
+msgid "( Map mail tags to google sheet with custom header name. ) "
+msgstr ""
+
+#: includes/pages/gs-integration.php:3
+msgid "Contact Form 7 - Google Sheet Integration"
+msgstr ""
+
+#: includes/pages/gs-integration.php:8
+msgid ""
+"Click \"Get code\" to retrieve your code from Google Drive to allow us to "
+"access your spreadsheets. And paste the code in the below textbox. "
+msgstr ""
+
+#: includes/pages/gs-integration.php:10
+msgid "Google Access Code"
+msgstr ""
+
+#: includes/pages/gs-integration.php:13
+msgid "Currently Active"
+msgstr ""
+
+#: includes/pages/gs-integration.php:25
+msgid "Debug Log"
+msgstr ""
+
+#: includes/pages/gs-integration.php:27
+msgid "Clear"
+msgstr ""
+
+#: includes/pages/gs-integration.php:29
+msgid ""
+"<a id=\"gs-sync\" data-init=\"yes\">Click here </a>  to fetch Sheet details "
+"to be set at Contact Forms Google Sheet Pro settings."
+msgstr ""
+
+#: includes/pages/gs-special-mail-tags.php:4
+msgid "Special Mail Tags "
+msgstr ""
+
+#: includes/pages/gs-special-mail-tags.php:4
+msgid "( Map special mail tags to google sheet with custom header name. ) "
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "CF7 Google Sheet Connector Pro"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "https://www.gsheetconnector.com/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Send your Contact Form 7 data to your Google Sheets spreadsheet."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "WesternDeal"
+msgstr ""

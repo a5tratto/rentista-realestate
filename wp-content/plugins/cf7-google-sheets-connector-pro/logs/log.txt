@@ -1,0 +1,1811 @@
+9 Giugno 2019 15:21:22 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-3452812903-982
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-3452812903-982
+    [cf0203nome] => hulya
+    [cf0204cognome] => imrak
+    [cf0205telefono] => +31621660205
+    [cf0206email] => i.imrak@outlook.com
+    [cf0207paese] => Inglese
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-06-11
+    [cf0210datacheckin] => 11/06/2019
+    [cf0211checkout] => 2019-06-18
+    [cf0212datacheckout] => 18/06/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 7
+    [cf0215idproprieta] => 28994
+    [cf0216proprieta] => Appartamento Il Nido
+    [cf0217totale] => 483
+    [cf0218anticipo] => 143
+    [cf0221commissione] => 74.45
+    [cf0219password] => 811134
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/06/2019-06-11-hulya-imrak.pdf
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+10 Giugno 2019 13:55:03 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-3452812903-982
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-3452812903-982
+    [cf0203nome] => hulya
+    [cf0204cognome] => imrak
+    [cf0205telefono] => +31621660205
+    [cf0206email] => i.imrak@outlook.com
+    [cf0207paese] => Inglese
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-06-11
+    [cf0210datacheckin] => 11/06/2019
+    [cf0211checkout] => 2019-06-18
+    [cf0212datacheckout] => 18/06/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 7
+    [cf0215idproprieta] => 28994
+    [cf0216proprieta] => Appartamento Il Nido
+    [cf0217totale] => 483
+    [cf0218anticipo] => 143
+    [cf0221commissione] => 72.45
+    [cf0219password] => 134987
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/06/2019-06-11-hulya-imrak.pdf
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+10 Giugno 2019 14:24:37 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-2801433160-872
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-2801433160-872
+    [cf0203nome] => dietmar
+    [cf0204cognome] => edich
+    [cf0205telefono] => +4915774189767
+    [cf0206email] => dima.ira@tele2.de
+    [cf0207paese] => Tedesco
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-06-16
+    [cf0210datacheckin] => 16/06/2019
+    [cf0211checkout] => 2019-06-21
+    [cf0212datacheckout] => 21/06/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 5
+    [cf0215idproprieta] => 28989
+    [cf0216proprieta] => Appartamento Arianna
+    [cf0217totale] => 517.50
+    [cf0218anticipo] => 187.50
+    [cf0221commissione] => 93.15
+    [cf0219password] => 101893
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/06/16-06-2019-dietmar-edich.jpg
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+10 Giugno 2019 14:28:32 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => 9413524-1475602264
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=9413524-1475602264
+    [cf0203nome] => facchetti
+    [cf0204cognome] => marco
+    [cf0205telefono] => +393297025185
+    [cf0206email] => postin2@gmail.com
+    [cf0207paese] => Italiano
+    [cf0208ota] => LagoVacanze
+    [cf0209checkin] => 2019-08-18
+    [cf0210datacheckin] => 18/08/2019
+    [cf0211checkout] => 2019-08-24
+    [cf0212datacheckout] => 24/08/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 6
+    [cf0215idproprieta] => 29021
+    [cf0216proprieta] => Residence Onda - App. 14
+    [cf0217totale] => 780
+    [cf0218anticipo] => 270
+    [cf0221commissione] => 0
+    [cf0219password] => 140098
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/06/2019-08-2019-facchetti-marco.jpg
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+14 Giugno 2019 15:14:26 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-3873851941-865
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-3873851941-865
+    [cf0203nome] => david
+    [cf0204cognome] => perkmann
+    [cf0205telefono] => +3358181292
+    [cf0206email] => riccavidoff@gmail.com
+    [cf0207paese] => Italiano
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-06-21
+    [cf0210datacheckin] => 21/06/2019
+    [cf0211checkout] => 2019-06-23
+    [cf0212datacheckout] => 23/06/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 2
+    [cf0215idproprieta] => 29013
+    [cf0216proprieta] => Residence Onda - App. 03
+    [cf0217totale] => 161
+    [cf0218anticipo] => 56.60
+    [cf0221commissione] => 47.15
+    [cf0219password] => 826768
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => 
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+14 Giugno 2019 15:20:35 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-3873851941-873
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-3873851941-873
+    [cf0203nome] => david
+    [cf0204cognome] => perkmann
+    [cf0205telefono] => +393358181292
+    [cf0206email] => riccavidoff@gmail.com
+    [cf0207paese] => Italiano
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-06-21
+    [cf0210datacheckin] => 21/06/2019
+    [cf0211checkout] => 2019-06-23
+    [cf0212datacheckout] => 23/06/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 2
+    [cf0215idproprieta] => 29021
+    [cf0216proprieta] => Residence Onda - App. 14
+    [cf0217totale] => 207
+    [cf0218anticipo] => 56.60
+    [cf0221commissione] => 47.15
+    [cf0219password] => 462681
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => 
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+14 Giugno 2019 15:51:27 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-3873851941-865
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-3873851941-865
+    [cf0203nome] => david
+    [cf0204cognome] => perkmann
+    [cf0205telefono] => 
+    [cf0206email] => riccavidoff@gmail.com
+    [cf0207paese] => Italiano
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-06-21
+    [cf0210datacheckin] => 21/06/2019
+    [cf0211checkout] => 2019-06-23
+    [cf0212datacheckout] => 23/06/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 2
+    [cf0215idproprieta] => 29013
+    [cf0216proprieta] => Residence Onda - App. 03
+    [cf0217totale] => 161
+    [cf0218anticipo] => 56.60
+    [cf0221commissione] => 47.15
+    [cf0219password] => 230861
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => 
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+16 Giugno 2019 15:47:07 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-3122566935-800
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-3122566935-800
+    [cf0203nome] => paola
+    [cf0204cognome] => merigo
+    [cf0205telefono] => +393497894030
+    [cf0206email] => info@eatinero.it
+    [cf0207paese] => Italiano
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-07-05
+    [cf0210datacheckin] => 05/07/2019
+    [cf0211checkout] => 2019-07-07
+    [cf0212datacheckout] => 07/07/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 2
+    [cf0215idproprieta] => 28994
+    [cf0216proprieta] => Appartamento Il Nido
+    [cf0217totale] => 195.50
+    [cf0218anticipo] => 55.50
+    [cf0221commissione] => 29.32
+    [cf0219password] => 183085
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/06/2019-07-05-paola-merigo.pdf
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+16 Giugno 2019 15:51:47 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-3122566935-800
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-3122566935-800
+    [cf0203nome] => paola
+    [cf0204cognome] => merigo
+    [cf0205telefono] => +393497894030
+    [cf0206email] => info@eatinero.it
+    [cf0207paese] => Italiano
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-07-05
+    [cf0210datacheckin] => 05/07/2019
+    [cf0211checkout] => 2019-07-07
+    [cf0212datacheckout] => 07/07/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 2
+    [cf0215idproprieta] => 28994
+    [cf0216proprieta] => Appartamento Il Nido
+    [cf0217totale] => 195.50
+    [cf0218anticipo] => 55.50
+    [cf0221commissione] => 29.32
+    [cf0219password] => 572814
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/06/2019-07-05-paola-merigo.pdf
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+17 Giugno 2019 16:33:39 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-2483606451-184
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-2483606451-184
+    [cf0203nome] => florian
+    [cf0204cognome] => bock
+    [cf0205telefono] => +491637820811
+    [cf0206email] => bock_florian@gmx.de
+    [cf0207paese] => Tedesco
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-07-20
+    [cf0210datacheckin] => 20/07/2019
+    [cf0211checkout] => 2019-07-22
+    [cf0212datacheckout] => 22/07/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 2
+    [cf0215idproprieta] => 29414
+    [cf0216proprieta] => Villa Palomar
+    [cf0217totale] => 1150
+    [cf0218anticipo] => 340
+    [cf0221commissione] => 172.50
+    [cf0219password] => 264715
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/06/2019-07-20-florian-bock.jpg
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+17 Giugno 2019 17:47:46 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-3003246217-508
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-3003246217-508
+    [cf0203nome] => martina
+    [cf0204cognome] => brandmayer
+    [cf0205telefono] => +4915774361837
+    [cf0206email] => s@k.com
+    [cf0207paese] => Tedesco
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-06-19
+    [cf0210datacheckin] => 19/06/2019
+    [cf0211checkout] => 2019-06-23
+    [cf0212datacheckout] => 23/06/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 4
+    [cf0215idproprieta] => 29007
+    [cf0216proprieta] => Casa Rosetta
+    [cf0217totale] => 690
+    [cf0218anticipo] => 0
+    [cf0221commissione] => 103.50
+    [cf0219password] => 731934
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => 
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+18 Giugno 2019 15:19:27 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => 9458341-1521378414
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=9458341-1521378414
+    [cf0203nome] => domenico
+    [cf0204cognome] => bonanno
+    [cf0205telefono] => +4915770351781
+    [cf0206email] => domenico-bonanno@t-online.de
+    [cf0207paese] => Tedesco
+    [cf0208ota] => Holidu
+    [cf0209checkin] => 2019-07-15
+    [cf0210datacheckin] => 15/07/2019
+    [cf0211checkout] => 2019-07-21
+    [cf0212datacheckout] => 21/07/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 6
+    [cf0215idproprieta] => 29006
+    [cf0216proprieta] => Casa Antonietta
+    [cf0217totale] => 1242
+    [cf0218anticipo] => 580.60
+    [cf0221commissione] => 186.30
+    [cf0219password] => 704196
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/06/2019-07-15-domenico-bonanno.jpg
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+18 Giugno 2019 15:33:43 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-2635974966-509
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-2635974966-509
+    [cf0203nome] => elisa
+    [cf0204cognome] => sacco sonador
+    [cf0205telefono] => +393494221702
+    [cf0206email] => esonad.314446@guest.booking.com
+    [cf0207paese] => Italiano
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-06-21
+    [cf0210datacheckin] => 21/06/2019
+    [cf0211checkout] => 2019-06-23
+    [cf0212datacheckout] => 23/06/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 2
+    [cf0215idproprieta] => 29445
+    [cf0216proprieta] => Vista Lago
+    [cf0217totale] => 345
+    [cf0218anticipo] => 105
+    [cf0221commissione] => 51.75
+    [cf0219password] => 854416
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/06/2019-06-21-elisa-sacco-sonador.jpeg
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+19 Giugno 2019 14:26:00 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-3376781687-408
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-3376781687-408
+    [cf0203nome] => nico
+    [cf0204cognome] => kretschmann
+    [cf0205telefono] => +4917631509644
+    [cf0206email] => hh@kk.com
+    [cf0207paese] => Tedesco
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-06-20
+    [cf0210datacheckin] => 20/06/2019
+    [cf0211checkout] => 2019-06-23
+    [cf0212datacheckout] => 23/06/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 3
+    [cf0215idproprieta] => 29003
+    [cf0216proprieta] => Appartamento Serena
+    [cf0217totale] => 241.50
+    [cf0218anticipo] => 0
+    [cf0221commissione] => 36.23
+    [cf0219password] => 349752
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => 
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+19 Giugno 2019 15:23:38 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-3675510983-905
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-3675510983-905
+    [cf0203nome] => jacqueline
+    [cf0204cognome] => reinecke
+    [cf0205telefono] => +4917645737158
+    [cf0206email] => reineckejacqueline@gmail.com
+    [cf0207paese] => Tedesco
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-06-21
+    [cf0210datacheckin] => 21/06/2019
+    [cf0211checkout] => 2019-06-23
+    [cf0212datacheckout] => 23/06/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 2
+    [cf0215idproprieta] => 29000
+    [cf0216proprieta] => Appartamento Minerva
+    [cf0217totale] => 161
+    [cf0218anticipo] => 51
+    [cf0221commissione] => 24.15
+    [cf0219password] => 386405
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/06/2019-06-21-jacqueline-reincke.jpg
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+19 Giugno 2019 18:18:47 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-2635972011-588
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-2635972011-588
+    [cf0203nome] => christina
+    [cf0204cognome] => ganser
+    [cf0205telefono] => +4915903788861
+    [cf0206email] => christa.ganser@web.de
+    [cf0207paese] => Tedesco
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-08-01
+    [cf0210datacheckin] => 01/08/2019
+    [cf0211checkout] => 2019-08-04
+    [cf0212datacheckout] => 04/08/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 3
+    [cf0215idproprieta] => 29442
+    [cf0216proprieta] => Appartamento Lavinia
+    [cf0217totale] => 448.50
+    [cf0218anticipo] => 138.50
+    [cf0221commissione] => 67.28
+    [cf0219password] => 145991
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/06/2019-08-01-christina-ganser.pdf
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+20 Giugno 2019 17:35:25 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-2352598227-457
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-2352598227-457
+    [cf0203nome] => dennis
+    [cf0204cognome] => suppes
+    [cf0205telefono] => +4917645883640
+    [cf0206email] => ff@jm.it
+    [cf0207paese] => Tedesco
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-06-20
+    [cf0210datacheckin] => 20/06/2019
+    [cf0211checkout] => 2019-06-23
+    [cf0212datacheckout] => 23/06/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 3
+    [cf0215idproprieta] => 38139
+    [cf0216proprieta] => Il Pelèr
+    [cf0217totale] => 345
+    [cf0218anticipo] => 0
+    [cf0221commissione] => 51.75
+    [cf0219password] => 858424
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => 
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+21 Giugno 2019 15:36:05 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-3056632046-249
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-3056632046-249
+    [cf0203nome] => dominik
+    [cf0204cognome] => suchecki
+    [cf0205telefono] => +48667662824
+    [cf0206email] => dominik_suchecki@interia.pl
+    [cf0207paese] => Inglese
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-08-04
+    [cf0210datacheckin] => 04/08/2019
+    [cf0211checkout] => 2019-08-15
+    [cf0212datacheckout] => 15/08/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 11
+    [cf0215idproprieta] => 38139
+    [cf0216proprieta] => Il Pelèr
+    [cf0217totale] => 1644.50
+    [cf0218anticipo] => 494.50
+    [cf0221commissione] => 246.68
+    [cf0219password] => 898615
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/06/2019-08-04-dominik-suchecky.pdf
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+21 Giugno 2019 15:50:53 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => 9466339-1542304478
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=9466339-1542304478
+    [cf0203nome] => stephan
+    [cf0204cognome] => hone
+    [cf0205telefono] => +4917684501212
+    [cf0206email] => stan.hoehne@gmx.de
+    [cf0207paese] => Tedesco
+    [cf0208ota] => Traumferien
+    [cf0209checkin] => 2019-08-10
+    [cf0210datacheckin] => 10/08/2019
+    [cf0211checkout] => 2019-08-21
+    [cf0212datacheckout] => 21/08/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 11
+    [cf0215idproprieta] => 29442
+    [cf0216proprieta] => Appartamento Lavinia
+    [cf0217totale] => 1527.90
+    [cf0218anticipo] => 497.90
+    [cf0221commissione] => 0
+    [cf0219password] => 741282
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/06/2019-08-10stephan-hone.jpg
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+26 Giugno 2019 15:58:53 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A203-HMAQ2Q4S55
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A203-HMAQ2Q4S55
+    [cf0203nome] => jeremy
+    [cf0204cognome] => blein
+    [cf0205telefono] => +33687891576
+    [cf0206email] => jeremy-k8d9ba3wol88zlry@guest.airbnb.com
+    [cf0207paese] => Inglese
+    [cf0208ota] => AirB&B
+    [cf0209checkin] => 2019-08-15
+    [cf0210datacheckin] => 15/08/2019
+    [cf0211checkout] => 2019-08-17
+    [cf0212datacheckout] => 17/08/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 2
+    [cf0215idproprieta] => 38292
+    [cf0216proprieta] => Appartamento Minerva 02
+    [cf0217totale] => 324
+    [cf0218anticipo] => 524
+    [cf0221commissione] => 31.96
+    [cf0219password] => 563275
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => 
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+28 Giugno 2019 16:31:25 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => 9516457-1544014970
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=9516457-1544014970
+    [cf0203nome] => stefanie
+    [cf0204cognome] => rasiti
+    [cf0205telefono] => +4917684866941
+    [cf0206email] => stefanie.1107@icloud.com
+    [cf0207paese] => Tedesco
+    [cf0208ota] => Holidu
+    [cf0209checkin] => 2019-08-12
+    [cf0210datacheckin] => 12/08/2019
+    [cf0211checkout] => 2019-08-17
+    [cf0212datacheckout] => 17/08/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 5
+    [cf0215idproprieta] => 30152
+    [cf0216proprieta] => Casale la Margherita – L’Ulivo
+    [cf0217totale] => 575
+    [cf0218anticipo] => 312.50
+    [cf0221commissione] => 86.25
+    [cf0219password] => 547521
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/06/2019-08-12-stefanie-rasiti.jpg
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+28 Giugno 2019 16:38:21 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-3715154364-421
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-3715154364-421
+    [cf0203nome] => elvinas
+    [cf0204cognome] => vilutis
+    [cf0205telefono] => +37060491492
+    [cf0206email] => elwinas@gmail.com
+    [cf0207paese] => Inglese
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-08-01
+    [cf0210datacheckin] => 01/08/2019
+    [cf0211checkout] => 2019-08-06
+    [cf0212datacheckout] => 06/08/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 5
+    [cf0215idproprieta] => 38016
+    [cf0216proprieta] => Villa Livia Luxury
+    [cf0217totale] => 3737.50
+    [cf0218anticipo] => 1207.50
+    [cf0221commissione] => 560.62
+    [cf0219password] => 762558
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/06/2019-08-01-elvinias-vilutis.pdf
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+28 Giugno 2019 18:24:39 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => 9521865-1521378414
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=9521865-1521378414
+    [cf0203nome] => manuel
+    [cf0204cognome] => bonni
+    [cf0205telefono] => +393925519898
+    [cf0206email] => manuelboni87@gmail.com
+    [cf0207paese] => Italiano
+    [cf0208ota] => Holidu
+    [cf0209checkin] => 2019-07-12
+    [cf0210datacheckin] => 12/07/2019
+    [cf0211checkout] => 2019-07-14
+    [cf0212datacheckout] => 14/07/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 2
+    [cf0215idproprieta] => 29006
+    [cf0216proprieta] => Casa Antonietta
+    [cf0217totale] => 414
+    [cf0218anticipo] => 300.20
+    [cf0221commissione] => 62.10
+    [cf0219password] => 617811
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => 
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+29 Giugno 2019 15:59:44 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A203-HMAQQY48TD
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A203-HMAQQY48TD
+    [cf0203nome] => alfred
+    [cf0204cognome] => appelros
+    [cf0205telefono] => +46738483633
+    [cf0206email] => alfred-74hgip818o2ma54d@guest.airbnb.com
+    [cf0207paese] => Inglese
+    [cf0208ota] => AirB&B
+    [cf0209checkin] => 2019-08-07
+    [cf0210datacheckin] => 07/08/2019
+    [cf0211checkout] => 2019-08-11
+    [cf0212datacheckout] => 11/08/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 4
+    [cf0215idproprieta] => 38292
+    [cf0216proprieta] => Appartamento Minerva 02
+    [cf0217totale] => 648
+    [cf0218anticipo] => 848
+    [cf0221commissione] => 51.73
+    [cf0219password] => 957404
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => 
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+3 Luglio 2019 16:06:50 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-3947094335-894
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-3947094335-894
+    [cf0203nome] => doris
+    [cf0204cognome] => tessin
+    [cf0205telefono] => +4941018147433
+    [cf0206email] => tessin-du@web.de
+    [cf0207paese] => Tedesco
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-10-07
+    [cf0210datacheckin] => 07/10/2019
+    [cf0211checkout] => 2019-10-17
+    [cf0212datacheckout] => 17/10/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 10
+    [cf0215idproprieta] => 29013
+    [cf0216proprieta] => Residence Onda - App. 03
+    [cf0217totale] => 632.50
+    [cf0218anticipo] => 182.50
+    [cf0221commissione] => 94.88
+    [cf0219password] => 038311
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/07/2019-10-2019-doris-tessin.jpg
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+5 Luglio 2019 14:40:28 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => 9521501-1542306218
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=9521501-1542306218
+    [cf0203nome] => lukas
+    [cf0204cognome] => ostmayr
+    [cf0205telefono] => +49
+    [cf0206email] => lukas.ostermayr111@gmx.de
+    [cf0207paese] => Tedesco
+    [cf0208ota] => Traumferien
+    [cf0209checkin] => 2019-08-12
+    [cf0210datacheckin] => 12/08/2019
+    [cf0211checkout] => 2019-08-17
+    [cf0212datacheckout] => 17/08/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 5
+    [cf0215idproprieta] => 29441
+    [cf0216proprieta] => Villa SoleLago Exclusive
+    [cf0217totale] => 2060
+    [cf0218anticipo] => 740
+    [cf0221commissione] => 0
+    [cf0219password] => 252817
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/07/2019-08-12-lukas-ostermayr.jpg
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+5 Luglio 2019 15:10:27 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-3216275103-733
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-3216275103-733
+    [cf0203nome] => nicole
+    [cf0204cognome] => menke
+    [cf0205telefono] => +491714552525
+    [cf0206email] => sunflower6407@arcor.de
+    [cf0207paese] => Tedesco
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-09-14
+    [cf0210datacheckin] => 14/09/2019
+    [cf0211checkout] => 2019-09-21
+    [cf0212datacheckout] => 21/09/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 7
+    [cf0215idproprieta] => 29018
+    [cf0216proprieta] => Residence Onda - App. 08
+    [cf0217totale] => 563.50
+    [cf0218anticipo] => 163.50
+    [cf0221commissione] => 84.53
+    [cf0219password] => 365264
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/07/2019-09-14-nicole-menke.jpg
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+6 Luglio 2019 15:14:42 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-3419074335-303
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-3419074335-303
+    [cf0203nome] => ken
+    [cf0204cognome] => boesmans
+    [cf0205telefono] => +32487389628
+    [cf0206email] => kboesm.381662@guest.booking.com
+    [cf0207paese] => Inglese
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-07-22
+    [cf0210datacheckin] => 22/07/2019
+    [cf0211checkout] => 2019-07-31
+    [cf0212datacheckout] => 31/07/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 9
+    [cf0215idproprieta] => 29024
+    [cf0216proprieta] => Residence Onda - App. 17
+    [cf0217totale] => 1345.50
+    [cf0218anticipo] => 405.50
+    [cf0221commissione] => 201.82
+    [cf0219password] => 404941
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/07/2019-07-22-ken-boesmans.jpg
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+9 Luglio 2019 10:34:43 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-3352446161-66
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-3352446161-66
+    [cf0203nome] => gwm
+    [cf0204cognome] => van liempd
+    [cf0205telefono] => +3644373604
+    [cf0206email] => jacquelinevanliempd@gmail.com
+    [cf0207paese] => Inglese
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-07-12
+    [cf0210datacheckin] => 12/07/2019
+    [cf0211checkout] => 2019-07-22
+    [cf0212datacheckout] => 22/07/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 10
+    [cf0215idproprieta] => 29020
+    [cf0216proprieta] => Residence Onda - App. 13
+    [cf0217totale] => 1495
+    [cf0218anticipo] => 445
+    [cf0221commissione] => 224.25
+    [cf0219password] => 694196
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/07/2019-07-12-gwm-van-lienpd.jpg
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+10 Luglio 2019 15:38:51 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-3829924871-308
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-3829924871-308
+    [cf0203nome] => massimo
+    [cf0204cognome] => sartorio
+    [cf0205telefono] => +393935656360
+    [cf0206email] => maxsartorio@gmail.com
+    [cf0207paese] => Italiano
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-08-14
+    [cf0210datacheckin] => 14/08/2019
+    [cf0211checkout] => 2019-08-17
+    [cf0212datacheckout] => 17/08/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 3
+    [cf0215idproprieta] => 28990
+    [cf0216proprieta] => Appartamento Camilla
+    [cf0217totale] => 207
+    [cf0218anticipo] => 67
+    [cf0221commissione] => 31.05
+    [cf0219password] => 198404
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/07/2019-08-14-massimo-sartorio.jpg
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+15 Luglio 2019 15:21:21 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A203-HMANPAWRYC
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A203-HMANPAWRYC
+    [cf0203nome] => raisa
+    [cf0204cognome] => wiersema
+    [cf0205telefono] => +972527010119
+    [cf0206email] => raisa-k8p5vrb6jkap7umm@guest.airbnb.com
+    [cf0207paese] => Inglese
+    [cf0208ota] => AirB&B
+    [cf0209checkin] => 2019-08-03
+    [cf0210datacheckin] => 03/08/2019
+    [cf0211checkout] => 2019-08-13
+    [cf0212datacheckout] => 13/08/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 10
+    [cf0215idproprieta] => 29028
+    [cf0216proprieta] => Villa Colombo - App 03
+    [cf0217totale] => 1080
+    [cf0218anticipo] => 1200
+    [cf0221commissione] => 73.20
+    [cf0219password] => 493750
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => 
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+16 Luglio 2019 14:19:44 	 PHP 7.1.30Array
+(
+    [g-recaptcha-response] => 
+    [cf0201idavantio] => A169-3163898758-135
+    [cf0202link] => https://www.lagovacanze.com/03-invio-richiesta-check-in/?idavantio=A169-3163898758-135
+    [cf0203nome] => bruno
+    [cf0204cognome] => del moral
+    [cf0205telefono] => +34670857378
+    [cf0206email] => bmanueldel@yahoo.es
+    [cf0207paese] => Inglese
+    [cf0208ota] => Booking
+    [cf0209checkin] => 2019-07-19
+    [cf0210datacheckin] => 19/07/2019
+    [cf0211checkout] => 2019-07-24
+    [cf0212datacheckout] => 24/07/2019
+    [cf0213avviso] => =I:I-15
+    [cf0214notti] => 5
+    [cf0215idproprieta] => 29026
+    [cf0216proprieta] => Terrazze a Lago
+    [cf0217totale] => 517.50
+    [cf0218anticipo] => 157.50
+    [cf0221commissione] => 77.62
+    [cf0219password] => 949559
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [cf0220allegato] => https://www.lagovacanze.com/wp-content/uploads/cf7gs/2019/07/2019-07-19-bruno-del-moral.jpg
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\SpreadsheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+28 Ottobre 2019 16:57:21 	 PHP 7.1.30Array
+(
+    [date] => 28 Ottobre 2019
+    [time] => 16:57
+    [g-recaptcha-response] => 03AOLTBLT7DcdqolWIpJrSA4xy0Mp6Sa9hP9XRhqd9sUJO4GrSm9vdJ98QRYe5Sgt5ShDlM3b0HjVflHyVMc8zOh7n06hjNpL8Qyt8aWWjAo-eY1S_mquZgeHRzXoELjw_znlyQI18XH4XbcCMgv3wxpL9lapdh6f-20uhR1wZ0q6L0v8KGh3ijSrCy09ogbOhJax86kCfTQ0UszbOHax8IzfXSJhHCtrJCbeQvZ-iNcDVwrPMzRIHpipFRPQnvtMXc1EqwZ1hAtKjekAx4oViUqYQvep_epQNne48zovjqumpZwiATKQV9O8JoVXDWqN5nqedHO7lNX857qE6mF4lceptYe4baY8VtjIo7-PALw6R8a3NdmDB4vJyYXKPezRGtieOgcW8j0-wYmNx_1CeXi2FQcu55lBuhivs8ZT9umvRT1w-aowC_3m7cJWMPDbbrmyqXmDwN-WZEXt9ztnvu5c2P7XvGrRrIYKSWK_P3ZPkgD46DglBHsV-w7mGIS6A3mwU6FSkHs-7
+    [tipologia] => booking@lagovacanze.com
+    [nomecognome] => asd
+    [telefono] => 340314509599
+    [mail] => giorgio.rizza@a5tratto.it
+    [messaggio] => Inserisci la tua richiestaasd
+    [privacy] => 1
+    [referer-page] => https://www.lagovacanze.com/
+    [ERROR_MSG] => String could not be parsed as XML
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/WorksheetFeed.php(44): SimpleXMLElement->__construct('')
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/Spreadsheet.php(87): Google\Spreadsheet\WorksheetFeed->__construct(false)
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(76): Google\Spreadsheet\Spreadsheet->getWorksheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(213): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(33): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(729): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+4 Novembre 2019 14:10:11 	 PHP 7.1.30Array
+(
+    [cf1000tipologia] => Il Sig. / La Sig.ra
+    [cf1001nomecognome] => SIMONE BERNO
+    [cf1002cf] => BRNSMN85D26D294D
+    [cf1003paese] => POLPENAZZE DEL GARDA
+    [cf1004via] => VEDRINE
+    [cf1005civico] => 23
+    [cf1006cap] => 25080
+    [cf1007provincia] => BRESCIA
+    [cf1010qualitalegale] => COMPROPRIETARIO DELEGATO
+    [cf1011legalerapp] => 
+    [cf1012cflegalerapp] => 
+    [cf1008telefono] => 3381919201
+    [cf1009mail] => evenbtc17@gmail.com
+    [cf1013pass] => 233143
+    [idproprieta] => 37982
+    [cf1015idproprieta] => 28888
+    [cf1016nomeproprieta] => EXCLUSIVE VILLA LE PALME
+    [cf1017paese] => POLPENAZZE DEL GARDA
+    [cf1018via] => DON MERCANTI
+    [cf1019civico] => 1
+    [cf1020cap] => 25080
+    [cf1021provincia] => BRESCIA
+    [cf1022foglio] => 8
+    [cf1023mappale] => 3516
+    [cf1024subalterno] => 6
+    [cf1053comunetax] => UNIONE DEI COMUNI>4
+    [cf1054openpool] => 1222-12-12
+    [cf1055closepool] => 1222-12-12
+    [cf1014member] => Nuovo Incarico Gestione Completa Biennale
+    [cf1052przmember] => 500
+    [cf1038incaricoinizio] => 2019-11-09
+    [cf1039incaricofine] => 2019-11-07
+    [cf1040datainc] => 2019-11-08
+    [cf1025percentuale] => 10
+    [cf1045lagovacanze] => 1
+    [cf1046booking] => 0
+    [cf1047aribnb] => 1
+    [cf1048expedia] => 1
+    [cf1049holidu] => 1
+    [cf1050homeaway] => 0
+    [cf1051traumferien] => 0
+    [cf1028bassa] => 240
+    [cf1029media] => 340
+    [cf1030alta] => 485
+    [cf1031natale] => 680
+    [cf1026cauzione] => 200
+    [cf1027pulizie] => 350
+    [cf1034intestatario] => BERNO SIMONE, BERNO LUCA, BERNO MARCO
+    [cf1035banca] => CASSA PADANA
+    [cf1036iban] => IT61E0834058050000000016311
+    [cf1037bic] => ICRAITRR9G0
+    [cf1032cameredisp] => 001
+    [cf1033lettidisp] => 0019
+    [cf1042pacchetto] => 28884
+    [cf1043scadenzah] => 2019-11-07 13:00:00
+    [cf1044zero] => 0
+    [referer-page] => direct visit
+    [ERROR_MSG] => Access token is invalid
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/DefaultServiceRequest.php(130): Google\Spreadsheet\DefaultServiceRequest->execute(Resource id #1732)
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/Worksheet.php(133): Google\Spreadsheet\DefaultServiceRequest->get('https://spreads...')
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(80): Google\Spreadsheet\Worksheet->getListFeed()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(214): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(34): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(740): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(309): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(286): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(531): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(737): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1105): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
+18 Febbraio 2020 16:43:30 	 PHP 7.1.33Array
+(
+    [date] => 18 Febbraio 2020
+    [time] => 16:43
+    [g-recaptcha-response] => 
+    [cf1000tipologia] => Il Sig. / La Sig.ra
+    [cf1001nomecognome] => LAGOVACANZE SRLS
+    [cf1002cf] => 03760450985
+    [cf1003paese] => POLPENAZZE DEL GARDA
+    [cf1004via] => VIA SANT'ANTONIO
+    [cf1005civico] => 13/A
+    [cf1006cap] => 25080
+    [cf1007provincia] => BRESCIA
+    [cf1010qualitalegale] => CONDUTTORE
+    [cf1011legalerapp] => LIDIA CRESCINI
+    [cf1012cflegalerapp] => CRSLDI62M43H717S
+    [cf1008telefono] => 3292059738
+    [cf1009mail] => GEOMBERNO@GMAIL.COM
+    [cf1013pass] => 055202
+    [idproprieta] => 34792
+    [cf1015idproprieta] => 29025
+    [cf1016nomeproprieta] => ROMANTIC BENACO SALO\'
+    [cf1017paese] => SALO'
+    [cf1018via] => SAN CARLO
+    [cf1019civico] => 53
+    [cf1020cap] => 25087
+    [cf1021provincia] => BRESCIA
+    [cf1022foglio] => SAL/32
+    [cf1023mappale] => 1648
+    [cf1024subalterno] => 3
+    [cf1053comunetax] => UNIONE DEI COMUNI>4
+    [cf1054openpool] => 
+    [cf1055closepool] => 
+    [cf1014member] => Rinnovo Incarico Gestione Completa Annuale
+    [cf1052przmember] => 0
+    [cf1038incaricoinizio] => 2020-02-18
+    [cf1039incaricofine] => 2021-01-06
+    [cf1040datainc] => 2020-02-18
+    [cf1025percentuale] => 100
+    [cf1045lagovacanze] => 1
+    [cf1046booking] => 1
+    [cf1047aribnb] => 1
+    [cf1048expedia] => 1
+    [cf1049holidu] => 1
+    [cf1050homeaway] => 0
+    [cf1051traumferien] => 150
+    [cf1028bassa] => 90
+    [cf1029media] => 120
+    [cf1030alta] => 150
+    [cf1031natale] => 250
+    [cf1026cauzione] => 200
+    [cf1027pulizie] => 140
+    [cf1034intestatario] => LAGOVACANZE SRL
+    [cf1035banca] => BCC DEL GARDA
+    [cf1036iban] => IT47S0867670330000000191926
+    [cf1037bic] => ICRAITRRIS0
+    [cf1032cameredisp] => 001
+    [cf1033lettidisp] => 0006
+    [cf1042pacchetto] => 28884
+    [cf1043scadenzah] => 2021-01-06 13:00:00
+    [cf1044zero] => 0
+    [cf1041firma] => https://www.lagovacanze.com/wp-content/uploads/wpcf7_signatures/cf1041firma-1582040592.png
+    [cf1041firma-attachment] => 
+    [cf1041firma-inline] => 
+    [referer-page] => https://www.lagovacanze.com/gestionale/
+    [ERROR_MSG] => Error in Google Request
+    [TRACE_STK] => #0 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/DefaultServiceRequest.php(130): Google\Spreadsheet\DefaultServiceRequest->execute(Resource id #2311)
+#1 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/asimlqt/php-google-spreadsheet-client/src/Google/Spreadsheet/SpreadsheetService.php(37): Google\Spreadsheet\DefaultServiceRequest->get('feeds/spreadshe...')
+#2 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/lib/google-sheets.php(74): Google\Spreadsheet\SpreadsheetService->getSpreadsheets()
+#3 /home/lagovaca/public_html/wp-content/plugins/cf7-google-sheets-connector-pro/includes/class-gs-service.php(395): CF7GSC_googlesheet->add_row(Array)
+#4 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(288): Gs_Connector_Service->cf7_save_to_google_sheets(Object(WPCF7_ContactForm))
+#5 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(312): WP_Hook->apply_filters('', Array)
+#6 /home/lagovaca/public_html/wp-includes/plugin.php(478): WP_Hook->do_action(Array)
+#7 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(214): do_action('wpcf7_mail_sent', Object(WPCF7_ContactForm))
+#8 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/submission.php(34): WPCF7_Submission->submit()
+#9 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/contact-form.php(740): WPCF7_Submission::get_instance(Object(WPCF7_ContactForm), Array)
+#10 /home/lagovaca/public_html/wp-content/plugins/contact-form-7/includes/rest-api.php(280): WPCF7_ContactForm->submit()
+#11 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(946): wpcf7_rest_create_feedback(Object(WP_REST_Request))
+#12 /home/lagovaca/public_html/wp-includes/rest-api/class-wp-rest-server.php(329): WP_REST_Server->dispatch(Object(WP_REST_Request))
+#13 /home/lagovaca/public_html/wp-includes/rest-api.php(305): WP_REST_Server->serve_request('/contact-form-7...')
+#14 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(288): rest_api_loaded(Object(WP))
+#15 /home/lagovaca/public_html/wp-includes/class-wp-hook.php(312): WP_Hook->apply_filters('', Array)
+#16 /home/lagovaca/public_html/wp-includes/plugin.php(544): WP_Hook->do_action(Array)
+#17 /home/lagovaca/public_html/wp-includes/class-wp.php(387): do_action_ref_array('parse_request', Array)
+#18 /home/lagovaca/public_html/wp-includes/class-wp.php(729): WP->parse_request('')
+#19 /home/lagovaca/public_html/wp-includes/functions.php(1255): WP->main('')
+#20 /home/lagovaca/public_html/wp-blog-header.php(16): wp()
+#21 /home/lagovaca/public_html/index.php(17): require('/home/lagovaca/...')
+#22 {main}
+)
