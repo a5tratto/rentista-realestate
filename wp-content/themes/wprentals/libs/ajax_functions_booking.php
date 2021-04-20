@@ -2464,6 +2464,51 @@ if( !function_exists('wpestate_ajax_show_booking_costs') ):
             print'<div class="instant_book_info" data-total_price="'.esc_attr($booking_array['total_price']).'" data-deposit="'.esc_attr($booking_array['deposit']).'" data-balance="'.esc_attr($booking_array['balance']).'"> ';
         }
 
+
+
+        /* Giorgio */
+        $current_user = wp_get_current_user();
+        // var_dump($current_user);
+        $userID             =   $current_user->ID;
+        // $referentenome   =   $current_user->display_name;
+        // $referentemail   =   $current_user->user_email;
+        $user_custom_picture    =   get_the_author_meta( 'custom_picture' , $userID );
+        $user_picture_clean = preg_replace('/\-*(\d+)x(\d+)\.(.*)$/', '.$3', $user_custom_picture);
+        $image_id               =   get_the_author_meta( 'small_custom_picture',$userID);
+        $user_small_picture     =   wp_get_attachment_image_src( $image_id, 'thumbnail');
+
+        // $referentenome          =   wp_get_current_user('display_name');
+        // $referentemail          =   get_the_author_meta( 'display_name',$user_email);
+
+
+        $nomeproprieta = get_the_title($property_id);;
+        // $nomeproprieta = get_the_title( $post_id );
+        $linkproprieta = get_permalink( $property_id );
+
+
+
+            ?>
+        <script type="text/javascript">
+            document.getElementById('darrivo').value = "<?php echo $booking_from_date ;?>";
+            document.getElementById('dpartenza').value = "<?php echo $booking_to_date ;?>";
+            document.getElementById('ospiti').value = "<?php echo $wpestate_guest_no ;?>";
+            document.getElementById('notti').value = "<?php echo $booking_array['numberDays'] ;?>";
+            document.getElementById('pprenotazione').value = "<?php echo $inter_price_show ;?>";
+            document.getElementById('ppulizie').value = "<?php echo $cleaning_fee_show ;?>";
+            document.getElementById('ptassa').value = "<?php echo $city_fee_show ;?>";
+            document.getElementById('pcauzione').value = "<?php echo $security_fee_show ;?>";
+            document.getElementById('ptotale').value = "<?php echo $balance_show ;?>";
+            document.getElementById('imgprofilo').value = "<?php print esc_url($user_picture_clean); ?>";
+            document.getElementById('idproprieta').value = "<?php echo $property_id ;?>";
+            document.getElementById('nomeproprieta').value = "<?php print $nomeproprieta ;?>";
+            document.getElementById('linkproprieta').value = "<?php print $linkproprieta ;?>";
+            // document.getElementById('referentemail').value = "<?php echo $referentemail ;?>";
+
+
+        </script>
+        <?php
+        /* Giorgio */
+
         die();
     }
 endif;
