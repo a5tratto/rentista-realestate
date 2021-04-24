@@ -805,7 +805,7 @@ if( !function_exists('wpestate_create_pay_user_invoice_form') ):
                         }
 
                         print ' 
-                            <p>giorgioqui4</p>
+                            
                             <div class="invoice_row invoice_total total_inv_span total_invoice_for_payment giorgio_commissioni_fattura">
                                <span class="inv_legend"><strong>'.esc_html__( 'Total','wprentals').'</strong></span>
                                <span class="inv_data" id="total_amm" data-total="'.esc_attr($invoice_price).'">'.$total_price_show.'</span></br>
@@ -2049,7 +2049,7 @@ if( !function_exists('wpestate_create_invoice_form') ):
 
 
                             print'
-                            <p>giorgioqui1</p>
+                            
                             <div class="invoice_row invoice_total invoice_total_generate_invoice giorgio_commissioni_ricevuta_indefinita">
                                 <div style="display:none;" id="inter_price" data-value="'.esc_attr($booking_array ['inter_price']).'"></div>
                                 <span class="inv_legend"><strong>'.esc_html__( 'Guest Pays','wprentals').'</strong></span>
@@ -2065,14 +2065,14 @@ if( !function_exists('wpestate_create_invoice_form') ):
                             $you_earn_show       =      wpestate_show_price_booking_for_invoice($booking_array ['youearned'],$wpestate_currency,$wpestate_where_currency,0,1);
                             $service_fee_show    =      wpestate_show_price_booking_for_invoice($booking_array ['service_fee'],$wpestate_currency,$wpestate_where_currency,0,1);
                             print'
-                            <p>giorgioqui1</p>
+                            
                             <div class="invoice_row invoice_totalx invoice_total_generate_invoice">
                                 <span class="inv_legend"><strong>'.esc_html__( 'You Earn','wprentals').'</strong></span>
                                 <span class="inv_data" id="youearned" data-youearned="'.esc_attr($booking_array ['youearned']).'"><strong>'.$you_earn_show.'</strong></span>
 
 
                                 <div class="invoice_explantions">'.esc_html__('we deduct security deposit, city fees, cleaning fees and website service fee','wprentals').'</div>
-                                <p>giorgioqui3</p>
+                                
                                 <span class="total_inv_span giorgio_servicefee">
                                     <span class="inv_legend invoice_legend_service_fee ">'.esc_html__( 'Service Fee','wprentals').':</span>
                                     <span id="inv_service_fee" class="invoice_legend_service_fee_value" data-value="'.esc_attr($booking_array ['service_fee']).'"  data-value-fixed-hidden="'.  floatval ( wprentals_get_option('wp_estate_service_fee_fixed_fee','') ).'">'.$service_commissioni.'</span>
