@@ -1303,12 +1303,13 @@ if( !function_exists('wpestate_ajax_add_booking_instant') ):
 
 
                         print '
+                        <p>giorgioqui2</p>
                             <div class="invoice_row invoice_total total_inv_span total_invoice_for_payment giorgio_commissioni_ricevuta_indefinita_edit">
                                <span class="inv_legend"><strong>'.esc_html__( 'Total','wprentals').'</strong></span>
                                <span class="inv_data" id="total_amm" data-total="'.esc_attr($invoice_price).'">'.$total_price_show.'</span>giorgio_commissioni_ricevuta_indefinita_edit</br>
 
-                               <span class="inv_legend invoice_reseration_fee_req ">'.esc_html__( 'Reservation Fee Required','wprentals').':</span>giorgio4<span class="inv_depozit depozit_show" data-value="'.esc_attr($service_commissioni).'"> '.$service_commissioni.'</span></br><!-- giorgio replace $depozit_show > $service_commissioni-->
-                               <span class="inv_legend invoice_balance_owed ">'.esc_html__( 'Balance Owed','wprentals').':</span> giorgio5<span class="inv_depozit balance_show"  data-value="'.esc_attr($balance).'">'.$balance_show.'</span>
+                               <span class="inv_legend invoice_reseration_fee_req ">'.esc_html__( 'Reservation Fee Required','wprentals').':</span><span class="inv_depozit depozit_show" data-value="'.esc_attr($service_commissioni).'"> '.$service_commissioni.'</span></br><!-- giorgio replace $depozit_show > $service_commissioni-->
+                               <span class="inv_legend invoice_balance_owed ">'.esc_html__( 'Balance Owed','wprentals').':</span><span class="inv_depozit balance_show"  data-value="'.esc_attr($balance).'">'.$balance_show.'</span>
                            </div>
                        </div>';
 

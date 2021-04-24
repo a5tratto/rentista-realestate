@@ -805,6 +805,7 @@ if( !function_exists('wpestate_create_pay_user_invoice_form') ):
                         }
 
                         print ' 
+                            <p>giorgioqui4</p>
                             <div class="invoice_row invoice_total total_inv_span total_invoice_for_payment giorgio_commissioni_fattura">
                                <span class="inv_legend"><strong>'.esc_html__( 'Total','wprentals').'</strong></span>
                                <span class="inv_data" id="total_amm" data-total="'.esc_attr($invoice_price).'">'.$total_price_show.'</span></br>
@@ -2052,8 +2053,8 @@ if( !function_exists('wpestate_create_invoice_form') ):
                                 <div style="display:none;" id="inter_price" data-value="'.esc_attr($booking_array ['inter_price']).'"></div>
                                 <span class="inv_legend"><strong>'.esc_html__( 'Guest Pays','wprentals').'</strong></span>
                                 <span class="inv_data" id="total_amm" data-total="'.esc_attr($total_price_comp).'">'.$total_price_show.'</span>
-
-                                <span class="total_inv_span giorgioqui"><span class="inv_legend invoice_reseration_fee_req">'.esc_html__( 'Reservation Fee Required','wprentals').':</span> giorgio1<span id="inv_depozit" data-value="'.esc_attr($service_commissioni).'">'.$service_commissioni.'</span><!-- giorgio replace $depozit_show > $service_commissioni-->
+                                <p>giorgioqui1</p>
+                                <span class="total_inv_span"><span class="inv_legend invoice_reseration_fee_req">'.esc_html__( 'Reservation Fee Required','wprentals').':</span><span id="inv_depozit" data-value="'.esc_attr($service_commissioni).'">'.$service_commissioni.'</span><!-- giorgio replace $depozit_show > $service_commissioni-->
                                 <div style="width:100%"></div>
                                 <span class="inv_legend invoice_balance_owed">'.esc_html__( 'Balance Owed','wprentals').':</span> <span id="inv_balance" data-val="'.esc_attr($balance).'">'.$balance_show.'</span>
                             </div>';
@@ -2069,7 +2070,7 @@ if( !function_exists('wpestate_create_invoice_form') ):
 
 
                                 <div class="invoice_explantions">'.esc_html__('we deduct security deposit, city fees, cleaning fees and website service fee','wprentals').'</div>
-
+                                <p>giorgioqui3</p>
                                 <span class="total_inv_span giorgio_servicefee">
                                     <span class="inv_legend invoice_legend_service_fee ">'.esc_html__( 'Service Fee','wprentals').':</span>
                                     <span id="inv_service_fee" class="invoice_legend_service_fee_value" data-value="'.esc_attr($booking_array ['service_fee']).'"  data-value-fixed-hidden="'.  floatval ( wprentals_get_option('wp_estate_service_fee_fixed_fee','') ).'">'.$service_commissioni.'</span>
