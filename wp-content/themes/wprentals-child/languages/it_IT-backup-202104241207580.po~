@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: WpRentals 2.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/new-wprentals\n"
 "POT-Creation-Date: 2021-01-19T13:56:55+00:00\n"
-"PO-Revision-Date: 2021-03-28 14:13+0000\n"
+"PO-Revision-Date: 2021-04-24 12:06+0000\n"
 "Last-Translator: Rentista\n"
 "Language-Team: Italiano\n"
 "Language: it_IT\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: wprentals\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Loco-Version: 2.5.2; wp-5.7"
+"X-Loco-Version: 2.5.2; wp-5.7.1"
 
 #: templates/submit_templates/property_price.php:826
 msgid " *(click to select multiple days and modify price for a certain period)"
@@ -707,11 +707,11 @@ msgstr "Bahrain"
 
 #: libs/ajax_functions_booking.php:2049 libs/ajax_functions_edit.php:1308
 msgid "Balance Owed"
-msgstr "Equilibrio dovuto"
+msgstr "Totale dovuto"
 
 #: libs/ajax_functions_booking.php:808
 msgid "Balance owed"
-msgstr "Equilibrio dovuto"
+msgstr "Totale dovuto"
 
 #: libs/ajax_functions_booking.php:2442
 msgid "Balance remaining"
@@ -719,7 +719,7 @@ msgstr "Saldo rimanente"
 
 #: dashboard/templates/unit-templates/balance_display.php:3
 msgid "Balance: "
-msgstr "Equilibrio:"
+msgstr "Totale:"
 
 #: libs/help_functions.php:6142
 msgid "Bangladesh"
@@ -4176,7 +4176,7 @@ msgstr "Pagare il deposito e confermare la prenotazione"
 #: dashboard/templates/book-listing-user-unit.php:85
 #: libs/css_js_include.php:995
 msgid "Pay Invoice in Full"
-msgstr "Paga la fattura per intero"
+msgstr "Visualizza Totali"
 
 #: templates/payment_management_booking.php:85
 msgid "Pay Owner"
@@ -5091,7 +5091,7 @@ msgstr "Tassa di prenotazione"
 #: libs/ajax_functions_booking.php:807 libs/ajax_functions_booking.php:2047
 #: libs/ajax_functions_edit.php:1307
 msgid "Reservation Fee Required"
-msgstr "Tassa di prenotazione richiesta"
+msgstr "Commissioni prenotazione"
 
 #: dashboard/templates/invoice_filters.php:32
 msgid "Reservation fees filter applies only to the invoices issued by you!"
