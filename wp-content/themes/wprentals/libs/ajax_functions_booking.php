@@ -2049,11 +2049,12 @@ if( !function_exists('wpestate_create_invoice_form') ):
 
 
                             print'
+                            <p>giorgioqui1</p>
                             <div class="invoice_row invoice_total invoice_total_generate_invoice giorgio_commissioni_ricevuta_indefinita">
                                 <div style="display:none;" id="inter_price" data-value="'.esc_attr($booking_array ['inter_price']).'"></div>
                                 <span class="inv_legend"><strong>'.esc_html__( 'Guest Pays','wprentals').'</strong></span>
                                 <span class="inv_data" id="total_amm" data-total="'.esc_attr($total_price_comp).'">'.$total_price_show.'</span>
-                                <p>giorgioqui1</p>
+                                
                                 <span class="total_inv_span"><span class="inv_legend invoice_reseration_fee_req">'.esc_html__( 'Reservation Fee Required','wprentals').':</span><span id="inv_depozit" data-value="'.esc_attr($service_commissioni).'">'.$service_commissioni.'</span><!-- giorgio replace $depozit_show > $service_commissioni-->
                                 <div style="width:100%"></div>
                                 <span class="inv_legend invoice_balance_owed">'.esc_html__( 'Balance Owed','wprentals').':</span> <span id="inv_balance" data-val="'.esc_attr($balance).'">'.$balance_show.'</span>
@@ -2064,6 +2065,7 @@ if( !function_exists('wpestate_create_invoice_form') ):
                             $you_earn_show       =      wpestate_show_price_booking_for_invoice($booking_array ['youearned'],$wpestate_currency,$wpestate_where_currency,0,1);
                             $service_fee_show    =      wpestate_show_price_booking_for_invoice($booking_array ['service_fee'],$wpestate_currency,$wpestate_where_currency,0,1);
                             print'
+                            <p>giorgioqui1</p>
                             <div class="invoice_row invoice_totalx invoice_total_generate_invoice">
                                 <span class="inv_legend"><strong>'.esc_html__( 'You Earn','wprentals').'</strong></span>
                                 <span class="inv_data" id="youearned" data-youearned="'.esc_attr($booking_array ['youearned']).'"><strong>'.$you_earn_show.'</strong></span>
